@@ -1,0 +1,6 @@
+# STRICT close gate for this repository.
+# Every bead names its gate (CODE PASS or BROWSER PASS); tests are locked at lock_tag.
+lock_tag       = specs-v1
+unit_test_dirs = tests/unit
+unit_test_cmd  = node --test
+pw_cmd         = npx playwright test
