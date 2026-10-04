@@ -23,16 +23,19 @@ marked `sh-placeholder` that say they are being prepared.
 
 ### What changed
 
-- E2 (`still-here-3a3`) built, not closed. The home page runs the ritual. The three lines arrive
-  under the green mark: the second 1.12 s after the first, the third 2.15 s after the second, each
-  counted from when the line before was painted. The result replaces the form at 4.4 s. Check
-  another restores the empty form. Before 2026 the same lines end in the pre-2026 sentence, and
-  nothing is drawn or saved. The certificate drawing is fetched at the press, and the portfolio is
-  written only when the result appears. Unit 4/4. The browser specs pass, except item 10 in
-  Firefox and WebKit: its test needs the press within 600 ms of the page clock's install, and this
-  machine takes longer. Two walk timings read this computer's own clock, which was found running up
-  to 12% slow while it corrected itself; they pass when it is steady. The Download and Copy
-  buttons are on screen but do nothing until E4 and E5.
+- E2 (`still-here-3a3`) built and marked blocked: waiting on C2 for item 10's test change and
+  item 14's golden. The sequence is re-timed so every step is set from the press: the second line
+  at 1.2 s, the third at 3.2 s, the result at 4.6 s, and no line is ever on screen less than 1 s.
+  With reduced motion only the fade goes; the pacing is the same. Played W1 (steps 1-5, 8-10) and
+  W8 in Chromium and WebKit at 390: the result came at 4.64-4.66 s both ways. Across ten names the
+  certificate now lands within 12-49 ms of itself in every browser (it was up to 200 ms in WebKit).
+  Two full E2 runs in six projects: 84 and 82 passed, 10 skipped. What still fails: item 10 (its
+  test lets the page clock run while the browser loads, so the press can land in the next second,
+  and under load fake time passes 3.5 s before the test checks nothing is saved), and W1.5 or
+  W8.2 now and then. Each of those walk failures happened inside a jump of this computer's own
+  clock, which steps back about 1.17 s every 31 s; those two steps time themselves with that clock.
+  Unit 4/4; the earlier beads' units and the DS4, DS5, E0 and X3 specs still pass (156 passed,
+  12 skipped). The Download and Copy buttons are on screen but do nothing until E4 and E5.
 - E1 (`still-here-yw2`) closed. `src/js/identifier.js` makes and reads identifiers:
   `canonicalize`, `makeIdentifier` and `parseIdentifier`. The home page loads it for the ritual,
   and the records check will import the same file. All seven vectors reproduce. Across 3,000
@@ -52,7 +55,9 @@ marked `sh-placeholder` that say they are being prepared.
 
 ### What's next
 
-1. E2 waits on the item 10 test question (next packet) and C2's golden; E3 to E7 next.
+1. E2 is blocked on C2 (item 10's test change, item 14's golden); E3 to E7 next. Before the next
+   browser run, check this computer's clock is steady: a 75 s watch of `Date.now()` against
+   `performance.now()` should show no jump.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
    approved candidates are copied to their golden names; the critic runs the waiting blind picks;
    any test change he red-pens goes to a test-author session and a re-tag.
@@ -97,3 +102,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E0 closed; the shell on every page, placeholders for the pages to come, the 404. (Martin, 2026-10-04)
 - 2026-10-04 — E1 closed; the identifier module, every vector reproduced. (Martin, 2026-10-04)
 - 2026-10-04 — E2 built and held open on its item 10 test and C2. (Martin, 2026-10-04)
+- 2026-10-04 — E2 re-timed from the press, the same with and without motion; blocked on C2. (Martin, 2026-10-04)

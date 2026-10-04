@@ -43,7 +43,7 @@ relations:
 
 **Phase 2 — The shell, the ritual and the certificate.** Phase 1 is held awaiting C2: DS2–DS7
 closed and the C2 packet is out; DS1 waits on two C2 items (Greek in the certificate face, and the
-linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and held open: item 10's locked test assumes the press lands within 600 ms of the page clock's install, which Firefox and WebKit miss here (a re-tag item for the next packet), and two walk timings read this host's wall clock, which was found slewing. Item 14 waits on C2. Work that needs Greek in the certificate face
+linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and blocked on C2: item 10's locked test lets the page clock run from its install, so the press can land in the next second and fake time can pass 3.5 s before the stored-count check (a re-tag item for the next packet); W1.5 and W8.2 time with the test machine's own clock, which steps back about 1.17 s every 31 s here, and they fail only inside those steps. Item 14 waits on C2. Work that needs Greek in the certificate face
 waits on C2's Decision 1.
 
 ## Build method
@@ -211,6 +211,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [x] E0: the site shell (header, the eight-item menu, the three-link footer, CSP and Open Graph meta, the link checker) and a page for every path of PRD R24, built or a marked placeholder; the real 404 page. Evidence: `still-here-lsz` closed through the gate; the shell is included at build time from `src/_shell/` (a page without its three markers fails the build); `tests/unit/still-here-lsz-links.test.ts` 6/6; shell and walk specs 124 passed, 2 skipped (the walk is Chromium and WebKit only) in six projects; W4.1–2 played in Chromium and WebKit at 390 and 1440; `npm run check:links` 19 pages, 0 broken; DS2–DS7 and X3 tests still green.
 - [x] E1: identifier module (Branch B, mod 37 per I-12, canonicalization, decoder) shared by the site and the records check. Evidence: `still-here-yw2` closed through the gate; `src/js/identifier.js` (canonicalize, makeIdentifier, parseIdentifier), imported by `src/js/home.js`; `tests/unit/still-here-yw2-identifier.test.ts` 6/6 (seven vectors, 3,000 random identifiers with every substitution and swap rejected, the decoder cases, one alphabet holder); the DS4 specimen recomputes to SH-00PP-9AGR-1GTB.
 - [ ] E2: the ritual on `/`: input rules (D5), examples (Q10), the sequence and its timing (Q5), reduced motion, the result, Check another, the pre-2026 clock. **[after C2]** styled to the home golden.
+  Evidence (2026-10-04): unit 4/4; items 1-9 and 11-13 green in six projects in two full runs (84 and 82 of 86 run passed); W1 and W8 played in Chromium and WebKit; open on item 10 (C2 test change) and item 14 (C2 golden).
 - [ ] E3: the certificate per issue: name layout, time zone (D4), the UTC line, QR code with the link. **[after C2]** matched to the certificate golden.
 - [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
 - [ ] E5: the certificate link (D2) and Copy certificate link.
@@ -410,3 +411,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E0 closed: the shared shell, every R24 page built or a marked placeholder, the 404 page, one CSP and Open Graph set (og:image now `hero-og-1200.jpg`), the link checker. Next: E1. (Jules, 2026-10-04)
 - 2026-10-04 — E1 closed: the identifier module, shared by the site and the records check; every vector reproduces. Next: E2. (Jules, 2026-10-04)
 - 2026-10-04 — E2 built (the ritual on `/`), held open: item 10's press-second test is a re-tag item, and item 14 waits on C2. (Jules, 2026-10-04)
+- 2026-10-04 — E2 re-timed: every step set from the press (1.2 s, 3.2 s, result 4.6 s), the same with and without motion; bead blocked on C2. (Jules, 2026-10-04)

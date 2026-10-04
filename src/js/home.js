@@ -5,18 +5,19 @@
 // empty or whitespace-only keeps the button aria-disabled and a press shows the empty-input
 // sentence. Names are only ever set as text (textContent, and escaped inside the certificate SVG).
 //
-// The sequence (Q5): one press only; line 1 with the press, line 2 1,120 ms after line 1 was painted, and
-// line 3 2,150 ms after line 2 was painted (comparing here with here is held longest), each counted
-// from the paint so a busy device never shortens a line's time on screen; the result at 4,400 ms
-// after the press, or 1,000 ms after the last line was painted if that is later, the same for
-// every object. The identifier is made from the second of the press while the lines run, and
-// the result is put together 200 ms after the last line, so that work never holds up a line;
-// nothing is shown or saved until the result appears, and leaving the
-// page before then (reload, Back, a link) cancels it. Before 2026 the clock cannot be expressed in
-// an identifier: the sequence runs the same and ends with the pre-2026 sentence, and no identifier is
-// made, nothing drawn and nothing saved.
+// The sequence (Q5): one press only. Every step is set from the press itself, not from the step
+// before it, so the pacing is the same for every object and the same whether or not the lines fade
+// in (reduced motion only drops the fade): line 1 with the press, line 2 at 1,200 ms, line 3 at
+// 3,200 ms and the result at 4,600 ms, so "Comparing here with here." is held longest (2 s) and
+// the last line has 400 ms to spare before the result. A line is never cut short: if a busy device
+// paints a line late, the next step waits until that line has been on screen for 1,000 ms. The identifier is
+// made from the second of the press while the lines run, and the result is put together 200 ms
+// after the last line, so that work never holds up a line; nothing is shown or saved until the
+// result appears, and leaving the page before then (reload, Back, a link) cancels it. Before 2026
+// the clock cannot be expressed in an identifier: the sequence runs the same and ends with the
+// pre-2026 sentence, and no identifier is made, nothing drawn and nothing saved.
 //
-// The certificate's drawing code is fetched when a check starts (it is needed 4.4 s later), which
+// The certificate's drawing code is fetched when a check starts (it is needed 4.6 s later), which
 // keeps the home page's first load small. The certificate's faces are loaded with the page (and preloaded in its head), so the certificate
 // is never drawn in a fallback face and its PNG never waits on a font (PRD R14). (Jules, 2026-10-04)
 import { makeIdentifier } from './identifier.js';
@@ -25,10 +26,12 @@ import { certificateLink } from './link.js';
 const MAX = 80;
 const COUNT_FROM = 61;
 const LINES = ['Establishing here.', 'Comparing here with here.', 'No actionable elsewhere detected.'];
-const LINE_GAPS = [1120, 2150];
-const LAST_LINE_HOLD = 1000;
+// when each step is due, in ms after the press: the three lines, then the result
+const LINE_AT = [0, 1200, 3200];
+const RESULT_AT = 4600;
+// the least time a line stays on screen before the next step, whatever the device's load
+const HOLD = 1000;
 const BUILD_AFTER_LAST = 200;
-const RESULT_AT = 4400;
 const EPOCH = Date.UTC(2026, 0, 1);
 const PORTFOLIO_KEY = 'stillhere.portfolio.v1';
 const EMPTY = 'Name an object to check its presence.';
@@ -233,6 +236,12 @@ function start() {
     if (r.entry) save(r.entry);
     r.heading.focus();
   };
+  // the step after line i is due at its time from the press, and never before line i has been
+  // on screen for HOLD ms
+  const after = (i, shown) => {
+    const due = pressedAt + (i + 1 < LINES.length ? LINE_AT[i + 1] : RESULT_AT);
+    return Math.max(due, shown + HOLD) - performance.now();
+  };
   const show = (i) => {
     if (!running) return;
     lines.append(el('li', '', LINES[i]));
@@ -242,12 +251,11 @@ function start() {
         if (!running) return;
         const shown = performance.now();
         if (i + 1 < LINES.length) {
-          timers.push(setTimeout(() => show(i + 1), LINE_GAPS[i]));
+          timers.push(setTimeout(() => show(i + 1), after(i, shown)));
           return;
         }
         timers.push(setTimeout(() => prepare().catch(() => undefined), BUILD_AFTER_LAST));
-        const at = Math.max(pressedAt + RESULT_AT, shown + LAST_LINE_HOLD);
-        timers.push(setTimeout(reveal, at - performance.now()));
+        timers.push(setTimeout(reveal, after(i, shown)));
       }),
     );
   };
