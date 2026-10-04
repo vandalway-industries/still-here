@@ -19,9 +19,12 @@
 //
 // The certificate's drawing code is fetched when a check starts (it is needed 4.6 s later), which
 // keeps the home page's first load small. The certificate's faces are loaded with the page (and preloaded in its head), so the certificate
-// is never drawn in a fallback face and its PNG never waits on a font (PRD R14). (Jules, 2026-10-04)
+// is never drawn in a fallback face and its PNG never waits on a font (PRD R14); the drawing also
+// waits for them, so the certificate drawn again from its link (/c/) comes out byte for byte the
+// same. The result's actions, Copy certificate link among them, are in result.js. (Jules, 2026-10-04)
 import { makeIdentifier } from './identifier.js';
 import { certificateLink } from './link.js';
+import { certificateActions, certificateFaces, certificateNode, el, resultDate } from './result.js';
 
 const MAX = 80;
 const COUNT_FROM = 61;
@@ -36,10 +39,6 @@ const EPOCH = Date.UTC(2026, 0, 1);
 const PORTFOLIO_KEY = 'stillhere.portfolio.v1';
 const EMPTY = 'Name an object to check its presence.';
 const BEFORE_2026 = "Your device's clock reads earlier than 1 January 2026, a moment our records cannot express. The object, however, is still here.";
-const ACTIONS = ['Download PDF', 'Download PNG', 'Copy certificate link', 'Check another'];
-const PREPARING = { pdf: 'Preparing PDF…', png: 'Preparing PNG…' };
-const EXPORT_FAILED = 'The file could not be prepared. Your certificate is still here: try again, or copy its link.';
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 if (document.fonts) {
   for (const weight of [500, 600]) document.fonts.load(`${weight} 1em "Cormorant Garamond"`).catch(() => undefined);
@@ -111,57 +110,10 @@ function reset({ focus = false } = {}) {
 }
 
 // ── The result ──────────────────────────────────────────────────────────────────────────────────
-function el(tag, cls, text) {
-  const e = document.createElement(tag);
-  if (cls) e.className = cls;
-  if (text !== undefined) e.textContent = text;
-  return e;
-}
-
-function resultDate(time, zone) {
-  const f = new Intl.DateTimeFormat('en-GB', { timeZone: zone, year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
-  const p = Object.fromEntries(f.formatToParts(time).map((x) => [x.type, x.value]));
-  return `${Number(p.day)} ${MONTHS[Number(p.month) - 1]} ${p.year}, ${p.hour}:${p.minute}:${p.second}`;
-}
-
-function certificateNode(svgText) {
-  const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml');
-  return document.importNode(doc.documentElement, true);
-}
-
 function checkAnother() {
   const b = el('button', 'button-secondary', 'Check another');
   b.type = 'button';
   b.addEventListener('click', () => reset({ focus: true }));
-  return b;
-}
-
-/**
- * Download PDF or Download PNG (E4): while the file is prepared the button reads "Preparing PDF…"
- * or "Preparing PNG…" and is aria-disabled, and a second tap does nothing. A failure restores the
- * button and puts the export-failure sentence beneath the buttons; nothing else changes.
- */
-function exporter(kind, label, busyLabel, file, actions) {
-  const b = el('button', 'button-secondary', label);
-  b.type = 'button';
-  let busy = false;
-  b.addEventListener('click', async () => {
-    if (busy) return;
-    busy = true;
-    b.textContent = busyLabel;
-    b.setAttribute('aria-disabled', 'true');
-    actions.parentElement?.querySelector('.export-note')?.remove();
-    try {
-      const { exportCertificate } = await import('./export.js');
-      await exportCertificate(kind, file);
-    } catch {
-      if (actions.isConnected) actions.after(el('p', 'export-note body-sm', EXPORT_FAILED));
-    } finally {
-      busy = false;
-      b.textContent = label;
-      b.removeAttribute('aria-disabled');
-    }
-  });
   return b;
 }
 
@@ -172,18 +124,14 @@ function buildResult({ name, time, zone, identifier }, drawCertificate) {
   h.id = 'result-heading';
   h.tabIndex = -1;
   const cert = el('div', 'result-certificate');
-  const svg = drawCertificate({ name, time, zone, identifier, link: certificateLink(location.origin, identifier, name, zone) });
+  const link = certificateLink(location.origin, identifier, name, zone);
+  const svg = drawCertificate({ name, time, zone, identifier, link });
   cert.append(certificateNode(svg));
-  const actions = el('div', 'result-actions');
-  const file = { svg, name, identifier };
-  actions.append(exporter('pdf', ACTIONS[0], PREPARING.pdf, file, actions), exporter('png', ACTIONS[1], PREPARING.png, file, actions));
-  const copy = el('button', 'button-secondary', ACTIONS[2]);
-  copy.type = 'button';
-  actions.append(copy, checkAnother());
+  const actions = certificateActions({ svg, name, identifier, link }, checkAnother());
   const kept = el('p', 'result-portfolio body-sm', 'Kept in Your Presence ');
-  const link = el('a', '', 'Portfolio on this device');
-  link.href = '/portfolio';
-  kept.append(link, '.');
+  const portfolio = el('a', '', 'Portfolio on this device');
+  portfolio.href = '/portfolio';
+  kept.append(portfolio, '.');
   section.append(
     h,
     el('p', 'result-name', name),
@@ -243,7 +191,7 @@ function start() {
 
   // the identifier and the drawing code are fetched now; the result is put together after the
   // last line and shown and saved only when it appears
-  const ingredients = before ? null : Promise.all([makeIdentifier(name, time), import('./certificate/draw.js')]);
+  const ingredients = before ? null : Promise.all([makeIdentifier(name, time), import('./certificate/draw.js'), certificateFaces(name)]);
   ingredients?.catch(() => undefined);
   let preparing = null;
   const prepare = () =>
@@ -263,7 +211,8 @@ function start() {
     sequence.hidden = true;
     outcome.replaceChildren(r.section);
     outcome.hidden = false;
-    running = false;
+    // the hidden form leaves its running state too, so the page holds no stray read-only field
+    setInert(false);
     if (r.entry) save(r.entry);
     r.heading.focus();
   };

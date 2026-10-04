@@ -798,3 +798,46 @@ a {
   font-variant-ligatures: none;
   font-feature-settings: "kern" 0, "liga" 0, "clig" 0;
 }
+
+/* ── The certificate link (E5) and the certificate's own page ────────────────────────────────── */
+.certificate-view[hidden],
+.certificate-intro[hidden] {
+  display: none;
+}
+
+a.button-secondary {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.result .copy-note {
+  margin-top: 12px;
+  max-width: var(--sh-space-text-max);
+}
+
+.copy-field {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--sh-color-hairline);
+  border-radius: var(--sh-radius-none);
+  background: var(--sh-color-surface);
+  color: var(--sh-color-graphite);
+  font-family: var(--sh-type-identifier-font-family);
+  font-size: var(--sh-type-body-sm-font-size);
+}
+
+.copy-field:focus-visible {
+  outline: 3px solid var(--sh-color-focus);
+  outline-offset: 2px;
+}
+
+.result-reopened .result-zone {
+  margin-top: 8px;
+}
+
+.result .result-links {
+  margin-top: var(--sh-space-md);
+}

@@ -217,6 +217,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
   Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (3.3% as the test scales a 1651-px pdf.js canvas; pixel for pixel it measured 1.04% Chromium / 1.01% WebKit, not the 0.17% first reported, and after every line was set glyph by glyph from the face's advances 0.65% / 1.00%; waits on the C2 re-tag and the WebKit guilloche decision), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
 - [ ] E5: the certificate link (D2) and Copy certificate link.
+  Evidence (2026-10-04): `still-here-wlr` CODE PASS and items 1-3 flipped; unit 3/3 in three runs; link spec two full runs in six projects, each chromium 5/6, chromium-390 5/6, webkit, webkit-390, firefox, firefox-390 3/4 (2 skipped, Chromium-only clipboard), the one failure each time item 4 at `/verify`'s form, which is E6. Held open on item 4 and BROWSER PASS until E6. `/c/#…` judges and redraws (built here because item 2 needs it; E6 spec item 1 passes in six projects); W2.1-W2.3 pass in Chromium and WebKit at 390 and 1440, twice.
 - [ ] E6: `/c/` and `/verify`: reopening is verifying; the Verify cases in their order (Q7, D3); failure and empty states.
 - [ ] E7: Your Presence Portfolio.
 - [ ] Walks W4.1–2, W1, W2, W3, W8 played by the critic in Chromium and WebKit at 390×844 and 1440×900.
@@ -417,3 +418,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E3 built: the certificate per issue, names outside the face drawn as images; held open on item 7 (C2). (Jules, 2026-10-04)
 - 2026-10-04 — E4 built: Download PDF and PNG, fonts embedded, progress and failure; held open on four test questions for C2. (Jules, 2026-10-04)
 - 2026-10-04 — E4 item 4 measured pixel for pixel: 1.04% / 1.01% (not 0.17%); every certificate line now set glyph by glyph, 0.65% Chromium, 1.00% WebKit; candidate re-rendered. Item 4 still waits on C2. (Jules, 2026-10-04)
+- 2026-10-04 — E5 built: the certificate link, Copy certificate link with its refused fallback, and `/c/#…` redrawn byte for byte; held open on item 4 until E6's Verify form. (Jules, 2026-10-04)

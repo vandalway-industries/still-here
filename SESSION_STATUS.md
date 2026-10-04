@@ -17,12 +17,25 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open until E6 builds Verify. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
 marked `sh-placeholder` that say they are being prepared.
 
 ### What changed
 
+- E5 (`still-here-wlr`) built and held open on item 4. Copy certificate link now works: it copies
+  the link and says "Certificate link copied."; where the browser refuses the clipboard it shows
+  "Copy this link to keep the certificate:" with the link beneath it in a read-only box, already
+  selected. Opening a link at `/c/#…` checks the identifier against the name, then draws the same
+  certificate again, byte for byte, and states when it was issued in the issuer's zone, with the
+  four buttons beneath; a link that does not check out draws nothing and says it could not be
+  located. Opening a link saves nothing. The result's buttons now live in `src/js/result.js`,
+  shared by both pages. Fixed on the way: after the result, the hidden form's box stayed
+  read-only. Checked: unit 3/3 (three runs); the link spec twice in six projects, every test
+  passing except item 4, which plays Verify (E6) and stops at its missing form; W2 steps 1-3 pass
+  in Chromium and WebKit at both sizes, twice. The earlier units are as before (DS1's two C2 items,
+  E4's item 3), and the DS4, DS5, E0 and E3 specs pass (170 passed). E2 and E4's remaining misses
+  are the known C2 items; press to result measured 4.62-4.74 s on the page's own clock.
 - E4 (`still-here-cq5`) built and held open. Download PDF and Download PNG now work on the result:
   the PDF is US Letter with the three faces embedded, and the PNG is 3,300 × 2,550. Files are named
   `STILL-HERE-<slug>-<11 symbols>`. While a file is prepared its button reads "Preparing PDF…" or
@@ -83,7 +96,7 @@ marked `sh-placeholder` that say they are being prepared.
 
 ### What's next
 
-1. E2 is blocked on C2 (item 10's test change, item 14's golden); E3 to E7 next. Before the next
+1. E2 to E4 wait on C2; E5 waits on E6 (item 4 plays Verify). E6, E7 next. Before the next
    browser run, check this computer's clock is steady: a 75 s watch of `Date.now()` against
    `performance.now()` should show no jump.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
@@ -134,3 +147,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E3 built and held open on its C2 golden. (Martin, 2026-10-04)
 - 2026-10-04 — E4 built and held open on four test questions for C2. (Martin, 2026-10-04)
 - 2026-10-04 — E4 item 4 figure corrected (1.04% before, 0.65% Chromium after per-glyph lines); candidate re-rendered. (Martin, 2026-10-04)
+- 2026-10-04 — E5 built; the link, Copy and its fallback, `/c/` redrawn; held open on item 4 until E6. (Martin, 2026-10-04)
