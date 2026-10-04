@@ -1,10 +1,13 @@
 // X6 (still-here-xoi) — network and weight guards in the browser. garage/pack/ACCEPTANCE.md § X6
-// items 1 and 3 (items 2, 4 and 5: the unit test). Item 1 replays walks W1–W6 (the steps of
+// items 1 and 3 (items 2, 4 and 5: the unit test). Item 1 replays walks W1–W6 whole (the steps of
 // e2e/helpers/walks.ts) with every request of the context recorded; the substitutes' own private
 // origin (substitutes.invalid, the test's file viewer) is not the site's and is left out.
 import { expect, test } from '@playwright/test';
 import { PAGES } from '../helpers/strings.ts';
 import * as W from '../helpers/walks.ts';
+import { readFileSync } from 'node:fs';
+
+const people = [...readFileSync(new URL('../../company/staff/staff.yaml', import.meta.url), 'utf8').matchAll(/^ {4}name: (.+)$/gm)].map((m) => ({ name: m[1].trim() }));
 
 test.describe('1. over walks W1–W6 every request is same-origin', () => {
   test.skip(({ browserName }) => browserName === 'firefox', 'the walks are played in Chromium and WebKit (WALKS.md)');
@@ -20,7 +23,14 @@ test.describe('1. over walks W1–W6 every request is same-origin', () => {
     for (const step of [W.W2_1, W.W2_2, W.W2_3, W.W2_4, W.W2_5, W.W2_6, W.W2_7]) await step(w);
     await W.closeSecondWindow();
     for (const step of [W.W3_1, W.W3_2, W.W3_3]) await step(w);
+    const before = w.context;
+    await W.W3_4(w);
+    // clearing site data may hand the walk a fresh context (WebKit); its requests count too
+    if (w.context !== before) record(w.context);
+    await W.W3_5(w);
     await W.W4_1(w);
+    await W.W4_2(w);
+    await W.W4_leadership(w, people);
     for (const step of [W.W4_research, W.W4_caseStudies, W.W4_status, W.W4_careers, W.W4_legal_terms, W.W4_legal_privacy, W.W4_404]) await step(w);
     for (const step of [W.W5_1, W.W5_2, W.W5_3]) await step(w);
     if (browserName === 'chromium') for (const step of [W.W6_1, W.W6_2, W.W6_3, W.W6_4, W.W6_5, W.W6_6, W.W6_7]) await step(w);

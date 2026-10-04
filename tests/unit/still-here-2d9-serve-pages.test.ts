@@ -142,7 +142,9 @@ test('4. playwright.config.ts: three engines, the server above; Playwright 1.59.
 
 test('5. .bd-gate is configured and the gate self-test passes', () => {
   const gate = read('.bd-gate');
-  assert.match(gate, /^lock_tag\s*=\s*specs-v1\s*$/m);
+  // specs-v1, or the re-tag a checkpoint recorded (CHECKPOINTS.md § Record; the re-tag rule)
+  const lock = /^lock_tag\s*=\s*(specs-v\d+)\s*$/m.exec(gate)?.[1];
+  assert.ok(lock === 'specs-v1' || (lock && (read('garage/pack/CHECKPOINTS.md').split('## Record')[1] ?? '').includes(lock)), `lock_tag ${lock} is specs-v1 or a recorded re-tag`);
   assert.match(gate, /^unit_test_dirs\s*=\s*tests\/unit\s*$/m);
   assert.match(gate, /^unit_test_cmd\s*=\s*node --test\s*$/m);
   assert.match(gate, /^pw_cmd\s*=\s*npx playwright test\s*$/m);

@@ -40,6 +40,10 @@ test('2–3. "All systems operational" at the top; the three titles verbatim, ea
   const r = await shown(siteText('status.html'));
   const first = r.order.findIndex((t) => t.includes(STATUS_CONSTANT));
   assert.ok(first >= 0, 'the constant is on the page');
+  // at the top: the first thing the page says, or the first after its heading
+  const [h1] = await inDom<string>([siteText('status.html')], "return (((doc.querySelector('main') || doc.body).querySelector('h1') || {}).textContent || '').replace(/\\s+/g, ' ').trim();");
+  const h1At = h1 ? r.order.findIndex((t) => t === h1) : -1;
+  assert.ok(first === 0 || (h1At >= 0 && first === h1At + 1) || r.order[0].includes(STATUS_CONSTANT), `"${STATUS_CONSTANT}" is the first content (found after: ${r.order.slice(0, first).join(' | ')})`);
   let at = first;
   for (const [i, t] of STATUS_TITLES.entries()) {
     const k = r.order.findIndex((x, j) => j > at && x === t);

@@ -57,10 +57,27 @@ test('2. /research/ lists exactly three papers by Dr. Petra Voss with title, aut
   );
   assert.deepEqual(r.links.sort(), PAPERS.map((p) => `/research/${p.slug}`).sort(), 'exactly the three papers');
   assert.equal((r.text.match(/Dr\. Petra Voss/g) ?? []).length >= 3, true, 'each by Dr. Petra Voss');
-  for (const p of PAPERS) {
-    assert.ok(r.text.includes(p.title), `${p.slug}: title`);
-    const abs = String(frontMatter(readMust(`company/research/${p.slug}.md`)).data.abstract ?? '').trim();
-    assert.ok(abs && r.text.includes(abs.slice(0, 60)), `${p.slug}: abstract`);
+  // each paper's own entry on the listing (the element around its link) carries its title, its
+  // author, its date and its whole abstract
+  const entries = await inDom<string[]>(
+    [siteText('research/index.html')],
+    `return arg.map(slug => {
+       const a = (doc.querySelector('main') || doc.body).querySelector('a[href="/research/' + slug + '"]');
+       const e = a && a.closest('article, li, section');
+       return e ? e.textContent.replace(/\\s+/g, ' ') : '';
+     });`,
+    PAPERS.map((p) => p.slug),
+  ).then((r) => r[0] as unknown as string[]);
+  const norm = (x: string) => x.replace(/\s+/g, ' ').trim();
+  for (const [i, p] of PAPERS.entries()) {
+    const e = entries[i];
+    assert.ok(e, `${p.slug}: its own entry on the listing`);
+    assert.ok(e.includes(p.title), `${p.slug}: title`);
+    assert.ok(e.includes('Dr. Petra Voss'), `${p.slug}: author`);
+    const words = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+    assert.ok(e.includes(p.date) || e.includes(words), `${p.slug}: its date (${p.date} or ${words})`);
+    const abs = norm(String(frontMatter(readMust(`company/research/${p.slug}.md`)).data.abstract ?? ''));
+    assert.ok(abs && norm(e).includes(abs), `${p.slug}: its whole abstract`);
   }
   assert.ok(r.svgs >= 3, 'a cover drawn in code for each');
   assert.equal(r.photos, 0, 'covers are drawn, not photographed');

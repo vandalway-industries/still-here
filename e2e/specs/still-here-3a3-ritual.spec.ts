@@ -140,7 +140,12 @@ test('10. during the sequence the input and chips are inert; the identifier enco
   await expect(objectInput(page)).toHaveAttribute('aria-disabled', 'true');
   await expect(objectInput(page)).not.toBeEditable();
   for (const e of EXAMPLES) await expect(exampleChip(page, e)).toHaveAttribute('aria-disabled', 'true');
-  await page.clock.runFor(4500);
+  // saved only when the result appears: nothing is stored during the sequence
+  expect(await stored(page), 'nothing saved at 1 s').toBe(0);
+  await page.clock.runFor(2500);
+  expect(await stored(page), 'nothing saved at 3.5 s').toBe(0);
+  await expect(resultHeading(page)).toHaveCount(0);
+  await page.clock.runFor(2000);
   await expect(resultHeading(page)).toBeVisible();
   // pressed at 10:52:00.4, shown at 10:52:05: the identifier is the press's second
   await expect(page.getByText('SH-00PP-9AGR-1GTB', { exact: true }).first()).toBeVisible();

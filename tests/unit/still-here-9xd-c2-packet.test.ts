@@ -26,7 +26,14 @@ test('1. the packet links every candidate file and lists the C2 questions for ea
   }
   const qs = c2Questions();
   assert.equal(qs.length, 4, 'four C2 questions in CHECKPOINTS.md');
-  for (const q of qs) assert.ok(md.includes(q), `the packet asks: ${q}`);
+  // for each candidate: the section of the packet (under its own heading) that links it lists
+  // the questions (the certificate's PNG and PDF may share one section)
+  const sections = md.split(/^(?=#{2,4} )/m);
+  for (const c of CANDIDATES) {
+    const sec = sections.find((x) => x.includes(`candidates/${c})`));
+    assert.ok(sec, `${c} has a section`);
+    for (const q of qs) assert.ok(sec!.includes(q), `${c}: its section asks "${q}"`);
+  }
 });
 
 test('2. it reports the turns used in Phases 0 and 1', () => {

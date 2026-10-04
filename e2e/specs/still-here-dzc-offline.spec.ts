@@ -3,7 +3,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { action, certificateSvg, objectInput } from '../helpers/site.ts';
 import * as R from '../helpers/reference.ts';
-import { NOT_FOUND, PORTFOLIO_HEADING, RESULT_HEADING, VERIFY_LABELS } from '../helpers/strings.ts';
+import { CLIPBOARD_REFUSED, COPIED, NOT_FOUND, PORTFOLIO_HEADING, RESULT_HEADING, VERIFY_LABELS } from '../helpers/strings.ts';
 
 async function oneVisit(page: Page) {
   await page.goto('/');
@@ -35,7 +35,16 @@ test('3. after one visit, offline: the ritual, both downloads, copying and reope
   }
   await action(page, 'Copy certificate link').click();
   const zone = await page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone);
-  await page.goto(R.link(new URL(page.url()).origin, id, 'Wallet', zone));
+  const link = R.link(new URL(page.url()).origin, id, 'Wallet', zone);
+  // the copy works offline: the confirmation, and the link itself (on the clipboard, or shown)
+  if (browserName === 'chromium') {
+    await expect(page.getByText(COPIED, { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(link);
+  } else {
+    await expect(page.getByText(COPIED, { exact: true }).or(page.getByText(CLIPBOARD_REFUSED, { exact: true })).first()).toBeVisible();
+    if (await page.getByText(CLIPBOARD_REFUSED, { exact: true }).isVisible()) await expect(page.locator('input[readonly], textarea[readonly]').first()).toHaveValue(link);
+  }
+  await page.goto(link);
   await expect(certificateSvg(page)).toBeVisible();
   await page.goto('/verify');
   await page.getByLabel(VERIFY_LABELS.identifier).fill(id);
@@ -57,8 +66,23 @@ test('4. offline: a page never visited opens; an image never shown shows its alt
   const r = await page.goto('/enterprise');
   expect(r?.ok() ?? true).toBe(true);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  // an image never shown: it is not in the cache, so it does not load, and its description shows
+  // in its place: a broken image keeps a box and its alt text, and nothing hides that text
   const img = page.getByRole('main').locator('img').first();
   await expect(img).toHaveAttribute('alt', /\S{3,}/);
+  await expect.poll(() => img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth === 0)).toBe(true);
+  const box = (await img.boundingBox())!;
+  expect(box.width * box.height, 'the image keeps a box to show its alt text in').toBeGreaterThan(0);
+  const style = await img.evaluate((e) => {
+    const cs = getComputedStyle(e);
+    return { color: cs.color, size: parseFloat(cs.fontSize), visibility: cs.visibility, opacity: Number(cs.opacity), textIndent: parseFloat(cs.textIndent) };
+  });
+  expect(style.visibility).toBe('visible');
+  expect(style.opacity).toBeGreaterThan(0);
+  expect(style.size).toBeGreaterThan(0);
+  expect(style.color).not.toMatch(/rgba\(\d+, \d+, \d+, 0\)|transparent/);
+  expect(Math.abs(style.textIndent)).toBeLessThan(1000);
+  await expect(img).toHaveAccessibleName((await img.getAttribute('alt'))!);
   await page.goto(`/no-such-page-${Date.now()}`);
   await expect(page.getByText(NOT_FOUND, { exact: true })).toBeVisible();
 });

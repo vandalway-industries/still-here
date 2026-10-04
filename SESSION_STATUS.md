@@ -12,7 +12,7 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (T0 at `d8d6ab3`, tag `specs-v1`) · **Phase:** 0 — Promote, gates, records filed
+**Branch:** `main` · **HEAD:** see `git log -1` (T0 at `d8d6ab3`; tests re-tagged `specs-v2`) · **Phase:** 0 — Promote, gates, records filed
 
 ### Current state
 
@@ -24,6 +24,14 @@ pass; every later bead's tests fail, as they should until the bead is built. Not
 is built beyond two placeholder pages.
 
 ### What changed
+
+- The Phase 0 gate review found eighteen acceptance items held too loosely by the tests. They are
+  tightened and re-tagged `specs-v2`; `.bd-gate` locks there. The list is in
+  `garage/pack/CHECKPOINTS.md` § Record and goes in the C2 packet. Every tightened test still fails
+  until its bead is built. G0's and G1's `.bd-gate` checks accept a recorded re-tag.
+- The Tab walk (X5 item 2) runs in WebKit too: Linux WebKit moves Tab through links.
+- `PLAN.md` § Build method: beads that need staging, the internal copy or production close only
+  from a run with that set and nothing skipped.
 
 - T0 (`still-here-64t`) closed: `tests/unit/still-here-64t-specs.test.ts` 5/5.
 - G0, G1, G2 and T0 run together: 26/26.
@@ -45,9 +53,9 @@ is built beyond two placeholder pages.
 
 ### Surprises / debt
 
-- Staging, internal-copy and production specs skip while `STAGING_URL`, `VANDALWAY_INTERNAL_URL`
-  or production are missing, and a run of only skipped tests exits 0. Whoever closes L1, L5, V2–V4
-  or N1–N3 runs them with those set and checks nothing was skipped.
+- Staging, internal-copy and production specs skip while `STAGING_URL`, `VANDALWAY_INTERNAL_URL`,
+  `PAGES_CHALLENGE` or production are missing, and a run of only skipped tests exits 0. The
+  zero-skip close rule in `PLAN.md` covers it.
 - vandalwayind.com already answers with somebody's parked page; the production specs check the
   page is ours before they run.
 - X5 needs `@axe-core/playwright`. It is not installed yet, because every package needs its row
@@ -66,3 +74,4 @@ is built beyond two placeholder pages.
 - 2026-10-04 — G0 closed; first commit, private repository, push over SSH. (Martin, 2026-10-04)
 - 2026-10-04 — G1 and G2 closed; scaffold, local Pages server, records filed. (Martin, 2026-10-04)
 - 2026-10-04 — T0 closed; every test written red and locked at specs-v1. (Martin, 2026-10-04)
+- 2026-10-04 — Tests tightened after the Phase 0 gate review; re-tagged specs-v2. (Martin, 2026-10-04)

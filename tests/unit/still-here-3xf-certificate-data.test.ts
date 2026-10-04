@@ -105,6 +105,87 @@ test('4. long names print in full in the name box: at most four lines, ≥ 30 un
       );
       assert.ok(!('error' in r) || !r.error, (r as { error?: string }).error);
       const ok = r as { images: number; sizes: number[]; lines: number; overlap: boolean; inBounds: boolean; full: boolean; hyphenAdded: boolean };
+      if (ok.images > 0) {
+        // the name drawn as an image (PRD diff item 8) is held to the same bar: in full, at most four
+        // lines, glyphs at the 30-unit floor. Its lines are found as ink bands; the glyphs on a line
+        // are counted from the period of its ink (every test name repeats one character)
+        const bands = await page.evaluate(async (svg) => {
+          document.body.innerHTML = svg;
+          const root = document.body.querySelector('svg')!;
+          root.setAttribute('width', '1100');
+          root.setAttribute('height', '850');
+          const out: { height: number; glyphs: number }[] = [];
+          for (const im of root.querySelectorAll('[data-field="name"] image')) {
+            const box = im.getBoundingClientRect();
+            const href = im.getAttribute('href') || im.getAttribute('xlink:href') || '';
+            const img = new Image();
+            img.src = href;
+            await img.decode();
+            const c = document.createElement('canvas');
+            c.width = Math.round(box.width * 4);
+            c.height = Math.round(box.height * 4);
+            const x = c.getContext('2d')!;
+            x.drawImage(img, 0, 0, c.width, c.height);
+            const d = x.getImageData(0, 0, c.width, c.height).data;
+            const ink = (i: number) => d[i + 3] > 40 && (d[i] + d[i + 1] + d[i + 2]) / 3 < 230;
+            const rows: number[] = [];
+            for (let y = 0; y < c.height; y++) {
+              let n = 0;
+              for (let xx = 0; xx < c.width; xx++) if (ink((y * c.width + xx) * 4)) n++;
+              rows.push(n);
+            }
+            const raw: number[][] = [];
+            let s0 = -1;
+            for (let y = 0; y <= c.height; y++) {
+              const on = y < c.height && rows[y] > 0;
+              if (on && s0 < 0) s0 = y;
+              if (!on && s0 >= 0) {
+                raw.push([s0, y]);
+                s0 = -1;
+              }
+            }
+            const merged: number[][] = [];
+            for (const b of raw) {
+              const last = merged[merged.length - 1];
+              if (last && b[0] - last[1] < (last[1] - last[0]) * 0.25) last[1] = b[1];
+              else merged.push([...b]);
+            }
+            for (const [y0, y1] of merged) {
+              const h = y1 - y0;
+              const prof: number[] = [];
+              for (let xx = 0; xx < c.width; xx++) {
+                let n = 0;
+                for (let y = y0; y < y1; y++) if (ink((y * c.width + xx) * 4)) n++;
+                prof.push(n);
+              }
+              const first = prof.findIndex((v) => v > 0);
+              let last = prof.length - 1;
+              while (last > first && prof[last] === 0) last--;
+              const seg = prof.slice(first, last + 1);
+              const m = seg.reduce((a, b) => a + b, 0) / seg.length;
+              let best = 0;
+              let lag0 = 0;
+              for (let lag = Math.floor(h * 0.5); lag <= Math.ceil(h * 1.8) && lag < seg.length / 2; lag++) {
+                let num = 0;
+                let den = 0;
+                for (let i = 0; i + lag < seg.length; i++) {
+                  num += (seg[i] - m) * (seg[i + lag] - m);
+                  den += (seg[i] - m) ** 2;
+                }
+                if (den && num / den > best) {
+                  best = num / den;
+                  lag0 = lag;
+                }
+              }
+              out.push({ height: h / 4, glyphs: lag0 ? Math.round(seg.length / lag0 + 0.15) : 1 });
+            }
+          }
+          return out;
+        }, svg);
+        assert.ok(bands.length >= 1 && bands.length <= 4, `${name.slice(0, 4)}…: ${bands.length} lines (at most four)`);
+        for (const b of bands) assert.ok(b.height >= 24, `${name.slice(0, 4)}…: glyphs ${b.height.toFixed(1)} units tall (the 30-unit floor's ink)`);
+        assert.equal(bands.reduce((a, b) => a + b.glyphs, 0), [...name].length, `${name.slice(0, 4)}…: printed in full`);
+      }
       if (ok.images === 0) {
         assert.ok(ok.full, `${name.slice(0, 12)}…: printed in full`);
         assert.ok(!ok.hyphenAdded, 'no hyphen added');

@@ -431,16 +431,22 @@ export function imageSize(buf: Buffer): { width: number; height: number } {
 
 /** Metadata the web copies must not carry (D21): returns the offending chunk or marker names. */
 export function imageMetadata(buf: Buffer): string[] {
+  // content credentials in any container: a C2PA manifest is a JUMBF box labelled "c2pa"
+  const c2pa = buf.includes(Buffer.from('jumb', 'latin1')) || buf.includes(Buffer.from('c2pa', 'latin1')) ? ['C2PA (JUMBF)'] : [];
+  return [...c2pa, ...containerMetadata(buf)];
+}
+
+function containerMetadata(buf: Buffer): string[] {
   const head = buf.subarray(0, 4).toString('latin1');
   if (buf.subarray(1, 4).toString('latin1') === 'PNG') {
     return pngInfo(buf).chunks.filter((c) => ['caBX', 'iTXt', 'tEXt', 'zTXt', 'eXIf'].includes(c));
   }
   if (buf[0] === 0xff && buf[1] === 0xd8) {
     return jpegInfo(buf)
-      .markers.filter((m) => m === 0xe1 || m === 0xed)
-      .map((m) => (m === 0xe1 ? 'APP1' : 'APP13'));
+      .markers.filter((m) => m === 0xe1 || m === 0xed || m === 0xeb)
+      .map((m) => (m === 0xe1 ? 'APP1' : m === 0xeb ? 'APP11 (JUMBF)' : 'APP13'));
   }
-  if (head === 'RIFF') return webpInfo(buf).chunks.filter((c) => c === 'EXIF' || c === 'XMP ');
+  if (head === 'RIFF') return webpInfo(buf).chunks.filter((c) => ['EXIF', 'XMP ', 'C2PA', 'caBX'].includes(c));
   if (head.startsWith('GIF')) {
     const g = gifInfo(buf);
     return [

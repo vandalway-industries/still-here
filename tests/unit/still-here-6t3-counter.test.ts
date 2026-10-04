@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { abs, DEPLOY_LOG, files, gifInfo, mustExist, readMust, sh } from '../helpers/repo.ts';
+import { abs, DEPLOY_LOG, files, gifInfo, mustExist, python, readMust, sh } from '../helpers/repo.ts';
 
 const line = (method: string, uri: string, status: number, ts: number) =>
   JSON.stringify({ level: 'info', ts, logger: 'http.log.access.log0', msg: 'handled request', request: { remote_ip: '127.0.0.1', proto: 'HTTP/1.1', method, host: 'vandalwayind.example', uri, headers: {} }, bytes_read: 0, duration: 0.001, size: 512, status, resp_headers: {} });
@@ -67,6 +67,48 @@ test('2 and 5. count.mjs adds the GETs of / and /index.html answered 200 or 304 
   assert.equal(value(), 5, 'a run with nothing new adds nothing');
   const c = readMust('deploy/caddy/vandalwayind.caddy');
   assert.match(c, /Cache-Control\s+"?no-cache"?/i, 'the HTML and counter.gif are sent with Cache-Control: no-cache');
+});
+
+/** counter.gif for a total reached by `n` counted loads, in a fresh scratch counter. */
+function gifFor(n: number): string {
+  const dir = mkdtempSync(join(tmpdir(), 'still-here-digits-'));
+  const t0 = Date.now() / 1000;
+  writeFileSync(join(dir, 'access.log'), [...Array(n).keys()].map((i) => line('GET', '/', 200, t0 + i)).join('\n') + '\n');
+  sh(process.execPath, [abs('deploy/counter/count.mjs'), '--log', join(dir, 'access.log'), '--total', join(dir, 'total'), '--gif', join(dir, 'counter.gif')]);
+  return join(dir, 'counter.gif');
+}
+
+test('2. counter.gif shows the total as odometer digits: each digit its own cell, the same digit drawn the same way', () => {
+  mustExist('deploy/counter/count.mjs');
+  const [g1, g2, g11, g12] = [1, 2, 11, 12].map(gifFor);
+  // cells are found from the right edge: units, then tens; a cell is the columns where two totals
+  // that differ only in that digit differ
+  const out = python(
+    'import sys\nfrom PIL import Image\n' +
+      'a, b, c, d = [Image.open(p).convert("RGB") for p in sys.argv[1:5]]\n' +
+      // columns counted from the right edge, so padded and growing counters read alike
+      // ink, not exact colour: each GIF has its own palette
+      'def ink(im, x, y):\n  p = im.getpixel((x, y)); q = im.getpixel((0, 0))\n  return sum(abs(p[i] - q[i]) for i in range(3)) > 150\n' +
+      'def col(im, xr):\n  w, h = im.size; x = w - 1 - xr\n  return tuple(ink(im, x, y) for y in range(h)) if 0 <= x < w else None\n' +
+      'def same(x, r0, y, s0, n):\n  return all(col(x, r0 + i) == col(y, s0 + i) and col(x, r0 + i) is not None for i in range(n))\n' +
+      'units = [r for r in range(max(a.size[0], b.size[0])) if col(a, r) != col(b, r)]\n' +
+      'u0, n = (min(units), max(units) - min(units) + 1) if units else (0, 0)\n' +
+      // the pitch: the shift at which 11 repeats its units digit as its tens digit
+      'pitch = next((p for p in range(n, max(c.size[0], 1)) if same(c, u0 + p, c, u0, n)), 0)\n' +
+      'checks = [n > 0, pitch > 0,\n' +
+      '  same(c, u0, a, u0, n),\n' +
+      '  same(d, u0, b, u0, n),\n' +
+      '  same(d, u0 + pitch, c, u0 + pitch, n),\n' +
+      '  a.size[1] == b.size[1] == c.size[1] == d.size[1]]\n' +
+      'print(" ".join("1" if x else "0" for x in checks))',
+    [g1, g2, g11, g12],
+  ).trim();
+  assert.equal(out, '1 1 1 1 1 1', `digit cells (a units cell, a pitch at which 11 repeats its 1, 11 ends as 1 does, 12 ends as 2 does, 12's tens is 11's, one height): ${out}`);
+});
+
+test('2. served: the page and counter.gif carry Cache-Control: no-cache', { skip: process.env.VANDALWAY_INTERNAL_URL ? false : 'VANDALWAY_INTERNAL_URL unset (uncommitted); served headers are checked when it is configured' }, async () => {
+  const origin = process.env.VANDALWAY_INTERNAL_URL!.replace(/\/$/, '');
+  for (const p of ['/', '/index.html', '/counter.gif']) assert.match((await fetch(origin + p)).headers.get('cache-control') ?? '', /no-cache/, p);
 });
 
 test('3. a systemd timer every ten minutes, installed and removed by the V2 scripts; Node present or installed', () => {

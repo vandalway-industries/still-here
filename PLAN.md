@@ -107,7 +107,11 @@ The builder–critic loop (factory README §3b), as it applies here.
   on it. No silent loops.
 - **Closing a bead:** every acceptance box flipped with evidence (`bd update --acceptance`), then
   `bd close` through the STRICT gate with notes naming the test files and counts, the walk for GUI
-  beads (each step "played" or "played (substitute)"), and the GENERALIZE line.
+  beads (each step "played" or "played (substitute)"), and the GENERALIZE line. A bead whose specs
+  depend on `STAGING_URL`, `VANDALWAY_INTERNAL_URL`, `PAGES_CHALLENGE` or production (V2–V4, L1,
+  L3, L5, N1–N3) closes only from a run with that environment set and 0 skipped in its spec and
+  unit files; the labelled HUMAN-JUDGED (after C2) skips are exempt. A run of only skipped tests
+  exits 0, so the close notes give the skip count.
 - **Decisions made during BUILD** are written into `PRD.md`, this file or `DESIGN.md` before the
   session lands (factory §3b rule 12), and every `garage/pack/ACCEPTANCE.md` edit re-syncs the
   bead's acceptance field in the same commit.
@@ -387,3 +391,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-04 — G0: first commit bb2b7fe, private repository created and pushed over SSH; G0 closed. (Jules, 2026-10-04)
 - 2026-10-04 — G1 and G2 closed: scaffold, local Pages server, browser config and walk substitutes (6934d93); the sample week's records, staff, inventory, gum graph seed, tracker schema and the continuity check (f8e7f89). (Jules, 2026-10-04)
 - 2026-10-04 — T0 closed: every test written red and locked at `specs-v1` (d8d6ab3); walk owners recorded in `docs/bead-map.md`. (Jules, 2026-10-04)
+- 2026-10-04 — The zero-skip close rule for beads that need staging, the internal copy or production; tests re-tagged `specs-v2` after the Phase 0 gate review (recorded in `garage/pack/CHECKPOINTS.md`). (Jules, 2026-10-04)

@@ -35,10 +35,13 @@ test('2. the Pages API: workflow build, cname, HTTPS enforced, domain verified',
 test('3. /build.txt equals the deployed commit', async () => {
   const sha = deployedSha();
   assert.equal((await (await fetch(`${PROD}/build.txt`, { cache: 'no-store' })).text()).trim(), sha);
-  // "within 15 minutes of the deploy": the closer runs this file within 15 minutes of the deploy,
-  // and the deployment's own record shows when it was made
-  const at = gh(`repos/${REPO}/deployments?environment=github-pages&per_page=1`)[0].created_at;
-  assert.ok(Date.parse(at) <= Date.now());
+  // within 15 minutes of the deploy: GitHub records when the deployment was created and when it
+  // reported success (Pages then serves it); the gap is at most 15 minutes
+  const dep = gh(`repos/${REPO}/deployments?environment=github-pages&per_page=1`)[0];
+  const statuses: { state: string; created_at: string }[] = gh(`repos/${REPO}/deployments/${dep.id}/statuses`);
+  const ok = statuses.filter((x) => x.state === 'success').map((x) => Date.parse(x.created_at)).sort((a, b) => a - b)[0];
+  assert.ok(ok, 'the deployment reported success');
+  assert.ok(ok - Date.parse(dep.created_at) <= 15 * 60_000, `served ${Math.round((ok - Date.parse(dep.created_at)) / 60_000)} minutes after the deploy`);
 });
 
 test('4. http answers 301 to https; www and the apex redirect one way; the certificate covers both names', async () => {

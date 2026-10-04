@@ -29,7 +29,7 @@ test('1–2. a zone snapshot of each domain before the first write, its id in th
   }
 });
 
-test('3. null MX, SPF -all and DMARC reject on both; the Pages challenge TXT', async () => {
+test('3. null MX, SPF -all and DMARC reject on both', async () => {
   const r = resolver();
   for (const d of DOMAINS) {
     const mx = await r.resolveMx(d);
@@ -41,9 +41,11 @@ test('3. null MX, SPF -all and DMARC reject on both; the Pages challenge TXT', a
     const dmarc = (await r.resolveTxt(`_dmarc.${d}`)).map((x) => x.join(''));
     assert.ok(dmarc.includes('v=DMARC1; p=reject'), `${d}: DMARC`);
   }
-  const challenge = (await r.resolveTxt('_github-pages-challenge-vandalway-industries.isitstillhere.com')).map((x) => x.join(''));
-  assert.equal(challenge.length, 1, 'the Pages challenge record');
-  if (process.env.PAGES_CHALLENGE) assert.equal(challenge[0], process.env.PAGES_CHALLENGE);
+});
+
+test('3. the Pages challenge TXT equals the value Clive handed over', { skip: process.env.PAGES_CHALLENGE ? false : 'PAGES_CHALLENGE unset (uncommitted): the value Clive handed over is needed to compare against' }, async () => {
+  const challenge = (await resolver().resolveTxt('_github-pages-challenge-vandalway-industries.isitstillhere.com')).map((x) => x.join(''));
+  assert.deepEqual(challenge, [process.env.PAGES_CHALLENGE]);
 });
 
 test('4. no wildcard record; every other record equals the snapshot (recorded in the deploy log)', async () => {

@@ -29,6 +29,8 @@ test('n, two loads, then n+3 within eleven minutes', async ({ page }) => {
     seen = await shown(page);
   }
   expect(seen).toBeGreaterThanOrEqual(n + 3);
-  const r = await page.request.get(`${ORIGIN}/`);
-  expect(r.headers()['cache-control']).toMatch(/no-cache/);
+  for (const p of ['/', '/counter.gif']) {
+    const r = await page.request.get(`${ORIGIN}${p}`);
+    expect(r.headers()['cache-control'], p).toMatch(/no-cache/);
+  }
 });

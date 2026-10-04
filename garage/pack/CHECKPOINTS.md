@@ -49,9 +49,25 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   written (eight steps on staging, four re-checked on production). The brand dossier's location and
   the continuity fixture were handed over to the run; neither location is written into this
   repository. Phase 0 is clear to start. (Jules, 2026-10-03)
+- **Re-tag specs-v2 — 2026-10-04**, before any builder ran. The Phase 0 gate review mapped every
+  acceptance item to the tests and found eighteen held too loosely; the tests were tightened and
+  re-tagged, and `.bd-gate` now locks at `specs-v2`. No acceptance text changed. The items: DS3.2
+  and L4.4 (content credentials in any image format); DS4.5 (signatures converted at build time
+  from an OFL script face never shipped, no other face requested, the ring text graphite); DS4.6
+  (the candidate PNG's QR code is Folding chair's); DS7.1 (the C2 questions under each candidate);
+  E2.10 (nothing stored during the sequence); E3.4 (a name drawn as an image held to the same
+  lines, size and completeness); S3.2 (each paper's date and whole abstract on the listing); S5.2
+  ("All systems operational" first); X4.3 (copying offline); X4.4 (an unseen image shows its alt
+  text); X5.2 (the Tab walk now in WebKit too); X6.1 (the whole of W1–W6 replayed); V2.1–2 (the
+  server's own hashes before and after, the backup and the undo); V3.2 (counter.gif drawn as digit
+  cells; Cache-Control on the image); L3.3 (the challenge value compared, or the check skipped
+  with its reason); N1.3 (deployment to served within 15 minutes, from GitHub's record); N2.3
+  (the go-live reset recorded and the counter dated by it). G0's and G1's checks of `.bd-gate` now
+  accept a re-tag recorded here. For Clive's sight in the C2 packet. (Jules, 2026-10-04)
 
 ## Changelog
 
 - 2026-10-03 — Written at stage 11 from I-06. (Jules, 2026-10-03)
 - 2026-10-03 — Blind read applied: C1 hands over the dossier's location and the continuity fixture; the check-symbol question removed (I-12); the reverse-DNS question removed (I-10); the C3 red-pen and re-tag rule; C3 beads close before Phase 7. (Jules, 2026-10-03)
 - 2026-10-03 — C1 recorded (I-13). (Jules, 2026-10-03)
+- 2026-10-04 — Re-tag specs-v2 recorded. (Jules, 2026-10-04)

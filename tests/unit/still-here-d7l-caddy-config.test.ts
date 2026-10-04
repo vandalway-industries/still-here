@@ -20,6 +20,9 @@ test('1. the Caddy snippet binds to localhost only and serves /srv/vandalwayind/
   assert.match(log, /vandalwayind/i);
   assert.match(log, /new port|port of its own|own port/i, 'the internal network reaches it on a new port');
   assert.match(log, /no (existing )?route (was )?changed|other routes? unchanged/i);
+  // and the server's evidence for it: every other block's hash unchanged (item 2's lines)
+  const blocks = [...log.matchAll(/^block (\S+) sha256 before ([0-9a-f]{64}) after ([0-9a-f]{64})$/gm)];
+  assert.ok(blocks.length >= 1 && blocks.every((b) => b[2] === b[3]), 'every other site block hashed, unchanged');
 });
 
 test('2. install and undo scripts; the log shows the backup, validate, reload, the other blocks unchanged, the undo run and the install re-run', () => {
@@ -34,6 +37,22 @@ test('2. install and undo scripts; the log shows the backup, validate, reload, t
   assert.match(install, /caddy validate/);
   assert.match(install, /caddy reload|systemctl reload caddy/);
   const log = readMust(DEPLOY_LOG);
+  // the server's own evidence, captured by the scripts into the log (sha256sum on the server):
+  //   backup <Caddyfile backup path, with its timestamp> sha256 <hex>
+  //   block <site address> sha256 before <hex> after <hex>     (one line per other site block)
+  //   uninstall Caddyfile sha256 <hex>                          (after the undo: equals the backup)
+  assert.match(install, /sha256sum/, 'the install script hashes the Caddyfile and each site block');
+  assert.match(readMust('deploy/vandalwayind-uninstall.sh'), /sha256sum/, 'the undo script hashes the restored Caddyfile');
+  const backup = /^backup \S*Caddyfile\S*(?:19|20)\d\d-?\d\d-?\d\d\S* sha256 ([0-9a-f]{64})$/m.exec(log);
+  assert.ok(backup, 'the backup, with a timestamp in its name, and its sha256');
+  const blocks = [...log.matchAll(/^block (\S+) sha256 before ([0-9a-f]{64}) after ([0-9a-f]{64})$/gm)];
+  assert.ok(blocks.length >= 1, 'each other site block hashed before and after');
+  for (const b of blocks) assert.equal(b[3], b[2], `${b[1]}: byte-identical before and after`);
+  assert.ok(!blocks.some((b) => /vandalwayind/.test(b[1])), 'the hashed blocks are the other sites');
+  const undo = /^uninstall Caddyfile sha256 ([0-9a-f]{64})$/m.exec(log);
+  assert.ok(undo, 'the Caddyfile hashed after the undo');
+  assert.equal(undo![1], backup![1], 'the undo returned the server to its backed-up state');
+  assert.match(log, /^caddy validate: Valid configuration$/m, "caddy validate's own output");
   for (const [what, re] of [
     ['the backup', /backed up[^\n]*Caddyfile|Caddyfile[^\n]*backed up/i],
     ['caddy validate passed', /caddy validate[^\n]*(passed|valid configuration)/i],

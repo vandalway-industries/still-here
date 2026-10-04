@@ -102,7 +102,9 @@ test('1. the promoted skeleton is in place', () => {
   assert.match(stops, /\.claude\/hooks\/stop-gate\.sh/);
   // .bd-gate is STRICT and configured for this repository
   const gate = read('.bd-gate');
-  assert.match(gate, /^lock_tag\s*=\s*specs-v1/m);
+  // specs-v1, or the re-tag a checkpoint recorded (CHECKPOINTS.md § Record; the re-tag rule)
+  const lock = /^lock_tag\s*=\s*(specs-v\d+)\s*$/m.exec(gate)?.[1];
+  assert.ok(lock === 'specs-v1' || (lock && (read('garage/pack/CHECKPOINTS.md').split('## Record')[1] ?? '').includes(lock)), `lock_tag ${lock} is specs-v1 or a recorded re-tag`);
   assert.match(gate, /^unit_test_dirs\s*=\s*tests\/unit/m);
   assert.match(gate, /^unit_test_cmd\s*=\s*node --test/m);
 });

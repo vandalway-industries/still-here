@@ -19,16 +19,19 @@ test('1. axe: zero serious and zero critical findings on every page', async ({ p
   expect(found).toEqual([]);
 });
 
-test('2. Tab reaches every control on every page, each with a visible focus indicator of at least 3:1', async ({ page, browserName }) => {
-  test.skip(browserName === 'webkit', "WebKit's Tab key skips links unless full keyboard access is switched on in the browser's preferences; the walk is in Chromium and Firefox");
+// Every engine: Linux WebKit, like Chromium and Firefox, moves Tab through links as well as controls.
+test('2. Tab reaches every control on every page, each with a visible focus indicator of at least 3:1', async ({ page }) => {
   test.setTimeout(180_000);
   for (const p of ALL) {
-    await page.goto(p);
+    const res = await page.goto(p);
+    // every page of PRD R24 is a page of the site (the 404 answers 404)
+    expect(res?.status(), p).toBe(p === '/no-such-page' ? 404 : 200);
     const total = await page.evaluate(() => {
       const els = [...document.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter((e) => (e as HTMLElement).getClientRects().length > 0 && !(e as HTMLElement).closest('[inert], [hidden]'));
       els.forEach((e, i) => e.setAttribute('data-a11y-control', String(i)));
       return els.length;
     });
+    expect(total, `${p}: controls to reach (at least the home link and the footer's three)`).toBeGreaterThanOrEqual(4);
     const reached = new Set<string>();
     const weak: string[] = [];
     for (let i = 0; i < total + 10 && reached.size < total; i++) {

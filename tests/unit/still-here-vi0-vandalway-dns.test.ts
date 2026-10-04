@@ -62,4 +62,13 @@ test('3. at go-live the total is reset to 0 and the counter line dated the go-li
   const m = /This page has been visited[\s\S]{0,400}?since (January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/.exec(html.replace(/<[^>]+>/g, ' '));
   assert.ok(m, 'the counter line names the date counting began');
   assert.ok(Number(m![3]) >= 2026, 'counting began at go-live');
+  // the go-live step's own record (written by the deploy script into the deploy log):
+  //   go-live <YYYY-MM-DD> total <the internal copy's total> -> 0
+  const g = /^go-live (\d{4}-\d\d-\d\d) total (\d+) -> 0$/m.exec(readMust(DEPLOY_LOG));
+  assert.ok(g, 'the deploy log records the go-live reset');
+  assert.ok(Number(g![2]) > 0, 'internal testing had made loads, and they were not carried over');
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const lineDate = `${m![3]}-${String(months.indexOf(m![1]) + 1).padStart(2, '0')}-${m![2].padStart(2, '0')}`;
+  assert.equal(lineDate, g![1], "the counter line's date is the go-live date");
+  assert.match(scripts, /go-?live[\s\S]{0,800}(echo|printf)[^\n]*\b0\b[^\n]*>[^\n]*total|(echo|printf)[^\n]*\b0\b[^\n]*>[^\n]*total[\s\S]{0,800}go-?live/i, 'the reset to 0 is the go-live step');
 });
