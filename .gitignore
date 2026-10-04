@@ -20,3 +20,4 @@ docs/goals/
 .dolt/
 *.db
 .beads-credential-key
+.claude/worktrees/
