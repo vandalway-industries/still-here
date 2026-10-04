@@ -182,7 +182,7 @@ Passed 2026-10-04. The gate review mapped all 296 acceptance items to assertions
 
 #### Steps
 - [ ] DS1: tokens from `DESIGN.md` generated into `src/css/tokens.css` and `src/js/tokens.js`; Inter, Inter Tight, JetBrains Mono and Cormorant Garamond static instances self-hosted (WOFF2 for the page, TTF for the PDF), OFL licences beside them; every colour pairing checked against WCAG 2.2.
-- [ ] DS2: the STILL HERE mark redrawn as SVG from `assets/still-here-logo-horizontal.png`; favicon, apple-touch-icon 180, manifest icons 192 and 512 (maskable).
+- [x] DS2: the STILL HERE mark redrawn as SVG from `assets/still-here-logo-horizontal.png`; favicon, apple-touch-icon 180, manifest icons 192 and 512 (maskable). Evidence: `still-here-jw0` closed; `tests/unit/still-here-jw0-icons.test.ts` 2/2; the mark drawn by `scripts/brand.mjs`, rasters by `scripts/icons.mjs`.
 - [ ] DS3: image derivatives for every placement in `garage/pack/ASSET_MANIFEST.md`, 1x and 2x, ≤ 250 KB each, metadata stripped (D21), committed under `src/images/`.
 - [ ] DS4: the certificate drawing module (layout, seal, guilloche border, signatures as paths, QR code, footer) inside the svg2pdf subset; a specimen "Folding chair" certificate rendered to `garage/pack/exemplars/candidates/certificate.png` and `.pdf`.
 - [ ] DS5: home (390 and 1440) and leadership (1440) built as static pages with drafted copy from `garage/pack/CONTENT_SEEDS.md`; screenshots to `candidates/`.

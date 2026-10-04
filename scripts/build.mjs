@@ -5,6 +5,7 @@ import { cpSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateTokens } from './tokens.mjs';
+import { generateBrand } from './brand.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'src');
@@ -17,6 +18,11 @@ if (!existsSync(SRC)) throw new Error('src/ is missing');
 // (rewritten only when DESIGN.md changed them).
 const regenerated = generateTokens(ROOT);
 if (regenerated.length) console.log(`tokens: wrote ${regenerated.join(', ')}`);
+
+// The mark and the favicon SVG, drawn from the verification-green token (scripts/brand.mjs). The
+// raster icons are rendered from the same drawing by scripts/icons.mjs and committed under src/.
+const brand = await generateBrand(ROOT);
+if (brand.length) console.log(`brand: wrote ${brand.join(', ')}`);
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
