@@ -16,8 +16,8 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 0: G0, G1 and G2 closed. T0 next: every test file `garage/pack/ACCEPTANCE.md` names,
-  written red and tagged `specs-v1`.
+- Phase 0: G0, G1, G2 and T0 closed; `specs-v1` tagged with every later bead red. Next: the
+  Phase 0 exit-gate review.
 
 **Next:**
 - Phase 1: the design system and the four golden candidates, then the C2 packet.
@@ -41,8 +41,8 @@ relations:
 
 ## Active phase
 
-**Phase 0 — Promote, gates, records filed.** G0, G1 and G2 closed. Next move: T0, every test
-written red and tagged `specs-v1`.
+**Phase 0 — Promote, gates, records filed.** G0, G1, G2 and T0 closed; `specs-v1` tagged. Next
+move: the exit-gate review, then Phase 1.
 
 ## Build method
 
@@ -156,7 +156,7 @@ From the audit's list, mapped to the moment each is needed. Everything else is t
 - [x] G0: file every bead in `garage/pack/ACCEPTANCE.md` with `--acceptance` verbatim, by the character listed as its owner (owner address `<id>@vandalway.example`); `docs/bead-map.md`; the bead-versus-ACCEPTANCE equality test. Evidence: 53 beads; `tests/unit/still-here-agb-promote.test.ts` tests 7 and 8 pass.
 - [x] G1: scaffold (`package.json` with exact pins, `scripts/build.mjs`, `scripts/serve-pages.mjs` reproducing research 3's URL table on port 5320, `e2e/playwright.config.ts` with Chromium, WebKit and Firefox, `e2e/helpers/` for the walk substitutes); install Firefox for Playwright; vendor the OKF validator. Evidence: commit 6934d93; `tests/unit/still-here-2d9-serve-pages.test.ts` 6/6; Firefox and the WebKit revision Playwright 1.59.1 expects installed; G1 closed.
 - [x] G2: file the record seeds into `company/` per `garage/pack/CONTENT_SEEDS.md` § Records (D11–D13); copy the continuity fixture into `tests/fixtures/`; validate the tracker by `bd import` into a throwaway database; the tracker never enters `.beads/`. Evidence: commit f8e7f89; `tests/unit/still-here-540-seeds.test.ts` 6/6 (throwaway import: 55 issues; `.beads/` unchanged); continuity check 0 matches; G2 closed.
-- [ ] T0: a separate test-author session writes every test file named in `ACCEPTANCE.md`, named with the real bead ids; the full run is red except Phase 0's; commit; tag `specs-v1`.
+- [x] T0: a separate test-author session writes every test file named in `ACCEPTANCE.md`, named with the real bead ids; the full run is red except Phase 0's; commit; tag `specs-v1`. Evidence: commit d8d6ab3, tag `specs-v1`; 50 unit files and 49 browser specs, the walk-to-bead table in `docs/bead-map.md` § Walks; `tests/unit/still-here-64t-specs.test.ts` 5/5; G0, G1, G2 and T0 together 26/26; every later bead's unit file red, every later bead's spec red or skipped for want of staging, the internal copy or production (Chromium run; `tests/fixtures/specs-v1-baseline.json`); T0 closed.
 
 #### Bar
 Deterministic only: `~/bin/bd-gate-selftest.sh` output; `~/projects/factory/scripts/docs-sync-check.sh .` clean; the PII gate at the public tier passes on the tree; G0/G1/G2's unit tests; the red run at `specs-v1`. No screen yet.
@@ -386,3 +386,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-03 — G0: 53 beads filed and mapped in `docs/bead-map.md`; C1 recorded in `garage/pack/CHECKPOINTS.md`. (Jules, 2026-10-03)
 - 2026-10-04 — G0: first commit bb2b7fe, private repository created and pushed over SSH; G0 closed. (Jules, 2026-10-04)
 - 2026-10-04 — G1 and G2 closed: scaffold, local Pages server, browser config and walk substitutes (6934d93); the sample week's records, staff, inventory, gum graph seed, tracker schema and the continuity check (f8e7f89). (Jules, 2026-10-04)
+- 2026-10-04 — T0 closed: every test written red and locked at `specs-v1` (d8d6ab3); walk owners recorded in `docs/bead-map.md`. (Jules, 2026-10-04)
