@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- STILL HERE support: internal incident and floor-count notes. Not published. -->
+<notes product="STILL HERE">
+  <note id="INC-001" kind="incident" time="2026-09-29T11:45:00Z" author="martin" tracker="sh-053">
+    <title>Third-floor presence event</title>
+    <p>Observed: Staff have left the third floor. The product continues to confirm their presence. Graham remains available near the microwave.</p>
+    <p>Customer impact: None reported. Internal impact: Several reported, loudly.</p>
+    <p>Mitigation: Open windows. Do not ask Graham what tomorrow's lunch is.</p>
+  </note>
+</notes>

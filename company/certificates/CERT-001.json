@@ -1,0 +1,18 @@
+{
+  "id": "CERT-001",
+  "kind": "public-product fixture",
+  "issued_at": "2026-10-02T09:01:00Z",
+  "time_zone": "UTC",
+  "identifier": "SH-00PK-EEC2-0EPR",
+  "object": "Folding chair",
+  "result": "STILL HERE.",
+  "location_evidence": "None collected.",
+  "linked_issue": "ISSUE-001",
+  "tracker": "sh-051",
+  "record": [
+    "Object: Folding chair",
+    "Result: STILL HERE.",
+    "Location evidence: None collected.",
+    "Linked issue: ISSUE-001."
+  ]
+}

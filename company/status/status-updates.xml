@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- STILL HERE public status updates, newest last. -->
+<updates product="STILL HERE">
+  <update id="STATUS-001" time="2026-09-29T12:10:00Z" author="martin" tracker="sh-053">
+    <title>Unexpected concentration of elsewhere on floor three</title>
+    <body>All systems operational. We are investigating reports of an unexpected concentration of elsewhere on floor three.</body>
+  </update>
+</updates>

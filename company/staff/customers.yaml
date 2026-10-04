@@ -1,0 +1,8 @@
+# STILL HERE customers we correspond with. Kept by Bev.
+# Customers are not tracker users; support quotes their messages.
+# As of 2026-10-02.
+customers:
+  - id: eileen
+    name: Eileen Webb
+    role: Municipal archivist
+    email: eileen.webb@municipal.example

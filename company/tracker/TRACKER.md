@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-04
 read_by: the staff; anyone reading the repository; the seed script that loads the tracker
 relations: {}
 ---
@@ -8,7 +8,8 @@ relations: {}
 
 The company's issue tracker, kept since 2014: product defects, decisions, support requests,
 facilities, finance, and staff matters, with every comment thread. `tracker.jsonl` beside this
-file holds the same issues, one per line, for loading into the tracker.
+file holds the same issues, one per line, for loading into the tracker; `schema.json` describes
+each line.
 
 Every issue carries the label `record`. These issues are the company's history. Nobody picks
 them up as work. A `closed` issue is closed. A `deferred` issue waits on the new site
@@ -1804,7 +1805,7 @@ Martin
 - **Opened by:** diane · **Assignee:** jules · **Opened:** 2026-09-28
 - **Record ID:** ISSUE-001
 
-Steps: Enter "Folding chair." Check. Remove chair. Check again.
+Steps: Enter “Folding chair.” Check. Remove chair. Check again.
 
 Expected: A meaningful difference if we intend to sell physical verification.
 

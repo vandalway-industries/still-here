@@ -1,0 +1,54 @@
+# STILL HERE staff list. Kept by Bev, office manager.
+# Ids are the ones the tracker, the mail system and the inventory use. Names and roles as the
+# tracker's People table has them. Addresses: <id>@vandalway.example.
+# As of 2026-10-02.
+staff:
+  - id: clive
+    name: Clive Standish
+    role: Founder
+    email: clive@vandalway.example
+  - id: diane
+    name: Diane
+    role: QA lead
+    email: diane@vandalway.example
+  - id: martin
+    name: Martin Bell
+    role: Support contractor
+    email: martin@vandalway.example
+  - id: jules
+    name: Jules Mercer
+    role: Developer
+    email: jules@vandalway.example
+  - id: petra
+    name: Dr. Petra Voss
+    role: Director of Positional Research
+    email: petra@vandalway.example
+  - id: susan
+    name: Susan Pritt
+    role: Accounting
+    email: susan@vandalway.example
+  - id: lucas
+    name: Lucas the Intern
+    role: Intern
+    email: lucas@vandalway.example
+  - id: graham
+    name: Graham Pike
+    role: Facilities
+    email: graham@vandalway.example
+  - id: len
+    name: Len
+    role: Head of Internal Communications
+    email: len@vandalway.example
+  - id: adrian
+    name: Adrian Vale
+    role: VP of Presence
+    email: adrian@vandalway.example
+    # On the org chart. See NOTE-001.
+  - id: bev
+    name: Bev
+    role: Office manager
+    email: bev@vandalway.example
+  - id: malcolm
+    name: Malcolm Venn
+    role: Vandalway liaison
+    email: malcolm@vandalway.example
