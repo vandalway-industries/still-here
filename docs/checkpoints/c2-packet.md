@@ -212,7 +212,7 @@ given here.
 **Test changes for your red-pen**
 
 4. **A paused clock for the timed specs.** The specs for E2 (items 9 and 10), E3 (tests 2, 5 and 6)
-   E4 (item 1, and `issued()` in its unit test) and E5 (`e2e/specs/still-here-wlr-link.spec.ts` tests 1–2; Firefox issued at 10:52:02 where the spec expects 10:52:00) start a fake clock that keeps running while the
+   E4 (item 1, and `issued()` in its unit test) E5 (`e2e/specs/still-here-wlr-link.spec.ts` tests 1–2; Firefox issued at 10:52:02 where the spec expects 10:52:00) and E7 (`e2e/specs/still-here-c29-portfolio.spec.ts`, its `three()` helper) start a fake clock that keeps running while the
    page loads. A slow first load in Firefox (about 2 s; a 40-byte page takes 1.2 s there too) pushes
    the press into the next second. Our identifier then, correctly, records that next second. The
    change: set the clock ten seconds early, load and type, pause it at the intended second, then
