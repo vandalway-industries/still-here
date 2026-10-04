@@ -29,8 +29,8 @@ relations:
 
 | # | Phase | Status | Exit gate |
 |---|---|---|---|
-| 0 | Promote, gates, records filed | active | G0 G1 G2 T0 closed; `specs-v1` tagged red |
-| 1 | Design system, golden candidates | pending | DS1–DS7 closed; C2 packet out |
+| 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
+| 1 | Design system, golden candidates | active | DS1–DS7 closed; C2 packet out |
 | 2 | The shell, the ritual and the certificate | pending | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | pending | S2–S9 closed; W4 W5 played |
 | 4 | Extras | pending | X1–X6 closed; W6 played |
@@ -41,8 +41,8 @@ relations:
 
 ## Active phase
 
-**Phase 0 — Promote, gates, records filed.** G0, G1, G2 and T0 closed; `specs-v1` tagged. Next
-move: the exit-gate review, then Phase 1.
+**Phase 1 — Design system and golden candidates.** Phase 0 passed its exit gate on 2026-10-04;
+tests locked at `specs-v2`. Next move: DS1 (tokens and fonts), then DS2–DS6, then the C2 packet.
 
 ## Build method
 
@@ -151,8 +151,8 @@ From the audit's list, mapped to the moment each is needed. Everything else is t
 ### Phase 0 — Promote, gates, records filed
 
 #### Entry criteria
-- [ ] C1: Clive signs off `PRD.md`, this plan and `garage/pack/` (recorded in `garage/pack/CHECKPOINTS.md`).
-- [ ] The brand dossier's location and the continuity fixture are in hand, and `garage/pack/ENV_PREFLIGHT.md` is re-run on the day; any changed line becomes a step here.
+- [x] C1: Clive signs off `PRD.md`, this plan and `garage/pack/` (recorded in `garage/pack/CHECKPOINTS.md`). Evidence: I-13; CHECKPOINTS.md § Record.
+- [x] The brand dossier's location and the continuity fixture are in hand, and `garage/pack/ENV_PREFLIGHT.md` is re-run on the day; any changed line becomes a step here. Evidence: pre-flight re-run 2026-10-03; changed lines: the organization exists; Node v18.19.1 already on the production server (V2 installs nothing); isitstillhere.com has no A record (N1 writes it); Playwright 1.59.1 needed WebKit revision 2272 (installed in G1).
 
 #### Steps
 - [x] G0: `git init -b main` in this folder; repository-local `user.email` set to the account's GitHub no-reply address before the first commit (I-02); promote skeleton per the factory README §2 (README, AGENTS.md carrying the company's working rules from `garage/pack/CONTENT_SEEDS.md` § AGENTS.md rules, the agent-file symlink factory §2 requires beside it, SESSION_STATUS, `docs/archive/`, `assets/` copied from `garage/assets/` plus the parent logo into `assets/brand/`); stop-gate and the PII pre-commit hook with `PII_PUBLIC=1` installed; `.bd-gate` (STRICT); `bd init` (push block stripped); `.gitignore`. Evidence: commit bb2b7fe; `tests/unit/still-here-agb-promote.test.ts` tests 1–4 and 6 pass; tree scan at the public tier clean.
@@ -169,9 +169,11 @@ Deterministic only: `~/bin/bd-gate-selftest.sh` output; `~/projects/factory/scri
 No cap (I-07). Expected about 60 orchestrator turns, reported in the C2 packet.
 
 #### Exit gate
-- [ ] G0, G1, G2 and T0 closed through the STRICT gate; `specs-v1` exists and every later bead's tests are red; the repository is pushed (or the push is the only thing waiting on the organization).
+- [x] G0, G1, G2 and T0 closed through the STRICT gate; `specs-v1` exists and every later bead's tests are red; the repository is pushed (or the push is the only thing waiting on the organization). Evidence: the four beads closed with full notes; Phase 0 unit files 26/26; all 49 later-bead unit files red on an independent re-run; `specs-v1` (d8d6ab3) and `specs-v2` (b0bd978) on origin.
 
 #### Result
+
+Passed 2026-10-04. The gate review mapped all 296 acceptance items to assertions: none missing, 18 weak. The test author tightened the 18 and re-tagged `specs-v2` before any builder ran (recorded in `garage/pack/CHECKPOINTS.md`). One stop on the way: the public-tier PII gate flagged two literal strings in the pack (our webmaster address on the 1997 domain and GitHub's SSH host); the hook allows exactly those two, documented in `AGENTS.md`. (Jules, 2026-10-04)
 
 ### Phase 1 — Design system and golden candidates
 
@@ -392,3 +394,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-04 — G1 and G2 closed: scaffold, local Pages server, browser config and walk substitutes (6934d93); the sample week's records, staff, inventory, gum graph seed, tracker schema and the continuity check (f8e7f89). (Jules, 2026-10-04)
 - 2026-10-04 — T0 closed: every test written red and locked at `specs-v1` (d8d6ab3); walk owners recorded in `docs/bead-map.md`. (Jules, 2026-10-04)
 - 2026-10-04 — The zero-skip close rule for beads that need staging, the internal copy or production; tests re-tagged `specs-v2` after the Phase 0 gate review (recorded in `garage/pack/CHECKPOINTS.md`). (Jules, 2026-10-04)
+- 2026-10-04 — Phase 0 closed at its exit gate; Phase 1 active. (Jules, 2026-10-04)
