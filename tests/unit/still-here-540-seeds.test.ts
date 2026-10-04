@@ -314,9 +314,19 @@ test('3. inventory.yaml holds exactly the five items and their recorded states',
 });
 
 test('4. bd import into a throwaway database gives 55 issues; .beads/ is unchanged', () => {
+  // The repository's beads: its tracked files byte for byte, and the issues its database holds.
+  // (The database's own working files are excluded: any concurrent read by another test file
+  // touches them without changing a single issue.)
   const hashBeads = () => {
     const h = createHash('sha256');
-    for (const f of walk(join(ROOT, '.beads'))) h.update(f).update(readFileSync(f));
+    for (const f of sh('git', ['ls-files', '.beads']).split('\n').filter(Boolean).sort()) {
+      h.update(f);
+      if (existsSync(join(ROOT, f))) h.update(readFileSync(join(ROOT, f)));
+    }
+    const beads: { id: string; status: string; updated_at?: string }[] = JSON.parse(
+      sh('bd', ['--readonly', 'list', '--all', '--limit', '0', '--json']),
+    );
+    h.update(JSON.stringify(beads.map((x) => [x.id, x.status, x.updated_at]).sort()));
     return h.digest('hex');
   };
   const before = hashBeads();
