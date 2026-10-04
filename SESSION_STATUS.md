@@ -31,11 +31,18 @@ marked `sh-placeholder` that say they are being prepared.
   as files, so the page's security policy is unchanged. Every certificate line is now placed
   from its start, with no kerning or ligatures, so the screen, the PNG and the PDF set the same
   glyphs. Proven: items 2, 5 and 7. Waiting on test changes at C2: item 3 (the PNG differs from
-  a no-font render by 9.8%, like the DS4 candidate; the bar is 20%), item 4 (0.17% when compared
-  pixel for pixel, 3.3% as the test squeezes 1651 px into 1650), item 6 at 390 (one Hebrew name
-  scores 0.585 against 0.6 on a tiny screen), and item 1's Firefox clock race. The C2 certificate
-  candidate was drawn before the lines were re-placed, so it should be rendered again before the
-  pick.
+  a no-font render by 9.8%, like the DS4 candidate; the bar is 20%), item 4 (see below), item 6
+  at 390 (one Hebrew name scores 0.585 against 0.6 on a tiny screen), and item 1's Firefox clock
+  race.
+- Correction to item 4. The 0.17% we reported earlier was wrong. Compared pixel for pixel (the
+  extra 1651st column cropped, not squeezed), the PDF and PNG differed by 1.04% in Chromium and
+  1.01% in WebKit. On screen the browser spaced the letters of a line its own way, while the PDF
+  used the face's spacing table, so the PDF drifted along each line. Every certificate line,
+  the name included, is now placed letter by letter from that table. Measured after the change:
+  0.65% in Chromium and 1.00% in WebKit pixel for pixel; the test's squeezed figure is still 3.0%
+  and 3.3%. Item 4 waits on the C2 re-tag (1651 to 1650) and, for WebKit, on the guilloche
+  decision. pdf.js still reads the footer verbatim and "Café" as text. The C2 certificate
+  candidate has been rendered again from the current drawing.
 - E3 (`still-here-3xf`) built and held open only on item 7, the certificate golden at C2. Each
   issue prints its own name, the local date and time with "Jurisdiction of here:", the UTC line,
   the identifier and a QR code for its link. A name with characters the certificate face lacks
@@ -126,3 +133,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E2 re-timed from the press, the same with and without motion; blocked on C2. (Martin, 2026-10-04)
 - 2026-10-04 — E3 built and held open on its C2 golden. (Martin, 2026-10-04)
 - 2026-10-04 — E4 built and held open on four test questions for C2. (Martin, 2026-10-04)
+- 2026-10-04 — E4 item 4 figure corrected (1.04% before, 0.65% Chromium after per-glyph lines); candidate re-rendered. (Martin, 2026-10-04)

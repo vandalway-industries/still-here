@@ -215,7 +215,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [ ] E3: the certificate per issue: name layout, time zone (D4), the UTC line, QR code with the link. **[after C2]** matched to the certificate golden.
   Evidence (2026-10-04): `still-here-3xf` items 1-6 flipped, held open on item 7 (C2 golden); unit 6/6; certificate spec 29/30 with one worker and Firefox 20/20 repeated (misses are the press-second race of E2 item 10); names outside the certificate face are drawn by the browser, one image per line (diff item 8).
 - [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
-  Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (0.17% cropped, 3.3% as the test scales a 1651-px pdf.js canvas), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
+  Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (3.3% as the test scales a 1651-px pdf.js canvas; pixel for pixel it measured 1.04% Chromium / 1.01% WebKit, not the 0.17% first reported, and after every line was set glyph by glyph from the face's advances 0.65% / 1.00%; waits on the C2 re-tag and the WebKit guilloche decision), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
 - [ ] E5: the certificate link (D2) and Copy certificate link.
 - [ ] E6: `/c/` and `/verify`: reopening is verifying; the Verify cases in their order (Q7, D3); failure and empty states.
 - [ ] E7: Your Presence Portfolio.
@@ -416,3 +416,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E2 re-timed: every step set from the press (1.2 s, 3.2 s, result 4.6 s), the same with and without motion; bead blocked on C2. (Jules, 2026-10-04)
 - 2026-10-04 — E3 built: the certificate per issue, names outside the face drawn as images; held open on item 7 (C2). (Jules, 2026-10-04)
 - 2026-10-04 — E4 built: Download PDF and PNG, fonts embedded, progress and failure; held open on four test questions for C2. (Jules, 2026-10-04)
+- 2026-10-04 — E4 item 4 measured pixel for pixel: 1.04% / 1.01% (not 0.17%); every certificate line now set glyph by glyph, 0.65% Chromium, 1.00% WebKit; candidate re-rendered. Item 4 still waits on C2. (Jules, 2026-10-04)

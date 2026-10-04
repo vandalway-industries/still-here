@@ -66,30 +66,32 @@ function positions(text, face, size, cx, tracking = 0, extra = {}) {
   return xs;
 }
 
-// A centred line is placed by its start, measured from the face's own advances: the browser and
-// svg2pdf.js then begin every line at the same point (text-anchor="middle" would leave the PDF to
-// centre on a width the page measures with kerning, which jsPDF does not apply).
+/** One tspan per glyph at its own x; spaces stay raw characters between them. */
+function glyphs(str, xs, y) {
+  return [...str].map((c, i) => (c === ' ' ? ' ' : `<tspan x="${n(xs[i])}" y="${n(y)}">${esc(c)}</tspan>`)).join('');
+}
+
+// Every line is set glyph by glyph from the face's own advances. The browser and svg2pdf.js then
+// put each glyph at the same point: left to the run, the browser spaces glyphs by its own shaping
+// (3.5–7.9% off the face's advance table in Chromium) while jsPDF uses the table, and the PDF
+// drifts away from the PNG along the line. A centred line is centred on the table's width
+// (text-anchor="middle" would leave the PDF to centre on a width the page measures with kerning).
 function text(str, { x, y, size, family = SERIF, weight = 500, fill = INK, anchor = 'middle', field, xs } = {}) {
-  if (!xs && anchor === 'middle') {
-    x -= measure(str, `${family}/${weight}`, size) / 2;
-    anchor = 'start';
+  if (!xs) {
+    const w = measure(str, `${family}/${weight}`, size);
+    xs = positions(str, `${family}/${weight}`, size, anchor === 'middle' ? x : x + w / 2);
   }
   const attrs = [
     field ? `data-field="${field}"` : '',
-    xs ? '' : `x="${n(x)}"`,
     `y="${n(y)}"`,
     `font-family="${family}"`,
     `font-size="${n(size)}"`,
     `font-weight="${weight}"`,
     `fill="${fill}"`,
-    xs ? '' : `text-anchor="${anchor}"`,
   ].filter(Boolean);
   // explicit glyph positions: one tspan per character, each with its own x, because svg2pdf.js
   // reads only the first value of an x list (checked against the PDF rendered back)
-  const body = xs
-    ? [...str].map((c, i) => (c === ' ' ? ' ' : `<tspan x="${n(xs[i])}" y="${n(y)}">${esc(c)}</tspan>`)).join('')
-    : esc(str);
-  return `<text ${attrs.join(' ')}>${body}</text>`;
+  return `<text ${attrs.join(' ')}>${glyphs(str, xs, y)}</text>`;
 }
 
 // ── Dates, written out ──────────────────────────────────────────────────────────────────────────
@@ -456,7 +458,7 @@ export function drawCertificate({ name, time, zone, identifier, link }) {
     const fit = fitName(setName);
     const lead = fit.size * 1.08;
     const firstBase = 326 - ((fit.lines.length - 1) * lead) / 2;
-    const tspans = fit.lines.map((l, i) => `<tspan x="${n(cx - measure(l, NAME_FACE, fit.size) / 2)}" y="${n(firstBase + i * lead)}">${esc(l)}</tspan>`).join('');
+    const tspans = fit.lines.map((l, i) => glyphs(l, positions(l, NAME_FACE, fit.size, cx), firstBase + i * lead)).join('');
     out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}">${tspans}</text>`);
   }
   out.push(`<line x1="${cx - 280}" y1="352" x2="${cx + 280}" y2="352" stroke="${MUTED}" stroke-width="0.5"/>`);
