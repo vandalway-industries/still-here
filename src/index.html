@@ -3,12 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STILL HERE</title>
+<title>STILL HERE — Is it still here?</title>
+<meta name="description" content="Name an object. We will confirm its presence.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="STILL HERE — Is it still here?">
+<meta property="og:description" content="Name an object. We will confirm its presence.">
+<meta property="og:image" content="/images/og-1200.jpg">
+<link rel="preload" href="/fonts/InterTight-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/CormorantGaramond-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/CormorantGaramond-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/site.css">
 </head>
-<body>
-<!-- Placeholder until E0 builds the shell and E2 the ritual. -->
+<body class="home">
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/brand/mark.svg" alt="" width="30" height="30">STILL HERE<sup>™</sup></a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav class="menu" id="site-menu" aria-label="Main">
+      <ul>
+      <li><a href="/verify">Verify</a></li>
+      <li><a href="/portfolio">Portfolio</a></li>
+      <li><a href="/leadership">Leadership</a></li>
+      <li><a href="/research/">Research</a></li>
+      <li><a href="/case-studies/">Case studies</a></li>
+      <li><a href="/status">Status</a></li>
+      <li><a href="/careers">Careers</a></li>
+      <li><a href="/enterprise">Enterprise</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 <main>
-<h1>Is it still here?</h1>
+  <div class="wrap">
+    <section class="ritual" aria-labelledby="ask">
+      <div class="ritual-copy">
+        <h1 class="display" id="ask">Is it still here?</h1>
+        <p class="lede">Name an object. We will confirm its presence.</p>
+        <form class="check" autocomplete="off">
+          <label class="visually-hidden" for="object">Object name</label>
+          <div class="check-row">
+            <input id="object" name="object" type="text" maxlength="80" spellcheck="false" autocapitalize="sentences">
+            <button class="button-primary" type="submit">Check presence</button>
+          </div>
+        </form>
+        <div class="examples">
+          <h2 class="label">Examples</h2>
+          <ul class="chips">
+            <li><button class="chip" type="button">Car keys</button></li>
+            <li><button class="chip" type="button">Phone</button></li>
+            <li><button class="chip" type="button">Wallet</button></li>
+            <li><button class="chip" type="button">Glasses</button></li>
+            <li><button class="chip" type="button">Folding chair</button></li>
+            <li><button class="chip" type="button">The Moon</button></li>
+            <li><button class="chip" type="button">A hot-air balloon</button></li>
+            <li><button class="chip" type="button">An emotional-support peacock</button></li>
+            <li><button class="chip" type="button">A time capsule (contents unknown)</button></li>
+            <li><button class="chip" type="button">A lighthouse</button></li>
+          </ul>
+        </div>
+      </div>
+      <figure class="ritual-chair">
+        <img src="/images/hero-542.webp" srcset="/images/hero-440.webp 440w, /images/hero-542.webp 542w" sizes="(min-width: 1024px) 460px, 186px" width="542" height="677" alt="A folding chair inside four green registration brackets, labelled ASSET 001, FOLDING CHAIR, STATUS: STILL HERE.">
+      </figure>
+    </section>
+  </div>
+  <section class="asset" aria-labelledby="asset-001">
+    <div class="wrap">
+      <figure>
+        <img src="/images/s01-chair-gallery-1200.webp" srcset="/images/s01-chair-gallery-600.webp 600w, /images/s01-chair-gallery-1200.webp 1200w" sizes="(min-width: 1024px) 660px, 100vw" width="1200" height="800" loading="lazy" alt="A folding chair on a plinth in a dark gallery, under a single spotlight.">
+      </figure>
+      <div class="asset-copy">
+        <h2 class="label" id="asset-001"><span class="tick" aria-hidden="true"></span>ASSET 001 · FOLDING CHAIR · STATUS: STILL HERE</h2>
+        <p>Our flagship research asset has been certified every Friday since records began. It has moved. It is still here.</p>
+      </div>
+    </div>
+  </section>
 </main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-brand">STILL HERE</p>
+    <ul>
+      <li><a href="/legal/terms">Terms of Presence</a></li>
+      <li><a href="/legal/privacy">Privacy</a></li>
+      <li><a href="https://vandalwayind.com/">A Vandalway Industries company</a></li>
+    </ul>
+  </div>
+</footer>
+<script type="module" src="/js/menu.js"></script>
+<script type="module" src="/js/home.js"></script>
 </body>
 </html>
