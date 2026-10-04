@@ -30,8 +30,8 @@ relations:
 | # | Phase | Status | Exit gate |
 |---|---|---|---|
 | 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
-| 1 | Design system, golden candidates | active | DS1–DS7 closed; C2 packet out |
-| 2 | The shell, the ritual and the certificate | pending | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
+| 1 | Design system, golden candidates | held (awaiting C2) | DS1–DS7 closed; C2 packet out |
+| 2 | The shell, the ritual and the certificate | active | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | pending | S2–S9 closed; W4 W5 played |
 | 4 | Extras | pending | X1–X6 closed; W6 played |
 | 5 | The records in full | pending | RC1–RC8 closed; W9 played locally; C3 packet out |
@@ -41,8 +41,10 @@ relations:
 
 ## Active phase
 
-**Phase 1 — Design system and golden candidates.** Phase 0 passed its exit gate on 2026-10-04;
-tests locked at `specs-v2`. Next move: DS1 (tokens and fonts), then DS2–DS6, then the C2 packet.
+**Phase 2 — The shell, the ritual and the certificate.** Phase 1 is held awaiting C2: DS2–DS7
+closed and the C2 packet is out; DS1 waits on two C2 items (Greek in the certificate face, and the
+linter-output test change). Next move: E0, the shell. Work that needs Greek in the certificate face
+waits on C2's Decision 1.
 
 ## Build method
 
@@ -184,7 +186,7 @@ Passed 2026-10-04. The gate review mapped all 296 acceptance items to assertions
 - [ ] DS1: tokens from `DESIGN.md` generated into `src/css/tokens.css` and `src/js/tokens.js`; Inter, Inter Tight, JetBrains Mono and Cormorant Garamond static instances self-hosted (WOFF2 for the page, TTF for the PDF), OFL licences beside them; every colour pairing checked against WCAG 2.2.
 - [x] DS2: the STILL HERE mark redrawn as SVG from `assets/still-here-logo-horizontal.png`; favicon, apple-touch-icon 180, manifest icons 192 and 512 (maskable). Evidence: `still-here-jw0` closed; `tests/unit/still-here-jw0-icons.test.ts` 2/2; the mark drawn by `scripts/brand.mjs`, rasters by `scripts/icons.mjs`.
 - [x] DS3: image derivatives for every placement in `garage/pack/ASSET_MANIFEST.md`, 1x and 2x, ≤ 250 KB each, metadata stripped (D21), committed under `src/images/`. Evidence: `still-here-aac` closed; `tests/unit/still-here-aac-derivatives.test.ts` 3/3; 58 WebP and the Open Graph JPEG made by `scripts/derivatives.py`, largest 247 KB. The hero's crop box moved to keep the whole callout (C2 item).
-- [x] DS4: the certificate drawing module (layout, seal, guilloche border, signatures as paths, QR code, footer) inside the svg2pdf subset; a specimen "Folding chair" certificate rendered to `garage/pack/exemplars/candidates/certificate.png` and `.pdf`. Evidence: `still-here-sp7` closed; `tests/unit/still-here-sp7-certificate-svg.test.ts` 8/8; `e2e/specs/still-here-sp7-certificate-candidate.spec.ts` 4/4 in Chromium and WebKit at 1440 and 390; the PDF made with jsPDF 4.2.1 + svg2pdf.js 2.8.1 and rendered back with pdf.js.
+- [x] DS4: the certificate drawing module (layout, seal, guilloche border, signatures as paths, QR code, footer) inside the svg2pdf subset; a specimen "Folding chair" certificate rendered to `garage/pack/exemplars/candidates/certificate.png` and `.pdf`. Evidence: `still-here-sp7` closed; `tests/unit/still-here-sp7-certificate-svg.test.ts` 8/8; `e2e/specs/still-here-sp7-certificate-candidate.spec.ts` 4/4 in Chromium and WebKit at 1440 and 390; the PDF made with jsPDF 4.2.1 + svg2pdf.js 2.8.1 and rendered back with pdf.js. Reading of DS4 item 5 (factory §3b rule 12): "converted at build time" is met by `scripts/certificate-glyphs.mjs`, a generation step run ahead of the build that reproduces byte-identical paths; `npm run build` does not run it. Wiring it into the build is filed as its own bead.
 - [x] DS5: home (390 and 1440) and leadership (1440) built as static pages with drafted copy from `garage/pack/CONTENT_SEEDS.md`; screenshots to `candidates/`. Evidence: `still-here-9uk` closed; `tests/unit/still-here-9uk-candidates.test.ts` 4/4; `e2e/specs/still-here-9uk-home-leadership-candidate.spec.ts` 12/12 in Chromium and WebKit at 1440 and 390; screenshots by `scripts/page-candidates.mjs`.
 - [x] DS6: the 1997 page in full with its period GIFs and the guestbook page, built in `vandalwayind/`; research 6's archived pages fetched as raw HTML into `garage/pack/exemplars/1997/`; screenshot to `candidates/`. Evidence: merged 8ef592c; `tests/unit/still-here-azk-vandalway-markup.test.ts` 4/4; candidate spec 4/4 in Chromium and WebKit; five archived pages, none refused (contact details withheld, recorded in `SOURCES.md`); DS6 closed.
 - [x] DS7: the C2 packet (`docs/checkpoints/c2-packet.md`): each candidate, the C2 questions from `garage/pack/CHECKPOINTS.md`, the turns used. Evidence: `still-here-9xd` closed; `tests/unit/still-here-9xd-c2-packet.test.ts` 2/2; five candidate sections, three decisions, two test changes for red-pen, two calls made under a rule; turns Phase 0 61, Phase 1 22.
@@ -372,6 +374,13 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 ## Open questions
 
 - **Mail provider for Q22** — out of this milestone (I-03). Blocks nothing in v1.
+- **Found during the build** — Work found by a review, kept here until C2 decides how found work is filed (the G0 bead check;
+C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2026-10-04)
+  - [ ] Phase 4 (X6, the guards): `npm run build` regenerates the certificate's signature paths (today
+  `scripts/certificate-glyphs.mjs` is run by hand; its output is byte-identical), and the
+  `tokens.css` header comment written by `scripts/tokens.mjs` names every generated colour source
+  (`src/brand/mark.svg` and `src/favicon.svg` carry the green too). Found at the Phase 1 critic
+  review.
 
 ## Retro — process notes (append-only)
 
@@ -397,3 +406,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-04 — Phase 0 closed at its exit gate; Phase 1 active. (Jules, 2026-10-04)
 - 2026-10-04 — DS1 built (tokens generated by the build, six static faces with their OFL and coverage); held open: Cormorant Garamond has no Greek (item 4) and the linter test expects text the linter does not print (item 2). Both go to the C2 packet. (Jules, 2026-10-04)
 - 2026-10-04 — DS2–DS5 closed: the mark and icons; the photograph derivatives; the certificate drawing with its Folding chair PNG and PDF (jsPDF 4.2.1 and svg2pdf.js 2.8.1 added, exact pins); home and leadership with their candidates. Three items for the C2 packet: the hero crop box, Lucas's display name, and the certificate candidate itself. (Jules, 2026-10-04)
+- 2026-10-04 — Phase 1 held awaiting C2 (critic review: DS2–DS7 pass; DS1 open on C2 Decision 1 and a test change). Phase 2 active. DS4 item 5's "build time" reading recorded. (Jules, 2026-10-04)

@@ -39,7 +39,8 @@ Questions:
 Please check:
 
 - **Signatures.** Clive's is drawn from the WindSong face and Diane's from the Petemoss face. Both
-  are converted to paths when the build runs, and the faces are never shipped. Say whether the
+  are converted to paths ahead of time by a generation script we run by hand (it reproduces the
+  same paths every time), and the faces are never shipped. Say whether the
   hands suit the people, and whether these are the right two signers.
 - **The seal.** Its ring text is in graphite.
 - **The guilloche border.**
@@ -173,6 +174,14 @@ session then applies it and re-tags. No builder edits a locked test.
    exits 0. The text "0 errors" never appears, so the assertion fails on a clean `DESIGN.md`. The
    change: parse the JSON output and assert `summary.errors === 0`. The exit-status assertion
    above it stays. DS1 item 2's wording ("reports 0 errors") does not change.
+
+3. **G0's bead check versus work found during the build (for your approval).** The file is
+   `tests/unit/still-here-agb-promote.test.ts`, test 7. It asserts that every bead is an
+   `ACCEPTANCE.md` section ("beads exist that are not ACCEPTANCE sections"). Our working rule says
+   work found during the build is filed as a bead, so any such bead turns G0 red. Until you decide,
+   found work goes into `PLAN.md` as a step under the phase that owns it. The change: test 7 checks
+   that every `ACCEPTANCE.md` section has its bead, and that every other bead names the bead it was
+   found from. Neither side's wording in `ACCEPTANCE.md` changes.
 
 ## Calls made under a rule
 
