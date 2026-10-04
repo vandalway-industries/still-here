@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-04
 read_by: every session start in BUILD (after SESSION_STATUS.md); `/goal` at BUILD entry; the landing gate's truth-pass at every session end; scripts/docs-sync-check.sh
 relations:
   tracks: PRD.md
@@ -156,8 +156,8 @@ From the audit's list, mapped to the moment each is needed. Everything else is t
 - [ ] The brand dossier's location and the continuity fixture are in hand, and `garage/pack/ENV_PREFLIGHT.md` is re-run on the day; any changed line becomes a step here.
 
 #### Steps
-- [ ] G0: `git init -b main` in this folder; repository-local `user.email` set to the account's GitHub no-reply address before the first commit (I-02); promote skeleton per the factory README §2 (README, AGENTS.md carrying the company's working rules from `garage/pack/CONTENT_SEEDS.md` § AGENTS.md rules, the agent-file symlink factory §2 requires beside it, SESSION_STATUS, `docs/archive/`, `assets/` copied from `garage/assets/` plus the parent logo into `assets/brand/`); stop-gate and the PII pre-commit hook with `PII_PUBLIC=1` installed; `.bd-gate` (STRICT); `bd init` (push block stripped); `.gitignore`.
-- [ ] G0: `gh repo create vandalway-industries/still-here --private` once the organization exists; push over SSH (the token lacks the `workflow` scope).
+- [x] G0: `git init -b main` in this folder; repository-local `user.email` set to the account's GitHub no-reply address before the first commit (I-02); promote skeleton per the factory README §2 (README, AGENTS.md carrying the company's working rules from `garage/pack/CONTENT_SEEDS.md` § AGENTS.md rules, the agent-file symlink factory §2 requires beside it, SESSION_STATUS, `docs/archive/`, `assets/` copied from `garage/assets/` plus the parent logo into `assets/brand/`); stop-gate and the PII pre-commit hook with `PII_PUBLIC=1` installed; `.bd-gate` (STRICT); `bd init` (push block stripped); `.gitignore`. Evidence: commit bb2b7fe; `tests/unit/still-here-agb-promote.test.ts` tests 1–4 and 6 pass; tree scan at the public tier clean.
+- [x] G0: `gh repo create vandalway-industries/still-here --private` once the organization exists; push over SSH (the token lacks the `workflow` scope). Evidence: `gh repo view` reads PRIVATE; `main` pushed over SSH at bb2b7fe; test 5 passes.
 - [x] G0: file every bead in `garage/pack/ACCEPTANCE.md` with `--acceptance` verbatim, by the character listed as its owner (owner address `<id>@vandalway.example`); `docs/bead-map.md`; the bead-versus-ACCEPTANCE equality test. Evidence: 53 beads; `tests/unit/still-here-agb-promote.test.ts` tests 7 and 8 pass.
 - [ ] G1: scaffold (`package.json` with exact pins, `scripts/build.mjs`, `scripts/serve-pages.mjs` reproducing research 3's URL table on port 5320, `e2e/playwright.config.ts` with Chromium, WebKit and Firefox, `e2e/helpers/` for the walk substitutes); install Firefox for Playwright; vendor the OKF validator.
 - [ ] G2: file the record seeds into `company/` per `garage/pack/CONTENT_SEEDS.md` § Records (D11–D13); copy the continuity fixture into `tests/fixtures/`; validate the tracker by `bd import` into a throwaway database; the tracker never enters `.beads/`.
@@ -389,3 +389,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-03 — Wording only: the 1997 page is described as "built in-house" throughout the pack. (Jules, 2026-10-03)
 - 2026-10-03 — C1 signed by Clive (I-13): pack approved; ceiling 1,400; phone checklist as written. (Jules, 2026-10-03)
 - 2026-10-03 — G0: 53 beads filed and mapped in `docs/bead-map.md`; C1 recorded in `garage/pack/CHECKPOINTS.md`. (Jules, 2026-10-03)
+- 2026-10-04 — G0: first commit bb2b7fe, private repository created and pushed over SSH; G0 closed. (Jules, 2026-10-04)
