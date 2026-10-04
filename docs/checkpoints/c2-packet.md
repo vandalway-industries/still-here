@@ -202,6 +202,58 @@ an answer.
    SSH host, `git@github.com`. Both are exact strings, not patterns. `AGENTS.md` records them in
    the scan command.
 
+## Addendum — found while building the ritual and the certificate (2026-10-04)
+
+The packet went out before Phase 2. Building the ritual (E2), the certificate for each issue (E3) and
+its exports (E4) raised the items below. Each test change was measured twice, once by the builder and
+once by a separate reviewer who reproduced it; where they disagreed, the reviewer's number is the one
+given here.
+
+**Test changes for your red-pen**
+
+4. **A paused clock for the timed specs.** The specs for E2 (items 9 and 10), E3 (tests 2, 5 and 6)
+   and E4 (item 1, and `issued()` in its unit test) start a fake clock that keeps running while the
+   page loads. A slow first load in Firefox (about 2 s; a 40-byte page takes 1.2 s there too) pushes
+   the press into the next second. Our identifier then, correctly, records that next second. The
+   change: set the clock ten seconds early, load and type, pause it at the intended second, then
+   press. Measured install-to-press when warm: Chromium 135–337 ms, WebKit 196–249 ms, Firefox
+   230–298 ms.
+5. **Walk timing.** W1.5 and W8.2 time the sequence with the test machine's wall clock. On our
+   build machine that clock has been stepping back about 1.16 s every 32 s. The change: time with
+   the monotonic clock. In the page the result arrives at 4.61–4.65 s, inside your four to five.
+6. **E4 item 4, the render-back comparison.** The helper rounds 1650.0000000000002 up to 1651 px
+   and squeezes it into 1650, which costs about 3%. The change: round, or crop.
+7. **E4 item 6 at phone width.** At 390 the Hebrew name is 40 × 21 px on screen, so a single pixel
+   decides the comparison (0.585 against 0.6). The rendering is right: שולחן, right to left, the
+   same glyphs and placement. The change: compare at twice the scale.
+
+**Decisions**
+
+4. **E4 item 3's wording.** "Ink differs by more than 20% from a no-font render" is measured over
+   the whole certificate, where about 80% of the ink is guilloche, QR code and seal. The same
+   certificate measures 9.8% in Chromium and 21.0% in WebKit. Inside the text it measures 32.0% and
+   46.8%. The faces are applied. Options: measure the text blocks only (recommended), or keep the
+   wording and accept that it can fail in Chromium.
+5. **The guilloche's thickness.** Its stroke is 0.45 units, finer than one pixel in the PDF at 150
+   dpi, so the PDF and the PNG draw it differently. After we placed every letter from the face's own
+   measurements, the PDF matches the PNG to 0.65% in Chromium and 1.00% in WebKit, against a 1% bar.
+   At 0.7 units WebKit measured 0.20%. Options: thicken it to 0.7 units (recommended), or keep the
+   hairline and accept WebKit at the bar.
+6. **Four-line names on the certificate.** In the current layout a name set on four lines runs over
+   "This certifies that" and nearly reaches the line below it. Moving the fixed lines for every name
+   is a design call for the certificate golden.
+
+**For your sight**
+
+- The certificate candidate above was rendered again on 2026-10-04 after the per-letter placement;
+  the drawing is otherwise unchanged.
+- Names with characters the certificate face does not have (emoji, Chinese, and so on) are drawn by
+  the browser as one image per line, about 600 dpi, as the PRD allows.
+- With the box empty, **Check presence** shows the disabled state from `DESIGN.md` (40% strength).
+  That changes the look of the home candidate at rest.
+- The ritual's timing is fixed from the press: lines at 1.2 s and 3.2 s, the result at 4.6 s, each
+  line held at least a second, the same with or without motion.
+
 ## Turns used
 
 These are counted from the build run's log:
@@ -229,3 +281,4 @@ words.
 ## Changelog
 
 - 2026-10-04: Written at the end of Phase 1 (DS7). (Jules, 2026-10-04)
+- 2026-10-04 — Addendum: what building the ritual and the certificate raised; the certificate candidate rendered again. (Jules, 2026-10-04)
