@@ -43,7 +43,7 @@ relations:
 
 **Phase 2 — The shell, the ritual and the certificate.** Phase 1 is held awaiting C2: DS2–DS7
 closed and the C2 packet is out; DS1 waits on two C2 items (Greek in the certificate face, and the
-linter-output test change). E0 (the shell) and E1 (the identifier) are closed. Next move: E2, the ritual. Work that needs Greek in the certificate face
+linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and held open: item 10's locked test assumes the press lands within 600 ms of the page clock's install, which Firefox and WebKit miss here (a re-tag item for the next packet), and two walk timings read this host's wall clock, which was found slewing. Item 14 waits on C2. Work that needs Greek in the certificate face
 waits on C2's Decision 1.
 
 ## Build method
@@ -409,3 +409,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — Phase 1 held awaiting C2 (critic review: DS2–DS7 pass; DS1 open on C2 Decision 1 and a test change). Phase 2 active. DS4 item 5's "build time" reading recorded. (Jules, 2026-10-04)
 - 2026-10-04 — E0 closed: the shared shell, every R24 page built or a marked placeholder, the 404 page, one CSP and Open Graph set (og:image now `hero-og-1200.jpg`), the link checker. Next: E1. (Jules, 2026-10-04)
 - 2026-10-04 — E1 closed: the identifier module, shared by the site and the records check; every vector reproduces. Next: E2. (Jules, 2026-10-04)
+- 2026-10-04 — E2 built (the ritual on `/`), held open: item 10's press-second test is a re-tag item, and item 14 waits on C2. (Jules, 2026-10-04)

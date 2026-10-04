@@ -564,3 +564,208 @@ a {
 .not-found p a {
   color: var(--sh-color-graphite);
 }
+
+/* ── Home: the ritual in motion (E2) ────────────────────────────────────────────────────────── */
+.check-note,
+.check-count {
+  margin: 12px 0 0;
+  font-size: var(--sh-type-body-sm-font-size);
+  line-height: var(--sh-type-body-sm-line-height);
+  color: var(--sh-color-graphite-muted);
+}
+
+.check-note:empty {
+  display: none;
+}
+
+.check-count {
+  font-family: var(--sh-type-identifier-font-family);
+}
+
+/* disabled: graphite at 40% over canvas, still focusable so the sentence can be reached */
+.button-primary[aria-disabled='true'],
+.ask.is-running .check input,
+.ask.is-running .chip {
+  opacity: 0.4;
+}
+
+.button-primary[aria-disabled='true'],
+.ask.is-running .chip {
+  cursor: default;
+}
+
+.button-primary[aria-disabled='true']:hover {
+  background: var(--sh-color-primary);
+  border-color: var(--sh-color-primary);
+}
+
+.ask.is-running .chip:hover {
+  text-decoration: none;
+}
+
+/* the sequence: one fixed mark, three lines arriving beneath it; room for all three is kept from
+   the start, so nothing on the page shifts while they arrive */
+.sequence {
+  margin-top: var(--sh-space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sh-space-md);
+}
+
+.sequence[hidden] {
+  display: none;
+}
+
+.sequence-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  fill: var(--sh-color-verification-green);
+}
+
+.sequence-lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: calc(3 * 24px + 2 * 8px);
+  font-family: var(--sh-type-identifier-font-family);
+  font-size: 15px;
+  font-weight: var(--sh-type-identifier-font-weight);
+  line-height: 24px;
+}
+
+.sequence-lines li + li {
+  margin-top: 8px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sequence-lines li {
+    animation: sh-arrive 200ms linear;
+  }
+}
+
+@keyframes sh-arrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* the result, in the form's place */
+.outcome[hidden] {
+  display: none;
+}
+
+.result {
+  margin-top: var(--sh-space-lg);
+}
+
+.result-heading {
+  margin: 0;
+  color: var(--sh-color-verification-green);
+  font-family: var(--sh-type-display-lg-font-family);
+  font-size: var(--sh-type-display-sm-font-size);
+  font-weight: var(--sh-type-display-lg-font-weight);
+  line-height: var(--sh-type-display-sm-line-height);
+  letter-spacing: var(--sh-type-display-sm-letter-spacing);
+}
+
+.result-heading:focus,
+.result-sentence:focus {
+  outline: none;
+}
+
+.result-heading:focus-visible,
+.result-sentence:focus-visible {
+  outline: 3px solid var(--sh-color-focus);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  .result-heading {
+    font-size: var(--sh-type-display-lg-font-size);
+    line-height: var(--sh-type-display-lg-line-height);
+    letter-spacing: var(--sh-type-display-lg-letter-spacing);
+  }
+}
+
+.result p {
+  margin: 0;
+}
+
+.result .result-name {
+  margin-top: var(--sh-space-md);
+  font-family: var(--sh-type-headline-font-family);
+  font-size: 24px;
+  font-weight: var(--sh-type-headline-font-weight);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.result .result-time {
+  margin-top: 8px;
+}
+
+.result-zone {
+  color: var(--sh-color-graphite-muted);
+  font-size: var(--sh-type-body-sm-font-size);
+  line-height: var(--sh-type-body-sm-line-height);
+}
+
+.result .result-identifier {
+  margin-top: 8px;
+  font-family: var(--sh-type-identifier-font-family);
+  font-size: var(--sh-type-identifier-font-size);
+  font-weight: var(--sh-type-identifier-font-weight);
+  letter-spacing: var(--sh-type-identifier-letter-spacing);
+}
+
+.result-certificate {
+  margin-top: var(--sh-space-lg);
+  padding: var(--sh-space-md);
+  background: var(--sh-color-surface);
+  border: 1px solid var(--sh-color-hairline);
+}
+
+.result-certificate svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--sh-space-lg);
+}
+
+.button-secondary {
+  margin: 0;
+  padding: 12px 18px;
+  border: 2px solid var(--sh-color-graphite);
+  border-radius: var(--sh-radius-none);
+  background: var(--sh-color-canvas);
+  color: var(--sh-color-graphite);
+  font-family: var(--sh-type-body-font-family);
+  font-size: var(--sh-type-body-sm-font-size);
+  line-height: var(--sh-type-body-sm-line-height);
+  cursor: pointer;
+}
+
+.button-secondary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.result .result-portfolio {
+  margin-top: var(--sh-space-md);
+  color: var(--sh-color-graphite-muted);
+}
+
+.result-sentence {
+  max-width: var(--sh-space-text-max);
+}

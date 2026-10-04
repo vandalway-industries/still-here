@@ -17,12 +17,22 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2, the ritual, is built and held open. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
-marked `sh-placeholder` that say they are being prepared. E2, the ritual, is next.
+marked `sh-placeholder` that say they are being prepared.
 
 ### What changed
 
+- E2 (`still-here-3a3`) built, not closed. The home page runs the ritual. The three lines arrive
+  under the green mark: the second 1.12 s after the first, the third 2.15 s after the second, each
+  counted from when the line before was painted. The result replaces the form at 4.4 s. Check
+  another restores the empty form. Before 2026 the same lines end in the pre-2026 sentence, and
+  nothing is drawn or saved. The certificate drawing is fetched at the press, and the portfolio is
+  written only when the result appears. Unit 4/4. The browser specs pass, except item 10 in
+  Firefox and WebKit: its test needs the press within 600 ms of the page clock's install, and this
+  machine takes longer. Two walk timings read this computer's own clock, which was found running up
+  to 12% slow while it corrected itself; they pass when it is steady. The Download and Copy
+  buttons are on screen but do nothing until E4 and E5.
 - E1 (`still-here-yw2`) closed. `src/js/identifier.js` makes and reads identifiers:
   `canonicalize`, `makeIdentifier` and `parseIdentifier`. The home page loads it for the ritual,
   and the records check will import the same file. All seven vectors reproduce. Across 3,000
@@ -42,7 +52,7 @@ marked `sh-placeholder` that say they are being prepared. E2, the ritual, is nex
 
 ### What's next
 
-1. E2, the ritual, then E3 to E7 in order.
+1. E2 waits on the item 10 test question (next packet) and C2's golden; E3 to E7 next.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
    approved candidates are copied to their golden names; the critic runs the waiting blind picks;
    any test change he red-pens goes to a test-author session and a re-tag.
@@ -86,3 +96,4 @@ marked `sh-placeholder` that say they are being prepared. E2, the ritual, is nex
 - 2026-10-04 — DS6 merged and closed; DS7 closed; the C2 packet is out. (Martin, 2026-10-04)
 - 2026-10-04 — E0 closed; the shell on every page, placeholders for the pages to come, the 404. (Martin, 2026-10-04)
 - 2026-10-04 — E1 closed; the identifier module, every vector reproduced. (Martin, 2026-10-04)
+- 2026-10-04 — E2 built and held open on its item 10 test and C2. (Martin, 2026-10-04)
