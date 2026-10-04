@@ -17,12 +17,20 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2, the ritual, is built and held open. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2, the ritual, and E3, the certificate per issue, are built and held open on C2. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
 marked `sh-placeholder` that say they are being prepared.
 
 ### What changed
 
+- E3 (`still-here-3xf`) built and held open only on item 7, the certificate golden at C2. Each
+  issue prints its own name, the local date and time with "Jurisdiction of here:", the UTC line,
+  the identifier and a QR code for its link. A name with characters the certificate face lacks
+  (emoji, Chinese) is now drawn by the browser, one picture per line, in the same place. A name is
+  set in NFC, so "Café" typed either way prints the same. Unit 6/6. The certificate spec passed
+  29/30 with one worker and 20/20 in Firefox when repeated. The misses are the press landing a
+  second late while the browser loads, the same test question as E2 item 10. For C2: a four-line
+  name runs over "This certifies that" in the certificate's fixed layout.
 - E2 (`still-here-3a3`) built and marked blocked: waiting on C2 for item 10's test change and
   item 14's golden. The sequence is re-timed so every step is set from the press: the second line
   at 1.2 s, the third at 3.2 s, the result at 4.6 s, and no line is ever on screen less than 1 s.
@@ -103,3 +111,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E1 closed; the identifier module, every vector reproduced. (Martin, 2026-10-04)
 - 2026-10-04 — E2 built and held open on its item 10 test and C2. (Martin, 2026-10-04)
 - 2026-10-04 — E2 re-timed from the press, the same with and without motion; blocked on C2. (Martin, 2026-10-04)
+- 2026-10-04 — E3 built and held open on its C2 golden. (Martin, 2026-10-04)

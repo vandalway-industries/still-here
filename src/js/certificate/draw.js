@@ -8,7 +8,7 @@
 //     link        the certificate link the QR code encodes
 //
 // Only the elements svg2pdf.js draws (PRD R9): svg, g, path, rect, circle, line, polyline, text,
-// tspan. No style attribute or element, no filter, mask, gradient or textPath; every position is
+// tspan, and image for a name with characters outside the face (diff item 8). No style attribute or element, no filter, mask, gradient or textPath; every position is
 // explicit. Colours come from src/js/tokens.js. Text is set in the certificate faces (Cormorant
 // Garamond, Inter Tight for the wordmark, JetBrains Mono for the identifier); the signatures are
 // paths converted at build time (signatures.js), so no script face is ever loaded.
@@ -134,23 +134,36 @@ export function utcLine(time) {
 }
 
 // ── The name: shrink to a 30-unit floor, then wrap to up to four centred lines ──────────────────
+// A name is set in NFC, so a name typed composed or decomposed prints identically (R11).
 const NAME_FACE = `${SERIF}/600`;
 const NAME_MAX = 54;
 const NAME_FLOOR = 30;
 const NAME_WIDTH = 760;
+// the widest a name image may run before it must take a fifth line: inside the inner rules
+const NAME_WIDTH_MAX = 900;
+// pixels per user unit for a name drawn as an image: 600 dpi on the 11-inch page (diff item 8)
+const NAME_SCALE = 6;
 
 function graphemes(s) {
   if (typeof Intl !== 'undefined' && Intl.Segmenter) return [...new Intl.Segmenter('en', { granularity: 'grapheme' }).segment(s)].map((g) => g.segment);
   return [...s];
 }
 
-export function fitName(name) {
-  const w = measure(name, NAME_FACE, 1);
-  if (w * NAME_FLOOR <= NAME_WIDTH) return { size: Math.min(NAME_MAX, NAME_WIDTH / w), lines: [name] };
+/** Is every character of the name in the certificate face? */
+export function inFace(name) {
+  const table = ADVANCES[NAME_FACE];
+  for (const ch of name) if (table[ch.codePointAt(0)] === undefined) return false;
+  return true;
+}
+
+/** Lay a name out with a width function (user units at a size): one line, or four at the floor. */
+function layout(name, widthAt, maxWidth = NAME_WIDTH) {
+  const w = widthAt(name, 1);
+  if (w * NAME_FLOOR <= maxWidth) return { size: Math.min(NAME_MAX, maxWidth / w), lines: [name] };
   const size = NAME_FLOOR;
   const lines = [];
   let line = '';
-  const fits = (s) => measure(s, NAME_FACE, size) <= NAME_WIDTH;
+  const fits = (s) => widthAt(s, size) <= maxWidth;
   for (const word of name.split(/\s+/).filter(Boolean)) {
     const candidate = line ? `${line} ${word}` : word;
     if (fits(candidate)) {
@@ -173,7 +186,57 @@ export function fitName(name) {
     }
   }
   if (line) lines.push(line);
-  return { size, lines: lines.slice(0, 4) };
+  return { size, lines };
+}
+
+export function fitName(name) {
+  const fit = layout(name.normalize('NFC'), (s, size) => measure(s, NAME_FACE, size));
+  return { size: fit.size, lines: fit.lines.slice(0, 4) };
+}
+
+/** A 2D canvas the browser draws a name on, or null where there is none (Node). */
+function canvas2d(w, h) {
+  if (typeof document === 'undefined') return null;
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  return c;
+}
+
+/**
+ * A name with characters outside the certificate face (diff item 8): each line is drawn by the
+ * visitor's browser, in the certificate face where it has the glyph and the browser's own fallback
+ * where it does not, and placed as an image in the name's position. Null where no canvas exists.
+ */
+function nameImages(name, cx, centre) {
+  const probe = canvas2d(1, 1);
+  if (!probe) return null;
+  const ctx = probe.getContext('2d');
+  const font = (size) => `600 ${size}px "${SERIF}", serif`;
+  const widthAt = (s, size) => {
+    ctx.font = font(100);
+    return (ctx.measureText(s).width / 100) * size;
+  };
+  let fit = layout(name, widthAt);
+  if (fit.lines.length > 4) fit = layout(name, widthAt, NAME_WIDTH_MAX);
+  const lead = fit.size * 1.08;
+  const firstBase = centre - ((fit.lines.length - 1) * lead) / 2;
+  const tall = fit.size * 1.3;
+  const out = [];
+  fit.lines.forEach((line, i) => {
+    const w = widthAt(line, fit.size) + fit.size * 0.2;
+    const c = canvas2d(Math.ceil(w * NAME_SCALE), Math.ceil(tall * NAME_SCALE));
+    const g = c.getContext('2d');
+    g.font = font(fit.size * NAME_SCALE);
+    g.fillStyle = INK;
+    g.textBaseline = 'alphabetic';
+    g.textAlign = 'center';
+    const ascent = fit.size * 0.98;
+    g.fillText(line, c.width / 2, ascent * NAME_SCALE);
+    const y = firstBase + i * lead - ascent;
+    out.push(`<image x="${n(cx - w / 2)}" y="${n(y)}" width="${n(c.width / NAME_SCALE)}" height="${n(c.height / NAME_SCALE)}" preserveAspectRatio="none" href="${c.toDataURL('image/png')}"/>`);
+  });
+  return `<g data-field="name">${out.join('')}</g>`;
 }
 
 // ── The drawn marks ─────────────────────────────────────────────────────────────────────────────
@@ -372,12 +435,17 @@ export function drawCertificate({ name, time, zone, identifier, link }) {
 
   out.push(text('This certifies that', { x: cx, y: 266, size: 22, weight: 500 }));
 
-  // the name, as typed
-  const fit = fitName(name);
-  const lead = fit.size * 1.08;
-  const firstBase = 326 - ((fit.lines.length - 1) * lead) / 2;
-  const tspans = fit.lines.map((l, i) => `<tspan x="${cx}" y="${n(firstBase + i * lead)}">${esc(l)}</tspan>`).join('');
-  out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}" text-anchor="middle">${tspans}</text>`);
+  // the name, as typed (in NFC): vector text in the face, or drawn by the browser (diff item 8)
+  const setName = name.normalize('NFC');
+  const image = inFace(setName) ? null : nameImages(setName, cx, 326);
+  if (image) out.push(image);
+  else {
+    const fit = fitName(setName);
+    const lead = fit.size * 1.08;
+    const firstBase = 326 - ((fit.lines.length - 1) * lead) / 2;
+    const tspans = fit.lines.map((l, i) => `<tspan x="${cx}" y="${n(firstBase + i * lead)}">${esc(l)}</tspan>`).join('');
+    out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}" text-anchor="middle">${tspans}</text>`);
+  }
   out.push(`<line x1="${cx - 280}" y1="352" x2="${cx + 280}" y2="352" stroke="${MUTED}" stroke-width="0.5"/>`);
 
   out.push(text('was, at the moment recorded below, confirmed to be', { x: cx, y: 392, size: 20, weight: 500 }));
