@@ -16,37 +16,29 @@ relations: {}
 
 ### Current state
 
-Phase 0 is closed. In Phase 1, DS2, DS3, DS4 and DS5 are closed; DS1 stays open on two items for
-C2; DS6 (the 1997 page) is being built in its own worktree; DS7 (the C2 packet) comes last. Three
-of the four golden candidates are on disk in `garage/pack/exemplars/candidates/`: the certificate
-(PNG and PDF), home at 390 and 1440, and leadership at 1440.
+Phase 1's work is done apart from DS1, which stays open on two items that went to C2. DS2 to DS7
+are closed. All five golden candidates are on disk in `garage/pack/exemplars/candidates/`: the
+certificate (PNG and PDF), home at 390 and 1440, leadership at 1440, and the 1997 page. The C2
+packet is out at `docs/checkpoints/c2-packet.md`. The run carries on into Phase 2; the **[after
+C2]** steps wait for Clive's answer.
 
 ### What changed
 
-- DS2 (`still-here-jw0`) closed. The mark is drawn as four bracket paths and one circle measured
-  from the logo (`src/js/mark.js`); `scripts/brand.mjs` writes `src/brand/mark.svg` and
-  `src/favicon.svg` on every build; `scripts/icons.mjs` rendered the ICO (16, 32), the touch icon
-  and the three manifest icons. Test 2/2.
-- DS3 (`still-here-aac`) closed. `scripts/derivatives.py` made 58 WebP files and the Open Graph
-  JPEG under `src/images/`, none over 250 KB (the largest 247 KB) and none carrying metadata.
-  Test 3/3. The hero is cropped wider than the manifest's box, which cut through the "ASSET 001"
-  callout; that box goes to C2.
-- DS4 (`still-here-sp7`) closed. `src/js/certificate/draw.js` draws the certificate; the QR code
-  comes from our own encoder (`qr.js`); the two signatures are paths converted from two OFL script
-  faces kept in `scripts/signature-faces/` and never shipped. jsPDF 4.2.1 and svg2pdf.js 2.8.1 are
-  now exact-pinned dev dependencies, with rows in `docs/licences.md`. Unit 8/8; browser 4/4 in
-  Chromium and WebKit.
-- DS5 (`still-here-9uk`) closed. `/` and `/leadership` are built as static pages with the shared
-  header and footer written into each (E0 makes them the shell). Unit 4/4; browser 12/12 in
-  Chromium and WebKit.
-- Phase 0 unit files still pass, 26/26.
+- DS6 merged (8ef592c) and closed: the 1997 page and its guestbook in `vandalwayind/`, five
+  archived pages in `garage/pack/exemplars/1997/` with contact details withheld (`SOURCES.md`),
+  and the `vandalway-1997.png` candidate. Unit 4/4; candidate spec 4/4 in Chromium and WebKit.
+- DS7 (`still-here-9xd`) closed. The C2 packet links each candidate with the four C2 questions under
+  it and the points to check, three decisions (Greek in the certificate face, Lucas's display name,
+  the hero crop box), two test changes for red-pen (specs-v2 for sight; the DS1 linter assertion),
+  two calls made under a rule, and the turns used (Phase 0 61, Phase 1 22, from the run's log).
+  `tests/unit/still-here-9xd-c2-packet.test.ts` 2/2.
 
 ### What's next
 
-1. DS6 lands from its worktree; then DS7, the C2 packet.
-2. The C2 packet carries: DS1's two items; the hero crop box (DS3); Lucas's name on his card
-   (DS5): the seed table says "Lucas", the staff record and the browser spec say "Lucas the
-   Intern", and the card shows the staff record's; and the candidates themselves.
+1. Phase 2 (E0 onward) on everything that does not wait for C2.
+2. When Clive answers, his words go into `garage/pack/CHECKPOINTS.md` § Record that day; approved
+   candidates are copied to their golden names; the critic runs the waiting blind picks; any test
+   change he red-pens goes to a test-author session and a re-tag.
 
 ### Waiting on Clive
 
@@ -84,3 +76,4 @@ of the four golden candidates are on disk in `garage/pack/exemplars/candidates/`
 - 2026-10-04 — Tests tightened after the Phase 0 gate review; re-tagged specs-v2. (Martin, 2026-10-04)
 - 2026-10-04 — DS1 built; held open on Greek coverage and the linter test's wording, both for C2. (Martin, 2026-10-04)
 - 2026-10-04 — DS2–DS5 closed; three of the four golden candidates on disk. (Martin, 2026-10-04)
+- 2026-10-04 — DS6 merged and closed; DS7 closed; the C2 packet is out. (Martin, 2026-10-04)
