@@ -11,24 +11,12 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { MARK } from '../src/js/mark.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-// Measured on the logo: the green extends x 118–464 and y 174–518. Bracket arms are 51 units
-// thick; horizontal arms run 124 units, vertical arms 125. The dot sits at (291, 346), r 64.7.
-// Coordinates below are relative to (118, 174).
-export const MARK = Object.freeze({
-  width: 346,
-  height: 344,
-  brackets: [
-    // top left, top right, bottom left, bottom right: each an L, drawn clockwise
-    'M0 0H124V51H52V125H0Z',
-    'M222 0H346V125H295V51H222Z',
-    'M0 218H52V294H124V344H0Z',
-    'M295 218H346V344H222V294H295Z',
-  ],
-  dot: { cx: 173, cy: 172, r: 64.7 },
-});
+// The geometry lives in src/js/mark.js, shared with the certificate.
+export { MARK };
 
 export function rgb(hex) {
   const h = hex.replace('#', '');
