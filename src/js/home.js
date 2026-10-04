@@ -37,6 +37,8 @@ const PORTFOLIO_KEY = 'stillhere.portfolio.v1';
 const EMPTY = 'Name an object to check its presence.';
 const BEFORE_2026 = "Your device's clock reads earlier than 1 January 2026, a moment our records cannot express. The object, however, is still here.";
 const ACTIONS = ['Download PDF', 'Download PNG', 'Copy certificate link', 'Check another'];
+const PREPARING = { pdf: 'Preparing PDF…', png: 'Preparing PNG…' };
+const EXPORT_FAILED = 'The file could not be prepared. Your certificate is still here: try again, or copy its link.';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 if (document.fonts) {
@@ -134,6 +136,35 @@ function checkAnother() {
   return b;
 }
 
+/**
+ * Download PDF or Download PNG (E4): while the file is prepared the button reads "Preparing PDF…"
+ * or "Preparing PNG…" and is aria-disabled, and a second tap does nothing. A failure restores the
+ * button and puts the export-failure sentence beneath the buttons; nothing else changes.
+ */
+function exporter(kind, label, busyLabel, file, actions) {
+  const b = el('button', 'button-secondary', label);
+  b.type = 'button';
+  let busy = false;
+  b.addEventListener('click', async () => {
+    if (busy) return;
+    busy = true;
+    b.textContent = busyLabel;
+    b.setAttribute('aria-disabled', 'true');
+    actions.parentElement?.querySelector('.export-note')?.remove();
+    try {
+      const { exportCertificate } = await import('./export.js');
+      await exportCertificate(kind, file);
+    } catch {
+      if (actions.isConnected) actions.after(el('p', 'export-note body-sm', EXPORT_FAILED));
+    } finally {
+      busy = false;
+      b.textContent = label;
+      b.removeAttribute('aria-disabled');
+    }
+  });
+  return b;
+}
+
 function buildResult({ name, time, zone, identifier }, drawCertificate) {
   const section = el('section', 'result');
   section.setAttribute('aria-labelledby', 'result-heading');
@@ -141,14 +172,14 @@ function buildResult({ name, time, zone, identifier }, drawCertificate) {
   h.id = 'result-heading';
   h.tabIndex = -1;
   const cert = el('div', 'result-certificate');
-  cert.append(certificateNode(drawCertificate({ name, time, zone, identifier, link: certificateLink(location.origin, identifier, name, zone) })));
+  const svg = drawCertificate({ name, time, zone, identifier, link: certificateLink(location.origin, identifier, name, zone) });
+  cert.append(certificateNode(svg));
   const actions = el('div', 'result-actions');
-  for (const a of ACTIONS.slice(0, 3)) {
-    const b = el('button', 'button-secondary', a);
-    b.type = 'button';
-    actions.append(b);
-  }
-  actions.append(checkAnother());
+  const file = { svg, name, identifier };
+  actions.append(exporter('pdf', ACTIONS[0], PREPARING.pdf, file, actions), exporter('png', ACTIONS[1], PREPARING.png, file, actions));
+  const copy = el('button', 'button-secondary', ACTIONS[2]);
+  copy.type = 'button';
+  actions.append(copy, checkAnother());
   const kept = el('p', 'result-portfolio body-sm', 'Kept in Your Presence ');
   const link = el('a', '', 'Portfolio on this device');
   link.href = '/portfolio';

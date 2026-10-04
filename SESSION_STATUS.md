@@ -17,12 +17,25 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2, the ritual, and E3, the certificate per issue, are built and held open on C2. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
 marked `sh-placeholder` that say they are being prepared.
 
 ### What changed
 
+- E4 (`still-here-cq5`) built and held open. Download PDF and Download PNG now work on the result:
+  the PDF is US Letter with the three faces embedded, and the PNG is 3,300 × 2,550. Files are named
+  `STILL-HERE-<slug>-<11 symbols>`. While a file is prepared its button reads "Preparing PDF…" or
+  "Preparing PNG…", and a failure puts the export-failure sentence beneath the buttons. The
+  export libraries are served from our own site and load on the first press; the fonts are fetched
+  as files, so the page's security policy is unchanged. Every certificate line is now placed
+  from its start, with no kerning or ligatures, so the screen, the PNG and the PDF set the same
+  glyphs. Proven: items 2, 5 and 7. Waiting on test changes at C2: item 3 (the PNG differs from
+  a no-font render by 9.8%, like the DS4 candidate; the bar is 20%), item 4 (0.17% when compared
+  pixel for pixel, 3.3% as the test squeezes 1651 px into 1650), item 6 at 390 (one Hebrew name
+  scores 0.585 against 0.6 on a tiny screen), and item 1's Firefox clock race. The C2 certificate
+  candidate was drawn before the lines were re-placed, so it should be rendered again before the
+  pick.
 - E3 (`still-here-3xf`) built and held open only on item 7, the certificate golden at C2. Each
   issue prints its own name, the local date and time with "Jurisdiction of here:", the UTC line,
   the identifier and a QR code for its link. A name with characters the certificate face lacks
@@ -112,3 +125,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E2 built and held open on its item 10 test and C2. (Martin, 2026-10-04)
 - 2026-10-04 — E2 re-timed from the press, the same with and without motion; blocked on C2. (Martin, 2026-10-04)
 - 2026-10-04 — E3 built and held open on its C2 golden. (Martin, 2026-10-04)
+- 2026-10-04 — E4 built and held open on four test questions for C2. (Martin, 2026-10-04)

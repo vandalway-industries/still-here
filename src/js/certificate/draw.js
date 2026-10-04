@@ -66,7 +66,14 @@ function positions(text, face, size, cx, tracking = 0, extra = {}) {
   return xs;
 }
 
+// A centred line is placed by its start, measured from the face's own advances: the browser and
+// svg2pdf.js then begin every line at the same point (text-anchor="middle" would leave the PDF to
+// centre on a width the page measures with kerning, which jsPDF does not apply).
 function text(str, { x, y, size, family = SERIF, weight = 500, fill = INK, anchor = 'middle', field, xs } = {}) {
+  if (!xs && anchor === 'middle') {
+    x -= measure(str, `${family}/${weight}`, size) / 2;
+    anchor = 'start';
+  }
   const attrs = [
     field ? `data-field="${field}"` : '',
     xs ? '' : `x="${n(x)}"`,
@@ -219,6 +226,8 @@ function nameImages(name, cx, centre) {
   };
   let fit = layout(name, widthAt);
   if (fit.lines.length > 4) fit = layout(name, widthAt, NAME_WIDTH_MAX);
+  probe.width = 0;
+  probe.height = 0;
   const lead = fit.size * 1.08;
   const firstBase = centre - ((fit.lines.length - 1) * lead) / 2;
   const tall = fit.size * 1.3;
@@ -233,8 +242,12 @@ function nameImages(name, cx, centre) {
     g.textAlign = 'center';
     const ascent = fit.size * 0.98;
     g.fillText(line, c.width / 2, ascent * NAME_SCALE);
+    const href = c.toDataURL('image/png');
+    const [cw, ch] = [c.width, c.height];
     const y = firstBase + i * lead - ascent;
-    out.push(`<image x="${n(cx - w / 2)}" y="${n(y)}" width="${n(c.width / NAME_SCALE)}" height="${n(c.height / NAME_SCALE)}" preserveAspectRatio="none" href="${c.toDataURL('image/png')}"/>`);
+    c.width = 0;
+    c.height = 0;
+    out.push(`<image x="${n(cx - w / 2)}" y="${n(y)}" width="${n(cw / NAME_SCALE)}" height="${n(ch / NAME_SCALE)}" preserveAspectRatio="none" href="${href}"/>`);
   });
   return `<g data-field="name">${out.join('')}</g>`;
 }
@@ -443,8 +456,8 @@ export function drawCertificate({ name, time, zone, identifier, link }) {
     const fit = fitName(setName);
     const lead = fit.size * 1.08;
     const firstBase = 326 - ((fit.lines.length - 1) * lead) / 2;
-    const tspans = fit.lines.map((l, i) => `<tspan x="${cx}" y="${n(firstBase + i * lead)}">${esc(l)}</tspan>`).join('');
-    out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}" text-anchor="middle">${tspans}</text>`);
+    const tspans = fit.lines.map((l, i) => `<tspan x="${n(cx - measure(l, NAME_FACE, fit.size) / 2)}" y="${n(firstBase + i * lead)}">${esc(l)}</tspan>`).join('');
+    out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}">${tspans}</text>`);
   }
   out.push(`<line x1="${cx - 280}" y1="352" x2="${cx + 280}" y2="352" stroke="${MUTED}" stroke-width="0.5"/>`);
 

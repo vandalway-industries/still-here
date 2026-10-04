@@ -61,5 +61,17 @@ for (const file of pages) {
   writeFileSync(file, html);
 }
 console.log(`shell: ${pages.length} pages`);
+// The export libraries (E4), served from our own origin and loaded only when a file is prepared:
+// jsPDF 4.2.1 and svg2pdf.js 2.8.1, their self-contained UMD builds, exactly as installed.
+const VENDOR = {
+  'jspdf.umd.min.js': 'node_modules/jspdf/dist/jspdf.umd.min.js',
+  'svg2pdf.umd.min.js': 'node_modules/svg2pdf.js/dist/svg2pdf.umd.min.js',
+};
+mkdirSync(join(OUT, 'js/vendor'), { recursive: true });
+for (const [name, from] of Object.entries(VENDOR)) {
+  if (!existsSync(join(ROOT, from))) throw new Error(`${from} is missing: run npm ci`);
+  cpSync(join(ROOT, from), join(OUT, 'js/vendor', name));
+}
+
 if (!existsSync(join(OUT, '404.html'))) throw new Error('site/404.html was not written');
 console.log(`built site/ from src/`);

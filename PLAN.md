@@ -43,7 +43,7 @@ relations:
 
 **Phase 2 — The shell, the ritual and the certificate.** Phase 1 is held awaiting C2: DS2–DS7
 closed and the C2 packet is out; DS1 waits on two C2 items (Greek in the certificate face, and the
-linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and blocked on C2: item 10's locked test lets the page clock run from its install, so the press can land in the next second and fake time can pass 3.5 s before the stored-count check (a re-tag item for the next packet); W1.5 and W8.2 time with the test machine's own clock, which steps back about 1.17 s every 31 s here, and they fail only inside those steps. Item 14 waits on C2. E3 (the certificate per issue) is built and held open on its C2 golden. Work that needs Greek in the certificate face
+linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and blocked on C2: item 10's locked test lets the page clock run from its install, so the press can land in the next second and fake time can pass 3.5 s before the stored-count check (a re-tag item for the next packet); W1.5 and W8.2 time with the test machine's own clock, which steps back about 1.17 s every 31 s here, and they fail only inside those steps. Item 14 waits on C2. E3 (the certificate per issue) is built and held open on its C2 golden. E4 (PDF and PNG) is built and held open on four test questions for C2. Work that needs Greek in the certificate face
 waits on C2's Decision 1.
 
 ## Build method
@@ -215,6 +215,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [ ] E3: the certificate per issue: name layout, time zone (D4), the UTC line, QR code with the link. **[after C2]** matched to the certificate golden.
   Evidence (2026-10-04): `still-here-3xf` items 1-6 flipped, held open on item 7 (C2 golden); unit 6/6; certificate spec 29/30 with one worker and Firefox 20/20 repeated (misses are the press-second race of E2 item 10); names outside the certificate face are drawn by the browser, one image per line (diff item 8).
 - [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
+  Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (0.17% cropped, 3.3% as the test scales a 1651-px pdf.js canvas), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
 - [ ] E5: the certificate link (D2) and Copy certificate link.
 - [ ] E6: `/c/` and `/verify`: reopening is verifying; the Verify cases in their order (Q7, D3); failure and empty states.
 - [ ] E7: Your Presence Portfolio.
@@ -414,3 +415,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E2 built (the ritual on `/`), held open: item 10's press-second test is a re-tag item, and item 14 waits on C2. (Jules, 2026-10-04)
 - 2026-10-04 — E2 re-timed: every step set from the press (1.2 s, 3.2 s, result 4.6 s), the same with and without motion; bead blocked on C2. (Jules, 2026-10-04)
 - 2026-10-04 — E3 built: the certificate per issue, names outside the face drawn as images; held open on item 7 (C2). (Jules, 2026-10-04)
+- 2026-10-04 — E4 built: Download PDF and PNG, fonts embedded, progress and failure; held open on four test questions for C2. (Jules, 2026-10-04)
