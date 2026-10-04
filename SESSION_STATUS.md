@@ -17,12 +17,18 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active and E0, the shell, is closed. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
-marked `sh-placeholder` that say they are being prepared. E1 is next.
+marked `sh-placeholder` that say they are being prepared. E2, the ritual, is next.
 
 ### What changed
 
+- E1 (`still-here-yw2`) closed. `src/js/identifier.js` makes and reads identifiers:
+  `canonicalize`, `makeIdentifier` and `parseIdentifier`. The home page loads it for the ritual,
+  and the records check will import the same file. All seven vectors reproduce. Across 3,000
+  random identifiers, every single substitution and every adjacent swap is refused. The
+  certificate specimen's identifier, SH-00PP-9AGR-1GTB, recomputes unchanged. Unit 6/6; the
+  earlier beads' unit tests still pass.
 - E0 (`still-here-lsz`) closed. The header, menu, footer, Content-Security-Policy and Open Graph
   tags live once, in `src/_shell/`, and the build includes them into every page; a page without
   the markers stops the build. The 404 carries the fixed sentence and Return home. The Open Graph
@@ -36,7 +42,7 @@ marked `sh-placeholder` that say they are being prepared. E1 is next.
 
 ### What's next
 
-1. E1, the identifier, then E2 to E7 in order.
+1. E2, the ritual, then E3 to E7 in order.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
    approved candidates are copied to their golden names; the critic runs the waiting blind picks;
    any test change he red-pens goes to a test-author session and a re-tag.
@@ -79,3 +85,4 @@ marked `sh-placeholder` that say they are being prepared. E1 is next.
 - 2026-10-04 — DS2–DS5 closed; three of the four golden candidates on disk. (Martin, 2026-10-04)
 - 2026-10-04 — DS6 merged and closed; DS7 closed; the C2 packet is out. (Martin, 2026-10-04)
 - 2026-10-04 — E0 closed; the shell on every page, placeholders for the pages to come, the 404. (Martin, 2026-10-04)
+- 2026-10-04 — E1 closed; the identifier module, every vector reproduced. (Martin, 2026-10-04)

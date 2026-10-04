@@ -1,7 +1,10 @@
 // Home, before the ritual is built (E2): an example fills the input and leaves it editable, with
 // the cursor at the end. The form does not leave the page. The certificate's faces are loaded with
 // the page (and preloaded in its head), so the certificate is never drawn in a fallback face and
-// its PNG never waits on a font (PRD R14). (Jules, 2026-10-04)
+// its PNG never waits on a font (PRD R14). The identifier module is loaded with the page: the
+// ritual (E2) issues each certificate's identifier with makeIdentifier. (Jules, 2026-10-04)
+import { makeIdentifier } from './identifier.js';
+
 if (document.fonts) {
   for (const weight of [500, 600]) document.fonts.load(`${weight} 1em "Cormorant Garamond"`).catch(() => undefined);
 }
