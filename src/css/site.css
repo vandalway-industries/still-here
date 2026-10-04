@@ -801,7 +801,8 @@ a {
 
 /* ── The certificate link (E5) and the certificate's own page ────────────────────────────────── */
 .certificate-view[hidden],
-.certificate-intro[hidden] {
+.verify[hidden],
+.verify-outcome[hidden] {
   display: none;
 }
 
@@ -840,4 +841,58 @@ a.button-secondary {
 
 .result .result-links {
   margin-top: var(--sh-space-md);
+}
+
+/* ── Verify (E6) ─────────────────────────────────────────────────────────────────────────────── */
+.verify {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sh-space-md);
+  max-width: var(--sh-space-text-max);
+  margin-top: var(--sh-space-lg);
+}
+
+.verify-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verify input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 14px 16px;
+  border: 2px solid var(--sh-color-graphite);
+  border-radius: var(--sh-radius-none);
+  background: var(--sh-color-canvas);
+  color: var(--sh-color-graphite);
+  font-family: var(--sh-type-body-font-family);
+  font-size: 18px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.verify #verify-identifier {
+  font-family: var(--sh-type-identifier-font-family);
+  letter-spacing: var(--sh-type-identifier-letter-spacing);
+}
+
+.verify input::placeholder {
+  color: var(--sh-color-graphite-muted);
+  opacity: 1;
+}
+
+.verify .button-primary {
+  align-self: flex-start;
+}
+
+.verify .check-note {
+  margin: 0;
+}
+
+.verify-outcome {
+  max-width: var(--sh-space-text-max);
+  padding-bottom: var(--sh-space-xxl);
 }

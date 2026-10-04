@@ -141,3 +141,29 @@ export function certificateActions({ svg, name, identifier, link }, another) {
   );
   return actions;
 }
+
+export const NOT_LOCATED = 'We could not locate this certificate. The object, however, is still here.';
+export const FUTURE = 'This certificate has not been issued yet. The object, however, is still here.';
+const FAILURE_LINKS = [
+  ['Verify a certificate', '/verify'],
+  ['Check an object', '/'],
+];
+
+/**
+ * A not-located or future result, on `/c/` or Verify: the sentence in title type and two text
+ * links, Verify a certificate and Check an object. No certificate is drawn.
+ */
+export function failure(sentence) {
+  const section = el('section', 'result result-failure');
+  const p = el('p', 'result-sentence title', sentence);
+  p.tabIndex = -1;
+  const links = el('p', 'result-links');
+  FAILURE_LINKS.forEach(([label, href], i) => {
+    const a = el('a', '', label);
+    a.href = href;
+    if (i) links.append(' · ');
+    links.append(a);
+  });
+  section.append(p, links);
+  return section;
+}

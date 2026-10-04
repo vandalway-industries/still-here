@@ -17,12 +17,26 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open until E6 builds Verify. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open on its spec's clock race (the C2 paused-clock change); E6 (reopen and verify) is closed. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
-marked `sh-placeholder` that say they are being prepared.
+marked `sh-placeholder` that say they are being prepared. `/verify` and `/c/` are built.
 
 ### What changed
 
+- E6 (`still-here-xws`) closed through the gate. `/verify` now verifies: type the identifier
+  (any case, `o` for zero, with or without `SH-`) and the name, press Verify or Enter, and it states
+  the issue in UTC. The order of judgment is one module, `src/js/judge.js`, used by Verify and by
+  `/c/`: a malformed identifier, then a name that does not match (or is over 80 code points) get
+  the not-located sentence; only a matching name is then judged for the future (more than five
+  minutes ahead of this device's clock). Failures draw nothing and offer "Verify a certificate" and
+  "Check an object". With a field empty, Verify is greyed and pressing it asks for both. Bare `/c/`
+  is the same form. Checked: unit 7/7 twice (including every substitution and swap of the
+  published vectors); the verify spec and the W2 walk, steps 1-7, 40 passed and 2 skipped in each
+  of two runs, and again in the close gate; links 19 pages, 0 broken.
+- E5 after E6: item 4 now passes in all six projects in both runs and is flipped. BROWSER PASS is
+  still held: in Firefox (both runs) and once in WebKit, the spec's issuing page pressed at :01 or
+  :02 while its fake clock ran on, so the certificate it redraws from is not the one it issued. The
+  same paused-clock change for C2 covers it. Chromium 6/6 both runs.
 - E5 (`still-here-wlr`) built and held open on item 4. Copy certificate link now works: it copies
   the link and says "Certificate link copied."; where the browser refuses the clipboard it shows
   "Copy this link to keep the certificate:" with the link beneath it in a read-only box, already
@@ -96,7 +110,7 @@ marked `sh-placeholder` that say they are being prepared.
 
 ### What's next
 
-1. E2 to E4 wait on C2; E5 waits on E6 (item 4 plays Verify). E6, E7 next. Before the next
+1. E2 to E5 wait on C2 (E5 on the paused-clock change for its spec too). E7 next. Before the next
    browser run, check this computer's clock is steady: a 75 s watch of `Date.now()` against
    `performance.now()` should show no jump.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
@@ -148,3 +162,4 @@ marked `sh-placeholder` that say they are being prepared.
 - 2026-10-04 — E4 built and held open on four test questions for C2. (Martin, 2026-10-04)
 - 2026-10-04 — E4 item 4 figure corrected (1.04% before, 0.65% Chromium after per-glyph lines); candidate re-rendered. (Martin, 2026-10-04)
 - 2026-10-04 — E5 built; the link, Copy and its fallback, `/c/` redrawn; held open on item 4 until E6. (Martin, 2026-10-04)
+- 2026-10-04 — E6 closed; Verify and bare `/c/` built; E5 item 4 flipped, held on its clock race. (Martin, 2026-10-04)

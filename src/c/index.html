@@ -6,7 +6,6 @@
 <!-- shell:head -->
 <title>Certificate — STILL HERE</title>
 <meta name="description" content="Certificate, from STILL HERE.">
-<meta name="sh-placeholder" content="true">
 <link rel="preload" href="/fonts/CormorantGaramond-Medium.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/CormorantGaramond-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 </head>
@@ -15,9 +14,21 @@
 <main>
   <div class="wrap">
     <div class="page-intro">
-      <h1 class="display">Certificate</h1>
-      <p class="certificate-intro">This page is being prepared for publication. Its address is already here.</p>
+      <h1 class="display">Verify a certificate</h1>
     </div>
+    <form class="verify" autocomplete="off" novalidate>
+      <div class="verify-field">
+        <label class="label" for="verify-identifier">Certificate identifier</label>
+        <input id="verify-identifier" name="identifier" type="text" spellcheck="false" autocapitalize="characters" autocomplete="off" placeholder="SH-XXXX-XXXX-XXXX">
+      </div>
+      <div class="verify-field">
+        <label class="label" for="verify-name">Object name</label>
+        <input id="verify-name" name="name" type="text" spellcheck="false" autocapitalize="sentences" autocomplete="off">
+      </div>
+      <button class="button-primary" type="submit" aria-disabled="true">Verify</button>
+      <p class="check-note verify-note" aria-live="polite"></p>
+    </form>
+    <div class="verify-outcome" aria-live="polite"></div>
     <div class="certificate-view" aria-live="polite" hidden></div>
   </div>
 </main>
