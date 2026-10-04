@@ -12,7 +12,7 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (T0 at `d8d6ab3`; tests re-tagged `specs-v2`) · **Phase:** 0 — Promote, gates, records filed
+**Branch:** `main` · **HEAD:** see `git log -1` (T0 at `d8d6ab3`; tests re-tagged `specs-v2`) · **Phase:** 1 — Design system, golden candidates
 
 ### Current state
 
@@ -24,6 +24,18 @@ pass; every later bead's tests fail, as they should until the bead is built. Not
 is built beyond two placeholder pages.
 
 ### What changed
+
+- DS1 (`still-here-hlw`) is built and stays open on two items it cannot pass as written.
+  `scripts/tokens.mjs` writes `src/css/tokens.css` and `src/js/tokens.js` from `DESIGN.md`'s front
+  matter on every build; `scripts/fonts.py` cut the six static faces (Inter 400, Inter Tight 600
+  and 700, JetBrains Mono 500, Cormorant Garamond 500 and 600) as TTF and WOFF2 into `src/fonts/`
+  with each family's OFL and `coverage.json`. Its test: items 1 and 3 pass; items 2 and 4 fail.
+- Item 4: Cormorant Garamond has no Greek. Only Δ, Ω, μ and π are in it, in the Google Fonts
+  copy and in the foundry's own releases 3.609 and 4.002. Cyrillic, Latin and Latin Extended are
+  all there. No other face was put in its place. This goes to the C2 packet as a decision.
+- Item 2: the linter reports `"errors": 0` and exits 0, but version 0.3.0 always answers in JSON
+  (even with `--format=text`), and the test looks for the words "0 errors". Every font check in
+  the test passes. The test needs a re-tag; it goes in the C2 packet.
 
 - The Phase 0 gate review found eighteen acceptance items held too loosely by the tests. They are
   tightened and re-tagged `specs-v2`; `.bd-gate` locks there. The list is in
@@ -44,8 +56,9 @@ is built beyond two placeholder pages.
 
 ### What's next
 
-1. The Phase 0 exit-gate review.
-2. Phase 1: DS1 (tokens and fonts) first.
+1. The C2 packet carries DS1's two items: Greek for the certificate face, and the linter test's
+   re-tag. DS1 closes when both are settled.
+2. DS2–DS6, on the tokens and faces DS1 has written.
 
 ### Waiting on Clive
 
@@ -60,7 +73,7 @@ is built beyond two placeholder pages.
   page is ours before they run.
 - X5 needs `@axe-core/playwright`. It is not installed yet, because every package needs its row
   in `docs/licences.md`; X5 adds both.
-- Cormorant Garamond may not cover Greek, which DS1 item 4 requires. DS1 will find out.
+- Cormorant Garamond does not cover Greek (DS1 item 4). See What changed.
 - The full unit run (`node --test 'tests/unit/**/*.test.ts'`) takes about two minutes: 220 tests,
   51 pass, 157 fail, 12 skipped, every failure in a bead not yet built. One earlier full run had
   G2's `.beads/` check fail because a bead comment was still being written out to
@@ -75,3 +88,4 @@ is built beyond two placeholder pages.
 - 2026-10-04 — G1 and G2 closed; scaffold, local Pages server, records filed. (Martin, 2026-10-04)
 - 2026-10-04 — T0 closed; every test written red and locked at specs-v1. (Martin, 2026-10-04)
 - 2026-10-04 — Tests tightened after the Phase 0 gate review; re-tagged specs-v2. (Martin, 2026-10-04)
+- 2026-10-04 — DS1 built; held open on Greek coverage and the linter test's wording, both for C2. (Martin, 2026-10-04)

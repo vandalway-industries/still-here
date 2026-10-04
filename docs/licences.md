@@ -40,6 +40,27 @@ happens. Optional packages are platform builds npm installs only on the matching
 |---|---|---|---|
 | OKF validator (`okf_validate.py`) | OKF toolkit 0.3.3 | MIT (`tools/okf/LICENSE`) | `tools/okf/`; checks the gum graph bundle. Needs PyYAML. |
 
+## Fonts shipped with the site
+
+Static instances cut by `scripts/fonts.py` from the Google Fonts repository's `ofl/` folders at
+commit `9710da1e`, each download checked against its SHA-256. Each family's licence sits beside
+its files in `src/fonts/` and is copied into `site/fonts/` with them.
+
+| Font | Faces | Licence | Where |
+|---|---|---|---|
+| Inter | 400 | OFL-1.1 (`src/fonts/Inter-OFL.txt`) | Body and interface text |
+| Inter Tight | 600, 700 | OFL-1.1 (`src/fonts/InterTight-OFL.txt`) | Headlines, the wordmark |
+| JetBrains Mono | 500 | OFL-1.1 (`src/fonts/JetBrainsMono-OFL.txt`) | Labels, verification lines, identifiers |
+| Cormorant Garamond | 500, 600 | OFL-1.1 (`src/fonts/CormorantGaramond-OFL.txt`) | The certificate |
+
+## Tools run by hand (not installed by npm)
+
+| Tool | Version | Licence | Where |
+|---|---|---|---|
+| fontTools (Python) | 4.61.1 | MIT | `scripts/fonts.py` instances the faces; run through `uv run --no-project --with fonttools==4.61.1 --with brotli==1.1.0` |
+| Brotli (Python) | 1.1.0 | MIT | WOFF2 compression for `scripts/fonts.py` |
+
 ## Changelog
 
 - 2026-10-04 — Written at G1 with the first lockfile. (Jules, 2026-10-04)
+- 2026-10-04 — DS1: the four font families and the two tools that cut them. (Jules, 2026-10-04)

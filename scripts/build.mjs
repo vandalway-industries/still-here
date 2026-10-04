@@ -4,6 +4,7 @@
 import { cpSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { generateTokens } from './tokens.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'src');
@@ -11,6 +12,11 @@ const OUT = join(ROOT, 'site');
 
 if (relative(ROOT, OUT) !== 'site') throw new Error('build output must be site/');
 if (!existsSync(SRC)) throw new Error('src/ is missing');
+
+// The design tokens first: src/css/tokens.css and src/js/tokens.js from DESIGN.md's front matter
+// (rewritten only when DESIGN.md changed them).
+const regenerated = generateTokens(ROOT);
+if (regenerated.length) console.log(`tokens: wrote ${regenerated.join(', ')}`);
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
