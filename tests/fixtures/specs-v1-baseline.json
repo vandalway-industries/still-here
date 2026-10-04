@@ -1,0 +1,518 @@
+{
+  "tag": "specs-v1",
+  "recorded": "2026-10-04",
+  "unit": {
+    "tests/unit/still-here-17d-gum-graph.test.ts": {
+      "pass": 1,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-1t0-status-records.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-2d9-serve-pages.test.ts": {
+      "pass": 6,
+      "fail": 0,
+      "skip": 0
+    },
+    "tests/unit/still-here-382-readme.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-3a3-input-rules.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-3xf-certificate-data.test.ts": {
+      "pass": 1,
+      "fail": 5,
+      "skip": 1
+    },
+    "tests/unit/still-here-3yo-research.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-48f-release-scan.test.ts": {
+      "pass": 4,
+      "fail": 1,
+      "skip": 0
+    },
+    "tests/unit/still-here-540-seeds.test.ts": {
+      "pass": 6,
+      "fail": 0,
+      "skip": 0
+    },
+    "tests/unit/still-here-5ki-enterprise.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-5v0-dns-prep.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-62x-continuity.test.ts": {
+      "pass": 5,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-6m0-workflow.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-6t3-counter.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-7i1-correspondence.test.ts": {
+      "pass": 3,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-8je-inventory.test.ts": {
+      "pass": 1,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-9uk-candidates.test.ts": {
+      "pass": 1,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-9xd-c2-packet.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-aac-derivatives.test.ts": {
+      "pass": 1,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-agb-promote.test.ts": {
+      "pass": 9,
+      "fail": 0,
+      "skip": 0
+    },
+    "tests/unit/still-here-aqv-vandalway-http.test.ts": {
+      "pass": 1,
+      "fail": 2,
+      "skip": 1
+    },
+    "tests/unit/still-here-azk-vandalway-markup.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-bdd-vandalway-final.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 1
+    },
+    "tests/unit/still-here-bhe-c4-packet.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-c29-portfolio.test.ts": {
+      "pass": 1,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-cq5-export.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-d7l-caddy-config.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 1
+    },
+    "tests/unit/still-here-dzc-offline.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-eg4-privacy.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-eli-a11y-static.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-esz-c3-packet.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-hlw-tokens.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-hng-terms.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-jw0-icons.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 0
+    },
+    "tests/unit/still-here-kdn-pages-api.test.ts": {
+      "pass": 0,
+      "fail": 6,
+      "skip": 0
+    },
+    "tests/unit/still-here-lsz-links.test.ts": {
+      "pass": 2,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-q15-presence.test.ts": {
+      "pass": 0,
+      "fail": 2,
+      "skip": 1
+    },
+    "tests/unit/still-here-r4r-case-studies.test.ts": {
+      "pass": 0,
+      "fail": 4,
+      "skip": 0
+    },
+    "tests/unit/still-here-skd-careers.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-sp7-certificate-svg.test.ts": {
+      "pass": 0,
+      "fail": 6,
+      "skip": 0
+    },
+    "tests/unit/still-here-tfr-post-launch.test.ts": {
+      "pass": 2,
+      "fail": 5,
+      "skip": 0
+    },
+    "tests/unit/still-here-tul-leadership.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 1
+    },
+    "tests/unit/still-here-u67-security-txt.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-vi0-vandalway-dns.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-wha-not-found.test.ts": {
+      "pass": 0,
+      "fail": 1,
+      "skip": 1
+    },
+    "tests/unit/still-here-wlr-link.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-xg9-staging-config.test.ts": {
+      "pass": 1,
+      "fail": 1,
+      "skip": 5
+    },
+    "tests/unit/still-here-xoi-guards.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-xws-verify.test.ts": {
+      "pass": 0,
+      "fail": 7,
+      "skip": 0
+    },
+    "tests/unit/still-here-yw2-identifier.test.ts": {
+      "pass": 1,
+      "fail": 5,
+      "skip": 0
+    },
+    "tests/unit/still-here-z4r-status.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "tests/unit/still-here-zhf-papers.test.ts": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    }
+  },
+  "playwright": {
+    "projects": [
+      "chromium"
+    ],
+    "files": {
+      "e2e/specs/still-here-382-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-3a3-ritual.spec.ts": {
+        "pass": 0,
+        "fail": 10,
+        "skip": 1
+      },
+      "e2e/specs/still-here-3a3-timing.spec.ts": {
+        "pass": 0,
+        "fail": 3,
+        "skip": 0
+      },
+      "e2e/specs/still-here-3a3-walk.spec.ts": {
+        "pass": 0,
+        "fail": 2,
+        "skip": 0
+      },
+      "e2e/specs/still-here-3xf-certificate.spec.ts": {
+        "pass": 0,
+        "fail": 5,
+        "skip": 0
+      },
+      "e2e/specs/still-here-3yo-research.spec.ts": {
+        "pass": 0,
+        "fail": 4,
+        "skip": 0
+      },
+      "e2e/specs/still-here-3yo-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-5ki-enterprise.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-5ki-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-6t3-counter.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 1
+      },
+      "e2e/specs/still-here-9uk-home-leadership-candidate.spec.ts": {
+        "pass": 0,
+        "fail": 3,
+        "skip": 0
+      },
+      "e2e/specs/still-here-aqv-walk.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 1
+      },
+      "e2e/specs/still-here-azk-vandalway-candidate.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-bdd-vandalway.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-bhe-walk.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 7
+      },
+      "e2e/specs/still-here-c29-portfolio.spec.ts": {
+        "pass": 0,
+        "fail": 3,
+        "skip": 0
+      },
+      "e2e/specs/still-here-c29-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-cq5-export.spec.ts": {
+        "pass": 0,
+        "fail": 4,
+        "skip": 0
+      },
+      "e2e/specs/still-here-cq5-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-d7l-vandalway-internal.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 1
+      },
+      "e2e/specs/still-here-dzc-offline.spec.ts": {
+        "pass": 0,
+        "fail": 2,
+        "skip": 0
+      },
+      "e2e/specs/still-here-dzc-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-eg4-privacy.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-eg4-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-eli-a11y.spec.ts": {
+        "pass": 0,
+        "fail": 3,
+        "skip": 0
+      },
+      "e2e/specs/still-here-hng-terms.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-hng-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-kdn-production.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 3
+      },
+      "e2e/specs/still-here-lsz-shell.spec.ts": {
+        "pass": 1,
+        "fail": 19,
+        "skip": 0
+      },
+      "e2e/specs/still-here-lsz-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-q15-presence.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-r4r-case-studies.spec.ts": {
+        "pass": 0,
+        "fail": 4,
+        "skip": 0
+      },
+      "e2e/specs/still-here-r4r-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-skd-careers.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-skd-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-sp7-certificate-candidate.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-tfr-walk.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 9
+      },
+      "e2e/specs/still-here-tul-leadership.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-tul-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-vi0-walk.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 1
+      },
+      "e2e/specs/still-here-wha-not-found.spec.ts": {
+        "pass": 1,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-wha-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-wlr-link.spec.ts": {
+        "pass": 0,
+        "fail": 6,
+        "skip": 0
+      },
+      "e2e/specs/still-here-xg9-staging.spec.ts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 3
+      },
+      "e2e/specs/still-here-xoi-guards.spec.ts": {
+        "pass": 1,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-xws-verify.spec.ts": {
+        "pass": 0,
+        "fail": 6,
+        "skip": 0
+      },
+      "e2e/specs/still-here-xws-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-z4r-status.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      },
+      "e2e/specs/still-here-z4r-walk.spec.ts": {
+        "pass": 0,
+        "fail": 1,
+        "skip": 0
+      }
+    }
+  }
+}
