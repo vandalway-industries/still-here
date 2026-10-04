@@ -62,7 +62,7 @@ superseded documents; nothing is deleted.
 
 ## Guardrails
 
-- Tests are written first and locked at the tag `specs-v1`. Never edit a locked test; a test that
+- Tests are written first and locked at the tag `specs-v1`, and after a recorded re-tag at the latest tag in `garage/pack/CHECKPOINTS.md` § Record (now `specs-v2`). Never edit a locked test; a test that
   must change goes to the next checkpoint packet.
 - Every commit passes the PII pre-commit hook at the public tier. Never bypass it.
 - The whole-tree scan, with the two approved exact allowances (our webmaster address on the 1997
