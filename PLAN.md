@@ -16,15 +16,10 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- C1: Clive reads `PRD.md` (diff at the top), this plan, `garage/pack/` and
-  `garage/pack/BLIND_READ.md`, and signs off or red-pens.
-- At C1 Clive also hands over the brand dossier's location and the continuity fixture
-  (`garage/pack/CONTENT_SEEDS.md` § Continuity fixture), and creates the `vandalway-industries`
-  organization in the browser (I-01).
+- Phase 0: G0, G1 and G2 closed. T0 next: every test file `garage/pack/ACCEPTANCE.md` names,
+  written red and tagged `specs-v1`.
 
 **Next:**
-- Phase 0: promote, gates, beads filed from `garage/pack/ACCEPTANCE.md`, record seeds filed, tests
-  written red and tagged `specs-v1`.
 - Phase 1: the design system and the four golden candidates, then the C2 packet.
 
 **Later:**
@@ -46,8 +41,8 @@ relations:
 
 ## Active phase
 
-**Phase 0 — Promote, gates, records filed.** Waiting on C1 (pack sign-off, the dossier's location,
-the continuity fixture) and the organization. Next move: Clive's sign-off, then G0.
+**Phase 0 — Promote, gates, records filed.** G0, G1 and G2 closed. Next move: T0, every test
+written red and tagged `specs-v1`.
 
 ## Build method
 
@@ -159,8 +154,8 @@ From the audit's list, mapped to the moment each is needed. Everything else is t
 - [x] G0: `git init -b main` in this folder; repository-local `user.email` set to the account's GitHub no-reply address before the first commit (I-02); promote skeleton per the factory README §2 (README, AGENTS.md carrying the company's working rules from `garage/pack/CONTENT_SEEDS.md` § AGENTS.md rules, the agent-file symlink factory §2 requires beside it, SESSION_STATUS, `docs/archive/`, `assets/` copied from `garage/assets/` plus the parent logo into `assets/brand/`); stop-gate and the PII pre-commit hook with `PII_PUBLIC=1` installed; `.bd-gate` (STRICT); `bd init` (push block stripped); `.gitignore`. Evidence: commit bb2b7fe; `tests/unit/still-here-agb-promote.test.ts` tests 1–4 and 6 pass; tree scan at the public tier clean.
 - [x] G0: `gh repo create vandalway-industries/still-here --private` once the organization exists; push over SSH (the token lacks the `workflow` scope). Evidence: `gh repo view` reads PRIVATE; `main` pushed over SSH at bb2b7fe; test 5 passes.
 - [x] G0: file every bead in `garage/pack/ACCEPTANCE.md` with `--acceptance` verbatim, by the character listed as its owner (owner address `<id>@vandalway.example`); `docs/bead-map.md`; the bead-versus-ACCEPTANCE equality test. Evidence: 53 beads; `tests/unit/still-here-agb-promote.test.ts` tests 7 and 8 pass.
-- [ ] G1: scaffold (`package.json` with exact pins, `scripts/build.mjs`, `scripts/serve-pages.mjs` reproducing research 3's URL table on port 5320, `e2e/playwright.config.ts` with Chromium, WebKit and Firefox, `e2e/helpers/` for the walk substitutes); install Firefox for Playwright; vendor the OKF validator.
-- [ ] G2: file the record seeds into `company/` per `garage/pack/CONTENT_SEEDS.md` § Records (D11–D13); copy the continuity fixture into `tests/fixtures/`; validate the tracker by `bd import` into a throwaway database; the tracker never enters `.beads/`.
+- [x] G1: scaffold (`package.json` with exact pins, `scripts/build.mjs`, `scripts/serve-pages.mjs` reproducing research 3's URL table on port 5320, `e2e/playwright.config.ts` with Chromium, WebKit and Firefox, `e2e/helpers/` for the walk substitutes); install Firefox for Playwright; vendor the OKF validator. Evidence: commit 6934d93; `tests/unit/still-here-2d9-serve-pages.test.ts` 6/6; Firefox and the WebKit revision Playwright 1.59.1 expects installed; G1 closed.
+- [x] G2: file the record seeds into `company/` per `garage/pack/CONTENT_SEEDS.md` § Records (D11–D13); copy the continuity fixture into `tests/fixtures/`; validate the tracker by `bd import` into a throwaway database; the tracker never enters `.beads/`. Evidence: commit f8e7f89; `tests/unit/still-here-540-seeds.test.ts` 6/6 (throwaway import: 55 issues; `.beads/` unchanged); continuity check 0 matches; G2 closed.
 - [ ] T0: a separate test-author session writes every test file named in `ACCEPTANCE.md`, named with the real bead ids; the full run is red except Phase 0's; commit; tag `specs-v1`.
 
 #### Bar
@@ -390,3 +385,4 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - 2026-10-03 — C1 signed by Clive (I-13): pack approved; ceiling 1,400; phone checklist as written. (Jules, 2026-10-03)
 - 2026-10-03 — G0: 53 beads filed and mapped in `docs/bead-map.md`; C1 recorded in `garage/pack/CHECKPOINTS.md`. (Jules, 2026-10-03)
 - 2026-10-04 — G0: first commit bb2b7fe, private repository created and pushed over SSH; G0 closed. (Jules, 2026-10-04)
+- 2026-10-04 — G1 and G2 closed: scaffold, local Pages server, browser config and walk substitutes (6934d93); the sample week's records, staff, inventory, gum graph seed, tracker schema and the continuity check (f8e7f89). (Jules, 2026-10-04)

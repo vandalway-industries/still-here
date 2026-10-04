@@ -12,27 +12,29 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (G0 landed at `bb2b7fe`) · **Phase:** 0 — Promote, gates, records filed
+**Branch:** `main` · **HEAD:** see `git log -1` (G1 at `6934d93`, G2 at `f8e7f89`) · **Phase:** 0 — Promote, gates, records filed
 
 ### Current state
 
-The repository is promoted, committed and pushed: `vandalway-industries/still-here`, private,
-reached over SSH. Every section of `garage/pack/ACCEPTANCE.md` is a bead, 53 in all, each filed by
-its owner; `docs/bead-map.md` has the ids. The PII pre-commit hook runs at the public tier with two
-approved exact allowances (our webmaster address on the 1997 domain, GitHub's SSH host); the tree
-scan is clean. The landing gate is installed and `.bd-gate` is STRICT. G0 is closed. C1 is signed
-and recorded in `garage/pack/CHECKPOINTS.md`. Nothing of the website is built.
+G0, G1 and G2 are closed. The repository builds (`npm run build` writes `site/` and nothing else)
+and the local Pages server answers on port 5320 the way GitHub Pages does. Playwright 1.59.1 is
+pinned with Chromium, WebKit and Firefox installed; the walk-substitute helpers are in
+`e2e/helpers/`. The sample week's records are filed in `company/`, verbatim and dated Monday
+2026-09-28 to Friday 2026-10-02, with the staff list, the inventory and the gum graph seed. The
+tracker validates against `company/tracker/schema.json` and loads 55 issues into a throwaway
+database; our own `.beads/` is untouched. The continuity check finds nothing. Nothing of the
+website is built beyond two placeholder pages.
 
 ### What changed
 
-- G0 (`still-here-agb`) closed: `tests/unit/still-here-agb-promote.test.ts` 9/9.
-- First commit `bb2b7fe`; private repository created; `main` pushed over SSH.
+- G1 (`still-here-2d9`) closed: `tests/unit/still-here-2d9-serve-pages.test.ts` 6/6.
+- G2 (`still-here-540`) closed: `tests/unit/still-here-540-seeds.test.ts` 6/6.
+- Unit suite 21/21. PII tree scan at the public tier clean. Drift check clean.
 
 ### What's next
 
-1. G1 (`still-here-2d9`): the scaffold and the local Pages server.
-2. G2 (`still-here-540`): record seeds filed into `company/`, the continuity fixture copied.
-3. T0 (`still-here-64t`): every test written red, tagged `specs-v1`.
+1. T0 (`still-here-64t`): every test written red, tagged `specs-v1`.
+2. Phase 1: DS1 (tokens and fonts) first.
 
 ### Waiting on Clive
 
@@ -40,14 +42,18 @@ and recorded in `garage/pack/CHECKPOINTS.md`. Nothing of the website is built.
 
 ### Surprises / debt
 
-- `bd init` points git's hooks at `.beads/hooks` and commits its own files. We undid both: git
-  uses `.git/hooks/pre-commit`, which runs the beads hook first and then the PII gate.
+- Playwright 1.59.1 wanted a WebKit build we did not have; the one on disk belonged to another
+  version. Installed it with Firefox. The G1 test now checks each engine's executable.
+- The tracker schema check found two closed issues (sh-031, sh-053) whose last update came before
+  their closing. Their `updated_at` now equals `closed_at`. ISSUE-001's quotation marks in sh-051
+  now match the record.
+- `checkInstallable()` and `checkNullMx()` are written but have nothing to check yet: the first
+  waits for the offline work (X4), the second for the null MX record on vandalwayind.com.
 - `bd` records a bead's owner from the git author address, so beads are filed and updated with the
-  owner's address as `GIT_AUTHOR_EMAIL` and `--actor`.
-- The PII allowance lives in the uncommitted pre-commit hook; `AGENTS.md` carries the exact
-  tree-scan command so a fresh clone can repeat it.
+  owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`.
 
 ## Changelog
 
 - 2026-10-03 — G0: repository promoted, 53 beads filed, gates installed; first commit held at the PII gate. (Martin, 2026-10-03)
 - 2026-10-04 — G0 closed; first commit, private repository, push over SSH. (Martin, 2026-10-04)
+- 2026-10-04 — G1 and G2 closed; scaffold, local Pages server, records filed. (Martin, 2026-10-04)
