@@ -221,6 +221,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [x] E6: `/c/` and `/verify`: reopening is verifying; the Verify cases in their order (Q7, D3); failure and empty states.
   Evidence: `still-here-xws` closed through the gate; `src/js/judge.js` (one order of judgment), `src/js/verify.js`, `src/js/certificate-page.js`; unit 7/7 twice (item 5's every substitution and swap); verify spec 6/6 in each of six projects and the W2 walk (steps 1-7, step 7 by decodeQr) in Chromium and WebKit at 1440 and 390, both green in two runs (40 passed, 2 skipped each) and again in the gate; `/verify` and bare `/c/` are no longer placeholders; `npm run check:links` 19 pages, 0 broken.
 - [ ] E7: Your Presence Portfolio.
+  Evidence (2026-10-04): `still-here-c29` CODE PASS and items 3-6 flipped, held open on BROWSER PASS and items 1-2. `/portfolio` (`src/js/portfolio.js`) reads the store the ritual writes, unchanged. Unit 4/4 twice. Portfolio spec plus the W3 walk, two runs in six projects: 19 and 20 passed, 2 skipped, 3 and 2 failed. W3 (steps 1-5, step 4 by clearSiteData) passed in Chromium and WebKit at 1440 and 390 both times. Every miss is spec test 1-2's first issue, 'Car keys', landing at 10:52:01 under the spec's running clock (stored SH-00PP-9AHB-518D, expected SH-00PP-9AGV-4P4X): C2 test change 4, which this spec needs too.
 - [ ] Walks W4.1–2, W1, W2, W3, W8 played by the critic in Chromium and WebKit at 390×844 and 1440×900.
 
 #### Bar
@@ -421,3 +422,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E4 item 4 measured pixel for pixel: 1.04% / 1.01% (not 0.17%); every certificate line now set glyph by glyph, 0.65% Chromium, 1.00% WebKit; candidate re-rendered. Item 4 still waits on C2. (Jules, 2026-10-04)
 - 2026-10-04 — E5 built: the certificate link, Copy certificate link with its refused fallback, and `/c/#…` redrawn byte for byte; held open on item 4 until E6's Verify form. (Jules, 2026-10-04)
 - 2026-10-04 — E6 closed: `/c/` and `/verify`, one judgment in Verify's order; E5 item 4 flipped, E5 held on its spec's press-second race (C2 test change 4). (Jules, 2026-10-04)
+- 2026-10-04 — E7 built: Your Presence Portfolio; held open on its spec's press-second race (C2 test change 4). (Jules, 2026-10-04)

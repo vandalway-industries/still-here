@@ -17,12 +17,23 @@ relations: {}
 ### Current state
 
 Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open on its spec's clock race (the C2 paused-clock change); E6 (reopen and verify) is closed. Every page the
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open on its spec's clock race (the C2 paused-clock change); E6 (reopen and verify) is closed; E7 (Your Presence Portfolio) is built and held open on the same clock race in its spec. Every page the
 PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
-marked `sh-placeholder` that say they are being prepared. `/verify` and `/c/` are built.
+marked `sh-placeholder` that say they are being prepared. `/verify`, `/c/` and `/portfolio` are built.
 
 ### What changed
 
+- E7 (`still-here-c29`) built and held open. `/portfolio` lists every certificate issued on this
+  device, newest first: the name, "3 October 2026, 05:52 · America/Chicago", the identifier, and
+  Open, Download PDF and Download PNG. Each file is drawn again from the four stored facts when
+  its button is pressed. An empty, cleared or corrupt store shows "Nothing has been certified on
+  this device yet. Everything you certify here stays here." The stored format is unchanged from
+  the ritual's. Checked: unit 4/4 twice. W3 passed whole in Chromium and WebKit at both sizes in
+  two runs. The portfolio spec missed 3 and then 2 times, in Firefox both runs and WebKit once:
+  each time the spec's first check, "Car keys", was issued at 10:52:01 under its running test
+  clock, so the identifier it looks for differs. It needs the paused-clock change too. Regressions:
+  the DS4, DS5, E0, E3, E5 and E6 specs gave 236 passed, 20 skipped and 2 failed (E3's known
+  Firefox clock race); the units are as before.
 - E6 (`still-here-xws`) closed through the gate. `/verify` now verifies: type the identifier
   (any case, `o` for zero, with or without `SH-`) and the name, press Verify or Enter, and it states
   the issue in UTC. The order of judgment is one module, `src/js/judge.js`, used by Verify and by
@@ -110,7 +121,7 @@ marked `sh-placeholder` that say they are being prepared. `/verify` and `/c/` ar
 
 ### What's next
 
-1. E2 to E5 wait on C2 (E5 on the paused-clock change for its spec too). E7 next. Before the next
+1. E2 to E5 and E7 wait on C2 (E5 and E7 on the paused-clock change for their specs). The Phase 2 exit critic is next. Before the next
    browser run, check this computer's clock is steady: a 75 s watch of `Date.now()` against
    `performance.now()` should show no jump.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
@@ -163,3 +174,4 @@ marked `sh-placeholder` that say they are being prepared. `/verify` and `/c/` ar
 - 2026-10-04 — E4 item 4 figure corrected (1.04% before, 0.65% Chromium after per-glyph lines); candidate re-rendered. (Martin, 2026-10-04)
 - 2026-10-04 — E5 built; the link, Copy and its fallback, `/c/` redrawn; held open on item 4 until E6. (Martin, 2026-10-04)
 - 2026-10-04 — E6 closed; Verify and bare `/c/` built; E5 item 4 flipped, held on its clock race. (Martin, 2026-10-04)
+- 2026-10-04 — E7 built; the portfolio, held on its spec's clock race. (Martin, 2026-10-04)

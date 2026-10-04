@@ -896,3 +896,57 @@ a.button-secondary {
   max-width: var(--sh-space-text-max);
   padding-bottom: var(--sh-space-xxl);
 }
+
+/* ── Your Presence Portfolio (E7) ───────────────────────────────────────────────────────────── */
+.portfolio {
+  max-width: var(--sh-space-text-max);
+  margin-top: var(--sh-space-lg);
+  padding-bottom: var(--sh-space-xxl);
+}
+
+.portfolio-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.portfolio-entry {
+  padding: var(--sh-space-md);
+  background: var(--sh-color-surface);
+}
+
+.portfolio-entry p {
+  margin: 0;
+}
+
+.portfolio .portfolio-name {
+  font-family: var(--sh-type-headline-font-family);
+  font-size: 22px;
+  font-weight: var(--sh-type-headline-font-weight);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.portfolio .portfolio-date {
+  margin-top: 4px;
+  color: var(--sh-color-graphite-muted);
+}
+
+.portfolio .portfolio-identifier {
+  margin-top: 4px;
+  font-family: var(--sh-type-identifier-font-family);
+  font-size: var(--sh-type-identifier-font-size);
+  font-weight: var(--sh-type-identifier-font-weight);
+  letter-spacing: var(--sh-type-identifier-letter-spacing);
+}
+
+.portfolio .portfolio-actions {
+  margin-top: var(--sh-space-md);
+}
+
+.portfolio .export-note {
+  margin-top: 12px;
+}

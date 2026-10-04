@@ -9,7 +9,7 @@
 // replaces the sentence rather than adding another. (Jules, 2026-10-04)
 
 export const ACTIONS = ['Download PDF', 'Download PNG', 'Copy certificate link', 'Check another'];
-const PREPARING = { pdf: 'Preparing PDF…', png: 'Preparing PNG…' };
+export const PREPARING = { pdf: 'Preparing PDF…', png: 'Preparing PNG…' };
 const EXPORT_FAILED = 'The file could not be prepared. Your certificate is still here: try again, or copy its link.';
 export const COPIED = 'Certificate link copied.';
 export const CLIPBOARD_REFUSED = 'Copy this link to keep the certificate:';
@@ -63,9 +63,10 @@ export function certificateFaces(name = '') {
 /**
  * Download PDF or Download PNG (E4): while the file is prepared the button reads "Preparing PDF…"
  * or "Preparing PNG…" and is aria-disabled, and a second tap does nothing. A failure restores the
- * button and puts the export-failure sentence beneath the buttons; nothing else changes.
+ * button and puts the export-failure sentence beneath the buttons; nothing else changes. `file`
+ * is the drawn certificate, or a function that draws it when the button is pressed (the portfolio).
  */
-function exporter(kind, label, busyLabel, file, actions) {
+export function exporter(kind, label, busyLabel, file, actions) {
   const b = el('button', 'button-secondary', label);
   b.type = 'button';
   let busy = false;
@@ -77,7 +78,7 @@ function exporter(kind, label, busyLabel, file, actions) {
     actions.parentElement?.querySelector('.export-note')?.remove();
     try {
       const { exportCertificate } = await import('./export.js');
-      await exportCertificate(kind, file);
+      await exportCertificate(kind, typeof file === 'function' ? await file() : file);
     } catch {
       if (actions.isConnected) actions.after(el('p', 'export-note body-sm', EXPORT_FAILED));
     } finally {
