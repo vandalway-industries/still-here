@@ -12,33 +12,34 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (T0 at `d8d6ab3`; tests re-tagged `specs-v2`) · **Phase:** 1 — Design system, golden candidates
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v2`) · **Phase:** 2 — The shell, the ritual and the certificate
 
 ### Current state
 
-Phase 1's work is done apart from DS1, which stays open on two items that went to C2. DS2 to DS7
-are closed. All five golden candidates are on disk in `garage/pack/exemplars/candidates/`: the
-certificate (PNG and PDF), home at 390 and 1440, leadership at 1440, and the 1997 page. The C2
-packet is out at `docs/checkpoints/c2-packet.md`. The run carries on into Phase 2; the **[after
-C2]** steps wait for Clive's answer.
+Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
+at `docs/checkpoints/c2-packet.md`). Phase 2 is active and E0, the shell, is closed. Every page the
+PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
+marked `sh-placeholder` that say they are being prepared. E1 is next.
 
 ### What changed
 
-- DS6 merged (8ef592c) and closed: the 1997 page and its guestbook in `vandalwayind/`, five
-  archived pages in `garage/pack/exemplars/1997/` with contact details withheld (`SOURCES.md`),
-  and the `vandalway-1997.png` candidate. Unit 4/4; candidate spec 4/4 in Chromium and WebKit.
-- DS7 (`still-here-9xd`) closed. The C2 packet links each candidate with the four C2 questions under
-  it and the points to check, three decisions (Greek in the certificate face, Lucas's display name,
-  the hero crop box), two test changes for red-pen (specs-v2 for sight; the DS1 linter assertion),
-  two calls made under a rule, and the turns used (Phase 0 61, Phase 1 22, from the run's log).
-  `tests/unit/still-here-9xd-c2-packet.test.ts` 2/2.
+- E0 (`still-here-lsz`) closed. The header, menu, footer, Content-Security-Policy and Open Graph
+  tags live once, in `src/_shell/`, and the build includes them into every page; a page without
+  the markers stops the build. The 404 carries the fixed sentence and Return home. The Open Graph
+  picture is now `src/images/hero-og-1200.jpg` (renamed from `og-1200.jpg`; `scripts/derivatives.py`
+  writes the new name). The link checker is `npm run check:links` after `npm run build`. The menu
+  button reads "Menu" and "Close menu". Short pages keep the footer at the bottom of the window.
+- Checked: E0 unit 6/6; shell and walk specs 124 passed, 2 skipped (the walk runs in Chromium and
+  WebKit only); W4.1–2 played; G0, G1, G2, T0, DS2 to DS7 and X3 unit tests pass; the DS4, DS5,
+  DS6 and X3 specs pass; DS1 still fails only its two C2 items, as before; 19 pages, 0 broken links.
+  In a browser at 390 and 1440 the only console error is the 404 page reporting its own 404.
 
 ### What's next
 
-1. Phase 2 (E0 onward) on everything that does not wait for C2.
-2. When Clive answers, his words go into `garage/pack/CHECKPOINTS.md` § Record that day; approved
-   candidates are copied to their golden names; the critic runs the waiting blind picks; any test
-   change he red-pens goes to a test-author session and a re-tag.
+1. E1, the identifier, then E2 to E7 in order.
+2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
+   approved candidates are copied to their golden names; the critic runs the waiting blind picks;
+   any test change he red-pens goes to a test-author session and a re-tag.
 
 ### Waiting on Clive
 
@@ -77,3 +78,4 @@ C2]** steps wait for Clive's answer.
 - 2026-10-04 — DS1 built; held open on Greek coverage and the linter test's wording, both for C2. (Martin, 2026-10-04)
 - 2026-10-04 — DS2–DS5 closed; three of the four golden candidates on disk. (Martin, 2026-10-04)
 - 2026-10-04 — DS6 merged and closed; DS7 closed; the C2 packet is out. (Martin, 2026-10-04)
+- 2026-10-04 — E0 closed; the shell on every page, placeholders for the pages to come, the 404. (Martin, 2026-10-04)

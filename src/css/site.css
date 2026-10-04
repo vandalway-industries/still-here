@@ -24,6 +24,14 @@ body {
   line-height: var(--sh-type-body-line-height);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* the footer sits at the bottom of a page shorter than the window */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > main {
+  flex: 1 0 auto;
 }
 
 img {
@@ -527,4 +535,32 @@ a {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: var(--sh-space-gutter-desktop);
   }
+}
+
+/* ── Pages from the shell: lists of sub-pages, the 404 (E0) ─────────────────────────────────── */
+.page-intro h1.headline {
+  margin: 0;
+}
+
+.page-links {
+  list-style: none;
+  margin: var(--sh-space-xl) 0 0;
+  padding: 0;
+}
+
+.page-links li + li {
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.page-links a {
+  display: block;
+  padding: var(--sh-space-md) 0;
+  font-family: var(--sh-type-title-font-family);
+  font-size: var(--sh-type-title-font-size);
+  font-weight: var(--sh-type-title-font-weight);
+  line-height: var(--sh-type-title-line-height);
+}
+
+.not-found p a {
+  color: var(--sh-color-graphite);
 }

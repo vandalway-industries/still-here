@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Build the published site: copy src/ into site/, the one folder the Pages workflow uploads.
 // Writes inside site/ only. site/ is in .gitignore. Later phases add their steps here.
-import { cpSync, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateTokens } from './tokens.mjs';
@@ -28,8 +28,38 @@ rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 cpSync(SRC, OUT, {
   recursive: true,
-  // Nothing from the records, the pack or dotfiles reaches the site.
-  filter: (from) => !/(^|\/)\.[^/]/.test(relative(SRC, from)),
+  // Nothing from the records, the pack or dotfiles reaches the site; the shell's parts are
+  // included into the pages below, not published on their own.
+  filter: (from) => !/(^|\/)\.[^/]/.test(relative(SRC, from)) && relative(SRC, from).split('/')[0] !== '_shell',
 });
+
+// The shell (E0): every page carries the same head (CSP, Open Graph, icons, styles), header, menu
+// and footer, included from src/_shell/ at build time. A page missing a marker fails the build.
+const SHELL = Object.fromEntries(
+  ['head', 'header', 'footer'].map((k) => [k, readFileSync(join(SRC, '_shell', `${k}.html`), 'utf8').trimEnd()]),
+);
+const pages = [];
+const walkHtml = (dir) => {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkHtml(p);
+    else if (e.name.endsWith('.html')) pages.push(p);
+  }
+};
+walkHtml(OUT);
+for (const file of pages) {
+  const rel = relative(OUT, file);
+  const path = '/' + rel.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
+  let html = readFileSync(file, 'utf8');
+  for (const k of Object.keys(SHELL)) {
+    const marker = `<!-- shell:${k} -->`;
+    if (html.split(marker).length !== 2) throw new Error(`${rel}: needs exactly one ${marker}`);
+    let part = SHELL[k];
+    if (k === 'header') part = part.replace(`<a href="${path}">`, `<a href="${path}" aria-current="page">`);
+    html = html.replace(marker, () => part);
+  }
+  writeFileSync(file, html);
+}
+console.log(`shell: ${pages.length} pages`);
 if (!existsSync(join(OUT, '404.html'))) throw new Error('site/404.html was not written');
 console.log(`built site/ from src/`);

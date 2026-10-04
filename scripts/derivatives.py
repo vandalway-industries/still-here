@@ -3,7 +3,8 @@
 
 Reads the manifest's tables, takes each row's derivative widths, and writes WebP files named
 `<id>-<width>.webp` under src/images/ (the id is the file's stem; the hero is `hero`), plus the one
-Open Graph JPEG (`og-1200.jpg`, 1200 x 630). The hero is cropped to the manifest's source box first.
+Open Graph JPEG (`hero-og-1200.jpg`, 1200 x 630; named for the hero it is cut from). The hero is
+cropped to the manifest's source box first.
 
 Web copies carry no metadata (D21): images are re-encoded from pixels only, with no EXIF, XMP,
 ICC or content-credential chunks, and each file is checked against 250 KB; quality steps down
@@ -101,8 +102,8 @@ def main():
     top = (h - 630) // 2
     og = og.crop((0, top, 1200, top + 630))
     data = encode(og, 'jpeg')
-    (OUT / 'og-1200.jpg').write_bytes(data)
-    wrote.append(f'og-1200.jpg ({len(data) // 1024} KB)')
+    (OUT / 'hero-og-1200.jpg').write_bytes(data)
+    wrote.append(f'hero-og-1200.jpg ({len(data) // 1024} KB)')
     print('\n'.join(wrote))
 
 
