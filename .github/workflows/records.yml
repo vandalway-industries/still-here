@@ -1,0 +1,33 @@
+# The records check (PRD R40, R41; RC6). On every push and pull request: build site/ from a clean
+# install, then run the continuity check across company/ and site/ against both lists of the
+# continuity fixture, and the identifier check, which recomputes every certificate identifier in the
+# records and on the built pages with src/js/identifier.js, the module the site ships. Reads only;
+# deploys nothing. (Diane, 2026-10-05)
+name: Records
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  records:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Continuity, company/ and site/
+        run: node scripts/continuity-check.mjs --list all company site
+      - name: Identifiers, company/ and site/
+        run: node scripts/identifier-check.mjs
