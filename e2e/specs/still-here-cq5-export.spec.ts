@@ -64,10 +64,20 @@ test.describe('in Chromium and WebKit', () => {
     }
   });
 
-  test('6. Hebrew, Arabic, CJK and an emoji export without missing glyphs; "Café" stays vector text', async ({ page }) => {
+  test('6. Hebrew, Arabic, CJK and an emoji export without missing glyphs; "Café" stays vector text', async ({ page, browser, baseURL }) => {
     test.setTimeout(120_000);
+    // The on-screen block is compared at device scale 2 (C2 test change 7): at 390 and scale 1 the
+    // Hebrew name is 40 × 21 px, where a single pixel decides the comparison.
+    const scaled = await browser.newContext({
+      baseURL,
+      viewport: page.viewportSize() ?? undefined,
+      deviceScaleFactor: 2,
+      hasTouch: !!test.info().project.use.hasTouch,
+      locale: 'en-GB',
+      acceptDownloads: true,
+    });
     for (const name of ['שולחן', 'كرسي', '椅子', '🪑 chair']) {
-      const p = await page.context().newPage();
+      const p = await scaled.newPage();
       await issue(p, name, { at: AT });
       const block = p.locator('svg[viewBox="0 0 1100 850"] [data-field="name"]');
       const onScreen = await block.screenshot();
@@ -116,6 +126,7 @@ test.describe('in Chromium and WebKit', () => {
       expect(iou, `${name}: the exported name matches the screen's (no missing glyphs)`).toBeGreaterThanOrEqual(0.6);
       await p.close();
     }
+    await scaled.close();
     const p = await page.context().newPage();
     await issue(p, 'Café', { at: AT });
     const pdf = await openDownload(p, await fileOf(p, 'Download PDF'));

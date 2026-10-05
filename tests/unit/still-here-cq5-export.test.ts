@@ -84,41 +84,58 @@ test('2. the PDF: US Letter landscape, the three faces embedded as /FontFile2 un
   });
 });
 
-test('3. the PNG is 3,300 × 2,550 and its ink differs from a render without the faces by more than 20%', async () => {
+// Item 3 is measured on the text blocks only (C2, Decision 4): the union of every <text> element's
+// bounding box, in the 3,300 × 2,550 export's pixels (3 px per user unit, padded by 2 units).
+test('3. the PNG is 3,300 × 2,550 and, inside the text blocks, its ink differs from a render without the faces by more than 20%', async () => {
   await withSitePage(async (page) => {
     await issued(page, 'Folding chair');
     const { bytes } = await exportFile(page, 'Download PNG');
     const p = pngInfo(bytes);
     assert.deepEqual([p.width, p.height], [3300, 2550]);
     const r = await page.evaluate(async (png) => {
+      const W = 3300;
+      const H = 2550;
+      const live = document.querySelector('svg[viewBox="0 0 1100 850"]') as SVGSVGElement;
+      const boxes = [...live.querySelectorAll('text')].map((t) => {
+        const b = (t as SVGTextElement).getBBox();
+        return [b.x * 3 - 6, b.y * 3 - 6, b.width * 3 + 12, b.height * 3 + 12];
+      });
+      const inText = new Uint8Array(W * H);
+      for (const [x, y, w, h] of boxes) {
+        for (let yy = Math.max(0, Math.floor(y)); yy < Math.min(H, y + h); yy++) {
+          for (let xx = Math.max(0, Math.floor(x)); xx < Math.min(W, x + w); xx++) inText[yy * W + xx] = 1;
+        }
+      }
       const ink = async (src: string) => {
         const img = new Image();
         img.src = src;
         await img.decode();
         const c = document.createElement('canvas');
-        c.width = 3300;
-        c.height = 2550;
+        c.width = W;
+        c.height = H;
         const x = c.getContext('2d')!;
         x.fillStyle = '#fff';
-        x.fillRect(0, 0, 3300, 2550);
-        x.drawImage(img, 0, 0, 3300, 2550);
-        const d = x.getImageData(0, 0, 3300, 2550).data;
+        x.fillRect(0, 0, W, H);
+        x.drawImage(img, 0, 0, W, H);
+        const d = x.getImageData(0, 0, W, H).data;
         let n = 0;
-        for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] < 384) n++;
+        for (let q = 0; q < W * H; q++) if (inText[q] && d[q * 4] + d[q * 4 + 1] + d[q * 4 + 2] < 384) n++;
         c.width = 0;
         c.height = 0;
         return n;
       };
-      const svg = document.querySelector('svg[viewBox="0 0 1100 850"]')!.cloneNode(true) as SVGSVGElement;
-      svg.setAttribute('width', '3300');
-      svg.setAttribute('height', '2550');
+      const svg = live.cloneNode(true) as SVGSVGElement;
+      svg.setAttribute('width', String(W));
+      svg.setAttribute('height', String(H));
       // the same drawing with the faces withheld: an SVG image cannot reach the page's fonts
       const fallback = await ink('data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(new XMLSerializer().serializeToString(svg)))));
       const exported = await ink('data:image/png;base64,' + png);
-      return { fallback, exported };
+      return { fallback, exported, boxes: boxes.length };
     }, bytes.toString('base64'));
+    assert.ok(r.boxes > 0, 'the certificate has <text> blocks');
+    assert.ok(r.fallback > 0, 'the fallback render has ink inside the text blocks');
     const diff = Math.abs(r.exported - r.fallback) / r.fallback;
-    assert.ok(diff > 0.2, `ink differs by ${(diff * 100).toFixed(1)}% (bar: more than 20%)`);
+    assert.ok(diff > 0.2, `inside the text blocks, ink differs by ${(diff * 100).toFixed(1)}% (bar: more than 20%)`);
   });
 });
 

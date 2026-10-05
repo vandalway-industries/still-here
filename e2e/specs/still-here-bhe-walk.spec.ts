@@ -8,12 +8,13 @@ import { readCounterGif } from '../helpers/counter.ts';
 import { REPOSITORY, serveRepository } from '../helpers/markdown.ts';
 import { onlyEngines } from '../helpers/site.ts';
 import * as W from '../helpers/walks.ts';
-import { readFileSync } from 'node:fs';
+import { leadershipPeople } from '../helpers/staff.ts';
 
 onlyEngines('chromium', 'webkit');
 test.skip(!process.env.STAGING_URL, 'L5 walks on staging: set STAGING_URL (from the uncommitted .env.staging); skipped, not passed');
 const VW = process.env.VANDALWAY_INTERNAL_URL?.replace(/\/$/, '');
-const people = [...readFileSync(new URL('../../company/staff/staff.yaml', import.meta.url), 'utf8').matchAll(/^ {4}name: (.+)$/gm)].map((m) => ({ name: m[1].trim() }));
+// the twelve cards' names: the staff record's, Lucas's card reading "Lucas" (C2 red-pen)
+const people = leadershipPeople();
 
 test.beforeEach(async ({ context, browserName }) => {
   if (browserName === 'chromium') await context.grantPermissions(['clipboard-read', 'clipboard-write']);

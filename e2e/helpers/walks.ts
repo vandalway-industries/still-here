@@ -9,6 +9,7 @@
 // Locked at specs-v1; tests/unit/<T0>-specs.test.ts scans this file. (Diane, 2026-10-04)
 import { expect, test, type Browser, type BrowserContext, type Download, type Locator, type Page, type TestInfo } from '@playwright/test';
 import { readFileSync } from 'node:fs';
+import { offlineSite } from './offline.ts';
 import { checkInstallable, checkNullMx, clearSiteData, decodeQr, openDownload } from './substitutes.ts';
 import * as R from './reference.ts';
 import * as S from './strings.ts';
@@ -26,8 +27,9 @@ export type Walk = {
     name?: string;
     id?: string;
     link?: string;
-    pressedAt?: number;
     downloads: Record<string, Buffer>;
+    /** origins the walk served the site from besides the configured one (W6.8's private server) */
+    origins: string[];
   };
 };
 
@@ -40,7 +42,7 @@ export function startWalk(page: Page, browser: Browser, info: TestInfo): Walk {
     info,
     engine: browser.browserType().name(),
     phone: !!vp && vp.width < 600,
-    state: { downloads: {} },
+    state: { downloads: {}, origins: [] },
   };
 }
 
@@ -100,6 +102,39 @@ async function readToEnd(w: Walk): Promise<void> {
 
 async function zoneOf(page: Page): Promise<string> {
   return page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone);
+}
+
+/**
+ * Timing kept inside the page (C2 test change 5): the keypress and the moment each awaited text is
+ * inserted (or first shown), both by the page's own performance.now(). The test machine's wall
+ * clock is not used. Installed just before the press; reads nothing a person could not see.
+ */
+async function startPageTimer(page: Page, texts: string[]): Promise<void> {
+  await page.evaluate((wanted) => {
+    const t: { pressed: number; seen: Record<string, number> } = { pressed: -1, seen: {} };
+    (window as unknown as { __walkTimes: typeof t }).__walkTimes = t;
+    window.addEventListener('keydown', (e) => { if (e.key === 'Enter' && t.pressed < 0) t.pressed = performance.now(); }, { capture: true });
+    const shown = (el: Element) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+    const showing = (want: string) => [...document.body.querySelectorAll('*')].filter((el) => (el.textContent ?? '').trim() === want && shown(el));
+    // what already shows these texts before the press does not count as their arrival
+    const before = new Set(wanted.flatMap(showing));
+    const look = () => {
+      if (t.pressed < 0) return;
+      const now = performance.now();
+      for (const want of wanted) {
+        if (!(want in t.seen) && showing(want).some((el) => !before.has(el))) t.seen[want] = now;
+      }
+    };
+    new MutationObserver(look).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true });
+  }, texts);
+}
+
+/** The page's own times since the press, for each awaited text that has arrived. */
+async function pageTimes(page: Page): Promise<Record<string, number>> {
+  const t = await page.evaluate(() => (window as unknown as { __walkTimes?: { pressed: number; seen: Record<string, number> } }).__walkTimes ?? null);
+  expect(t, 'the in-page timer was installed before the press').not.toBeNull();
+  expect(t!.pressed, 'the in-page timer saw the keypress').toBeGreaterThanOrEqual(0);
+  return Object.fromEntries(Object.entries(t!.seen).map(([k, v]) => [k, v - t!.pressed]));
 }
 
 /** Check an object from the home page, by keyboard, and wait for the result. */
@@ -183,7 +218,7 @@ export async function W1_3(w: Walk): Promise<void> {
 export async function W1_4(w: Walk): Promise<void> {
   await test.step('W1.4 — Enter: the check starts, the form stops answering, the three lines arrive in order', async () => {
     w.state.zone ??= await zoneOf(w.page);
-    w.state.pressedAt = Date.now();
+    await startPageTimer(w.page, [S.RESULT_HEADING]);
     await box(w).press('Enter');
     await expect(w.page.getByText(S.LINES[0], { exact: true })).toBeVisible();
     // the box, the button and the examples stop answering
@@ -201,7 +236,9 @@ export async function W1_4(w: Walk): Promise<void> {
 export async function W1_5(w: Walk): Promise<void> {
   await test.step('W1.5 — four to five seconds after the press: the result, in full, on the home page', async () => {
     await expect(resultHeading(w)).toBeVisible({ timeout: 6_000 });
-    const elapsed = Date.now() - (w.state.pressedAt ?? Date.now());
+    // from the keypress to the result's insertion, timed inside the page
+    const elapsed = (await pageTimes(w.page))[S.RESULT_HEADING];
+    expect(elapsed, 'the in-page timer saw the result arrive').toBeDefined();
     expect(elapsed, 'the result arrives four to five seconds after the press').toBeGreaterThanOrEqual(3_900);
     expect(elapsed).toBeLessThanOrEqual(5_600);
     await expect(w.page.getByText(w.state.name!, { exact: true }).first()).toBeVisible();
@@ -636,8 +673,8 @@ export async function W5_3(w: Walk): Promise<void> {
 }
 
 // ── W6 — offline ────────────────────────────────────────────────────────────────────────────────
-async function oneVisit(w: Walk): Promise<void> {
-  await w.page.goto('/');
+async function oneVisit(w: Walk, origin = ''): Promise<void> {
+  await w.page.goto(`${origin}/`);
   // a visitor's first visit lets the site finish installing itself before the network goes
   const ready = await w.page.evaluate(
     () =>
@@ -732,13 +769,21 @@ export async function W6_7(w: Walk): Promise<void> {
 
 export async function W6_8(w: Walk): Promise<void> {
   await test.step('W6.8 — (WebKit, no install) after one visit with the network off, steps 3–6 still work in the tab', async () => {
-    await oneVisit(w);
-    await w.context.setOffline(true);
-    await w.page.goto('/');
-    await W6_3(w);
-    await W6_4(w);
-    await W6_5(w);
-    await W6_6(w);
+    // offline is the server stopped, not context.setOffline, which in WebKit refuses even the
+    // service worker's answers (C2 test changes; e2e/helpers/offline.ts)
+    const site = await offlineSite(w.context, w.info.project.use.baseURL);
+    w.state.origins.push(site.origin);
+    try {
+      await oneVisit(w, site.origin);
+      await site.goOffline();
+      await w.page.goto(`${site.origin}/`);
+      await W6_3(w);
+      await W6_4(w);
+      await W6_5(w);
+      await W6_6(w);
+    } finally {
+      await site.close();
+    }
   });
 }
 
@@ -823,18 +868,20 @@ export async function W8_2(w: Walk): Promise<void> {
   await test.step('W8.2 — the same three lines, the same order and pace; nothing moves, fades or slides', async () => {
     await w.page.goto('/');
     await chip(w, 'Folding chair').click();
-    const pressed = Date.now();
+    await startPageTimer(w.page, [...S.LINES]);
     await box(w).press('Enter');
     let moving = 0;
-    const seen: number[] = [];
     for (let i = 0; i < S.LINES.length; i++) {
       await expect(w.page.getByText(S.LINES[i], { exact: true })).toBeVisible({ timeout: 3_000 });
-      seen.push(Date.now() - pressed);
       moving += await w.page.evaluate(() => document.getAnimations().length);
     }
     await expect(resultHeading(w)).toBeVisible({ timeout: 6_000 });
     moving += await w.page.evaluate(() => document.getAnimations().length);
     expect(moving, 'nothing moves').toBe(0);
+    // each line's arrival after the keypress, timed inside the page
+    const times = await pageTimes(w.page);
+    const seen = S.LINES.map((l) => times[l]);
+    for (const [i, v] of seen.entries()) expect(v, `the in-page timer saw line ${i + 1} arrive`).toBeDefined();
     expect(seen[1] - seen[0]).toBeGreaterThanOrEqual(900);
     expect(seen[2] - seen[1]).toBeGreaterThanOrEqual(900);
   });

@@ -5,9 +5,10 @@
 import { expect, test } from '@playwright/test';
 import { PAGES } from '../helpers/strings.ts';
 import * as W from '../helpers/walks.ts';
-import { readFileSync } from 'node:fs';
+import { leadershipPeople } from '../helpers/staff.ts';
 
-const people = [...readFileSync(new URL('../../company/staff/staff.yaml', import.meta.url), 'utf8').matchAll(/^ {4}name: (.+)$/gm)].map((m) => ({ name: m[1].trim() }));
+// the twelve cards' names: the staff record's, Lucas's card reading "Lucas" (C2 red-pen)
+const people = leadershipPeople();
 
 test.describe('1. over walks W1–W6 every request is same-origin', () => {
   test.skip(({ browserName }) => browserName === 'firefox', 'the walks are played in Chromium and WebKit (WALKS.md)');
@@ -35,8 +36,10 @@ test.describe('1. over walks W1–W6 every request is same-origin', () => {
     for (const step of [W.W5_1, W.W5_2, W.W5_3]) await step(w);
     if (browserName === 'chromium') for (const step of [W.W6_1, W.W6_2, W.W6_3, W.W6_4, W.W6_5, W.W6_6, W.W6_7]) await step(w);
     else await W.W6_8(w);
-    const origin = new URL(info.project.use.baseURL!).origin;
-    const foreign = urls.filter((u) => !u.startsWith(`${origin}/`) && !/^(data|blob):/.test(u) && !u.startsWith('https://substitutes.invalid/'));
+    // the site's origins: the configured one, and the private server W6.8 serves it from while it
+    // stops that server to go offline (C2 test changes)
+    const origins = [new URL(info.project.use.baseURL!).origin, ...w.state.origins];
+    const foreign = urls.filter((u) => !origins.some((o) => u.startsWith(`${o}/`)) && !/^(data|blob):/.test(u) && !u.startsWith('https://substitutes.invalid/'));
     expect(urls.length).toBeGreaterThan(50);
     expect([...new Set(foreign)]).toEqual([]);
   });

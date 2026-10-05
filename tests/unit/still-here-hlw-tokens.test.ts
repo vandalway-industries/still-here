@@ -118,7 +118,14 @@ test('2. static Inter, Inter Tight, JetBrains Mono and Cormorant Garamond as WOF
   assert.deepEqual(extra.map((f) => f.family), [], 'only the four families are shipped');
   const lint = run('npx', ['-y', '@google/design.md@0.3.0', 'lint', 'DESIGN.md'], { timeout: 180_000 });
   assert.equal(lint.status, 0, lint.stdout + lint.stderr);
-  assert.match(lint.stdout + lint.stderr, /\b0 errors?\b/i);
+  // 0.3.0 prints JSON: { findings: [...], summary: { errors, warnings, infos } } (C2 test change 2)
+  let report: { summary?: { errors?: unknown } };
+  try {
+    report = JSON.parse(lint.stdout);
+  } catch {
+    assert.fail(`the linter's output is not JSON: ${lint.stdout.slice(0, 200)}`);
+  }
+  assert.equal(report.summary?.errors, 0, `the linter reports errors: ${lint.stdout.slice(0, 400)}`);
 });
 
 test('3. contrast, computed from the generated tokens', async () => {
@@ -139,7 +146,10 @@ test('3. contrast, computed from the generated tokens', async () => {
   assert.ok(contrast(onPrimary, graphite) >= 16.8, `on-primary on graphite ${contrast(onPrimary, graphite).toFixed(2)}`);
 });
 
-test("4. Cormorant Garamond's TTF covers Latin, Latin Extended, Greek and Cyrillic; coverage.json records its cmap", () => {
+// C2 Decision 1 (2026-10-05): a name in a script the certificate face lacks, Greek included, is
+// drawn as an image, as emoji and CJK names are, and no second face ships. Greek is not required
+// of Cormorant Garamond; test 2 keeps the shipped families to the four.
+test("4. Cormorant Garamond's TTF covers Latin, Latin Extended and Cyrillic (Greek not required); coverage.json records its cmap", () => {
   const ttfs = files('src/fonts', /\.ttf$/i);
   const cormorant = fontFacts(ttfs.map(abs)).filter((f) => f.family === 'Cormorant Garamond');
   assert.ok(cormorant.length > 0, 'no Cormorant Garamond TTF');
@@ -155,9 +165,6 @@ test("4. Cormorant Garamond's TTF covers Latin, Latin Extended, Greek and Cyrill
     ['Basic Latin letters', 0x61, 0x7a],
     ['Latin-1 Supplement letters', 0xc0, 0xff],
     ['Latin Extended-A', 0x100, 0x17f],
-    ['Greek capitals', 0x391, 0x3a1],
-    ['Greek capitals', 0x3a3, 0x3a9],
-    ['Greek small letters', 0x3b1, 0x3c9],
     ['Cyrillic', 0x410, 0x44f],
   ];
   for (const cmap of cmaps) {

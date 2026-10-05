@@ -3,11 +3,12 @@
 import { expect, test, type Page } from '@playwright/test';
 import { checkButton, consoleErrors, exampleChip, objectInput, onlyEngines } from '../helpers/site.ts';
 import { DESIGN_COLOURS, EXAMPLES, FONT_FAMILIES, HOME_HEADING, LEADERSHIP } from '../helpers/strings.ts';
-import { readFileSync } from 'node:fs';
+import { staff } from '../helpers/staff.ts';
 
 onlyEngines('chromium', 'webkit');
 
-const NAMES = [...readFileSync(new URL('../../company/staff/staff.yaml', import.meta.url), 'utf8').matchAll(/^ {2}- id: (\w+)\n {4}name: (.+)$/gm)].map((m) => [m[1], m[2].trim()] as const);
+// each card's name: the staff record's, except Lucas's card, which reads "Lucas" (C2 red-pen)
+const NAMES = staff().map((p) => [p.id, p.cardName] as const);
 
 async function paletteAndFaces(page: Page): Promise<{ colours: string[]; families: string[] }> {
   return page.evaluate(() => {

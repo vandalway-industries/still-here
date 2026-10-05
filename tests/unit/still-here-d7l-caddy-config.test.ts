@@ -11,9 +11,18 @@ const CADDY = 'deploy/caddy/vandalwayind.caddy';
 
 test('1. the Caddy snippet binds to localhost only and serves /srv/vandalwayind/ with file_server on a port of its own', () => {
   const c = readMust(CADDY).replace(/#.*$/gm, '');
-  const addresses = [...c.matchAll(/^\s*([^\s{#][^{]*?)\s*\{/gm)].map((m) => m[1].trim()).filter((a) => !/^(handle|route|header|log|@|file_server|encode|root|respond|try_files)/.test(a));
-  assert.ok(addresses.length >= 1, 'a site address');
-  for (const a of addresses) assert.match(a, /^(https?:\/\/)?(localhost|127\.0\.0\.1|\[::1\]):\d{2,5}$/, `bound to localhost on its own port: ${a}`);
+  // site addresses are the block openers at depth 0; a nested opener (log's `output file … {`, a
+  // handle, a matcher) is never an address (C2, Phase 6 critic item 26)
+  const addresses: string[] = [];
+  let depth = 0;
+  for (const line of c.split('\n')) {
+    const m = /^\s*([^\s{#][^{]*?)\s*\{/.exec(line);
+    if (m && depth === 0) addresses.push(m[1].trim());
+    for (const ch of line) depth += ch === '{' ? 1 : ch === '}' ? -1 : 0;
+  }
+  const named = addresses.filter((a) => !/^(handle|route|header|log|output|@|file_server|encode|root|respond|try_files)/.test(a));
+  assert.ok(named.length >= 1, 'a site address');
+  for (const a of named) assert.match(a, /^(https?:\/\/)?(localhost|127\.0\.0\.1|\[::1\]):\d{2,5}$/, `bound to localhost on its own port: ${a}`);
   assert.match(c, /\broot\s+(\*\s+)?\/srv\/vandalwayind\/?\b/);
   assert.match(c, /\bfile_server\b/);
   const log = readMust(DEPLOY_LOG);

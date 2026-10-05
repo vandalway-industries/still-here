@@ -4,16 +4,17 @@
 // Substitute steps call their named helpers inside e2e/helpers/walks.ts; the † steps are Clive's
 // production re-check (CHECKPOINTS.md). Role and visible-text locators only.
 import { test, type Page } from '@playwright/test';
-import { readFileSync } from 'node:fs';
 import { readCounterGif } from '../helpers/counter.ts';
 import { isLive, onlyEngines, PRODUCTION, PRODUCTION_VANDALWAY } from '../helpers/site.ts';
 import * as W from '../helpers/walks.ts';
+import { leadershipPeople } from '../helpers/staff.ts';
 
 onlyEngines('chromium', 'webkit');
 test.use({ baseURL: PRODUCTION });
 test.describe.configure({ mode: 'serial' });
 const REPO = 'https://github.com/vandalway-industries/still-here';
-const people = [...readFileSync(new URL('../../company/staff/staff.yaml', import.meta.url), 'utf8').matchAll(/^ {4}name: (.+)$/gm)].map((m) => ({ name: m[1].trim() }));
+// the twelve cards' names: the staff record's, Lucas's card reading "Lucas" (C2 red-pen)
+const people = leadershipPeople();
 
 let live = false;
 test.beforeAll(async () => {

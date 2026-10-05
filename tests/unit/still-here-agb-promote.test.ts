@@ -138,12 +138,23 @@ test('3. the pre-commit hook exports PII_PUBLIC=1 and runs the PII gate on stage
   assert.equal(hooksPath, '', 'core.hooksPath bypasses .git/hooks');
 });
 
-test('4. commits carry only the GitHub no-reply address', () => {
+// The one accepted exception (CHECKPOINTS.md § Record, 2026-10-05): commit 38c10f5's author is
+// jules@vandalway.example; its committer is the account's own. Every other commit, and every
+// committer, keeps the no-reply address.
+const ACCEPTED_AUTHOR: Record<string, string> = { '38c10f5': 'jules@vandalway.example' };
+
+test('4. commits carry only the GitHub no-reply address (one accepted author exception)', () => {
   const email = sh('git', ['config', '--local', 'user.email']).trim();
   assert.match(email, /@users\.noreply\.github\.com$/);
-  const authors = new Set(sh('git', ['log', '--format=%ae%n%ce']).split('\n').filter(Boolean));
-  assert.ok(authors.size > 0, 'no commits yet');
-  assert.deepEqual([...authors], [email]);
+  const commits = sh('git', ['log', '--format=%H %ae %ce']).split('\n').filter(Boolean).map((l) => l.split(' '));
+  assert.ok(commits.length > 0, 'no commits yet');
+  const bad: string[] = [];
+  for (const [sha, author, committer] of commits) {
+    if (committer !== email) bad.push(`${sha.slice(0, 7)} committer ${committer}`);
+    const exception = Object.entries(ACCEPTED_AUTHOR).find(([k]) => sha.startsWith(k));
+    if (author !== email && !(exception && exception[1] === author)) bad.push(`${sha.slice(0, 7)} author ${author}`);
+  }
+  assert.deepEqual(bad, [], 'commits with an address other than the no-reply one');
 });
 
 test('5. main, and a private remote at vandalway-industries/still-here over SSH', () => {
@@ -170,7 +181,7 @@ test('6. assets/ equals garage/assets/ file for file, plus the parent logo', () 
   for (const [k, h] of want) assert.equal(have.get(k), h, `${k} differs from garage/assets/`);
 });
 
-test('7. every ACCEPTANCE section is a bead, verbatim, filed by its owner', () => {
+test('7. every ACCEPTANCE section is a bead, verbatim, filed by its owner; any other bead names its source', () => {
   const secs = sections();
   const map = beadMap();
   assert.equal(map.size, secs.length, 'docs/bead-map.md does not list every section');
@@ -192,8 +203,21 @@ test('7. every ACCEPTANCE section is a bead, verbatim, filed by its owner', () =
     assert.equal(b.created_by, addr, `${s.label}: filed by`);
   }
   assert.equal(map.get('G0')!.id, G0_ID);
-  // nothing else in .beads/ but the pack's beads
-  assert.equal(beads.length, secs.length, 'beads exist that are not ACCEPTANCE sections');
+  // Any other bead is work found during the build (C2 test change 3): it must name the bead it was
+  // found from, by a `discovered-from` dependency or a note naming that bead's id.
+  const packIds = new Set(secs.map((s) => map.get(s.label)!.id));
+  const others = beads.filter((b) => !packIds.has(b.id));
+  if (others.length > 0) {
+    const ids = new Set(beads.map((b) => b.id));
+    const detail: (Bead & { dependencies?: { id: string; dependency_type?: string }[] | null; notes?: string | null })[] =
+      JSON.parse(sh('bd', ['show', ...others.map((b) => b.id), '--json']));
+    for (const b of detail) {
+      const fromDep = (b.dependencies ?? []).some((d) => d.dependency_type === 'discovered-from' && ids.has(d.id) && d.id !== b.id);
+      const named = [...(b.notes ?? '').matchAll(/\b[a-z0-9]+(?:-[a-z0-9]+)+\b/g)].map((m) => m[0]);
+      const fromNote = named.some((n) => ids.has(n) && n !== b.id);
+      assert.ok(fromDep || fromNote, `${b.id} is not an ACCEPTANCE section and names no bead it was found from`);
+    }
+  }
 });
 
 test('8. no bead is labelled record', () => {

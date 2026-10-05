@@ -84,8 +84,10 @@ async function renderPdf(page: Page, dpi: number): Promise<{ text: string; width
     const viewport = p.getViewport({ scale });
     const canvas = document.createElement('canvas');
     canvas.id = 'render';
-    canvas.width = Math.ceil(viewport.width);
-    canvas.height = Math.ceil(viewport.height);
+    // rounded, not ceiled: 792 × 150 / 72 is 1650.0000000000002, which must be 1650 px, not a
+    // 1651-px canvas squeezed back into 1650 (C2 test change 6)
+    canvas.width = Math.round(viewport.width);
+    canvas.height = Math.round(viewport.height);
     document.body.style.margin = '0';
     document.body.appendChild(canvas);
     await p.render({ canvasContext: canvas.getContext('2d')!, viewport, canvas }).promise;
@@ -176,11 +178,12 @@ export async function openDownload(page: Page, download: Download, dir?: string)
 
 /**
  * W2.7 — "scans a printed QR code with a phone camera".
- * Decodes the QR code with jsQR from an exported PNG or from the pdf.js render of a PDF (150 dpi).
+ * Decodes the QR code with jsQR from an exported PNG or from the pdf.js render of a PDF (150 dpi,
+ * or `dpi` when given: pdf.js in WebKit needs 200 for the longest name's code, C2 test change 8).
  * Returns the decoded text (the certificate link), or null when no code is found. The caller then
  * opens the decoded URL. The camera scan itself is phone checklist item 6 †.
  */
-export async function decodeQr(context: BrowserContext, file: { png: Buffer } | { pdf: Buffer }): Promise<string | null> {
+export async function decodeQr(context: BrowserContext, file: { png: Buffer } | { pdf: Buffer; dpi?: number }): Promise<string | null> {
   if ('png' in file) {
     return withSubstitutePage(context, { '/file.png': file.png }, async (p) => {
       await drawPng(p);
@@ -188,7 +191,7 @@ export async function decodeQr(context: BrowserContext, file: { png: Buffer } | 
     });
   }
   return withSubstitutePage(context, { '/file.pdf': file.pdf }, async (p) => {
-    await renderPdf(p, 150);
+    await renderPdf(p, file.dpi ?? 150);
     return decodeCanvas(p);
   });
 }

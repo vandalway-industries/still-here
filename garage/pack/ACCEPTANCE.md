@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-05
 read_by: Phase 0's G0 (files each section as one bead with `bd create --acceptance` verbatim); T0, the test-author session (one test file per name below, named with the real bead id); every Worker before it starts a bead; the critic (rule 1 and rule 8: the original text); `/goal`'s final audit
 relations:
   derived_from: ../../PRD.md
@@ -79,7 +79,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 1. `src/css/tokens.css` and `src/js/tokens.js` are generated from `DESIGN.md`'s front matter; every colour, type, spacing and radius token appears once as `--sh-*` (CSS) and once as a named export (JS); no hex literal appears anywhere in `src/` outside those two files (`vandalwayind/` is exempt; the manifest's colours are written by the build from `src/js/tokens.js`).
 2. `src/fonts/` holds static instances of Inter, Inter Tight, JetBrains Mono and Cormorant Garamond as WOFF2 and as TTF (the TTFs for the certificate faces), each with its OFL licence; `npx -y @google/design.md@0.3.0 lint DESIGN.md` reports 0 errors.
 3. Contrast, computed: graphite on canvas ≥ 16.8:1; graphite-muted on canvas ≥ 7:1 and on surface ≥ 7:1; verification green on canvas between 3.0:1 and 4.49:1 and therefore used only for large text and marks (sh-047); graphite on verification green ≥ 4.5:1; on-primary on graphite ≥ 16.8:1.
-4. Cormorant Garamond's TTF covers Latin, Latin Extended, Greek and Cyrillic; its cmap is recorded in `src/fonts/coverage.json` for PRD R11's check.
+4. Cormorant Garamond's TTF covers Latin, Latin Extended and Cyrillic; its cmap is recorded in `src/fonts/coverage.json` for PRD R11's check. A name in a script the certificate face lacks (Greek included) is drawn as an image, as emoji and CJK names are; no second face ships (C2, Decision 1).
 
 ### DS2 — the mark and icons (owner: jules)
 - [ ] CODE PASS — `tests/unit/<id>-icons.test.ts` passes
@@ -180,7 +180,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 - [ ] BROWSER PASS — `e2e/specs/<id>-export.spec.ts` and `e2e/specs/<id>-walk.spec.ts` (W1 steps 6–7) green in Chromium and WebKit; Firefox for the download events
 1. Download PDF fires a download named `STILL-HERE-<slug>-<11 symbols>.pdf`; Download PNG the same with `.png`. The slug follows PRD R16's rule: "Folding chair" → `folding-chair`; "Café au lait!" → `cafe-au-lait`; "שולחן", "椅子" and "🪑" → `object`; a 100-letter name → 40 characters at most. Two different objects never share a name.
 2. The PDF is US Letter landscape (792 × 612 pt); it contains `/FontFile2` for Cormorant Garamond, Inter Tight and JetBrains Mono under their registered names; its extracted text contains the footer string verbatim.
-3. The PNG is 3,300 × 2,550; its ink-pixel count differs from a render with the faces withheld (fallback) by more than 20%.
+3. The PNG is 3,300 × 2,550; measured on the text blocks only (each `<text>` element's bounding box), its ink-pixel count differs from a render with the faces withheld (fallback) by more than 20% (C2, Decision 4).
 4. The PDF rendered by pdf.js at 150 dpi and the PNG scaled to 150 dpi differ in at most 1% of pixels.
 5. After export the canvas is 0 × 0; no canvas ever exceeds 16,777,216 pixels.
 6. "שולחן", "كرسي", "椅子" and "🪑 chair" export without missing glyphs (pixel check against the on-screen render of the same block); "Café" stays vector text.
@@ -493,3 +493,4 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 
 - 2026-10-03 — Written at stage 11: 52 beads across nine phases. (Diane, 2026-10-03)
 - 2026-10-03 — Blind read applied (`BLIND_READ.md`): Phase 1 beads renamed DS1–DS7 and Phase 5 beads RC1–RC8; the shell moved to Phase 2 as E0 with placeholder pages (S1 retired); paper and status texts written in Phase 3; RC8 (the repository) added; substitutes for unplayable steps; I-09–I-12 applied. 53 beads. (Diane, 2026-10-03)
+- 2026-10-05 — C2 answered: DS1 item 4 says a name in a script the certificate face lacks, Greek included, is drawn as an image and no second face ships (Decision 1); E4 item 3's ink comparison is measured on the text blocks only, the bar unchanged (Decision 4). (Diane, 2026-10-05)

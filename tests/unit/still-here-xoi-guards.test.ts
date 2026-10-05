@@ -81,6 +81,12 @@ test('4. outside garage/ and assets/: no IPv4 but 127.0.0.1 and Pages\' four; no
     // namespaces and schema dialects are identifiers, not hosts we use
     t = t.replace(/\bxmlns(:\w+)?\s*=\s*"[^"]*"/g, '').replace(/"\$schema"\s*:\s*"[^"]*"/g, '');
     if (f === 'package-lock.json') t = t.replace(/"resolved"\s*:\s*"https:\/\/registry\.npmjs\.org\/[^"]*"/g, '');
+    // C2 (Phase 4 critic item 25): two hosts we do not choose and never load from. The OFL's own
+    // URL inside a verbatim OFL licence text; a package's funding URL inside the npm lockfile; and
+    // the prose files (Markdown, the bead export) that name them when they discuss this scan.
+    if (/OFL[^/]*\.txt$/i.test(f) && /SIL OPEN FONT LICENSE/i.test(t)) t = t.replace(/(?:https?:\/\/)?scripts\.sil\.org\b/gi, '');
+    if (f === 'package-lock.json') t = t.replace(/"funding"\s*:\s*\{[^{}]*?"url"\s*:\s*"https:\/\/opencollective\.com\/[^"]*"[^{}]*\}/g, '').replace(/"funding"\s*:\s*"https:\/\/opencollective\.com\/[^"]*"/g, '');
+    if (/\.md$/i.test(f) || f === '.beads/issues.jsonl') t = t.replace(/(?:https?:\/\/)?(?:scripts\.sil\.org|opencollective\.com)\b/gi, '');
     for (const m of t.matchAll(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g)) if (m[0] !== '127.0.0.1' && !(PAGES_IPV4 as readonly string[]).includes(m[0])) bad.push(`${f}: IPv4 ${m[0]}`);
     for (const m of t.matchAll(URL_HOST)) {
       if (!allowed(m[1], cited)) bad.push(`${f}: host ${m[1]}`);
