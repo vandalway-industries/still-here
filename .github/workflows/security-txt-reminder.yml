@@ -1,0 +1,77 @@
+# The security.txt reminder (PRD R35; L2 item 4). Once a week it reads the published
+# security.txt; when its Expires is 30 days away or less and no open issue titled
+# "Renew security.txt" exists, it opens one, assigned to the account in the repository variable
+# RENEWAL_ASSIGNEE. It reads and opens issues and does nothing else: no checkout, no commit, no
+# deploy. Run by hand with `expires` set to a near date for a dry run: the issue it opens is then
+# closed again at once. (Jules, 2026-10-05)
+name: security.txt reminder
+
+on:
+  schedule:
+    - cron: '17 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      expires:
+        description: 'Dry run: use this RFC 3339 time as the published Expires'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v9.0.0
+        env:
+          ASSIGNEE: ${{ vars.RENEWAL_ASSIGNEE }}
+          DRY_RUN_EXPIRES: ${{ github.event.inputs.expires }}
+          SECURITY_TXT: https://isitstillhere.com/.well-known/security.txt
+        with:
+          script: |
+            const TITLE = 'Renew security.txt';
+            const DAYS = 30;
+            const dryRun = (process.env.DRY_RUN_EXPIRES || '').trim();
+            let expires = dryRun;
+            if (!expires) {
+              let r;
+              try {
+                r = await fetch(process.env.SECURITY_TXT, { cache: 'no-store' });
+              } catch (e) {
+                core.warning(`security.txt could not be fetched (${e.message}); nothing to check yet`);
+                return;
+              }
+              if (!r.ok) {
+                core.warning(`security.txt answered ${r.status}; nothing to check yet`);
+                return;
+              }
+              const line = (await r.text()).split(/\r?\n/).find((l) => /^Expires:/i.test(l));
+              if (!line) return core.setFailed('the published security.txt has no Expires field');
+              expires = line.slice(line.indexOf(':') + 1).trim();
+            }
+            const at = Date.parse(expires);
+            if (Number.isNaN(at)) return core.setFailed(`Expires "${expires}" is not a date`);
+            const left = (at - Date.now()) / 86400000;
+            core.info(`Expires ${expires}: ${left.toFixed(1)} days left${dryRun ? ' (dry run)' : ''}`);
+            if (left > DAYS) return;
+            const { owner, repo } = context.repo;
+            const open = await github.paginate(github.rest.issues.listForRepo, { owner, repo, state: 'open', per_page: 100 });
+            if (open.some((i) => !i.pull_request && i.title === TITLE)) {
+              core.info(`an open "${TITLE}" issue exists already`);
+              return;
+            }
+            const body = [
+              `The published security.txt expires on ${expires}, ${Math.max(0, Math.floor(left))} days from now.`,
+              '',
+              'Run the Pages workflow (a new build writes a new Expires 365 days ahead), then check',
+              'https://isitstillhere.com/.well-known/security.txt and close this issue.',
+            ].join('\n');
+            const assignees = process.env.ASSIGNEE ? [process.env.ASSIGNEE] : [];
+            const { data: issue } = await github.rest.issues.create({ owner, repo, title: TITLE, body, assignees });
+            core.info(`opened #${issue.number}`);
+            if (dryRun) {
+              await github.rest.issues.update({ owner, repo, issue_number: issue.number, state: 'closed', state_reason: 'not_planned' });
+              core.info(`dry run: closed #${issue.number}`);
+            }

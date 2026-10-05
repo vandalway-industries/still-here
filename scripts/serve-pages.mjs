@@ -6,6 +6,8 @@
 //   /folder           301 to /folder/
 //   /folder/          200, folder/index.html
 //   a missing path    404, with <root>/404.html as the body when present
+// Anything under /api/ also carries access-control-allow-origin: *, so /api/v1/presence.json can
+// be read from any origin (PRD R34). Production's own header is checked at launch (N3).
 // Usage: node scripts/serve-pages.mjs <root> <port>    (the project uses: site 5320)
 import { createServer } from 'node:http';
 import { readFileSync, statSync } from 'node:fs';
@@ -79,6 +81,7 @@ export function createPagesServer(root) {
     }
     const r = resolvePages(base, url.pathname);
     const headers = { 'cache-control': 'max-age=600', server: 'serve-pages' };
+    if (url.pathname.startsWith('/api/')) headers['access-control-allow-origin'] = '*';
     if (r.status === 301) {
       res.writeHead(301, { ...headers, location: r.location + url.search, 'content-type': 'text/html; charset=utf-8' });
       res.end(head ? undefined : `<a href="${r.location}">Moved Permanently</a>\n`);

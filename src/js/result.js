@@ -145,6 +145,9 @@ export function certificateActions({ svg, name, identifier, link }, another) {
 
 export const NOT_LOCATED = 'We could not locate this certificate. The object, however, is still here.';
 export const FUTURE = 'This certificate has not been issued yet. The object, however, is still here.';
+// A valid link this device could not draw (its drawing code or faces did not load). Draft wording,
+// awaiting Clive's red-pen at C2 (C2 packet, addendum decision 7b). (Jules, 2026-10-05)
+export const NOT_DRAWN = 'This certificate could not be drawn on this device. Its link is still valid.';
 const FAILURE_LINKS = [
   ['Verify a certificate', '/verify'],
   ['Check an object', '/'],

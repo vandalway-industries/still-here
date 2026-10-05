@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-04
+updated: 2026-10-05
 read_by: anyone adding or upgrading a dependency; the G1 test (every package in `package-lock.json` must have a row here)
 relations:
   derived_from: ../package-lock.json
@@ -61,6 +61,8 @@ happens. Optional packages are platform builds npm installs only on the matching
 | `svgpath` | 2.6.0 | MIT | Installed by `svg2pdf.js` |
 | `text-segmentation` | 1.0.3 | MIT | Optional; comes with `jspdf`'s optional `canvg` and `html2canvas` (not used) |
 | `utrie` | 1.0.2 | MIT | Optional; comes with `jspdf`'s optional `canvg` and `html2canvas` (not used) |
+| `@axe-core/playwright` | 4.13.0 | MPL-2.0 | Runs axe in the accessibility spec (X5); never copied into `site/` |
+| `axe-core` | 4.13.0 | MPL-2.0 | Installed by `@axe-core/playwright`; the accessibility rules axe checks |
 
 ## Vendored tools
 

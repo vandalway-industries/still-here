@@ -6,13 +6,14 @@
 // the viewer's; beneath it Download PDF, Download PNG, Copy certificate link and Check another.
 // A malformed or altered link, or a name over 80 code points, gets the not-located sentence; one
 // dated more than five minutes past this device's clock gets the not-yet-issued sentence. Neither
-// draws a certificate. Nothing is saved: opening a link adds nothing to Your Presence Portfolio.
+// draws a certificate. A valid link this device cannot draw (its drawing code or faces did not
+// load) says so and that the link is still valid. Nothing is saved: opening a link adds nothing to Your Presence Portfolio.
 // Everything read here comes from after the #, which the browser never sends. Editing the fragment
 // in the address bar judges the new one. With no fragment the page is the Verify form, exactly as
 // on /verify. (Jules, 2026-10-04)
 import { judge } from './judge.js';
 import { certificateLink, readFragment } from './link.js';
-import { certificateActions, certificateFaces, certificateNode, confirmation, el, failure, FUTURE, NOT_LOCATED, resultDate } from './result.js';
+import { certificateActions, certificateFaces, certificateNode, confirmation, el, failure, FUTURE, NOT_DRAWN, NOT_LOCATED, resultDate } from './result.js';
 import { mountVerify } from './verify.js';
 
 const view = document.querySelector('.certificate-view');
@@ -69,7 +70,7 @@ async function render() {
   }
   const verdict = await judgeLink(fragment);
   const section =
-    verdict.kind === 'issued' ? await issued(verdict).catch(() => failure(NOT_LOCATED)) : failure(verdict.kind === 'future' ? FUTURE : NOT_LOCATED);
+    verdict.kind === 'issued' ? await issued(verdict).catch(() => failure(NOT_DRAWN)) : failure(verdict.kind === 'future' ? FUTURE : NOT_LOCATED);
   if (turn !== shown) return;
   view.replaceChildren(section);
   showForm(false);

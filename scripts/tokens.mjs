@@ -93,8 +93,9 @@ export function tokensFrom(design) {
 export function renderCss(fm) {
   const out = [];
   out.push('/* Generated from DESIGN.md\'s front matter by scripts/tokens.mjs. Do not edit by hand:');
-  out.push('   change DESIGN.md and run the build. The only file in src/ besides src/js/tokens.js that');
-  out.push('   holds a colour value. */');
+  out.push('   change DESIGN.md and run the build. The colour values in src/ are all generated from those');
+  out.push('   tokens: here, in src/js/tokens.js, and the verification green in src/brand/mark.svg and');
+  out.push('   src/favicon.svg (drawn by scripts/brand.mjs). */');
   out.push('');
   for (const [family, stem, weights] of FACES) {
     for (const [w, style] of weights) {

@@ -39,6 +39,11 @@ const EPOCH = Date.UTC(2026, 0, 1);
 const PORTFOLIO_KEY = 'stillhere.portfolio.v1';
 const EMPTY = 'Name an object to check its presence.';
 const BEFORE_2026 = "Your device's clock reads earlier than 1 January 2026, a moment our records cannot express. The object, however, is still here.";
+// Two draft sentences awaiting Clive's red-pen at C2 (C2 packet, addendum decision 7a and 7c):
+// the check could not finish (the certificate's drawing code or faces did not load), and this
+// device refused to keep a copy in the portfolio. (Jules, 2026-10-05)
+const NOT_COMPLETED = 'This check could not be completed. Nothing was issued and nothing was kept. Please try again.';
+const NOT_KEPT = 'This device did not let us keep a copy. The certificate is still yours: download it or copy its link.';
 
 if (document.fonts) {
   for (const weight of [500, 600]) document.fonts.load(`${weight} 1em "Cormorant Garamond"`).catch(() => undefined);
@@ -132,6 +137,8 @@ function buildResult({ name, time, zone, identifier }, drawCertificate) {
   const portfolio = el('a', '', 'Portfolio on this device');
   portfolio.href = '/portfolio';
   kept.append(portfolio, '.');
+  // shown in place of the line above when this device refuses to keep the copy
+  const notKept = el('p', 'result-portfolio body-sm', NOT_KEPT);
   section.append(
     h,
     el('p', 'result-name', name),
@@ -142,7 +149,7 @@ function buildResult({ name, time, zone, identifier }, drawCertificate) {
     actions,
     kept,
   );
-  return { section, heading: h };
+  return { section, heading: h, kept, notKept };
 }
 
 function buildBefore2026() {
@@ -155,7 +162,11 @@ function buildBefore2026() {
   return { section, heading: p };
 }
 
-/** Save to Your Presence Portfolio: name, time, zone and identifier only, newest first. */
+/**
+ * Save to Your Presence Portfolio: name, time, zone and identifier only, newest first. Returns
+ * false when this device refuses storage (turned off, private mode, full): the certificate is still
+ * shown, and the result says it was not kept.
+ */
 function save(entry) {
   let list = [];
   try {
@@ -167,8 +178,9 @@ function save(entry) {
   list.unshift(entry);
   try {
     localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(list));
+    return true;
   } catch {
-    /* storage refused (private mode, full): the certificate is still shown */
+    return false;
   }
 }
 
@@ -206,14 +218,21 @@ function start() {
   const reveal = async () => {
     timers = [];
     const r = await prepare().catch(() => null);
-    if (!r || !running) return;
+    if (!running) return;
+    if (!r) {
+      // the certificate could not be put together: nothing is shown as issued and nothing is
+      // kept; the box comes back, empty and focused, with the sentence beneath it
+      reset({ focus: true });
+      note.textContent = NOT_COMPLETED;
+      return;
+    }
+    if (r.entry && !save(r.entry)) r.kept.replaceWith(r.notKept);
     ask.hidden = true;
     sequence.hidden = true;
     outcome.replaceChildren(r.section);
     outcome.hidden = false;
     // the hidden form leaves its running state too, so the page holds no stray read-only field
     setInert(false);
-    if (r.entry) save(r.entry);
     r.heading.focus();
   };
   // the step after line i is due at its time from the press, and never before line i has been

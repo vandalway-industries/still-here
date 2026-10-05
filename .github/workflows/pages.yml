@@ -1,0 +1,52 @@
+# Publish isitstillhere.com to GitHub Pages (PRD R35, R49; L2). Builds site/ from a clean install,
+# stamps the commit into site/build.txt, refuses a security.txt with fewer than 30 days left, then
+# uploads site/ (hidden files included, for .well-known/) and deploys it. Skipped while the
+# repository is private. (Jules, 2026-10-05)
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: echo "$GITHUB_SHA" > site/build.txt
+      - run: npm run check:security-txt
+      - uses: actions/configure-pages@v6.0.0
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site
+          include-hidden-files: true
+
+  deploy:
+    if: github.event.repository.private == false
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5.0.1

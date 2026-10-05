@@ -1,6 +1,7 @@
 /* Generated from DESIGN.md's front matter by scripts/tokens.mjs. Do not edit by hand:
-   change DESIGN.md and run the build. The only file in src/ besides src/js/tokens.js that
-   holds a colour value. */
+   change DESIGN.md and run the build. The colour values in src/ are all generated from those
+   tokens: here, in src/js/tokens.js, and the verification green in src/brand/mark.svg and
+   src/favicon.svg (drawn by scripts/brand.mjs). */
 
 @font-face {
   font-family: "Inter";
