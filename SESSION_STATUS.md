@@ -18,7 +18,7 @@ relations: {}
 
 Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
 open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1 and RC2 are closed.
+RC1 to RC8 in order. RC1, RC2 and RC3 are closed.
 
 ### What changed
 
@@ -30,12 +30,15 @@ RC1 to RC8 in order. RC1 and RC2 are closed.
   behind it, and Bev's spreadsheet is filed as `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same five
   rows. Bev's count of the stapler is now a comment on sh-014, so its row has something to cite.
   Unit 4/4; the tracker still validates, 55 issues and 0 errors.
+- RC3: `company/status/notes.xml` now holds my 11:50 floor counts for the week, floors one to
+  three, with a schema (`notes.xsd`). Tuesday's floor three is 0, amended to 1 on reflection when
+  Graham was found on the stairs. The three public updates agree with their sources. Unit 3/3.
 - The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
   against both lists.
 
 ### What's next
 
-1. RC3, the status records (the 11:50 floor counts and their schema), then RC4 to RC8 in order.
+1. RC4, the gum graph, then RC5 to RC8 in order.
 2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
@@ -87,3 +90,4 @@ RC1 to RC8 in order. RC1 and RC2 are closed.
 - 2026-10-05 — Phase 4 built: X1, X2, X3, X5 closed; X4 and X6 held on test items for the next packet. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 5 active; RC1 closed: the mail headers, threading and the attachment header. (Martin, 2026-10-05)
 - 2026-10-05 — RC2 closed: the inventory's schema, Bev's spreadsheet, and the stapler's evidence. (Martin, 2026-10-05)
+- 2026-10-05 — RC3 closed: the week's floor counts and their schema. (Martin, 2026-10-05)

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema for company/status/notes.xml, STILL HERE support's internal notes. Two kinds of entry:
+     incident notes (INC-nnn), each with a UTC time, the author's staff id, the tracker issue, a
+     title and paragraphs; and the 11:50 floor counts, one day at a time, each count giving its
+     date, UTC time, floor, value and counter, with optional comments and amendments (an amendment
+     gives the corrected value and why). Kept by Martin. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:simpleType name="staffId">
+    <xs:restriction base="xs:string"><xs:pattern value="[a-z]+"/></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trackerRef">
+    <xs:restriction base="xs:string"><xs:pattern value="sh-\d{3}"/></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="utc">
+    <xs:restriction base="xs:dateTime"><xs:pattern value=".+Z"/></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="text">
+    <xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="notes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="note" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" type="text"/>
+              <xs:element name="p" type="text" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"><xs:pattern value="INC-\d{3}"/></xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="kind" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"><xs:enumeration value="incident"/></xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="time" type="utc" use="required"/>
+            <xs:attribute name="author" type="staffId" use="required"/>
+            <xs:attribute name="tracker" type="trackerRef"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="day" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="count" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="comment" type="text" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="amendment" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="text">
+                            <xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
+                            <xs:attribute name="by" type="staffId" use="required"/>
+                            <xs:attribute name="time" type="utc" use="required"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="date" type="xs:date" use="required"/>
+                  <xs:attribute name="time" type="utc" use="required"/>
+                  <xs:attribute name="floor" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string"><xs:pattern value="[1-9]"/></xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
+                  <xs:attribute name="by" type="staffId" use="required"/>
+                  <xs:attribute name="tracker" type="trackerRef"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="date" type="xs:date" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="product" type="text" use="required"/>
+      <xs:attribute name="author" type="staffId" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
