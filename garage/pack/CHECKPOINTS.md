@@ -64,6 +64,13 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   with its reason); N1.3 (deployment to served within 15 minutes, from GitHub's record); N2.3
   (the go-live reset recorded and the counter dated by it). G0's and G1's checks of `.bd-gate` now
   accept a re-tag recorded here. For Clive's sight in the C2 packet. (Jules, 2026-10-04)
+- **C2, test change 4 approved — 2026-10-04**, ahead of the rest of the packet. Clive's red-pen on
+  the paused clock: "Approve test change 4 now." The timed specs start their fake clock ten seconds
+  early, load and type, pause at the intended second, then press. Applied by a separate test-author
+  session to exactly the specs and helpers the packet names (E2 items 9 and 10, E3 tests 2 and 5–6,
+  E4 item 1 and its unit test's `issued()`, E5's link spec tests 1–2, E7's portfolio `three()`, and
+  the shared `issue()` helper), then re-tagged `specs-v3`. No acceptance text changed. The rest of
+  C2 still waits on the full packet. (Jules, 2026-10-04)
 
 ## Changelog
 

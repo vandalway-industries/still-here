@@ -31,8 +31,8 @@ relations:
 |---|---|---|---|
 | 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
 | 1 | Design system, golden candidates | held (awaiting C2) | DS1–DS7 closed; C2 packet out |
-| 2 | The shell, the ritual and the certificate | active | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
-| 3 | The company website | pending | S2–S9 closed; W4 W5 played |
+| 2 | The shell, the ritual and the certificate | held (awaiting C2) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
+| 3 | The company website | active | S2–S9 closed; W4 W5 played |
 | 4 | Extras | pending | X1–X6 closed; W6 played |
 | 5 | The records in full | pending | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | pending | V1–V4 closed; W7 played internally |
@@ -41,10 +41,10 @@ relations:
 
 ## Active phase
 
-**Phase 2 — The shell, the ritual and the certificate.** Phase 1 is held awaiting C2: DS2–DS7
-closed and the C2 packet is out; DS1 waits on two C2 items (Greek in the certificate face, and the
-linter-output test change). E0 (the shell) and E1 (the identifier) are closed. E2 (the ritual) is built and blocked on C2: item 10's locked test lets the page clock run from its install, so the press can land in the next second and fake time can pass 3.5 s before the stored-count check (a re-tag item for the next packet); W1.5 and W8.2 time with the test machine's own clock, which steps back about 1.17 s every 31 s here, and they fail only inside those steps. Item 14 waits on C2. E3 (the certificate per issue) is built and held open on its C2 golden. E4 (PDF and PNG) is built and held open on four test questions for C2. Work that needs Greek in the certificate face
-waits on C2's Decision 1.
+**Phase 3 — The company website.** Phases 1 and 2 are held awaiting C2. Phase 2: E0, E1 and E6
+closed; E2, E3, E4, E5 and E7 built and held on C2 items only (the critic's review of 2026-10-04
+found no stuck walk step). Clive approved test change 4, the paused clock, ahead of the packet; the
+tests are being re-tagged `specs-v3`, and the five beads re-run after it. Next move: S2–S9.
 
 ## Build method
 
@@ -213,7 +213,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
 - [ ] E2: the ritual on `/`: input rules (D5), examples (Q10), the sequence and its timing (Q5), reduced motion, the result, Check another, the pre-2026 clock. **[after C2]** styled to the home golden.
   Evidence (2026-10-04): unit 4/4; items 1-9 and 11-13 green in six projects in two full runs (84 and 82 of 86 run passed); W1 and W8 played in Chromium and WebKit; open on item 10 (C2 test change) and item 14 (C2 golden).
 - [ ] E3: the certificate per issue: name layout, time zone (D4), the UTC line, QR code with the link. **[after C2]** matched to the certificate golden.
-  Evidence (2026-10-04): `still-here-3xf` items 1-6 flipped, held open on item 7 (C2 golden); unit 6/6; certificate spec 29/30 with one worker and Firefox 20/20 repeated (misses are the press-second race of E2 item 10); names outside the certificate face are drawn by the browser, one image per line (diff item 8).
+  Evidence (2026-10-04): `still-here-3xf` items 1-3 and 5-6 flipped; item 4 unticked at the Phase 2 review (four-line names print over "This certifies that"; C2 Decision 6); held open on items 4 and 7; unit 6/6; certificate spec 29/30 with one worker and Firefox 20/20 repeated (misses are the press-second race of E2 item 10); names outside the certificate face are drawn by the browser, one image per line (diff item 8).
 - [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
   Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (3.3% as the test scales a 1651-px pdf.js canvas; pixel for pixel it measured 1.04% Chromium / 1.01% WebKit, not the 0.17% first reported, and after every line was set glyph by glyph from the face's advances 0.65% / 1.00%; waits on the C2 re-tag and the WebKit guilloche decision), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
 - [ ] E5: the certificate link (D2) and Copy certificate link.
@@ -222,7 +222,7 @@ No cap (I-07). Expected about 120 orchestrator turns.
   Evidence: `still-here-xws` closed through the gate; `src/js/judge.js` (one order of judgment), `src/js/verify.js`, `src/js/certificate-page.js`; unit 7/7 twice (item 5's every substitution and swap); verify spec 6/6 in each of six projects and the W2 walk (steps 1-7, step 7 by decodeQr) in Chromium and WebKit at 1440 and 390, both green in two runs (40 passed, 2 skipped each) and again in the gate; `/verify` and bare `/c/` are no longer placeholders; `npm run check:links` 19 pages, 0 broken.
 - [ ] E7: Your Presence Portfolio.
   Evidence (2026-10-04): `still-here-c29` CODE PASS and items 3-6 flipped, held open on BROWSER PASS and items 1-2. `/portfolio` (`src/js/portfolio.js`) reads the store the ritual writes, unchanged. Unit 4/4 twice. Portfolio spec plus the W3 walk, two runs in six projects: 19 and 20 passed, 2 skipped, 3 and 2 failed. W3 (steps 1-5, step 4 by clearSiteData) passed in Chromium and WebKit at 1440 and 390 both times. Every miss is spec test 1-2's first issue, 'Car keys', landing at 10:52:01 under the spec's running clock (stored SH-00PP-9AHB-518D, expected SH-00PP-9AGV-4P4X): C2 test change 4, which this spec needs too.
-- [ ] Walks W4.1–2, W1, W2, W3, W8 played by the critic in Chromium and WebKit at 390×844 and 1440×900.
+- [x] Walks W4.1–2, W1, W2, W3, W8 played by the critic in Chromium and WebKit at 390×844 and 1440×900. Evidence: Phase 2 exit review, 2026-10-04: every step played by hand (W2.7 and W3.4 by their substitutes) in both engines at both sizes, no stuck step; the locked walk specs' remaining reds are C2 test changes 4–5 or measured host clock steps.
 
 #### Bar
 Deterministic: the identifier vectors and the exhaustive test; timing and stillness; no tells; QR decode; render-back ≤ 1%; `/FontFile2`; the link and Verify vectors. Then the walks in a browser, with substitutes where `WALKS.md` names them. Then, after C2, the blind pick: the result screen against `exemplars/home-390-golden.png` and `home-1440-golden.png`, the exported PNG against `exemplars/certificate-golden.png`.
@@ -387,6 +387,11 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
   `tokens.css` header comment written by `scripts/tokens.mjs` names every generated colour source
   (`src/brand/mark.svg` and `src/favicon.svg` carry the green too). Found at the Phase 1 critic
   review.
+  - [ ] Phase 4 (X6): the three failure sentences in the C2 packet's addendum, decision 7, once Clive
+    red-pens them: the stuck running state when the certificate drawing cannot load
+    (`src/js/home.js`), the false "could not locate" when a valid link cannot be drawn
+    (`src/js/certificate-page.js`), and the "Kept…" line when storage is refused (`src/js/home.js`).
+    Found at the Phase 2 review.
 
 ## Retro — process notes (append-only)
 
@@ -423,3 +428,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E5 built: the certificate link, Copy certificate link with its refused fallback, and `/c/#…` redrawn byte for byte; held open on item 4 until E6's Verify form. (Jules, 2026-10-04)
 - 2026-10-04 — E6 closed: `/c/` and `/verify`, one judgment in Verify's order; E5 item 4 flipped, E5 held on its spec's press-second race (C2 test change 4). (Jules, 2026-10-04)
 - 2026-10-04 — E7 built: Your Presence Portfolio; held open on its spec's press-second race (C2 test change 4). (Jules, 2026-10-04)
+- 2026-10-04 — Phase 2 held awaiting C2 after the critic's review; Phase 3 active. E3 item 4 unticked. Clive's early approval of test change 4 recorded. (Jules, 2026-10-04)

@@ -219,13 +219,18 @@ given here.
    press. Measured install-to-press when warm: Chromium 135–337 ms, WebKit 196–249 ms, Firefox
    230–298 ms.
 5. **Walk timing.** W1.5 and W8.2 time the sequence with the test machine's wall clock. On our
-   build machine that clock has been stepping back about 1.16 s every 32 s. The change: time with
-   the monotonic clock. In the page the result arrives at 4.61–4.65 s, inside your four to five.
+   build machine that clock has been stepping back about 1.16 s every 32 s. The change: time from the keypress to the result's arrival inside the
+   page, which also removes a 5.6 s overshoot seen when three browsers run at once. In the page the result arrives at 4.61–4.65 s, inside your four to five.
 6. **E4 item 4, the render-back comparison.** The helper rounds 1650.0000000000002 up to 1651 px
    and squeezes it into 1650, which costs about 3%. The change: round, or crop.
 7. **E4 item 6 at phone width.** At 390 the Hebrew name is 40 × 21 px on screen, so a single pixel
    decides the comparison (0.585 against 0.6). The rendering is right: שולחן, right to left, the
    same glyphs and placement. The change: compare at twice the scale.
+
+8. **E3 item 5, decoding the QR code.** The spec decodes a picture of the on-screen certificate. The
+   promise in the PRD is about the files people keep. The change: decode the exported PNG and the
+   rendered PDF at the longest name. (Done by hand at review: both decode in both engines; pdf.js in
+   WebKit needs 200 dpi rather than 150.)
 
 **Decisions**
 
@@ -237,11 +242,26 @@ given here.
 5. **The guilloche's thickness.** Its stroke is 0.45 units, finer than one pixel in the PDF at 150
    dpi, so the PDF and the PNG draw it differently. After we placed every letter from the face's own
    measurements, the PDF matches the PNG to 0.65% in Chromium and 1.00% in WebKit, against a 1% bar.
-   At 0.7 units WebKit measured 0.20%. Options: thicken it to 0.7 units (recommended), or keep the
-   hairline and accept WebKit at the bar.
-6. **Four-line names on the certificate.** In the current layout a name set on four lines runs over
-   "This certifies that" and nearly reaches the line below it. Moving the fixed lines for every name
+   At 0.7 units WebKit measured 0.20%. Measured again at the Phase 2 review, WebKit is 1.003%, over the bar,
+   so keeping the hairline means E4 item 4 (and PRD R15) fails in WebKit as written. Options: thicken
+   it to 0.7 units (recommended), or keep the hairline and change the bar.
+6. **Four-line names on the certificate.** In the current layout a name set on four lines prints over
+   "This certifies that" until it cannot be read, and its fourth line drops below the name rule onto
+   "was, at the moment recorded below" (80 × 椅 and 80 × 🪑, both named in E3 item 4). E3 item 4 is
+   held open on this decision. Moving the fixed lines for every name
    is a design call for the certificate golden.
+
+7. **Three failure sentences we do not have yet.** Found at the review; each needs words from you.
+   (a) If the certificate drawing cannot load mid-ritual, the page stays in its running state with
+   no message (it should say something and give the box back). (b) If a valid certificate link
+   cannot be drawn, `/c/` says "We could not locate this certificate", which is untrue. (c) If the
+   browser refuses storage, the result still says "Kept in Your Presence Portfolio on this device."
+   Our drafts, for your red-pen:
+   - (a) "This check could not be completed. Nothing was issued and nothing was kept. Please try
+     again." The box comes back, empty and focused.
+   - (b) "This certificate could not be drawn on this device. Its link is still valid."
+   - (c) "This device did not let us keep a copy. The certificate is still yours: download it or
+     copy its link." (shown in place of the "Kept in Your Presence Portfolio" line)
 
 **For your sight**
 
