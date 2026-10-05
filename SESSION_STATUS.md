@@ -12,116 +12,40 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v2`) · **Phase:** 2 — The shell, the ritual and the certificate
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 3 — The company website
 
 ### Current state
 
-Phase 1 is held awaiting C2 (DS1 open on its two C2 items; DS2 to DS7 closed; the C2 packet is out
-at `docs/checkpoints/c2-packet.md`). Phase 2 is active. E0, the shell, and E1, the identifier, are closed; E2 (the ritual), E3 (the certificate per issue) and E4 (PDF and PNG) are built and held open on C2; E5 (the certificate link) is built and held open on its spec's clock race (the C2 paused-clock change); E6 (reopen and verify) is closed; E7 (Your Presence Portfolio) is built and held open on the same clock race in its spec. Every page the
-PRD lists answers: home and leadership as built, the 404 for real, and the rest as placeholders
-marked `sh-placeholder` that say they are being prepared. `/verify`, `/c/` and `/portfolio` are built.
+Phases 1 and 2 are held awaiting C2. Phase 3 is built: S3 to S9 are closed through the gate, and
+S2 (leadership) is held open only on its C2 blind pick. Every page the PRD lists is now built; no
+page carries `sh-placeholder` any more. The build writes `/research/` and
+each paper from `company/research/`, and `/status` from `company/status/status-updates.xml`, and
+reads nothing else under `company/`.
 
 ### What changed
 
-- E7 (`still-here-c29`) built and held open. `/portfolio` lists every certificate issued on this
-  device, newest first: the name, "3 October 2026, 05:52 · America/Chicago", the identifier, and
-  Open, Download PDF and Download PNG. Each file is drawn again from the four stored facts when
-  its button is pressed. An empty, cleared or corrupt store shows "Nothing has been certified on
-  this device yet. Everything you certify here stays here." The stored format is unchanged from
-  the ritual's. Checked: unit 4/4 twice. W3 passed whole in Chromium and WebKit at both sizes in
-  two runs. The portfolio spec missed 3 and then 2 times, in Firefox both runs and WebKit once:
-  each time the spec's first check, "Car keys", was issued at 10:52:01 under its running test
-  clock, so the identifier it looks for differs. It needs the paused-clock change too. Regressions:
-  the DS4, DS5, E0, E3, E5 and E6 specs gave 236 passed, 20 skipped and 2 failed (E3's known
-  Firefox clock race); the units are as before.
-- E6 (`still-here-xws`) closed through the gate. `/verify` now verifies: type the identifier
-  (any case, `o` for zero, with or without `SH-`) and the name, press Verify or Enter, and it states
-  the issue in UTC. The order of judgment is one module, `src/js/judge.js`, used by Verify and by
-  `/c/`: a malformed identifier, then a name that does not match (or is over 80 code points) get
-  the not-located sentence; only a matching name is then judged for the future (more than five
-  minutes ahead of this device's clock). Failures draw nothing and offer "Verify a certificate" and
-  "Check an object". With a field empty, Verify is greyed and pressing it asks for both. Bare `/c/`
-  is the same form. Checked: unit 7/7 twice (including every substitution and swap of the
-  published vectors); the verify spec and the W2 walk, steps 1-7, 40 passed and 2 skipped in each
-  of two runs, and again in the close gate; links 19 pages, 0 broken.
-- E5 after E6: item 4 now passes in all six projects in both runs and is flipped. BROWSER PASS is
-  still held: in Firefox (both runs) and once in WebKit, the spec's issuing page pressed at :01 or
-  :02 while its fake clock ran on, so the certificate it redraws from is not the one it issued. The
-  same paused-clock change for C2 covers it. Chromium 6/6 both runs.
-- E5 (`still-here-wlr`) built and held open on item 4. Copy certificate link now works: it copies
-  the link and says "Certificate link copied."; where the browser refuses the clipboard it shows
-  "Copy this link to keep the certificate:" with the link beneath it in a read-only box, already
-  selected. Opening a link at `/c/#…` checks the identifier against the name, then draws the same
-  certificate again, byte for byte, and states when it was issued in the issuer's zone, with the
-  four buttons beneath; a link that does not check out draws nothing and says it could not be
-  located. Opening a link saves nothing. The result's buttons now live in `src/js/result.js`,
-  shared by both pages. Fixed on the way: after the result, the hidden form's box stayed
-  read-only. Checked: unit 3/3 (three runs); the link spec twice in six projects, every test
-  passing except item 4, which plays Verify (E6) and stops at its missing form; W2 steps 1-3 pass
-  in Chromium and WebKit at both sizes, twice. The earlier units are as before (DS1's two C2 items,
-  E4's item 3), and the DS4, DS5, E0 and E3 specs pass (170 passed). E2 and E4's remaining misses
-  are the known C2 items; press to result measured 4.62-4.74 s on the page's own clock.
-- E4 (`still-here-cq5`) built and held open. Download PDF and Download PNG now work on the result:
-  the PDF is US Letter with the three faces embedded, and the PNG is 3,300 × 2,550. Files are named
-  `STILL-HERE-<slug>-<11 symbols>`. While a file is prepared its button reads "Preparing PDF…" or
-  "Preparing PNG…", and a failure puts the export-failure sentence beneath the buttons. The
-  export libraries are served from our own site and load on the first press; the fonts are fetched
-  as files, so the page's security policy is unchanged. Every certificate line is now placed
-  from its start, with no kerning or ligatures, so the screen, the PNG and the PDF set the same
-  glyphs. Proven: items 2, 5 and 7. Waiting on test changes at C2: item 3 (the PNG differs from
-  a no-font render by 9.8%, like the DS4 candidate; the bar is 20%), item 4 (see below), item 6
-  at 390 (one Hebrew name scores 0.585 against 0.6 on a tiny screen), and item 1's Firefox clock
-  race.
-- Correction to item 4. The 0.17% we reported earlier was wrong. Compared pixel for pixel (the
-  extra 1651st column cropped, not squeezed), the PDF and PNG differed by 1.04% in Chromium and
-  1.01% in WebKit. On screen the browser spaced the letters of a line its own way, while the PDF
-  used the face's spacing table, so the PDF drifted along each line. Every certificate line,
-  the name included, is now placed letter by letter from that table. Measured after the change:
-  0.65% in Chromium and 1.00% in WebKit pixel for pixel; the test's squeezed figure is still 3.0%
-  and 3.3%. Item 4 waits on the C2 re-tag (1651 to 1650) and, for WebKit, on the guilloche
-  decision. pdf.js still reads the footer verbatim and "Café" as text. The C2 certificate
-  candidate has been rendered again from the current drawing.
-- E3 (`still-here-3xf`) built and held open only on item 7, the certificate golden at C2. Each
-  issue prints its own name, the local date and time with "Jurisdiction of here:", the UTC line,
-  the identifier and a QR code for its link. A name with characters the certificate face lacks
-  (emoji, Chinese) is now drawn by the browser, one picture per line, in the same place. A name is
-  set in NFC, so "Café" typed either way prints the same. Unit 6/6. The certificate spec passed
-  29/30 with one worker and 20/20 in Firefox when repeated. The misses are the press landing a
-  second late while the browser loads, the same test question as E2 item 10. For C2: a four-line
-  name runs over "This certifies that" in the certificate's fixed layout.
-- E2 (`still-here-3a3`) built and marked blocked: waiting on C2 for item 10's test change and
-  item 14's golden. The sequence is re-timed so every step is set from the press: the second line
-  at 1.2 s, the third at 3.2 s, the result at 4.6 s, and no line is ever on screen less than 1 s.
-  With reduced motion only the fade goes; the pacing is the same. Played W1 (steps 1-5, 8-10) and
-  W8 in Chromium and WebKit at 390: the result came at 4.64-4.66 s both ways. Across ten names the
-  certificate now lands within 12-49 ms of itself in every browser (it was up to 200 ms in WebKit).
-  Two full E2 runs in six projects: 84 and 82 passed, 10 skipped. What still fails: item 10 (its
-  test lets the page clock run while the browser loads, so the press can land in the next second,
-  and under load fake time passes 3.5 s before the test checks nothing is saved), and W1.5 or
-  W8.2 now and then. Each of those walk failures happened inside a jump of this computer's own
-  clock, which steps back about 1.17 s every 31 s; those two steps time themselves with that clock.
-  Unit 4/4; the earlier beads' units and the DS4, DS5, E0 and X3 specs still pass (156 passed,
-  12 skipped). The Download and Copy buttons are on screen but do nothing until E4 and E5.
-- E1 (`still-here-yw2`) closed. `src/js/identifier.js` makes and reads identifiers:
-  `canonicalize`, `makeIdentifier` and `parseIdentifier`. The home page loads it for the ritual,
-  and the records check will import the same file. All seven vectors reproduce. Across 3,000
-  random identifiers, every single substitution and every adjacent swap is refused. The
-  certificate specimen's identifier, SH-00PP-9AGR-1GTB, recomputes unchanged. Unit 6/6; the
-  earlier beads' unit tests still pass.
-- E0 (`still-here-lsz`) closed. The header, menu, footer, Content-Security-Policy and Open Graph
-  tags live once, in `src/_shell/`, and the build includes them into every page; a page without
-  the markers stops the build. The 404 carries the fixed sentence and Return home. The Open Graph
-  picture is now `src/images/hero-og-1200.jpg` (renamed from `og-1200.jpg`; `scripts/derivatives.py`
-  writes the new name). The link checker is `npm run check:links` after `npm run build`. The menu
-  button reads "Menu" and "Close menu". Short pages keep the footer at the bottom of the window.
-- Checked: E0 unit 6/6; shell and walk specs 124 passed, 2 skipped (the walk runs in Chromium and
-  WebKit only); W4.1–2 played; G0, G1, G2, T0, DS2 to DS7 and X3 unit tests pass; the DS4, DS5,
-  DS6 and X3 specs pass; DS1 still fails only its two C2 items, as before; 19 pages, 0 broken links.
-  In a browser at 390 and 1440 the only console error is the 404 page reporting its own 404.
+- S2 (`still-here-tul`): each leadership card carries the person's id. Unit 3/3 (one skipped,
+  after C2); the leadership spec and its walk 10 passed, 2 skipped, in two runs. Held on C2.
+- S3 (`still-here-3yo`): Petra's three papers are in `company/research/` (the long one's
+  contents add up to 86 pages; the two short ones are 1,214 and 963 words with footnotes);
+  `/research/` lists them with covers drawn in code. Unit 4/4; spec and walk 28 passed, 2 skipped.
+- S4 (`still-here-r4r`): three case studies of Ms Webb's register and the Memorial bench, quoting
+  only what she wrote to us. Unit 4/4; spec and walk 28 passed, 2 skipped, two runs.
+- S5 (`still-here-z4r`): I wrote STATUS-002 and STATUS-003 and the schema for the updates file;
+  the status page is made from it. Unit 3/3; spec and walk 10 passed, 2 skipped, two runs.
+- S6 (`still-here-skd`), S7 (`still-here-5ki`), S8 (`still-here-hng`), S9 (`still-here-eg4`):
+  careers, Enterprise, Terms of Presence and Privacy. No form on careers or Enterprise. Unit 3/3,
+  4/4, 2/2, 2/2; each spec and walk 10 passed, 2 skipped, two runs.
+- Regressions after S9: Phase 0 to 2 unit files all as before except G0 test 4, which is red
+  because one commit (the Enterprise one) carries a staff address as its author; that is being
+  put right separately. The E0 and DS5 specs: 136 passed, 8 skipped.
+- Browser runs used a private copy of the build on its own port (`STAGING_URL` pointed at it),
+  because another session's local server on 5320 stopped mid-run once and refused three WebKit
+  tests.
 
 ### What's next
 
-1. E2 to E5 and E7 wait on C2 (E5 and E7 on the paused-clock change for their specs). The Phase 2 exit critic is next. Before the next
+1. The Phase 3 critic review: W4 (each sub-walk) and W5 by hand. E2 to E5 and E7 re-run after the paused-clock re-tag (`specs-v3`). Before the next
    browser run, check this computer's clock is steady: a 75 s watch of `Date.now()` against
    `performance.now()` should show no jump.
 2. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day;
@@ -152,8 +76,9 @@ marked `sh-placeholder` that say they are being prepared. `/verify`, `/c/` and `
   51 pass, 157 fail, 12 skipped, every failure in a bead not yet built. One earlier full run had
   G2's `.beads/` check fail because a bead comment was still being written out to
   `.beads/issues.jsonl` while the run went on; the next run passed. Change no bead mid-run.
-- `bd` records a bead's owner from the git author address, so beads are filed and updated with the
-  owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`.
+- `bd` records a bead's owner from the git author address, so `bd` commands are run with the
+  owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`, set on that one command only. Never
+  export them: a `git commit` in the same shell takes the address as its author.
 
 ## Changelog
 
@@ -175,3 +100,4 @@ marked `sh-placeholder` that say they are being prepared. `/verify`, `/c/` and `
 - 2026-10-04 — E5 built; the link, Copy and its fallback, `/c/` redrawn; held open on item 4 until E6. (Martin, 2026-10-04)
 - 2026-10-04 — E6 closed; Verify and bare `/c/` built; E5 item 4 flipped, held on its clock race. (Martin, 2026-10-04)
 - 2026-10-04 — E7 built; the portfolio, held on its spec's clock race. (Martin, 2026-10-04)
+- 2026-10-04 — Phase 3 built: S3–S9 closed, S2 held on C2; the papers and status updates written. (Martin, 2026-10-04)
