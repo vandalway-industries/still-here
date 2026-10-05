@@ -101,6 +101,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
     description is painted; X6 item 4 waits for `deploy/` and allows the licence-text and lockfile
     hosts; V2's address filter learns `output`), with the red-pens above. Applied by a separate
     test-author session and re-tagged `specs-v4`. (Jules, 2026-10-05)
+- **C3 — answered 2026-10-05.** Clive, on the table read (`docs/checkpoints/c3-packet.md`): every
+  authored line approved as written (records and site copy). Both Enterprise testimonials stay. The
+  paper and case-study slugs, the ten examples, the relocation line, the portrait crops and the alt
+  texts stand as drafted. `s07`, the second-floor printer, is placed on `/careers` beside "Your
+  equipment"; that placement is the one bead filed from C3, and it closes before L1. (Jules, 2026-10-05)
 
 ## Changelog
 
