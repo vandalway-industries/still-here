@@ -33,7 +33,7 @@ relations:
 | 1 | Design system, golden candidates | held (awaiting C2) | DS1–DS7 closed; C2 packet out |
 | 2 | The shell, the ritual and the certificate | held (awaiting C2) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | held (awaiting C2) | S2–S9 closed; W4 W5 played |
-| 4 | Extras | active | X1–X6 closed; W6 played |
+| 4 | Extras | held (test items for the next packet; under review) | X1–X6 closed; W6 played |
 | 5 | The records in full | active | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | pending | V1–V4 closed; W7 played internally |
 | 7 | Staging and the launch packet | pending | L1–L5 closed; C4 packet out |
@@ -41,15 +41,16 @@ relations:
 
 ## Active phase
 
-**Phase 4 — Extras.** Phases 1, 2 and 3 are held awaiting C2. Phase 2: E0, E1, E5 and E6 closed;
-E2, E3, E4 and E7 built and held on C2 items (E2 and E7 also wait on a quiet-machine re-run before
-C4). Phase 3: S3–S9 closed; S2 waits on the leadership golden. Tests are locked at `specs-v3` (Clive
-approved test change 4 ahead of the packet). Phase 4: X1, X2, X3 and X5 closed; X4 and X6 built and
-held open on test items for the next checkpoint packet (Playwright's offline emulation in WebKit and
-Firefox; X6 item 4's precondition and licence-text hosts), and Phase 4 is under review.
+**Phase 5 — The records in full.** One owner, RC1 → RC8 in order. RC1 to RC6 closed. RC7's packet
+is out (`docs/checkpoints/c3-packet.md`); the bead is held open on a test item for the next packet
+(its test 2 looks for page copy under `src/content/`, which does not exist). Next move: RC8.
 
-**Phase 5 — The records in full** is active, one owner, RC1 → RC8 in order. RC1 to RC6 closed. Next move:
-RC7, the C3 packet.
+Phases 1, 2 and 3 are held awaiting C2. Phase 2: E0, E1, E5 and E6 closed; E2, E3, E4 and E7 built
+and held on C2 items (E2 and E7 also wait on a quiet-machine re-run before C4). Phase 3: S3–S9
+closed; S2 waits on the leadership golden. Phase 4 is held: X1, X2, X3 and X5 closed; X4 and X6
+built and held open on test items for the next checkpoint packet (Playwright's offline emulation in
+WebKit and Firefox; X6 item 4's precondition and licence-text hosts); the phase is under review.
+Tests are locked at `specs-v3` (Clive approved test change 4 ahead of the packet).
 
 ## Build method
 
@@ -320,6 +321,7 @@ No cap (I-07). Expected about 100 orchestrator turns.
   Evidence: RC1 closed — every mail with Message-ID, subject and threading, SUPPORT-001's attachment header, CAL-001's invite history; `tests/unit/still-here-7i1-correspondence.test.ts` 5/5; continuity 0. RC2 closed — `company/inventory/schema.json`, every row citing record ids, Bev's SpreadsheetML `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same five ids and statuses; `tests/unit/still-here-8je-inventory.test.ts` 4/4. RC3 closed — the 11:50 floor counts for the week in `company/status/notes.xml` with `notes.xsd`, Tuesday's floor three 0 amended to 1 on reflection; STATUS-001–003 checked against their sources; `tests/unit/still-here-1t0-status-records.test.ts` 3/3. RC4 closed — `company/gum-graph/` as 28 concepts (7 people, 4 observations, 2 borrowings, 1 reimbursement, 12 access requests, 2 claims); OKF validator `--strict` conformant; `tests/unit/still-here-17d-gum-graph.test.ts` 4/4. RC5 closed — every footnote resolves, §3 present, Six Feet's times and distance are QA-001's and sh-051's; `tests/unit/still-here-zhf-papers.test.ts` 3/3 (its distance pattern is overbroad, a C3 packet item).
 - [x] RC6 the continuity and identifier checks in CI across `company/` and `site/`. Evidence: `scripts/identifier-check.mjs` (imports `src/js/identifier.js`) and `.github/workflows/records.yml`, commit c8852b8; Actions run 37302871955 green: continuity 0 over `company/` and `site/`, identifiers 8 found, 8 recompute; `tests/unit/still-here-62x-continuity.test.ts` 7/7.
 - [ ] RC7 the C3 packet: every HUMAN-JUDGED line, records and site copy, laid out for a table read in reading order, with the record ids, pages and locked test files each line lives in.
+  Evidence so far: `docs/checkpoints/c3-packet.md` written (16 PRD items placed, 56 company records and 23 page sources linked, 64 locked strings with the files that hold them, the testimonials and `s07` calls); `tests/unit/still-here-esz-c3-packet.test.ts` tests 1 and 3 pass; test 2 fails only on `src/content/`, which does not exist — a test item for the next packet. RC7 held open.
 - [ ] RC8 `README.md` and `company/README.md`; walk W9 played on the local checkout.
 
 #### Bar
@@ -433,6 +435,11 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
     server rather than `context.setOffline`; X6 item 4 to allow the licence texts' and the
     lockfile's funding hosts (or cite them), its `deploy/` precondition met at Phase 6. Found at
     the Phase 4 build, 2026-10-05.
+  - [ ] Next packet (RC5, RC7, RC8): RC5's distance pattern matches any word ending in "m" or "ft";
+    RC7's test 2 looks for page copy under `src/content/`, which does not exist (copy lives in each
+    page's template under `src/`); RC8's test 1 wants `package.json` scripts named `test` and `e2e`,
+    and the scripts are `test:unit` and `test:e2e` (`package.json` is outside Phase 5's files).
+    Listed in `docs/checkpoints/c3-packet.md` § 7. Found at the Phase 5 build, 2026-10-05.
 
 ## Retro — process notes (append-only)
 

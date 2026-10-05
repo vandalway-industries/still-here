@@ -18,7 +18,7 @@ relations: {}
 
 Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
 open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1 to RC6 are closed.
+RC1 to RC8 in order. RC1 to RC6 are closed. RC7's packet is out and the bead is held open on a test item. Phase 4 is now marked held.
 
 ### What changed
 
@@ -46,17 +46,24 @@ RC1 to RC8 in order. RC1 to RC6 are closed.
   (`scripts/identifier-check.mjs`), which recomputes every certificate number in the records and on
   the pages with the site's own module. First run on GitHub: green, continuity 0, 8 identifiers
   found and 8 recomputed. Unit 7/7.
+- RC7: the C3 packet is out, `docs/checkpoints/c3-packet.md`. It places all 16 items the PRD
+  gives C3, links all 56 company records and 23 page sources, lists the 64 locked strings with the
+  files that hold them, and sets out the testimonials and `s07` calls. Its test passes 2 of 3. The
+  third looks for page copy under `src/content/`, and that folder does not exist. That goes in the
+  next packet, and RC7 stays open on it.
 - The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
   against both lists.
 
 ### What's next
 
-1. RC7, the C3 packet, then RC8.
+1. RC8, the two READMEs and walk W9.
 2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
 
 ### Waiting on Clive
+
+- C3: the table read, `docs/checkpoints/c3-packet.md`. Nothing waits on it until Phase 7.
 
 - C2: the golden candidates, the test changes, and the three failure sentences.
 - The Pages verification TXT value for isitstillhere.com, any time before L3.
@@ -107,3 +114,4 @@ RC1 to RC8 in order. RC1 to RC6 are closed.
 - 2026-10-05 — RC4 closed: the gum graph in full, every edge its own concept. (Martin, 2026-10-05)
 - 2026-10-05 — RC5 closed: the papers checked as records. (Martin, 2026-10-05)
 - 2026-10-05 — RC6 closed: the records check runs in CI. (Martin, 2026-10-05)
+- 2026-10-05 — RC7: the C3 packet is out; the bead held on a test item. (Martin, 2026-10-05)
