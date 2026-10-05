@@ -18,7 +18,7 @@ relations: {}
 
 Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
 open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1 to RC5 are closed.
+RC1 to RC8 in order. RC1 to RC6 are closed.
 
 ### What changed
 
@@ -41,12 +41,17 @@ RC1 to RC8 in order. RC1 to RC5 are closed.
   resolves, and *Six Feet to the Left* states only the times and the distance QA-001 and sh-051
   record. Unit 3/3. No change to the papers. The test's distance pattern also catches any word
   ending in m ("from" reads as "fro m"); it goes to the C3 packet as before.
+- RC6: a new workflow, Records (`.github/workflows/records.yml`), builds the site on every push
+  and runs the continuity check over `company/` and `site/` and the new identifier check
+  (`scripts/identifier-check.mjs`), which recomputes every certificate number in the records and on
+  the pages with the site's own module. First run on GitHub: green, continuity 0, 8 identifiers
+  found and 8 recomputed. Unit 7/7.
 - The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
   against both lists.
 
 ### What's next
 
-1. RC6, the continuity and identifier checks in CI, then RC7 and RC8.
+1. RC7, the C3 packet, then RC8.
 2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
@@ -101,3 +106,4 @@ RC1 to RC8 in order. RC1 to RC5 are closed.
 - 2026-10-05 — RC3 closed: the week's floor counts and their schema. (Martin, 2026-10-05)
 - 2026-10-05 — RC4 closed: the gum graph in full, every edge its own concept. (Martin, 2026-10-05)
 - 2026-10-05 — RC5 closed: the papers checked as records. (Martin, 2026-10-05)
+- 2026-10-05 — RC6 closed: the records check runs in CI. (Martin, 2026-10-05)

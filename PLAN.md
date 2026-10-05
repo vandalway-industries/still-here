@@ -48,8 +48,8 @@ approved test change 4 ahead of the packet). Phase 4: X1, X2, X3 and X5 closed; 
 held open on test items for the next checkpoint packet (Playwright's offline emulation in WebKit and
 Firefox; X6 item 4's precondition and licence-text hosts), and Phase 4 is under review.
 
-**Phase 5 — The records in full** is active, one owner, RC1 → RC8 in order. RC1 to RC5 closed. Next move:
-RC6, the continuity and identifier checks in CI.
+**Phase 5 — The records in full** is active, one owner, RC1 → RC8 in order. RC1 to RC6 closed. Next move:
+RC7, the C3 packet.
 
 ## Build method
 
@@ -318,7 +318,7 @@ No cap (I-07). Expected about 100 orchestrator turns.
 #### Steps
 - [x] RC1 correspondence, chat, notes and calendar in full · RC2 the inventory (YAML and Bev's XML) · RC3 status records (internal notes; the public updates cross-checked) · RC4 the gum graph as an OKF bundle · RC5 the papers checked as records.
   Evidence: RC1 closed — every mail with Message-ID, subject and threading, SUPPORT-001's attachment header, CAL-001's invite history; `tests/unit/still-here-7i1-correspondence.test.ts` 5/5; continuity 0. RC2 closed — `company/inventory/schema.json`, every row citing record ids, Bev's SpreadsheetML `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same five ids and statuses; `tests/unit/still-here-8je-inventory.test.ts` 4/4. RC3 closed — the 11:50 floor counts for the week in `company/status/notes.xml` with `notes.xsd`, Tuesday's floor three 0 amended to 1 on reflection; STATUS-001–003 checked against their sources; `tests/unit/still-here-1t0-status-records.test.ts` 3/3. RC4 closed — `company/gum-graph/` as 28 concepts (7 people, 4 observations, 2 borrowings, 1 reimbursement, 12 access requests, 2 claims); OKF validator `--strict` conformant; `tests/unit/still-here-17d-gum-graph.test.ts` 4/4. RC5 closed — every footnote resolves, §3 present, Six Feet's times and distance are QA-001's and sh-051's; `tests/unit/still-here-zhf-papers.test.ts` 3/3 (its distance pattern is overbroad, a C3 packet item).
-- [ ] RC6 the continuity and identifier checks in CI across `company/` and `site/`.
+- [x] RC6 the continuity and identifier checks in CI across `company/` and `site/`. Evidence: `scripts/identifier-check.mjs` (imports `src/js/identifier.js`) and `.github/workflows/records.yml`, commit c8852b8; Actions run 37302871955 green: continuity 0 over `company/` and `site/`, identifiers 8 found, 8 recompute; `tests/unit/still-here-62x-continuity.test.ts` 7/7.
 - [ ] RC7 the C3 packet: every HUMAN-JUDGED line, records and site copy, laid out for a table read in reading order, with the record ids, pages and locked test files each line lives in.
 - [ ] RC8 `README.md` and `company/README.md`; walk W9 played on the local checkout.
 
