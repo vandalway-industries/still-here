@@ -1211,3 +1211,130 @@ a.button-secondary {
 .status-row .body-sm {
   margin-top: var(--sh-space-sm);
 }
+
+/* ── Case studies (S4) ──────────────────────────────────────────────────────────────────────── */
+.case-list {
+  list-style: none;
+  margin: var(--sh-space-xxl) 0 var(--sh-space-section);
+  padding: 0;
+  max-width: var(--sh-space-text-max);
+}
+
+.case-list li {
+  padding: var(--sh-space-lg) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.case-list h2 {
+  margin: var(--sh-space-xs) 0 0;
+}
+
+.case-list h2 a,
+.case-back a {
+  color: var(--sh-color-graphite);
+}
+
+.case-list .body-sm {
+  margin: var(--sh-space-sm) 0 0;
+  color: var(--sh-color-graphite-muted);
+}
+
+.case {
+  padding: var(--sh-space-xxl) 0 var(--sh-space-section);
+}
+
+.case h1 {
+  margin: var(--sh-space-md) 0 0;
+  max-width: 24ch;
+}
+
+.case-lede {
+  margin: var(--sh-space-lg) 0 0;
+  max-width: var(--sh-space-text-max);
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.case-lead,
+.case-portrait {
+  margin: var(--sh-space-xl) 0 0;
+}
+
+.case-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case-portrait {
+  max-width: 360px;
+}
+
+.case-facts {
+  display: grid;
+  gap: var(--sh-space-md);
+  margin: var(--sh-space-xl) 0 0;
+  padding: var(--sh-space-lg) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+  border-bottom: 1px solid var(--sh-color-hairline);
+}
+
+.case-facts dd {
+  margin: var(--sh-space-xs) 0 0;
+}
+
+@media (min-width: 640px) {
+  .case-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .case-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.case-body {
+  max-width: var(--sh-space-text-max);
+}
+
+.case-body h2 {
+  margin: var(--sh-space-xxl) 0 0;
+}
+
+.case-body p {
+  margin: var(--sh-space-md) 0 0;
+}
+
+.case-quote {
+  margin: var(--sh-space-xl) 0 0;
+  padding-left: var(--sh-space-lg);
+  border-left: 3px solid var(--sh-color-graphite);
+}
+
+.case-quote p {
+  margin: 0;
+  font-family: var(--sh-type-headline-font-family);
+  font-size: var(--sh-type-headline-font-size);
+  font-weight: var(--sh-type-headline-font-weight);
+  line-height: var(--sh-type-headline-line-height);
+  letter-spacing: var(--sh-type-headline-letter-spacing);
+}
+
+.case-quote p::before {
+  content: "\201C";
+}
+
+.case-quote p::after {
+  content: "\201D";
+}
+
+.case-body .case-cite {
+  margin-top: var(--sh-space-sm);
+  padding-left: calc(var(--sh-space-lg) + 3px);
+}
+
+.case-back {
+  margin: var(--sh-space-xxl) 0 0;
+}
