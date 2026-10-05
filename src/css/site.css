@@ -1520,3 +1520,40 @@ a.button-secondary {
     grid-template-columns: 360px minmax(0, 1fr);
   }
 }
+
+/* ── Terms of Presence and Privacy (S8, S9) ─────────────────────────────────────────────────── */
+.legal {
+  padding: var(--sh-space-xxl) 0 var(--sh-space-section);
+  max-width: var(--sh-space-text-max);
+}
+
+.legal-lede {
+  margin: var(--sh-space-lg) 0 0;
+  color: var(--sh-color-graphite-muted);
+}
+
+.legal section {
+  margin: var(--sh-space-xxl) 0 0;
+}
+
+.legal h2 {
+  margin: 0;
+}
+
+.legal p {
+  margin: var(--sh-space-md) 0 0;
+}
+
+.legal .legal-source {
+  font-size: var(--sh-type-body-sm-font-size);
+  line-height: var(--sh-type-body-sm-line-height);
+  color: var(--sh-color-graphite-muted);
+}
+
+.legal a {
+  color: var(--sh-color-graphite);
+}
+
+.legal .legal-links {
+  margin-top: var(--sh-space-xxl);
+}
