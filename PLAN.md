@@ -41,12 +41,10 @@ relations:
 
 ## Active phase
 
-**Phase 3 — The company website.** Phases 1 and 2 are held awaiting C2. Phase 2: E0, E1, E5 and E6
-closed; E2, E3, E4 and E7 built and held on C2 items (E2 and E7 also on a quiet-machine re-run) (the critic's review of 2026-10-04
-found no stuck walk step). Clive approved test change 4, the paused clock, ahead of the packet; the
-tests are re-tagged `specs-v3` and the five beads were re-run on 2026-10-05: E5 closed; E2 item 10,
-E3 BROWSER PASS and E4 item 1 flipped; E2 and E7 wait on a quiet-machine re-run. Next move: the Phase 3
-critic review.
+**Phase 4 — Extras.** Phases 1, 2 and 3 are held awaiting C2. Phase 2: E0, E1, E5 and E6 closed;
+E2, E3, E4 and E7 built and held on C2 items (E2 and E7 also wait on a quiet-machine re-run before
+C4). Phase 3: S3–S9 closed; S2 waits on the leadership golden. Tests are locked at `specs-v3` (Clive
+approved test change 4 ahead of the packet). Next move: X1–X3, then X4, then X5–X6.
 
 ## Build method
 
