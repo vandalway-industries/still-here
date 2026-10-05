@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Build the published site: copy src/ into site/, the one folder the Pages workflow uploads.
-// Writes inside site/ only. site/ is in .gitignore. Later phases add their steps here.
+// Writes the published copy into site/ (in .gitignore), and regenerates these sources first:
+// src/css/tokens.css, src/js/tokens.js, src/js/certificate/{signatures,metrics}.js, src/brand/mark.svg
+// and src/favicon.svg. Later phases add their steps here.
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';

@@ -291,8 +291,11 @@ No cap (I-07). Expected about 160 orchestrator turns.
   Built (commit dbaaac8). The unit test passes 4/4. Chromium is green at both sizes on two runs.
   Firefox passes test 3 but not test 4: its service worker still reaches the network under
   `setOffline`. In WebKit every request fails under `setOffline`, so tests 3, 4 and W6.8 fail. With
-  the server actually stopped, all three engines work offline. Held for a test change in the next
-  packet.
+  the server actually stopped, all three engines open pages and the 404 offline, but until
+  2026-10-05 WebKit painted an unseen photograph as an empty box with no description. offline.js
+  now lays the description over any photograph that fails, checked by eye with the server stopped
+  in WebKit, Chromium and Firefox at 390 and 1440 on /leadership and /enterprise. Held for a test
+  change in the next packet. (Jules, 2026-10-05)
 - [x] X5 accessibility across every page (axe, keyboard, focus, live region). Closed 2026-10-05:
   unit 2/2; spec 18/18 in six projects on two runs (axe 0 serious/critical on 19 pages).
 - [ ] X6 the guards: no external request, no analytics, fragment never sent, CSP holds, page weight, no placeholder left.

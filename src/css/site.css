@@ -40,6 +40,32 @@ img {
   height: auto;
 }
 
+/* A photograph that did not arrive: offline.js wraps it in .img-frame and lays its description
+   over the box, because some browsers paint nothing legible there. (Jules, 2026-10-05) */
+.img-frame {
+  display: block;
+  position: relative;
+}
+
+.img-missing-alt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sh-space-md);
+  overflow: hidden;
+  background: var(--sh-color-surface);
+  border: 1px solid var(--sh-color-hairline);
+  color: var(--sh-color-graphite-muted);
+  font-family: var(--sh-type-body-sm-font-family);
+  font-size: var(--sh-type-body-sm-font-size);
+  font-weight: var(--sh-type-body-sm-font-weight);
+  line-height: var(--sh-type-body-sm-line-height);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
 a {
   color: inherit;
   text-underline-offset: 0.18em;
@@ -311,6 +337,12 @@ a {
   margin: 0 auto;
 }
 
+.ritual-chair .img-frame {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .ritual-copy .lede {
   margin: var(--sh-space-md) 0 0;
   color: var(--sh-color-graphite-muted);
@@ -436,6 +468,10 @@ a {
   .ritual-chair img {
     width: 100%;
     height: auto;
+  }
+
+  .ritual-chair .img-frame {
+    width: auto;
   }
 }
 
