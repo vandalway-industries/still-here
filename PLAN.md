@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-04
+updated: 2026-10-05
 read_by: every session start in BUILD (after SESSION_STATUS.md); `/goal` at BUILD entry; the landing gate's truth-pass at every session end; scripts/docs-sync-check.sh
 relations:
   tracks: PRD.md
@@ -44,7 +44,9 @@ relations:
 **Phase 4 — Extras.** Phases 1, 2 and 3 are held awaiting C2. Phase 2: E0, E1, E5 and E6 closed;
 E2, E3, E4 and E7 built and held on C2 items (E2 and E7 also wait on a quiet-machine re-run before
 C4). Phase 3: S3–S9 closed; S2 waits on the leadership golden. Tests are locked at `specs-v3` (Clive
-approved test change 4 ahead of the packet). Next move: X1–X3, then X4, then X5–X6.
+approved test change 4 ahead of the packet). Phase 4: X1, X2, X3 and X5 closed; X4 and X6 built and
+held open on test items for the next checkpoint packet (Playwright's offline emulation in WebKit and
+Firefox; X6 item 4's precondition and licence-text hosts). Next move: those packet items, then Phase 5.
 
 ## Build method
 
@@ -274,11 +276,25 @@ No cap (I-07). Expected about 160 orchestrator turns.
 - [ ] Phase 3 exit gate.
 
 #### Steps
-- [ ] X1 `presence.json` · X2 `security.txt` and its CI expiry check · X3 the 404 on every server.
+- [x] X1 `presence.json` · X2 `security.txt` and its CI expiry check · X3 the 404 on every server.
+  X1, X2 and X3 closed through the gate 2026-10-05 (commit dbaaac8): unit 2/2, 3/3, 1/1 on two runs
+  (staging skips); presence spec 6/6 and the 404 spec and walk 16 passed, 2 skipped, on two runs.
 - [ ] X4 manifest and service worker; everything in Goals 1–3 offline; build N+1 served by the second navigation.
-- [ ] X5 accessibility across every page (axe, keyboard, focus, live region).
+  Built (commit dbaaac8). The unit test passes 4/4. Chromium is green at both sizes on two runs.
+  Firefox passes test 3 but not test 4: its service worker still reaches the network under
+  `setOffline`. In WebKit every request fails under `setOffline`, so tests 3, 4 and W6.8 fail. With
+  the server actually stopped, all three engines work offline. Held for a test change in the next
+  packet.
+- [x] X5 accessibility across every page (axe, keyboard, focus, live region). Closed 2026-10-05:
+  unit 2/2; spec 18/18 in six projects on two runs (axe 0 serious/critical on 19 pages).
 - [ ] X6 the guards: no external request, no analytics, fragment never sent, CSP holds, page weight, no placeholder left.
-- [ ] Walk W6 played; the 404 sub-walk of W4 played.
+  Items 2, 3 and 5 green on two runs, and item 1 in Chromium. Item 1 in WebKit stops at W6.8 (the
+  same emulation). Item 4 needs `deploy/` (Phase 6). Its scan also finds scripts.sil.org, inside the
+  verbatim OFL texts, and opencollective.com, core-js's funding URL in `package-lock.json`. Held
+  for the next packet.
+- [ ] Walk W6 played; the 404 sub-walk of W4 played. W4.404 played in Chromium and WebKit at both
+  sizes. W6.1–7 played in Chromium at both sizes (1–2 with the `checkInstallable()` substitute).
+  W6.8 in WebKit is held on the emulation item above.
 
 #### Bar
 Deterministic: each X bead's specs, axe at zero serious or critical, the weight budget, the network log. Then W6 in Chromium (installability with its substitute) and the offline steps in WebKit.
@@ -395,16 +411,24 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - **Mail provider for Q22** — out of this milestone (I-03). Blocks nothing in v1.
 - **Found during the build** — Work found by a review, kept here until C2 decides how found work is filed (the G0 bead check;
 C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2026-10-04)
-  - [ ] Phase 4 (X6, the guards): `npm run build` regenerates the certificate's signature paths (today
+  - [x] Phase 4 (X6, the guards): `npm run build` regenerates the certificate's signature paths (today
   `scripts/certificate-glyphs.mjs` is run by hand; its output is byte-identical), and the
   `tokens.css` header comment written by `scripts/tokens.mjs` names every generated colour source
   (`src/brand/mark.svg` and `src/favicon.svg` carry the green too). Found at the Phase 1 critic
-  review.
+  review. Done 2026-10-05 (commit dbaaac8). The build converts the glyphs again whenever the
+  SHA-256 of their inputs (the script and every face) differs from the one stamped in both outputs.
+  The header now names `src/js/tokens.js`, `src/brand/mark.svg` and `src/favicon.svg`.
   - [ ] Phase 4 (X6): the three failure sentences in the C2 packet's addendum, decision 7, once Clive
     red-pens them: the stuck running state when the certificate drawing cannot load
     (`src/js/home.js`), the false "could not locate" when a valid link cannot be drawn
     (`src/js/certificate-page.js`), and the "Kept…" line when storage is refused (`src/js/home.js`).
-    Found at the Phase 2 review.
+    Found at the Phase 2 review. The three paths are built with the drafted sentences (commit
+    dbaaac8): the box comes back empty and focused, `/c/` says the link is still valid, and the
+    not-kept line replaces "Kept…". The wording still waits on Clive's red-pen at C2.
+  - [ ] Next packet (X4, X6): offline in WebKit and Firefox emulated by stopping or blocking the
+    server rather than `context.setOffline`; X6 item 4 to allow the licence texts' and the
+    lockfile's funding hosts (or cite them), its `deploy/` precondition met at Phase 6. Found at
+    the Phase 4 build, 2026-10-05.
 
 ## Retro — process notes (append-only)
 
@@ -444,3 +468,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — Phase 2 held awaiting C2 after the critic's review; Phase 3 active. E3 item 4 unticked. Clive's early approval of test change 4 recorded. (Jules, 2026-10-04)
 - 2026-10-05 — Re-run at specs-v3: E5 closed; E2 item 10, E3 BROWSER PASS and E4 item 1 flipped; E2 and E7 to re-run on a quiet machine before C4. (Jules, 2026-10-05)
 - 2026-10-05 — Phase 3 held awaiting C2 (S2's leadership golden only) after the critic's review; Phase 4 active. (Jules, 2026-10-05)
+- 2026-10-05 — Phase 4: X1, X2, X3, X5 closed; X4 and X6 built and held on test items for the next packet; the glyph and tokens-header items done; the failure sentences built as drafts. (Jules, 2026-10-05)
