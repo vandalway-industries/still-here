@@ -247,6 +247,7 @@ No cap (I-07). Expected about 220 orchestrator turns.
   - S4 (2026-10-04): `still-here-r4r` closed through the gate. Three studies of Eileen Webb's register and bench-01, quotations verbatim from sh-025 and SUPPORT-001 only, photographs b1, b2, b3-wide, p12-eileen. Unit 4/4; spec and W4.case-studies walk 28 passed, 2 skipped, two runs in six projects.
   - S5 (2026-10-04): `still-here-z4r` closed through the gate. STATUS-002 and STATUS-003 written by Martin, `status-updates.xsd` added; `/status` generated from the XML at build. Unit 3/3; spec and W4.status walk 10 passed, 2 skipped, two runs in six projects.
   - S6 (2026-10-04): `still-here-skd` closed through the gate. Three postings, "We will find you.", no form or mail link; s04, s06, m1-m3 placed. The manifest's s02 (research), s05 and s03 (status) placed in the same commit. Unit 3/3; spec and W4.careers walk 10 passed, 2 skipped, two runs in six projects.
+  - S7 (2026-10-04): `still-here-5ki` closed through the gate. Bulk certification copy, two testimonials verbatim from SUPPORT-001 and sh-025, the call to action verbatim, no form; s08, b3-wide-courthouse, p12-eileen-courthouse. Unit 4/4; spec and W5 walk 10 passed, 2 skipped, two runs in six projects.
 - [ ] Walks W4 (with each page's sub-walk) and W5 played by the critic.
 
 #### Bar

@@ -1453,3 +1453,70 @@ a.button-secondary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ── Enterprise (S7) ────────────────────────────────────────────────────────────────────────── */
+.enterprise-lead {
+  margin: var(--sh-space-xxl) 0 0;
+}
+
+.enterprise-section {
+  display: grid;
+  gap: var(--sh-space-xl);
+  margin: var(--sh-space-section) 0 0;
+}
+
+.enterprise-section figure {
+  margin: 0;
+}
+
+.enterprise-text {
+  max-width: var(--sh-space-text-max);
+}
+
+.enterprise-text h2 {
+  margin: 0;
+}
+
+.enterprise-text p {
+  margin: var(--sh-space-md) 0 0;
+}
+
+.enterprise-voices > figure {
+  max-width: 360px;
+}
+
+.testimonial {
+  margin: var(--sh-space-xl) 0 0;
+}
+
+.testimonial figcaption {
+  margin-top: var(--sh-space-sm);
+  padding-left: calc(var(--sh-space-lg) + 3px);
+}
+
+.enterprise-cta {
+  margin: var(--sh-space-section) 0;
+  padding: var(--sh-space-xl) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+  max-width: var(--sh-space-text-max);
+}
+
+.enterprise-cta h2,
+.enterprise-cta p {
+  margin: 0;
+}
+
+.enterprise-cta p {
+  margin-top: var(--sh-space-sm);
+}
+
+@media (min-width: 1024px) {
+  .enterprise-section {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .enterprise-voices {
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
+}
