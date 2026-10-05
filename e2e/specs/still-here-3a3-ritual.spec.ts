@@ -14,16 +14,23 @@ import {
 
 const AT = '2026-10-03T10:52:00.400Z';
 
-/** Install the page clock (once per page) at `at`, open home, type the name and press Enter. */
+/**
+ * Install the page clock (once per page) ten seconds before `at`, open home, type the name, pause
+ * the clock at `at` and press Enter, so the press lands on that second however long the load took.
+ * The clock then runs again, unless `paused`: then it stays paused and every runFor is exact.
+ */
 const installed = new WeakSet<Page>();
-async function press(page: Page, name: string, at = AT): Promise<void> {
-  if (!installed.has(page)) {
-    await page.clock.install({ time: new Date(at) });
+async function press(page: Page, name: string, at = AT, paused = false): Promise<void> {
+  const first = !installed.has(page);
+  if (first) {
+    await page.clock.install({ time: new Date(new Date(at).getTime() - 10_000) });
     installed.add(page);
   }
   await page.goto('/');
   await objectInput(page).fill(name);
+  if (first) await page.clock.pauseAt(new Date(at));
   await objectInput(page).press('Enter');
+  if (first && !paused) await page.clock.resume();
 }
 
 const stored = async (page: Page) => {
@@ -123,7 +130,7 @@ test('9. no tells: the sequence DOM is identical for the fourteen names of PRD R
   test.setTimeout(120_000);
   const doms: string[] = [];
   for (const name of NO_TELLS) {
-    await press(page, name);
+    await press(page, name, AT, true);
     const stages: string[] = [];
     for (const step of [300, 1100, 1100]) {
       await page.clock.runFor(step);
@@ -135,7 +142,7 @@ test('9. no tells: the sequence DOM is identical for the fourteen names of PRD R
 });
 
 test('10. during the sequence the input and chips are inert; the identifier encodes the second of the press; leaving issues nothing', async ({ page }) => {
-  await press(page, 'Folding chair');
+  await press(page, 'Folding chair', AT, true);
   await page.clock.runFor(1000);
   await expect(objectInput(page)).toHaveAttribute('aria-disabled', 'true');
   await expect(objectInput(page)).not.toBeEditable();
@@ -169,7 +176,7 @@ test('10. during the sequence the input and chips are inert; the identifier enco
     const p = await page.context().newPage();
     await p.goto('/leadership');
     await p.evaluate(() => localStorage.clear());
-    await press(p, 'Wallet');
+    await press(p, 'Wallet', AT, true);
     await p.clock.runFor(1500);
     await go(p);
     await p.clock.runFor(6000);

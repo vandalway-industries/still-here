@@ -30,10 +30,11 @@ const CANVAS_WATCH = `(() => {
 })();`;
 
 async function issued(page: Page, name: string): Promise<void> {
-  await page.clock.install({ time: new Date(AT) });
+  await page.clock.install({ time: new Date(new Date(AT).getTime() - 10_000) });
   await page.goto('/');
   const input = page.getByRole('main').getByRole('textbox');
   await input.fill(name);
+  await page.clock.pauseAt(new Date(AT));
   await input.press('Enter');
   await page.clock.runFor(5500);
   await page.clock.resume();

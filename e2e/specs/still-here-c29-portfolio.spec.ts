@@ -11,14 +11,17 @@ const TIMES = ['2026-10-03T10:52:00Z', '2026-10-03T10:53:00Z', '2026-10-03T10:54
 const NAMES = ['Car keys', 'The Moon', 'My car keys'];
 
 async function three(page: Page) {
-  await page.clock.install({ time: new Date(TIMES[0]) });
+  const early = (t: string) => new Date(new Date(t).getTime() - 10_000);
+  await page.clock.install({ time: early(TIMES[0]) });
   for (const [i, name] of NAMES.entries()) {
-    if (i) await page.clock.setSystemTime(new Date(TIMES[i]));
+    if (i) await page.clock.setSystemTime(early(TIMES[i]));
     await page.goto('/');
     const input = page.getByRole('main').getByRole('textbox');
     await input.fill(name);
+    await page.clock.pauseAt(new Date(TIMES[i]));
     await input.press('Enter');
     await page.clock.runFor(5500);
+    await page.clock.resume();
     await expect(page.getByRole('heading', { name: RESULT_HEADING, exact: true })).toBeVisible();
   }
 }

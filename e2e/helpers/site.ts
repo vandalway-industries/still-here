@@ -32,15 +32,18 @@ export const action = (page: Page, name: string) =>
   page.getByRole('button', { name, exact: true }).or(page.getByRole('link', { name, exact: true })).first();
 
 /**
- * Issue a certificate from the home page. With `at`, the page clock is installed at that instant
- * before the page loads and run forward past the sequence (so no real waiting); the clock is then
- * resumed. Returns the identifier shown on the result screen.
+ * Issue a certificate from the home page. With `at`, the page clock is installed ten seconds
+ * before that instant, the page loads and the name is typed, the clock is paused at `at` (so the
+ * press lands on that second however long the load took), and after the press it is run forward
+ * past the sequence (so no real waiting); the clock is then resumed. Returns the identifier shown
+ * on the result screen.
  */
 export async function issue(page: Page, name: string, opts: { at?: string | Date; goto?: boolean } = {}): Promise<string> {
-  if (opts.at) await page.clock.install({ time: new Date(opts.at) });
+  if (opts.at) await page.clock.install({ time: new Date(new Date(opts.at).getTime() - 10_000) });
   if (opts.goto !== false) await page.goto('/');
   const input = objectInput(page);
   await input.fill(name);
+  if (opts.at) await page.clock.pauseAt(new Date(opts.at));
   await input.press('Enter');
   if (opts.at) {
     await page.clock.runFor(5_500);
