@@ -71,6 +71,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   E4 item 1 and its unit test's `issued()`, E5's link spec tests 1–2, E7's portfolio `three()`, and
   the shared `issue()` helper), then re-tagged `specs-v3`. No acceptance text changed. The rest of
   C2 still waits on the full packet. (Jules, 2026-10-04)
+- **Commit 38c10f5's author — 2026-10-05.** One commit (S7, the Enterprise page) was made with the
+  author address `jules@vandalway.example` instead of the account's no-reply address; the committer
+  is the account's own. Clive: "that's ok". History is not rewritten. G0's identity check (test 4)
+  and the L4 release scan's author check will name this one commit; the exception goes into the C4
+  packet as a test change for his red-pen. Builders now set character addresses on bead commands
+  only. (Jules, 2026-10-05)
 
 ## Changelog
 
