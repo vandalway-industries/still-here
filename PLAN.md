@@ -243,6 +243,7 @@ No cap (I-07). Expected about 220 orchestrator turns.
 #### Steps
 - [ ] S2 leadership · S3 research, with the three papers written into `company/research/` · S4 case studies (three pages, the customer named per I-09) · S5 status, with STATUS-002 and STATUS-003 written · S6 careers · S7 enterprise · S8 terms · S9 privacy — copy drafted from `garage/pack/CONTENT_SEEDS.md`, every required statement present, every placeholder replaced.
   - S2 (2026-10-04): `still-here-tul` CODE PASS, BROWSER PASS and items 1-3 flipped; held open on item 4 (after C2, the blind pick). Cards carry each person's id (14da7e0); unit 3/3 (1 skipped, after C2); leadership spec and W4.leadership walk 10 passed, 2 skipped, two runs in six projects.
+  - S3 (2026-10-04): `still-here-3yo` closed through the gate. The three papers written into `company/research/` (Petra); `scripts/company-pages.mjs` builds `/research/` and each paper from them, covers drawn in SVG; the build reads only `company/research/` and `company/status/status-updates.xml`. Unit 4/4; research spec and W4.research walk 28 passed, 2 skipped in six projects (three clean runs; one run lost three WebKit tests to a shared local server stopping mid-run); RC5's unit file 3/3; continuity 0.
 - [ ] Walks W4 (with each page's sub-walk) and W5 played by the critic.
 
 #### Bar

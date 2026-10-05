@@ -6,6 +6,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateTokens } from './tokens.mjs';
 import { generateBrand } from './brand.mjs';
+import { writeResearch, writeStatus } from './company-pages.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'src');
@@ -32,6 +33,12 @@ cpSync(SRC, OUT, {
   // included into the pages below, not published on their own.
   filter: (from) => !/(^|\/)\.[^/]/.test(relative(SRC, from)) && relative(SRC, from).split('/')[0] !== '_shell',
 });
+
+// The research papers and the status page, written from the company's records (S3, S5). The
+// build reads company/research/ and company/status/status-updates.xml and nothing else under
+// company/ (scripts/company-pages.mjs).
+console.log(`research: ${writeResearch(ROOT, OUT)} papers`);
+console.log(`status: ${writeStatus(ROOT, OUT)} updates`);
 
 // The shell (E0): every page carries the same head (CSP, Open Graph, icons, styles), header, menu
 // and footer, included from src/_shell/ at build time. A page missing a marker fails the build.

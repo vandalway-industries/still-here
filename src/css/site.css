@@ -950,3 +950,264 @@ a.button-secondary {
 .portfolio .export-note {
   margin-top: 12px;
 }
+
+/* ── Research (S3): the listing, each paper, the covers drawn in code ─────────────────────────── */
+.papers {
+  margin: var(--sh-space-xxl) 0 var(--sh-space-section);
+  display: grid;
+  gap: var(--sh-space-xxl);
+}
+
+.paper-entry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sh-space-lg);
+}
+
+.paper-entry + .paper-entry {
+  padding-top: var(--sh-space-xxl);
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.paper-cover .cover,
+.paper-head-cover .cover {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.paper-summary h2 {
+  margin: var(--sh-space-sm) 0 0;
+}
+
+.paper-summary h2 a {
+  color: var(--sh-color-graphite);
+  text-decoration: none;
+}
+
+.paper-summary h2 a:hover {
+  text-decoration: underline;
+}
+
+.paper-author {
+  margin: var(--sh-space-xs) 0 0;
+  color: var(--sh-color-graphite-muted);
+}
+
+.paper-abstract {
+  margin: var(--sh-space-md) 0 0;
+  max-width: var(--sh-space-text-max);
+}
+
+@media (min-width: 640px) {
+  .paper-entry {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--sh-space-xl);
+  }
+}
+
+.cover .cover-paper {
+  fill: var(--sh-color-surface);
+  stroke: var(--sh-color-hairline);
+}
+
+.cover text {
+  fill: var(--sh-color-graphite);
+}
+
+.cover .cover-label,
+.cover .cover-axis-label {
+  font-family: var(--sh-type-label-font-family);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  fill: var(--sh-color-graphite-muted);
+}
+
+.cover .cover-title {
+  font-family: var(--sh-type-headline-font-family);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+
+.cover .cover-rule,
+.cover .cover-axis {
+  stroke: var(--sh-color-graphite);
+  stroke-width: 1;
+}
+
+.cover .cover-plot {
+  stroke: var(--sh-color-graphite);
+  stroke-width: 2;
+}
+
+.paper {
+  padding: var(--sh-space-xxl) 0 var(--sh-space-section);
+}
+
+.paper-head {
+  display: grid;
+  gap: var(--sh-space-xl);
+  padding-bottom: var(--sh-space-xl);
+  border-bottom: 1px solid var(--sh-color-hairline);
+}
+
+.paper-head h1 {
+  margin: var(--sh-space-md) 0 0;
+  max-width: 20ch;
+}
+
+.paper-byline {
+  margin: var(--sh-space-md) 0 0;
+  color: var(--sh-color-graphite-muted);
+}
+
+@media (min-width: 1024px) {
+  .paper-head {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: end;
+  }
+}
+
+.paper-abstract-block,
+.paper-body,
+.paper-notes,
+.paper-back {
+  max-width: var(--sh-space-text-max);
+}
+
+.paper-abstract-block {
+  margin-top: var(--sh-space-xl);
+  padding: var(--sh-space-lg);
+  background: var(--sh-color-surface);
+}
+
+.paper-abstract-block h2,
+.paper-notes h2 {
+  margin: 0 0 var(--sh-space-sm);
+}
+
+.paper-abstract-block p {
+  margin: 0;
+}
+
+.paper-body h2 {
+  margin: var(--sh-space-xxl) 0 0;
+  font-family: var(--sh-type-title-font-family);
+  font-size: var(--sh-type-title-font-size);
+  font-weight: var(--sh-type-title-font-weight);
+  line-height: var(--sh-type-title-line-height);
+}
+
+.paper-body h3 {
+  margin: var(--sh-space-xl) 0 0;
+  font-size: var(--sh-type-body-font-size);
+}
+
+.paper-body p,
+.paper-body ul,
+.paper-body ol {
+  margin: var(--sh-space-md) 0 0;
+}
+
+.paper-body ul,
+.paper-body ol,
+.paper-notes ol {
+  padding: 0;
+  list-style: none;
+}
+
+.paper-body li + li {
+  margin-top: var(--sh-space-sm);
+}
+
+.paper-body li .list-n,
+.paper-notes .list-n {
+  font-family: var(--sh-type-label-font-family);
+  font-size: 13px;
+}
+
+.note-ref {
+  font-family: var(--sh-type-label-font-family);
+  font-size: 11px;
+  line-height: 0;
+}
+
+.note-ref a,
+.note-back {
+  color: var(--sh-color-graphite);
+}
+
+.paper-notes {
+  margin-top: var(--sh-space-xxl);
+  padding-top: var(--sh-space-lg);
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.paper-notes li {
+  font-size: var(--sh-type-body-sm-font-size);
+  line-height: var(--sh-type-body-sm-line-height);
+}
+
+.paper-notes li + li {
+  margin-top: var(--sh-space-sm);
+}
+
+.paper-notes li:target {
+  outline: 3px solid var(--sh-color-focus);
+  outline-offset: 4px;
+}
+
+.paper-back {
+  margin-top: var(--sh-space-xl);
+}
+
+.paper-back a {
+  color: var(--sh-color-graphite);
+}
+
+/* ── Status (S5): the standing line, then the history ───────────────────────────────────────── */
+.status-constant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: var(--sh-space-xl) 0 0;
+}
+
+.status-mark {
+  width: 24px;
+  height: 24px;
+}
+
+.status-history {
+  margin: var(--sh-space-xxl) 0 var(--sh-space-section);
+  max-width: var(--sh-space-text-max);
+}
+
+.status-history > h2 {
+  margin: 0;
+}
+
+.status-rows {
+  list-style: none;
+  margin: var(--sh-space-md) 0 0;
+  padding: 0;
+}
+
+.status-row {
+  padding: var(--sh-space-lg) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.status-row h3 {
+  margin: var(--sh-space-xs) 0 0;
+}
+
+.status-row p {
+  margin: var(--sh-space-xs) 0 0;
+}
+
+.status-row .body-sm {
+  margin-top: var(--sh-space-sm);
+}
