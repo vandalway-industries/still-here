@@ -77,6 +77,30 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   and the L4 release scan's author check will name this one commit; the exception goes into the C4
   packet as a test change for his red-pen. Builders now set character addresses on bead commands
   only. (Jules, 2026-10-05)
+- **C2 — answered 2026-10-05.** Clive, on the packet and its addendum:
+  - Goldens approved: the certificate (Folding chair), home at 1440 and 390, leadership at 1440,
+    and the 1997 page. Copied to `exemplars/` under their golden names. On the certificate: "it
+    looks great"; the line "Jurisdiction of here: <zone>" stays as specified (the issuing device's
+    own time zone, D4). The certificate golden is rendered again once the guilloche change below
+    is made, for his sight.
+  - Red-pens: on home, the band's "It has moved. It is still here." becomes "Every Friday, it is
+    still here." On leadership, Lucas's card reads "Lucas" with "Intern" beneath it, not "Lucas the
+    Intern" (Decision 2).
+  - Decision 1, Greek: a name in a script the certificate face lacks is drawn as an image, as
+    emoji and Chinese names are; DS1 item 4 is reworded to say so; no second face ships.
+  - Decision 3: the hero crop box is the build's (1044,110)-(1656,875); the manifest follows.
+  - Decision 4: E4 item 3's ink check is measured on the text blocks only; the bar stays above 20%.
+  - Decision 5: the guilloche thickens from 0.45 to 0.7 units.
+  - Decision 6: long names step down in size to fit at most three lines in the name zone; the fixed
+    lines never move.
+  - Decision 7: the three failure sentences approved as drafted.
+  - Test changes: the verified bundle approved (DS1's linter reads JSON; G0 accepts found-work
+    beads that name their source and the one accepted commit author; walks timed in the page;
+    render-back cropped, not squeezed; the Hebrew comparison at twice the scale; the QR decoded from
+    the downloaded files; offline emulated by stopping the server; the alt-text check asserts the
+    description is painted; X6 item 4 waits for `deploy/` and allows the licence-text and lockfile
+    hosts; V2's address filter learns `output`), with the red-pens above. Applied by a separate
+    test-author session and re-tagged `specs-v4`. (Jules, 2026-10-05)
 
 ## Changelog
 
