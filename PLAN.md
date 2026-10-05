@@ -34,7 +34,7 @@ relations:
 | 2 | The shell, the ritual and the certificate | held (awaiting C2) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | held (awaiting C2) | S2–S9 closed; W4 W5 played |
 | 4 | Extras | active | X1–X6 closed; W6 played |
-| 5 | The records in full | pending | RC1–RC8 closed; W9 played locally; C3 packet out |
+| 5 | The records in full | active | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | pending | V1–V4 closed; W7 played internally |
 | 7 | Staging and the launch packet | pending | L1–L5 closed; C4 packet out |
 | 8 | Launch | pending | N1–N3 closed; W-DoD on production |
@@ -46,7 +46,10 @@ E2, E3, E4 and E7 built and held on C2 items (E2 and E7 also wait on a quiet-mac
 C4). Phase 3: S3–S9 closed; S2 waits on the leadership golden. Tests are locked at `specs-v3` (Clive
 approved test change 4 ahead of the packet). Phase 4: X1, X2, X3 and X5 closed; X4 and X6 built and
 held open on test items for the next checkpoint packet (Playwright's offline emulation in WebKit and
-Firefox; X6 item 4's precondition and licence-text hosts). Next move: those packet items, then Phase 5.
+Firefox; X6 item 4's precondition and licence-text hosts), and Phase 4 is under review.
+
+**Phase 5 — The records in full** is active, one owner, RC1 → RC8 in order. RC1 closed. Next move:
+RC2, the inventory.
 
 ## Build method
 
@@ -310,10 +313,11 @@ No cap (I-07). Expected about 100 orchestrator turns.
 ### Phase 5 — The records in full
 
 #### Entry criteria
-- [ ] G2, E1, S3 and S5 closed (identifiers are checked with the shipped module; the papers and status updates exist).
+- [x] G2, E1, S3 and S5 closed (identifiers are checked with the shipped module; the papers and status updates exist). Evidence: `bd show` reads closed for still-here-540, still-here-yw2, still-here-3yo and still-here-z4r (2026-10-05).
 
 #### Steps
 - [ ] RC1 correspondence, chat, notes and calendar in full · RC2 the inventory (YAML and Bev's XML) · RC3 status records (internal notes; the public updates cross-checked) · RC4 the gum graph as an OKF bundle · RC5 the papers checked as records.
+  Evidence: RC1 closed — every mail with Message-ID, subject and threading, SUPPORT-001's attachment header, CAL-001's invite history; `tests/unit/still-here-7i1-correspondence.test.ts` 5/5; continuity 0.
 - [ ] RC6 the continuity and identifier checks in CI across `company/` and `site/`.
 - [ ] RC7 the C3 packet: every HUMAN-JUDGED line, records and site copy, laid out for a table read in reading order, with the record ids, pages and locked test files each line lives in.
 - [ ] RC8 `README.md` and `company/README.md`; walk W9 played on the local checkout.

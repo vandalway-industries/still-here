@@ -6,6 +6,8 @@ from: eileen.webb@municipal.example
 to:
   - martin@vandalway.example
 subject: "Bench confirmation"
+message_id: "<bench-confirmation.20261002T091400Z@municipal.example>"
+x_attachment: "STILL-HERE-memorial-bench-00PHHEGCM3Y.pdf (certificate SH-00PH-HEGC-M3YK)"
 tracker: sh-025
 ---
 

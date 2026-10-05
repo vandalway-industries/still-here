@@ -12,49 +12,27 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 4 — Extras
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 5 — The records in full
 
 ### Current state
 
-Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built. X1 (presence.json), X2 (security.txt),
-X3 (the 404) and X5 (accessibility) are closed through the gate. X4 (offline) and X6 (the guards)
-are built and held open on test items for the next checkpoint packet. The site now has a manifest
-and a service worker; every page carries its build id; and `/.well-known/security.txt` renews its
-Expires on every build.
+Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
+open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
+RC1 to RC8 in order. RC1 is closed.
 
 ### What changed
 
-- New in the build (commit dbaaac8): `/api/v1/presence.json`, with `access-control-allow-origin: *`
-  under `/api/` on the local server; `security.txt` with `npm run check:security-txt`; the Pages and
-  reminder workflows in `.github/workflows/`; `manifest.webmanifest`; and `/sw.js`. The worker
-  precaches 62 files (about 4.1 MB). It fetches pages from the network first and serves assets
-  from its cache. Its cache is named with the build id, the same id as `/build.txt` and
-  `<html data-build>`.
-- The build now converts the certificate glyphs itself when their inputs change, and `tokens.css`
-  names every generated colour source. Both were found-work items for Phase 4.
-- The three failure paths from C2 decision 7 are built with the drafted sentences: a check that
-  cannot finish, a link that cannot be drawn, and storage refused. The wording waits on Clive.
-- `@axe-core/playwright` 4.13.0 is installed, pinned, with rows in `docs/licences.md`.
-- Every number here comes from two runs in six projects at two workers. The site was served from a
-  private copy on its own port.
-  - X1: unit 2/2, spec 6/6.
-  - X2: unit 3/3.
-  - X3: unit 1/1, spec and walk 16 passed, 2 skipped.
-  - X5: unit 2/2, spec 18/18. axe found 0 serious or critical issues on all 19 pages.
-- X4 is green in Chromium at both sizes: unit 4/4, offline tests 3 and 4, and W6.1–7. Firefox
-  passes test 3 but fails test 4, because its service worker still reaches the network under
-  Playwright's `setOffline`. In WebKit every request fails under `setOffline`, cached or not, so
-  tests 3, 4 and W6.8 fail. With the server actually stopped, all three engines open pages,
-  unseen images and the 404 from the worker.
-- X6: items 2, 3 and 5 are green, and item 1 is green in Chromium. Item 4 needs `deploy/` (Phase 6).
-  Its scan also flags two hosts that are not ours: scripts.sil.org, in the verbatim OFL licence
-  texts, and opencollective.com, in core-js's funding entry in `package-lock.json`.
+- RC1: every mail in `company/correspondence/` now has a Message-ID, and the replies have their
+  subjects and thread by In-Reply-To to the message they answer, which they quote. SUPPORT-001
+  carries Ms Webb's attachment header with certificate SH-00PH-HEGC-M3YK. CAL-001 has its invite
+  history by date. The bodies are as filed.
+- Unit 5/5 for RC1; the seeds test 6/6 and the records check 7/7 still pass. The continuity check
+  reports 0 matches against both lists.
 
 ### What's next
 
-1. Put the X4 and X6 test items into the next checkpoint packet: offline emulation in WebKit and
-   Firefox, and X6 item 4's hosts. `PLAN.md` § Open questions lists them.
-2. Phase 5, the records in full.
+1. RC2, the inventory (the schema and Bev's spreadsheet), then RC3 to RC8 in order.
+2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
 
@@ -103,3 +81,4 @@ Expires on every build.
 - 2026-10-04 — Phase 3 built: S3–S9 closed, S2 held on C2; the papers and status updates written. (Martin, 2026-10-04)
 - 2026-10-05 — Re-run at specs-v3: E5 closed; E2 item 10, E3 BROWSER PASS, E4 item 1 flipped; E2 and E7 to a quiet re-run. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 4 built: X1, X2, X3, X5 closed; X4 and X6 held on test items for the next packet. (Martin, 2026-10-05)
+- 2026-10-05 — Phase 5 active; RC1 closed: the mail headers, threading and the attachment header. (Martin, 2026-10-05)
