@@ -265,6 +265,18 @@ function statusTime(iso) {
   return `${longDate(m[1])}, ${m[2]} UTC`;
 }
 
+// Photographs garage/pack/ASSET_MANIFEST.md places beside particular updates (by record id).
+const STATUS_PHOTOS = {
+  'STATUS-001': { src: 's05-floor-three', w: 480, h: 320, alt: 'An empty open-plan office floor with every window open.' },
+  'STATUS-002': { src: 's03-chair-friday', w: 480, h: 320, alt: 'A folding chair on office carpet, six feet from a taped rectangle where it stood.' },
+};
+
+function statusPhoto(id) {
+  const p = STATUS_PHOTOS[id];
+  if (!p) return '';
+  return `<img class="status-photo" src="/images/${p.src}-480.webp" srcset="/images/${p.src}-480.webp 480w, /images/${p.src}-960.webp 960w" sizes="(min-width: 640px) 320px, 100vw" width="${p.w}" height="${p.h}" loading="lazy" alt="${escapeHtml(p.alt)}">`;
+}
+
 export function writeStatus(root, out) {
   const updates = readStatus(root);
   const html =
@@ -278,6 +290,7 @@ export function writeStatus(root, out) {
           `<h3 class="title">${escapeHtml(u.title)}</h3>` +
           `<p class="label status-id">${escapeHtml(u.id)}</p>` +
           u.body.map((p) => `<p class="body-sm">${escapeHtml(p)}</p>`).join('') +
+          statusPhoto(u.id) +
           `</li>`,
       )
       .join('') +

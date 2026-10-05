@@ -1338,3 +1338,118 @@ a.button-secondary {
 .case-back {
   margin: var(--sh-space-xxl) 0 0;
 }
+
+/* Manifest photographs on research and status */
+.research-figure {
+  margin: var(--sh-space-xl) 0 0;
+  max-width: 320px;
+}
+
+.research-figure img,
+.status-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.status-photo {
+  margin-top: var(--sh-space-md);
+  max-width: 320px;
+}
+
+/* ── Careers (S6) ───────────────────────────────────────────────────────────────────────────── */
+.postings {
+  margin: var(--sh-space-xxl) 0 0;
+  max-width: var(--sh-space-text-max);
+}
+
+.posting {
+  padding: var(--sh-space-xl) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+}
+
+.posting h2 {
+  margin: var(--sh-space-sm) 0 0;
+}
+
+.posting p {
+  margin: var(--sh-space-md) 0 0;
+}
+
+.posting h3 {
+  margin: var(--sh-space-lg) 0 0;
+}
+
+.posting-list {
+  margin: var(--sh-space-sm) 0 0;
+  padding-left: 1.2em;
+}
+
+.posting-list li + li {
+  margin-top: var(--sh-space-xs);
+}
+
+.careers-apply {
+  margin: var(--sh-space-xl) 0 0;
+  padding: var(--sh-space-xl) 0;
+  border-top: 1px solid var(--sh-color-hairline);
+  max-width: var(--sh-space-text-max);
+}
+
+.careers-apply h2,
+.careers-apply p {
+  margin: 0;
+}
+
+.careers-apply p {
+  margin-top: var(--sh-space-sm);
+}
+
+.careers-section {
+  margin: var(--sh-space-section) 0 0;
+}
+
+.careers-section h2 {
+  margin: 0;
+}
+
+.careers-section p {
+  margin: var(--sh-space-sm) 0 0;
+  color: var(--sh-color-graphite-muted);
+}
+
+.careers-section figure {
+  margin: var(--sh-space-lg) 0 0;
+}
+
+.careers-section img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.careers-photos {
+  display: grid;
+  gap: var(--sh-space-lg);
+}
+
+.careers-pair {
+  display: grid;
+  gap: var(--sh-space-xxl);
+  margin-bottom: var(--sh-space-section);
+}
+
+.careers-pair figure {
+  max-width: 400px;
+}
+
+@media (min-width: 640px) {
+  .careers-photos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .careers-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

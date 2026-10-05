@@ -246,6 +246,7 @@ No cap (I-07). Expected about 220 orchestrator turns.
   - S3 (2026-10-04): `still-here-3yo` closed through the gate. The three papers written into `company/research/` (Petra); `scripts/company-pages.mjs` builds `/research/` and each paper from them, covers drawn in SVG; the build reads only `company/research/` and `company/status/status-updates.xml`. Unit 4/4; research spec and W4.research walk 28 passed, 2 skipped in six projects (three clean runs; one run lost three WebKit tests to a shared local server stopping mid-run); RC5's unit file 3/3; continuity 0.
   - S4 (2026-10-04): `still-here-r4r` closed through the gate. Three studies of Eileen Webb's register and bench-01, quotations verbatim from sh-025 and SUPPORT-001 only, photographs b1, b2, b3-wide, p12-eileen. Unit 4/4; spec and W4.case-studies walk 28 passed, 2 skipped, two runs in six projects.
   - S5 (2026-10-04): `still-here-z4r` closed through the gate. STATUS-002 and STATUS-003 written by Martin, `status-updates.xsd` added; `/status` generated from the XML at build. Unit 3/3; spec and W4.status walk 10 passed, 2 skipped, two runs in six projects.
+  - S6 (2026-10-04): `still-here-skd` closed through the gate. Three postings, "We will find you.", no form or mail link; s04, s06, m1-m3 placed. The manifest's s02 (research), s05 and s03 (status) placed in the same commit. Unit 3/3; spec and W4.careers walk 10 passed, 2 skipped, two runs in six projects.
 - [ ] Walks W4 (with each page's sub-walk) and W5 played by the critic.
 
 #### Bar
