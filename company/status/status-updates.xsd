@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema for company/status/status-updates.xml, STILL HERE's public status updates. Each update
+     has a record id (STATUS-nnn), a UTC time, the author's staff id, the tracker issue it concerns,
+     a title and a body. Kept by Martin. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="updates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="update" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="body">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"><xs:pattern value="STATUS-\d{3}"/></xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="time" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:dateTime"><xs:pattern value=".+Z"/></xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="author" type="xs:NCName" use="required"/>
+            <xs:attribute name="tracker" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"><xs:pattern value="sh-\d{3}"/></xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="product" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

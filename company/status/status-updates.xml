@@ -5,4 +5,12 @@
     <title>Unexpected concentration of elsewhere on floor three</title>
     <body>All systems operational. We are investigating reports of an unexpected concentration of elsewhere on floor three.</body>
   </update>
+  <update id="STATUS-002" time="2026-10-02T09:00:00Z" author="martin" tracker="sh-051">
+    <title>Scheduled relocation of the flagship research asset (Fridays)</title>
+    <body>All systems operational. Our flagship research asset, a folding chair, is relocated every Friday as part of a scheduled quality test. This morning it was moved six feet to the left. It remains present, and certificates continue to be issued as normal. No action is required.</body>
+  </update>
+  <update id="STATUS-003" time="2026-10-02T09:40:00Z" author="martin" tracker="sh-025">
+    <title>Investigating reports of a bench</title>
+    <body>All systems operational. We have received a customer's question about a bench that was removed in April. A certificate confirms that our system processed the name entered; it cannot establish where an object is. We are looking into the matter and will post again if there is anything further to report.</body>
+  </update>
 </updates>
