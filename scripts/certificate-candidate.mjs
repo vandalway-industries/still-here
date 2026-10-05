@@ -9,7 +9,7 @@
 // before conversion. Run by hand: `node scripts/certificate-candidate.mjs`. (Jules, 2026-10-04)
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -117,7 +117,7 @@ export async function renderCandidate({ out = OUT, cert = SPECIMEN } = {}) {
   return { png: join(out, 'certificate.png'), pdf: join(out, 'certificate.pdf'), svg: result.svg };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
   const r = await renderCandidate();
   console.log(`certificate candidate: wrote ${r.png.slice(ROOT.length + 1)}, ${r.pdf.slice(ROOT.length + 1)}`);
 }
