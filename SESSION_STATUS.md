@@ -16,9 +16,9 @@ relations: {}
 
 ### Current state
 
-Phase 5 is built and held on test items for the next packet. RC1 to RC6 are closed through the
-gate. The C3 packet is out. RC7 and RC8 are built and held open, each on one test item. Phase 6 is
-now active. Phases 1, 2 and 3 are held awaiting C2, and Phase 4 is held on its test items and under
+Phase 5's exit gate is met: RC1 to RC8 are closed through the gate, W9 is played on the local
+checkout, and the C3 packet is out. RC7 and RC8 turned out to be product items, not test items, and
+both are fixed. Phase 6 is active. Phases 1, 2 and 3 are held awaiting C2, and Phase 4 is held on its test items and under
 review.
 
 ### What changed
@@ -42,23 +42,24 @@ review.
   `company/` and `site/` and the identifier check (`scripts/identifier-check.mjs`), which
   recomputes every certificate number with the site's own module. First run on GitHub: green,
   continuity 0, 8 identifiers found and all 8 recomputed. Unit 7/7.
-- RC7: the C3 packet, `docs/checkpoints/c3-packet.md`, places all 16 items the PRD gives C3. It
-  links all 57 company records and every page source, lists the 64 locked strings with the files
-  that hold them, and sets out the testimonials and `s07` calls. Unit 2 of 3: test 2 looks for
-  page copy under `src/content/`, and that folder does not exist.
-- RC8: `README.md` and `company/README.md` are written. Unit 3 of 4: test 1 and walk W9's first
-  step look for `npm test` and `npm run e2e`, but `package.json` calls those scripts `test:unit`
-  and `test:e2e`. The README gives the commands that work. W9 steps 1 to 3 and 5, played by hand
-  on the local checkout with that one substitution: 2 passed (Chromium, WebKit).
-- Whole unit suite: 225 tests, 173 pass, 14 skipped, 38 fail. Every failure is one of three
-  kinds: the two items above; beads of Phases 6 to 8 not yet built; or failures already known
-  before this phase (G0 test 4, E4 unit 3, DS1 items 2 and 4, X6 item 4).
+- RC7 closed. Every page's words (its title, its description and everything inside `<main>`)
+  now live in `src/content/`, one file per page at the page's own path. The page under `src/`
+  keeps its structure and the shell, and the build puts the two together. I built the site before
+  and after the move and compared every file: identical, down to the build id (11de8e1e97e74102).
+  The only difference is security.txt's Expires, which follows the clock. The C3 packet now links
+  all 19 copy sources and its line numbers follow them. Unit 3/3; the S2–S9, E0 and DS5 browser
+  specs 92/92 in Chromium and WebKit.
+- RC8 closed. `package.json` has `test` and `e2e`, and the old names still work. The README says
+  `npm test` and `npm run e2e`. Unit 4/4; walk W9 2/2 in Chromium and WebKit, run twice.
+- Whole unit suite: 225 tests, 175 pass, 14 skipped, 36 fail. Each of the 36 also fails at the
+  previous commit. They are beads of Phases 6 to 8 not yet built, or failures already known
+  (G0 test 4, E4 unit 3, DS1 items 2 and 4, X6 item 4).
 
 ### What's next
 
 1. Phase 6: V1, the 1997 page finished.
-2. The next checkpoint packet takes the test items: RC5's distance pattern, RC7's `src/content/`,
-   RC8's two script names, and the X4 and X6 items. `PLAN.md` § Open questions lists them, and
+2. The next checkpoint packet takes the test items: RC5's distance pattern, and the X4 and X6
+   items. `PLAN.md` § Open questions lists them, and
    the C3 packet's § 7 sets out the Phase 5 ones.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2 or C3, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
@@ -118,3 +119,4 @@ review.
 - 2026-10-05 — RC6 closed: the records check runs in CI. (Martin, 2026-10-05)
 - 2026-10-05 — RC7: the C3 packet is out; the bead held on a test item. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 5 built: RC1–RC6 closed, the C3 packet out, RC7 and RC8 held on test items; Phase 6 active. (Martin, 2026-10-05)
+- 2026-10-05 — RC7 and RC8 closed as product fixes: the copy in `src/content/`, the `test` and `e2e` scripts; Phase 5's exit gate met. (Martin, 2026-10-05)

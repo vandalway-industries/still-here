@@ -40,9 +40,9 @@ the visitor's browser; there is no application server and no database.
 ## Test it
 
 ```bash
-npm run test:unit   # the unit tests (Node runs the .test.ts files directly)
+npm test            # the unit tests (Node runs the .test.ts files directly)
 npx playwright install chromium webkit firefox   # once, for the browser specs
-npm run test:e2e    # the browser specs, in Chromium, WebKit and Firefox
+npm run e2e         # the browser specs, in Chromium, WebKit and Firefox
 ```
 
 The browser specs build the site and serve it themselves. The records have their own checks, which
@@ -57,7 +57,7 @@ node scripts/identifier-check.mjs
 
 | Path | What it is |
 |---|---|
-| [`src/`](src/) | The website's source: pages, styles, scripts, fonts and images. |
+| [`src/`](src/) | The website's source: page templates, each page's copy in [`src/content/`](src/content/), styles, scripts, fonts and images. |
 | `site/` | The built website, written by `npm run build`. Not kept in the repository. |
 | [`vandalwayind/`](vandalwayind/) | Vandalway Industries' page, vandalwayind.com, as built in 1997. |
 | [`company/`](company/README.md) | The company's records: the issue tracker, correspondence, notes, status records, inventory, the gum graph, research. |
@@ -87,3 +87,4 @@ node scripts/identifier-check.mjs
 
 - 2026-10-03 — Written at promote. (Jules, 2026-10-03)
 - 2026-10-05 — Rewritten for readers: what STILL HERE does, how to run and test it, the map, the licences. (Jules, 2026-10-05)
+- 2026-10-05 — The test commands are `npm test` and `npm run e2e`; each page's copy lives in `src/content/`. (Jules, 2026-10-05)

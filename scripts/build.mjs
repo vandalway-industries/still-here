@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Build the published site: copy src/ into site/, the one folder the Pages workflow uploads.
+// Each page is its template under src/ with its copy from src/content/ and the shell from src/_shell/.
 // Writes the published copy into site/ (in .gitignore), and regenerates these sources first:
 // src/css/tokens.css, src/js/tokens.js, src/js/certificate/{signatures,metrics}.js, src/brand/mark.svg
 // and src/favicon.svg. Later phases add their steps here.
@@ -38,10 +39,52 @@ rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 cpSync(SRC, OUT, {
   recursive: true,
-  // Nothing from the records, the pack or dotfiles reaches the site; the shell's parts are
-  // included into the pages below, not published on their own.
-  filter: (from) => !/(^|\/)\.[^/]/.test(relative(SRC, from)) && relative(SRC, from).split('/')[0] !== '_shell',
+  // Nothing from the records, the pack or dotfiles reaches the site; the shell's parts and the
+  // pages' copy are included into the pages below, not published on their own.
+  filter: (from) => !/(^|\/)\.[^/]/.test(relative(SRC, from)) && !['_shell', 'content'].includes(relative(SRC, from).split('/')[0]),
 });
+
+// The copy (RC7): every page's words live in src/content/, at the page's own path. A copy source
+// opens with two front-matter lines, `title:` and `description:`, written as they appear in the
+// page's HTML, and continues with everything inside the page's <main>. The page under src/ keeps
+// its structure: the shell markers, its preloads and scripts, and two markers for its copy,
+// <!-- content:head --> (the title and description) and <!-- content:main --> (inside <main>).
+// A page without its copy, or copy without its page, fails the build.
+const CONTENT = join(SRC, 'content');
+const copyFiles = [];
+const walkCopy = (dir) => {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkCopy(p);
+    else copyFiles.push(relative(CONTENT, p));
+  }
+};
+walkCopy(CONTENT);
+const fillMarker = (rel, html, marker, part) => {
+  if (html.split(marker).length !== 2) throw new Error(`${rel}: needs exactly one ${marker}`);
+  return html.replace(marker, () => part);
+};
+for (const rel of copyFiles) {
+  const page = join(OUT, rel);
+  if (!existsSync(page)) throw new Error(`src/content/${rel} has no page at src/${rel}`);
+  const m = /^---\ntitle: ([^\n]+)\ndescription: ([^\n"]+)\n---\n([\s\S]*)$/.exec(readFileSync(join(CONTENT, rel), 'utf8'));
+  if (!m) throw new Error(`src/content/${rel}: needs title and description front matter, then the page's main`);
+  let html = readFileSync(page, 'utf8');
+  html = fillMarker(rel, html, '<!-- content:head -->\n', `<title>${m[1]}</title>\n<meta name="description" content="${m[2]}">\n`);
+  html = fillMarker(rel, html, '<!-- content:main -->\n', m[3]);
+  writeFileSync(page, html);
+}
+const copyPages = [];
+const walkPages = (dir) => {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkPages(p);
+    else if (e.name.endsWith('.html')) copyPages.push(relative(OUT, p));
+  }
+};
+walkPages(OUT);
+for (const rel of copyPages) if (!copyFiles.includes(rel)) throw new Error(`src/${rel} has no copy at src/content/${rel}`);
+console.log(`copy: ${copyFiles.length} pages from src/content/`);
 
 // The research papers and the status page, written from the company's records (S3, S5). The
 // build reads company/research/ and company/status/status-updates.xml and nothing else under

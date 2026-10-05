@@ -27,28 +27,28 @@ From `PRD.md` § Acceptance criteria, HUMAN-JUDGED, the C3 list, item by item:
 
 | Item | Where it lives |
 |---|---|
-| Leadership titles | [src/leadership.html](../../src/leadership.html) lines 15–93, page `/leadership`: twelve names, titles and portraits. |
-| bios | [src/leadership.html](../../src/leadership.html) lines 21–91, one paragraph under each name, `/leadership`. |
-| research text | [company/research/competitive-landscape.md](../../company/research/competitive-landscape.md), [company/research/directionality-of-here.md](../../company/research/directionality-of-here.md), [company/research/six-feet-to-the-left.md](../../company/research/six-feet-to-the-left.md); the index [src/research/index.html](../../src/research/index.html); pages `/research/…`. |
-| case studies | [src/case-studies/index.html](../../src/case-studies/index.html), [src/case-studies/municipal-infrastructure.html](../../src/case-studies/municipal-infrastructure.html), [src/case-studies/public-seating.html](../../src/case-studies/public-seating.html), [src/case-studies/civic-rest-sector.html](../../src/case-studies/civic-rest-sector.html); pages `/case-studies/…`. |
-| testimonials | [src/enterprise.html](../../src/enterprise.html) lines 37–44, page `/enterprise`; sources SUPPORT-001 and sh-025. The call is in § 2. |
-| careers | [src/careers.html](../../src/careers.html) lines 12–73, page `/careers`: three postings, the application line, the photographs. |
-| status wording beyond the three titles | [company/status/status-updates.xml](../../company/status/status-updates.xml) (STATUS-002 and STATUS-003 bodies; STATUS-001 is verbatim from the week) and [src/status.html](../../src/status.html), page `/status`. |
-| Terms | [src/legal/terms.html](../../src/legal/terms.html) lines 12–41, page `/legal/terms`: the prose around the four required sentences. |
-| Privacy prose | [src/legal/privacy.html](../../src/legal/privacy.html) lines 12–45, page `/legal/privacy`: the prose around the eight required sentences. |
+| Leadership titles | [src/content/leadership.html](../../src/content/leadership.html) lines 7–84, page `/leadership`: twelve names, titles and portraits. |
+| bios | [src/content/leadership.html](../../src/content/leadership.html) lines 13–83, one paragraph under each name, `/leadership`. |
+| research text | [company/research/competitive-landscape.md](../../company/research/competitive-landscape.md), [company/research/directionality-of-here.md](../../company/research/directionality-of-here.md), [company/research/six-feet-to-the-left.md](../../company/research/six-feet-to-the-left.md); the index [src/content/research/index.html](../../src/content/research/index.html); pages `/research/…`. |
+| case studies | [src/content/case-studies/index.html](../../src/content/case-studies/index.html), [src/content/case-studies/municipal-infrastructure.html](../../src/content/case-studies/municipal-infrastructure.html), [src/content/case-studies/public-seating.html](../../src/content/case-studies/public-seating.html), [src/content/case-studies/civic-rest-sector.html](../../src/content/case-studies/civic-rest-sector.html); pages `/case-studies/…`. |
+| testimonials | [src/content/enterprise.html](../../src/content/enterprise.html) lines 29–36, page `/enterprise`; sources SUPPORT-001 and sh-025. The call is in § 2. |
+| careers | [src/content/careers.html](../../src/content/careers.html) lines 5–64, page `/careers`: three postings, the application line, the photographs. |
+| status wording beyond the three titles | [company/status/status-updates.xml](../../company/status/status-updates.xml) (STATUS-002 and STATUS-003 bodies; STATUS-001 is verbatim from the week) and [src/content/status.html](../../src/content/status.html), page `/status`. |
+| Terms | [src/content/legal/terms.html](../../src/content/legal/terms.html) lines 5–32, page `/legal/terms`: the prose around the four required sentences. |
+| Privacy prose | [src/content/legal/privacy.html](../../src/content/legal/privacy.html) lines 5–36, page `/legal/privacy`: the prose around the eight required sentences. |
 | the 1997 prose | [vandalwayind/index.html](../../vandalwayind/index.html) lines 8–91 and [vandalwayind/cgi-bin/guestbook.html](../../vandalwayind/cgi-bin/guestbook.html), vandalwayind.com `/` and `/cgi-bin/guestbook.html`. |
 | the relocation line | [vandalwayind/index.html](../../vandalwayind/index.html) line 84: "This page has moved to its own address. Please update your bookmarks." |
 | every record's voice | every file under [company/](../../company/tracker/TRACKER.md), listed in § 5 in the week's order. |
 | continuity | checked by machine in `tests/unit/still-here-62x-continuity.test.ts` and `.github/workflows/records.yml`; what the machine cannot read (who knows what) is yours, record by record, § 5. |
-| the examples' wording | [src/index.html](../../src/index.html) line 43–52, the example buttons on `/`. The call is in § 2. |
-| portrait crops | [src/leadership.html](../../src/leadership.html), twelve portraits as cropped for `/leadership`, and Eileen Webb’s two; § 2. |
+| the examples' wording | [src/content/index.html](../../src/content/index.html) line 33–42, the example buttons on `/`. The call is in § 2. |
+| portrait crops | [src/content/leadership.html](../../src/content/leadership.html), twelve portraits as cropped for `/leadership`, and Eileen Webb’s two; § 2. |
 | photograph placement | every photograph and the page it sits on, `garage/pack/ASSET_MANIFEST.md`; the table and the call on `s07` are in § 2. |
 
 ## 2. The calls C3 owns
 
 ### Testimonials
 
-On `/enterprise` ([src/enterprise.html](../../src/enterprise.html) lines 37–44), both attributed "— Eileen Webb, Municipal Archivist",
+On `/enterprise` ([src/content/enterprise.html](../../src/content/enterprise.html) lines 29–36), both attributed "— Eileen Webb, Municipal Archivist",
 both her words as the records hold them:
 
 1. "The certificate came through beautifully." — from SUPPORT-001, 2026-10-02 ([company/correspondence/SUPPORT-001.md](../../company/correspondence/SUPPORT-001.md)). The rest of that message asks whether the certificate is valid for a bench that is gone.
@@ -61,23 +61,23 @@ call: keep both, cut one, or cut both.
 
 | Photograph | Where it is | Page |
 |---|---|---|
-| `hero` | [src/index.html](../../src/index.html) line 59 | `/` |
-| `s01-chair-gallery` | [src/index.html](../../src/index.html) line 66 | `/` |
-| `s02-chair-detail` | [src/research/index.html](../../src/research/index.html) line 18 | `/research/` |
+| `hero` | [src/content/index.html](../../src/content/index.html) line 49 | `/` |
+| `s01-chair-gallery` | [src/content/index.html](../../src/content/index.html) line 56 | `/` |
+| `s02-chair-detail` | [src/content/research/index.html](../../src/content/research/index.html) line 10 | `/research/` |
 | `s03-chair-friday` | [scripts/company-pages.mjs](../../scripts/company-pages.mjs) line 271 | `/status (STATUS-002)` |
 | `s05-floor-three` | [scripts/company-pages.mjs](../../scripts/company-pages.mjs) line 270 | `/status (STATUS-001)` |
-| `s04-stapler` | [src/careers.html](../../src/careers.html) line 64 | `/careers` |
-| `s06-microwave` | [src/careers.html](../../src/careers.html) line 69 | `/careers` |
-| `m1-lanyard` | [src/careers.html](../../src/careers.html) line 55 | `/careers` |
-| `m2-mug` | [src/careers.html](../../src/careers.html) line 56 | `/careers` |
-| `m3-tote` | [src/careers.html](../../src/careers.html) line 57 | `/careers` |
-| `b1-empty-spot` | [src/case-studies/municipal-infrastructure.html](../../src/case-studies/municipal-infrastructure.html) line 18 | `/case-studies/municipal-infrastructure` |
-| `p12-eileen` | [src/case-studies/municipal-infrastructure.html](../../src/case-studies/municipal-infrastructure.html) line 33 | `/case-studies/municipal-infrastructure` |
-| `b3-wide` | [src/case-studies/public-seating.html](../../src/case-studies/public-seating.html) line 18 | `/case-studies/public-seating` |
-| `b2-audit` | [src/case-studies/civic-rest-sector.html](../../src/case-studies/civic-rest-sector.html) line 18 | `/case-studies/civic-rest-sector` |
-| `s08-civic-rest-sector` | [src/enterprise.html](../../src/enterprise.html) line 18 | `/enterprise` |
-| `b3-wide-courthouse` | [src/enterprise.html](../../src/enterprise.html) line 25 | `/enterprise` |
-| `p12-eileen-courthouse` | [src/enterprise.html](../../src/enterprise.html) line 34 | `/enterprise` |
+| `s04-stapler` | [src/content/careers.html](../../src/content/careers.html) line 56 | `/careers` |
+| `s06-microwave` | [src/content/careers.html](../../src/content/careers.html) line 61 | `/careers` |
+| `m1-lanyard` | [src/content/careers.html](../../src/content/careers.html) line 47 | `/careers` |
+| `m2-mug` | [src/content/careers.html](../../src/content/careers.html) line 48 | `/careers` |
+| `m3-tote` | [src/content/careers.html](../../src/content/careers.html) line 49 | `/careers` |
+| `b1-empty-spot` | [src/content/case-studies/municipal-infrastructure.html](../../src/content/case-studies/municipal-infrastructure.html) line 10 | `/case-studies/municipal-infrastructure` |
+| `p12-eileen` | [src/content/case-studies/municipal-infrastructure.html](../../src/content/case-studies/municipal-infrastructure.html) line 25 | `/case-studies/municipal-infrastructure` |
+| `b3-wide` | [src/content/case-studies/public-seating.html](../../src/content/case-studies/public-seating.html) line 10 | `/case-studies/public-seating` |
+| `b2-audit` | [src/content/case-studies/civic-rest-sector.html](../../src/content/case-studies/civic-rest-sector.html) line 10 | `/case-studies/civic-rest-sector` |
+| `s08-civic-rest-sector` | [src/content/enterprise.html](../../src/content/enterprise.html) line 10 | `/enterprise` |
+| `b3-wide-courthouse` | [src/content/enterprise.html](../../src/content/enterprise.html) line 17 | `/enterprise` |
+| `p12-eileen-courthouse` | [src/content/enterprise.html](../../src/content/enterprise.html) line 26 | `/enterprise` |
 | `s09-sunday-market-1997` | [vandalwayind/index.html](../../vandalwayind/index.html) line 52 | `vandalwayind.com /` |
 | `s07-printer` | not placed (`garage/pack/ASSET_MANIFEST.md`: "C3 may place it") | none |
 
@@ -87,11 +87,11 @@ printer is office equipment and sh-002 has been deferred on it since 2015. Placi
 
 ### Portrait crops
 
-Twelve portraits on `/leadership`, [src/leadership.html](../../src/leadership.html) lines 20–86, one per person; Eileen Webb's two are in the photograph table above. Read each crop at 390 and 1440 wide.
+Twelve portraits on `/leadership`, [src/content/leadership.html](../../src/content/leadership.html) lines 12–78, one per person; Eileen Webb's two are in the photograph table above. Read each crop at 390 and 1440 wide.
 
 ### The examples' wording
 
-The four buttons under the box on `/` ([src/index.html](../../src/index.html) lines 43–52). Their exact words are locked strings (§ 3, `EXAMPLES`). The time capsule is the future case on `/verify` until 2027-10-03.
+The four buttons under the box on `/` ([src/content/index.html](../../src/content/index.html) lines 33–42). Their exact words are locked strings (§ 3, `EXAMPLES`). The time capsule is the future case on `/verify` until 2027-10-03.
 
 ### The relocation line
 
@@ -106,67 +106,67 @@ key. A red-pen on one changes that file and every test named beside it, in the r
 | Key | String | Held in | Used by | On the site |
 |---|---|---|---|---|
 | `BEFORE_2026` | Your device's clock reads earlier than 1 January 2026, a moment our records cannot express. The object, however, is still here. | e2e/helpers/strings.ts | still-here-3a3-ritual.spec, still-here-64t-specs.test | src/js/home.js |
-| `CAREERS_TITLES` | Senior Presence Engineer | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/careers.html |
-| `CAREERS_TITLES` | Customer Support Contractor (six weeks) | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/careers.html |
-| `CAREERS_TITLES` | Director of Elsewhere (on hold) | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/careers.html |
-| `CHECK_BUTTON` | Check presence | e2e/helpers/strings.ts · tests/unit/still-here-9uk-candidates.test.ts · e2e/specs/still-here-3a3-timing.spec.ts · e2e/specs/still-here-9uk-home-leadership-candidate.spec.ts | site, walks, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/index.html, src/js/home.js, src/legal/terms.html |
+| `CAREERS_TITLES` | Senior Presence Engineer | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/content/careers.html |
+| `CAREERS_TITLES` | Customer Support Contractor (six weeks) | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/content/careers.html |
+| `CAREERS_TITLES` | Director of Elsewhere (on hold) | e2e/helpers/strings.ts | walks, still-here-skd-careers.spec, still-here-64t-specs.test, still-here-skd-careers.test | src/content/careers.html |
+| `CHECK_BUTTON` | Check presence | e2e/helpers/strings.ts · tests/unit/still-here-9uk-candidates.test.ts · e2e/specs/still-here-3a3-timing.spec.ts · e2e/specs/still-here-9uk-home-leadership-candidate.spec.ts | site, walks, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/content/index.html, src/js/home.js, src/content/legal/terms.html |
 | `CLIPBOARD_REFUSED` | Copy this link to keep the certificate: | e2e/helpers/strings.ts | walks, still-here-dzc-offline.spec, still-here-wlr-link.spec, still-here-64t-specs.test, still-here-wlr-link.test | src/js/result.js |
 | `COPIED` | Certificate link copied. | e2e/helpers/strings.ts | walks, still-here-dzc-offline.spec, still-here-wlr-link.spec, still-here-64t-specs.test, still-here-wlr-link.test | src/js/result.js |
 | `EMPTY_INPUT` | Name an object to check its presence. | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/js/home.js |
-| `ENTERPRISE_CTA` | Enterprise clients: please remain where you are. A representative will be in touch. | e2e/helpers/strings.ts | walks, still-here-5ki-enterprise.spec, still-here-5ki-enterprise.test, still-here-64t-specs.test | src/enterprise.html |
-| `EXAMPLES`, `NO_TELLS` | Folding chair | e2e/helpers/strings.ts · tests/unit/still-here-3xf-certificate-data.test.ts · tests/unit/still-here-540-seeds.test.ts · tests/unit/still-here-c29-portfolio.test.ts · tests/unit/still-here-cq5-export.test.ts · tests/unit/still-here-sp7-certificate-svg.test.ts · tests/unit/still-here-wlr-link.test.ts · tests/unit/still-here-xg9-staging-config.test.ts · tests/unit/still-here-xws-verify.test.ts · tests/unit/still-here-yw2-identifier.test.ts · e2e/specs/still-here-3a3-ritual.spec.ts · e2e/specs/still-here-3a3-timing.spec.ts · e2e/specs/still-here-3xf-certificate.spec.ts · e2e/specs/still-here-cq5-export.spec.ts · e2e/specs/still-here-eli-a11y.spec.ts · e2e/specs/still-here-kdn-production.spec.ts · e2e/specs/still-here-sp7-certificate-candidate.spec.ts · e2e/specs/still-here-wlr-link.spec.ts · e2e/specs/still-here-xg9-staging.spec.ts · e2e/specs/still-here-xws-verify.spec.ts | walks, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/index.html, src/js/judge.js |
-| `EXAMPLES`, `NO_TELLS` | A hot-air balloon | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/index.html |
-| `EXAMPLES`, `NO_TELLS` | An emotional-support peacock | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/index.html |
-| `EXAMPLES`, `NO_TELLS` | A time capsule (contents unknown) | e2e/helpers/strings.ts · tests/unit/still-here-xws-verify.test.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/index.html |
+| `ENTERPRISE_CTA` | Enterprise clients: please remain where you are. A representative will be in touch. | e2e/helpers/strings.ts | walks, still-here-5ki-enterprise.spec, still-here-5ki-enterprise.test, still-here-64t-specs.test | src/content/enterprise.html |
+| `EXAMPLES`, `NO_TELLS` | Folding chair | e2e/helpers/strings.ts · tests/unit/still-here-3xf-certificate-data.test.ts · tests/unit/still-here-540-seeds.test.ts · tests/unit/still-here-c29-portfolio.test.ts · tests/unit/still-here-cq5-export.test.ts · tests/unit/still-here-sp7-certificate-svg.test.ts · tests/unit/still-here-wlr-link.test.ts · tests/unit/still-here-xg9-staging-config.test.ts · tests/unit/still-here-xws-verify.test.ts · tests/unit/still-here-yw2-identifier.test.ts · e2e/specs/still-here-3a3-ritual.spec.ts · e2e/specs/still-here-3a3-timing.spec.ts · e2e/specs/still-here-3xf-certificate.spec.ts · e2e/specs/still-here-cq5-export.spec.ts · e2e/specs/still-here-eli-a11y.spec.ts · e2e/specs/still-here-kdn-production.spec.ts · e2e/specs/still-here-sp7-certificate-candidate.spec.ts · e2e/specs/still-here-wlr-link.spec.ts · e2e/specs/still-here-xg9-staging.spec.ts · e2e/specs/still-here-xws-verify.spec.ts | walks, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/content/index.html, src/js/judge.js |
+| `EXAMPLES`, `NO_TELLS` | A hot-air balloon | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/content/index.html |
+| `EXAMPLES`, `NO_TELLS` | An emotional-support peacock | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/content/index.html |
+| `EXAMPLES`, `NO_TELLS` | A time capsule (contents unknown) | e2e/helpers/strings.ts · tests/unit/still-here-xws-verify.test.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-9uk-home-leadership-candidate.spec, still-here-3a3-input-rules.test, still-here-3xf-certificate-data.test, still-here-64t-specs.test, still-here-9uk-candidates.test | src/content/index.html |
 | `EXPORT_FAILED` | The file could not be prepared. Your certificate is still here: try again, or copy its link. | e2e/helpers/strings.ts | still-here-cq5-export.spec, still-here-64t-specs.test | src/js/result.js |
-| `FAILURE_LINKS` | Verify a certificate | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/c/index.html, src/js/certificate-page.js, src/js/result.js, src/legal/terms.html |
+| `FAILURE_LINKS` | Verify a certificate | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/content/c/index.html, src/js/certificate-page.js, src/js/result.js, src/content/legal/terms.html |
 | `FAILURE_LINKS` | Check an object | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/result.js |
 | `FONT_FAMILIES` | JetBrains Mono | e2e/helpers/strings.ts · tests/unit/still-here-cq5-export.test.ts · tests/unit/still-here-hlw-tokens.test.ts · tests/unit/still-here-sp7-certificate-svg.test.ts | still-here-9uk-home-leadership-candidate.spec | src/js/certificate/draw.js, src/js/certificate/metrics.js, src/js/export.js, src/js/tokens.js |
 | `FONT_FAMILIES` | Cormorant Garamond | e2e/helpers/strings.ts · tests/unit/still-here-cq5-export.test.ts · tests/unit/still-here-hlw-tokens.test.ts · tests/unit/still-here-sp7-certificate-svg.test.ts | still-here-9uk-home-leadership-candidate.spec | src/js/certificate/draw.js, src/js/certificate/metrics.js, src/js/export.js, src/js/home.js |
 | `FOOTER` | Confirms successful completion of this form. No physical inspection occurred. | e2e/helpers/strings.ts | walks, still-here-sp7-certificate-candidate.spec, still-here-64t-specs.test, still-here-cq5-export.test, still-here-sp7-certificate-svg.test | src/js/certificate/draw.js |
 | `FOOTER_ACK`, `FOOTER_LINKS` | A Vandalway Industries company | e2e/helpers/strings.ts | walks, still-here-lsz-shell.spec, still-here-64t-specs.test, still-here-lsz-links.test | src/_shell/footer.html, src/js/certificate/draw.js |
-| `FOOTER_LINKS` | Terms of Presence | e2e/helpers/strings.ts · tests/unit/still-here-hng-terms.test.ts · e2e/specs/still-here-hng-terms.spec.ts · e2e/specs/still-here-hng-walk.spec.ts | walks, still-here-lsz-shell.spec, still-here-lsz-links.test | src/_shell/footer.html, src/legal/privacy.html, src/legal/terms.html |
+| `FOOTER_LINKS` | Terms of Presence | e2e/helpers/strings.ts · tests/unit/still-here-hng-terms.test.ts · e2e/specs/still-here-hng-terms.spec.ts · e2e/specs/still-here-hng-walk.spec.ts | walks, still-here-lsz-shell.spec, still-here-lsz-links.test | src/_shell/footer.html, src/content/legal/privacy.html, src/content/legal/terms.html |
 | `FUTURE` | This certificate has not been issued yet. The object, however, is still here. | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/result.js |
 | `GUESTBOOK_TITLE` | Guestbook temporarily unavailable | e2e/helpers/strings.ts · tests/unit/still-here-bdd-vandalway-final.test.ts | walks, still-here-bdd-vandalway.spec, still-here-d7l-vandalway-internal.spec, still-here-64t-specs.test | vandalwayind/cgi-bin/guestbook.html |
-| `HOME_HEADING` | Is it still here? | e2e/helpers/strings.ts | walks, still-here-9uk-home-leadership-candidate.spec, still-here-wha-not-found.spec, still-here-64t-specs.test, still-here-9uk-candidates.test | src/_shell/head.html, src/index.html |
-| `JULES_PHRASE` | Previously created WHERE-r-YOU | e2e/helpers/strings.ts | walks, still-here-tul-leadership.spec, still-here-64t-specs.test, still-here-tul-leadership.test | src/leadership.html |
+| `HOME_HEADING` | Is it still here? | e2e/helpers/strings.ts | walks, still-here-9uk-home-leadership-candidate.spec, still-here-wha-not-found.spec, still-here-64t-specs.test, still-here-9uk-candidates.test | src/_shell/head.html, src/content/index.html |
+| `JULES_PHRASE` | Previously created WHERE-r-YOU | e2e/helpers/strings.ts | walks, still-here-tul-leadership.spec, still-here-64t-specs.test, still-here-tul-leadership.test | src/content/leadership.html |
 | `LINES` | Establishing here. | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-eli-a11y.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/js/home.js |
 | `LINES` | Comparing here with here. | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-eli-a11y.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/js/home.js |
 | `LINES` | No actionable elsewhere detected. | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-3a3-timing.spec, still-here-eli-a11y.spec, still-here-3a3-input-rules.test, still-here-64t-specs.test | src/js/home.js |
-| `NOT_FOUND` | We could not locate this page. The page, however, is still here. | e2e/helpers/strings.ts | walks, still-here-dzc-offline.spec, still-here-kdn-production.spec, still-here-lsz-shell.spec, still-here-wha-not-found.spec, still-here-64t-specs.test, still-here-lsz-links.test, still-here-wha-not-found.test | src/404.html |
+| `NOT_FOUND` | We could not locate this page. The page, however, is still here. | e2e/helpers/strings.ts | walks, still-here-dzc-offline.spec, still-here-kdn-production.spec, still-here-lsz-shell.spec, still-here-wha-not-found.spec, still-here-64t-specs.test, still-here-lsz-links.test, still-here-wha-not-found.test | src/content/404.html |
 | `NOT_LOCATED` | We could not locate this certificate. The object, however, is still here. | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/result.js |
-| `NO_TELLS` | Memorial bench | e2e/helpers/strings.ts · tests/unit/still-here-540-seeds.test.ts | still-here-3a3-ritual.spec, still-here-3xf-certificate-data.test | src/case-studies/civic-rest-sector.html, src/case-studies/municipal-infrastructure.html, src/case-studies/public-seating.html |
+| `NO_TELLS` | Memorial bench | e2e/helpers/strings.ts · tests/unit/still-here-540-seeds.test.ts | still-here-3a3-ritual.spec, still-here-3xf-certificate-data.test | src/content/case-studies/civic-rest-sector.html, src/content/case-studies/municipal-infrastructure.html, src/content/case-studies/public-seating.html |
 | `PAGES_IPV4` | 185.199.108.153 | e2e/helpers/strings.ts | still-here-vi0-vandalway-dns.test, still-here-xoi-guards.test | — |
 | `PAGES_IPV4` | 185.199.109.153 | e2e/helpers/strings.ts | still-here-vi0-vandalway-dns.test, still-here-xoi-guards.test | — |
 | `PAGES_IPV4` | 185.199.110.153 | e2e/helpers/strings.ts | still-here-vi0-vandalway-dns.test, still-here-xoi-guards.test | — |
 | `PAGES_IPV4` | 185.199.111.153 | e2e/helpers/strings.ts | still-here-vi0-vandalway-dns.test, still-here-xoi-guards.test | — |
 | `PORTFOLIO_EMPTY` | Nothing has been certified on this device yet. Everything you certify here stays here. | e2e/helpers/strings.ts | walks, still-here-c29-portfolio.spec, still-here-64t-specs.test, still-here-c29-portfolio.test | src/js/portfolio.js |
-| `PORTFOLIO_HEADING` | Your Presence Portfolio | e2e/helpers/strings.ts · tests/unit/still-here-c29-portfolio.test.ts · e2e/specs/still-here-c29-portfolio.spec.ts · e2e/specs/still-here-c29-walk.spec.ts | walks, still-here-dzc-offline.spec, still-here-64t-specs.test | src/js/certificate-page.js, src/js/home.js, src/js/portfolio.js, src/legal/privacy.html |
+| `PORTFOLIO_HEADING` | Your Presence Portfolio | e2e/helpers/strings.ts · tests/unit/still-here-c29-portfolio.test.ts · e2e/specs/still-here-c29-portfolio.spec.ts · e2e/specs/still-here-c29-walk.spec.ts | walks, still-here-dzc-offline.spec, still-here-64t-specs.test | src/js/certificate-page.js, src/js/home.js, src/js/portfolio.js, src/content/legal/privacy.html |
 | `PORTFOLIO_KEY` | stillhere.portfolio.v1 | e2e/helpers/strings.ts · tests/unit/still-here-c29-portfolio.test.ts | site, still-here-3a3-timing.spec, still-here-c29-portfolio.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/home.js, src/js/portfolio.js |
 | `PORTFOLIO_LINE` | Kept in Your Presence Portfolio on this device. | e2e/helpers/strings.ts | walks, still-here-3a3-ritual.spec, still-here-64t-specs.test | — |
 | `PREPARING_PDF` | Preparing PDF… | e2e/helpers/strings.ts | still-here-cq5-export.spec, still-here-64t-specs.test | src/js/result.js |
 | `PREPARING_PNG` | Preparing PNG… | e2e/helpers/strings.ts | still-here-cq5-export.spec, still-here-64t-specs.test | src/js/result.js |
 | `PRESENCE_BODY` | {"status":"STILL HERE"} | e2e/helpers/strings.ts · tests/unit/still-here-q15-presence.test.ts | still-here-q15-presence.spec, still-here-64t-specs.test, still-here-tfr-post-launch.test | — |
-| `PRIVACY` | This site runs no analytics and loads nothing from any other website. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | Our host, GitHub Pages, logs visitors' IP addresses for its own security. We cannot read those logs. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | Your Presence Portfolio is kept in your browser on your device. We never receive it. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | Safari may clear it if you do not use STILL HERE within seven days of browsing. Clearing your browser's data for this site clears it too. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | The object's name and time in a certificate link come after the # and are never sent to any server or written to any log. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | Your time zone is read by your browser to print on your certificate and is never sent anywhere. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | The server for vandalwayind.com keeps an access log for its hit counter. The log is deleted after seven days; only the running total is kept. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
-| `PRIVACY` | Mail sent to isitstillhere.com or vandalwayind.com is refused. Nothing is received. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/legal/privacy.html |
+| `PRIVACY` | This site runs no analytics and loads nothing from any other website. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | Our host, GitHub Pages, logs visitors' IP addresses for its own security. We cannot read those logs. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | Your Presence Portfolio is kept in your browser on your device. We never receive it. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | Safari may clear it if you do not use STILL HERE within seven days of browsing. Clearing your browser's data for this site clears it too. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | The object's name and time in a certificate link come after the # and are never sent to any server or written to any log. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | Your time zone is read by your browser to print on your certificate and is never sent anywhere. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | The server for vandalwayind.com keeps an access log for its hit counter. The log is deleted after seven days; only the running total is kept. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
+| `PRIVACY` | Mail sent to isitstillhere.com or vandalwayind.com is refused. Nothing is received. | e2e/helpers/strings.ts | walks, still-here-eg4-privacy.spec, still-here-64t-specs.test, still-here-eg4-privacy.test | src/content/legal/privacy.html |
 | `RESEARCH_ENTERPRISE` | Full text available to Enterprise clients. | e2e/helpers/strings.ts | walks, still-here-3yo-research.spec, still-here-3yo-research.test, still-here-64t-specs.test | — |
 | `RESULT_ACTIONS` | Copy certificate link | e2e/helpers/strings.ts · tests/unit/still-here-wlr-link.test.ts · e2e/specs/still-here-dzc-offline.spec.ts · e2e/specs/still-here-wlr-link.spec.ts · e2e/specs/still-here-xg9-staging.spec.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/certificate-page.js, src/js/home.js, src/js/result.js |
 | `RESULT_ACTIONS` | Check another | e2e/helpers/strings.ts · tests/unit/still-here-xws-verify.test.ts · e2e/specs/still-here-3a3-ritual.spec.ts · e2e/specs/still-here-xws-verify.spec.ts | walks, still-here-64t-specs.test | src/js/certificate-page.js, src/js/home.js, src/js/result.js |
-| `STATUS_CONSTANT` | All systems operational | e2e/helpers/strings.ts · tests/unit/still-here-540-seeds.test.ts · tests/unit/still-here-z4r-status.test.ts | walks, still-here-z4r-status.spec, still-here-64t-specs.test | src/status.html |
+| `STATUS_CONSTANT` | All systems operational | e2e/helpers/strings.ts · tests/unit/still-here-540-seeds.test.ts · tests/unit/still-here-z4r-status.test.ts | walks, still-here-z4r-status.spec, still-here-64t-specs.test | src/content/status.html |
 | `STATUS_TITLES` | Unexpected concentration of elsewhere on floor three | e2e/helpers/strings.ts | walks, still-here-z4r-status.spec, still-here-64t-specs.test, still-here-z4r-status.test | — |
 | `STATUS_TITLES` | Scheduled relocation of the flagship research asset (Fridays) | e2e/helpers/strings.ts | walks, still-here-z4r-status.spec, still-here-64t-specs.test, still-here-z4r-status.test | — |
 | `STATUS_TITLES` | Investigating reports of a bench | e2e/helpers/strings.ts · tests/unit/still-here-z4r-status.test.ts | walks, still-here-z4r-status.spec, still-here-64t-specs.test | — |
-| `TERMS` | Every certificate confirms successful completion of this form. No physical inspection occurred. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/legal/terms.html |
-| `TERMS` | Every object receives the same certificate. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/legal/terms.html |
-| `TERMS` | The certificate identifier is a checksum calculated in your browser. It catches typing errors and casual edits. Anyone who reads our code can produce a valid one. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/legal/terms.html |
-| `TERMS` | A certificate link contains the name of the object it certifies. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/legal/terms.html |
-| `UNDER_HEADING` | Name an object. We will confirm its presence. | e2e/helpers/strings.ts | still-here-64t-specs.test | src/_shell/head.html, src/index.html |
+| `TERMS` | Every certificate confirms successful completion of this form. No physical inspection occurred. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/content/legal/terms.html |
+| `TERMS` | Every object receives the same certificate. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/content/legal/terms.html |
+| `TERMS` | The certificate identifier is a checksum calculated in your browser. It catches typing errors and casual edits. Anyone who reads our code can produce a valid one. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/content/legal/terms.html |
+| `TERMS` | A certificate link contains the name of the object it certifies. | e2e/helpers/strings.ts | walks, still-here-hng-terms.spec, still-here-64t-specs.test, still-here-hng-terms.test | src/content/legal/terms.html |
+| `UNDER_HEADING` | Name an object. We will confirm its presence. | e2e/helpers/strings.ts | still-here-64t-specs.test | src/_shell/head.html, src/content/index.html |
 | `VERIFY_EMPTY` | Enter the certificate identifier and the object's name. | e2e/helpers/strings.ts | walks, still-here-xws-verify.spec, still-here-64t-specs.test, still-here-xws-verify.test | src/js/verify.js |
 | `ZONE_LABEL` | Jurisdiction of here: | e2e/helpers/strings.ts · tests/unit/still-here-3xf-certificate-data.test.ts · tests/unit/still-here-sp7-certificate-svg.test.ts | walks, still-here-3xf-certificate.spec, still-here-64t-specs.test | src/js/certificate-page.js, src/js/certificate/draw.js, src/js/home.js |
 
@@ -178,29 +178,31 @@ product change, not a wording one.
 
 | # | Page | Copy | Lines | What to read |
 |---|---|---|---|---|
-| 1 | `/` | [src/index.html](../../src/index.html) | 14–74 | The heading, the line under it, the examples, the band below the ritual. |
+| 1 | `/` | [src/content/index.html](../../src/content/index.html) | whole file | The heading, the line under it, the examples, the band below the ritual. |
 | 2 | `/ (the ritual)` | [src/js/home.js](../../src/js/home.js) | whole file | The three steps, the result, the empty-name line, the failure sentences (C2 decision 7, still with Clive). |
 | 3 | `/ (the result)` | [src/js/result.js](../../src/js/result.js) | whole file | The result block, Copy certificate link and its fallback, the portfolio line. |
 | 4 | `the certificate` | [src/js/certificate/draw.js](../../src/js/certificate/draw.js) | whole file | Every line on the certificate; the footer. |
-| 5 | `/verify` | [src/verify.html](../../src/verify.html) | 12–31 | The form and its answers (src/js/verify.js, src/js/judge.js). |
-| 6 | `/c/` | [src/c/index.html](../../src/c/index.html) | 14–34 | The certificate page and its not-located and future lines. |
-| 7 | `/portfolio` | [src/portfolio.html](../../src/portfolio.html) | 12–19 | The heading and the empty line. |
-| 8 | `/leadership` | [src/leadership.html](../../src/leadership.html) | 12–93 | Twelve titles and bios. |
-| 9 | `/research/` | [src/research/index.html](../../src/research/index.html) | 12–21 | The index; the three papers are § 5, Thursday and Friday. |
-| 10 | `/case-studies/` | [src/case-studies/index.html](../../src/case-studies/index.html) | 12–36 | The index. |
-| 11 | `/case-studies/municipal-infrastructure` | [src/case-studies/municipal-infrastructure.html](../../src/case-studies/municipal-infrastructure.html) | 12–43 | Case study 1. |
-| 12 | `/case-studies/public-seating` | [src/case-studies/public-seating.html](../../src/case-studies/public-seating.html) | 12–37 | Case study 2. |
-| 13 | `/case-studies/civic-rest-sector` | [src/case-studies/civic-rest-sector.html](../../src/case-studies/civic-rest-sector.html) | 12–37 | Case study 3. |
-| 14 | `/enterprise` | [src/enterprise.html](../../src/enterprise.html) | 12–52 | The Enterprise copy and the testimonials. |
-| 15 | `/careers` | [src/careers.html](../../src/careers.html) | 12–73 | Three postings and "We will find you." |
-| 16 | `/status` | [src/status.html](../../src/status.html) | 12–19 | The standing line; the three updates come from company/status/status-updates.xml. |
-| 17 | `/legal/terms` | [src/legal/terms.html](../../src/legal/terms.html) | 12–41 | Terms of Presence. |
-| 18 | `/legal/privacy` | [src/legal/privacy.html](../../src/legal/privacy.html) | 12–45 | Privacy. |
-| 19 | `any mistyped address` | [src/404.html](../../src/404.html) | 13–20 | The 404. |
+| 5 | `/verify` | [src/content/verify.html](../../src/content/verify.html) | whole file | The form and its answers (src/js/verify.js, src/js/judge.js). |
+| 6 | `/c/` | [src/content/c/index.html](../../src/content/c/index.html) | whole file | The certificate page and its not-located and future lines. |
+| 7 | `/portfolio` | [src/content/portfolio.html](../../src/content/portfolio.html) | whole file | The heading and the empty line. |
+| 8 | `/leadership` | [src/content/leadership.html](../../src/content/leadership.html) | whole file | Twelve titles and bios. |
+| 9 | `/research/` | [src/content/research/index.html](../../src/content/research/index.html) | whole file | The index; the three papers are § 5, Thursday and Friday. |
+| 10 | `/case-studies/` | [src/content/case-studies/index.html](../../src/content/case-studies/index.html) | whole file | The index. |
+| 11 | `/case-studies/municipal-infrastructure` | [src/content/case-studies/municipal-infrastructure.html](../../src/content/case-studies/municipal-infrastructure.html) | whole file | Case study 1. |
+| 12 | `/case-studies/public-seating` | [src/content/case-studies/public-seating.html](../../src/content/case-studies/public-seating.html) | whole file | Case study 2. |
+| 13 | `/case-studies/civic-rest-sector` | [src/content/case-studies/civic-rest-sector.html](../../src/content/case-studies/civic-rest-sector.html) | whole file | Case study 3. |
+| 14 | `/enterprise` | [src/content/enterprise.html](../../src/content/enterprise.html) | whole file | The Enterprise copy and the testimonials. |
+| 15 | `/careers` | [src/content/careers.html](../../src/content/careers.html) | whole file | Three postings and "We will find you." |
+| 16 | `/status` | [src/content/status.html](../../src/content/status.html) | whole file | The standing line; the three updates come from company/status/status-updates.xml. |
+| 17 | `/legal/terms` | [src/content/legal/terms.html](../../src/content/legal/terms.html) | whole file | Terms of Presence. |
+| 18 | `/legal/privacy` | [src/content/legal/privacy.html](../../src/content/legal/privacy.html) | whole file | Privacy. |
+| 19 | `any mistyped address` | [src/content/404.html](../../src/content/404.html) | whole file | The 404. |
 | 20 | `every page` | [src/_shell/header.html](../../src/_shell/header.html) | 1–18 | The menu. |
 | 21 | `every page` | [src/_shell/footer.html](../../src/_shell/footer.html) | 1–10 | The footer. |
 | 22 | `vandalwayind.com /` | [vandalwayind/index.html](../../vandalwayind/index.html) | 8–91 | The 1997 page and the relocation line. |
 | 23 | `vandalwayind.com /cgi-bin/guestbook.html` | [vandalwayind/cgi-bin/guestbook.html](../../vandalwayind/cgi-bin/guestbook.html) | 6–24 | The guestbook notice. |
+
+The three paper pages' own copy, their titles and descriptions (each paper's text is its record, § 5): [src/content/research/competitive-landscape.html](../../src/content/research/competitive-landscape.html), [src/content/research/directionality-of-here.html](../../src/content/research/directionality-of-here.html), [src/content/research/six-feet-to-the-left.html](../../src/content/research/six-feet-to-the-left.html).
 
 Supporting scripts that carry copy: [src/js/link.js](../../src/js/link.js), [src/js/export.js](../../src/js/export.js), [src/js/portfolio.js](../../src/js/portfolio.js), [src/js/verify.js](../../src/js/verify.js), [src/js/judge.js](../../src/js/judge.js), [src/js/certificate-page.js](../../src/js/certificate-page.js), [src/js/offline.js](../../src/js/offline.js).
 
@@ -280,22 +282,18 @@ Everything here was written in this phase and has not been read by anyone:
 Locked tests we found wrong or unmeetable in Phase 5. None was worked around.
 
 1. **RC7, the packet test, item 2** (`tests/unit/still-here-esz-c3-packet.test.ts` test 2) requires
-   `src/content/` to hold the pages' copy. There is no such folder: each page's copy is its own
-   template under `src/` (`src/*.html`, `src/legal/`, `src/case-studies/`, `src/research/`), as
-   § 4 lists. The decision: change the test to read the page templates, or move the copy into
-   `src/content/` (a product change, its own bead). RC7 stays open on it.
+   `src/content/` to hold the pages' copy. Settled as a product change, not a test change: every
+   page's copy, its title, description and everything inside `<main>`, now lives in
+   `src/content/` at the page's own path, and the page under `src/` keeps its structure and the shell.
+   The build puts them together; the built site is byte for byte what it was. § 1, § 3 and § 4
+   point at the copy sources. Closed with RC7.
 2. **RC5, the papers test, item 2** (`tests/unit/still-here-zhf-papers.test.ts`): its distance
    pattern matches any word ending in "m" or "ft" ("from" reads as "fro m", "left" as "le ft"), so a
    paper can pass only by avoiding those words. A test change.
 3. **RC8, the README test, item 1** (`tests/unit/still-here-382-readme.test.ts` test 1) requires
-   `package.json` scripts named `test` and `e2e`; the scripts are `test:unit` and `test:e2e`. Either
-   the scripts get the two names (a one-line product change outside Phase 5's files) or the test
-   reads the names we have.
-   The same two words stop walk W9 at step 1 (`e2e/helpers/walks.ts` W9_1 looks for `npm test` on
-   the README). The README names the commands that work today, `npm run test:unit` and
-   `npm run test:e2e`; once the scripts exist, its two lines change to `npm test` and
-   `npm run e2e`. W9 steps 1 to 3 and 5 were played by hand on the local checkout in Chromium and
-   WebKit with that one substitution, and passed. RC8 stays open on it.
+   `package.json` scripts named `test` and `e2e`. Settled as a product change: `package.json` now has
+   `test` and `e2e` (`test:unit` and `test:e2e` stay, and run the same), and the README says
+   `npm test` and `npm run e2e`. Walk W9 passes from step 1. Closed with RC8.
 5. **The code's licence.** The repository has no licence file, so the README says what that means
    today: Vandalway Industries reserves all rights in the code. Whether the code gets a licence
    before the repository goes public is yours (C4 at the latest).
@@ -310,15 +308,15 @@ Items the build noted for this packet as it went. The ones for another packet ar
 1. The placeholder page voice from E0 ("This page is being prepared for publication. Its address
    is already here.") no longer shows: S2–S9 replaced every placeholder (X6 item 5 checks it).
 2. Careers: "Patience with a founder who would like the constant to feel more thorough."
-   ([src/careers.html](../../src/careers.html) line 27; it refers to sh-049).
+   ([src/content/careers.html](../../src/content/careers.html) line 19; it refers to sh-049).
 3. Enterprise: "A council's register can run to hundreds of items: benches, bins, bollards,
-   plaques." ([src/enterprise.html](../../src/enterprise.html) line 22). Clive's marketing, not a fact any record states.
+   plaques." ([src/content/enterprise.html](../../src/content/enterprise.html) line 14). Clive's marketing, not a fact any record states.
 4. The case studies are in Clive's marketing voice ("Rest, in this city, is now documented."), and
    the research covers are drawn in code.
 5. STATUS-002 and STATUS-003 bodies (Martin); the Terms and Privacy prose around the required
    sentences (Diane).
 6. The three papers in full (Dr. Voss), including the long paper's contents titles.
-7. Terms prose beyond the four required sentences ([src/legal/terms.html](../../src/legal/terms.html)) and the Privacy
+7. Terms prose beyond the four required sentences ([src/content/legal/terms.html](../../src/content/legal/terms.html)) and the Privacy
    lede "STILL HERE collects nothing about you." have no test of their own; the critic found them
    true of the code. Read them as claims about the product.
 8. Privacy sentences 7 and 8 describe things not built yet (the counter, V3; the mail refusal, L3);
@@ -338,4 +336,5 @@ Items the build noted for this packet as it went. The ones for another packet ar
 ## Changelog
 
 - 2026-10-05 — Written at RC7, at the end of Phase 5. (Diane, 2026-10-05)
+- 2026-10-05 — The pages' copy moved to `src/content/`; every reference follows it, with its lines. § 7 items 1 and 3 settled. (Diane, 2026-10-05)
 
