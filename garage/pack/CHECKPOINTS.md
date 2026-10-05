@@ -106,6 +106,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   paper and case-study slugs, the ten examples, the relocation line, the portrait crops and the alt
   texts stand as drafted. `s07`, the second-floor printer, is placed on `/careers` beside "Your
   equipment"; that placement is the one bead filed from C3, and it closes before L1. (Jules, 2026-10-05)
+- **Re-tag specs-v4 — 2026-10-05**, applying C2's approved test bundle and red-pens exactly (tag on
+  da0e241; `.bd-gate` locks there). `ACCEPTANCE.md` DS1 item 4 (Greek drawn as an image) and E4 item
+  3 (ink measured on the text blocks) reworded per C2 Decisions 1 and 4, their beads re-synced. Noted
+  for the C4 packet: X4 item 3 still names `context.setOffline(true)`, which its test no longer uses.
+  (Jules, 2026-10-05)
 
 ## Changelog
 
