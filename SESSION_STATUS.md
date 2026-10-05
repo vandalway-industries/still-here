@@ -18,7 +18,7 @@ relations: {}
 
 Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
 open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1, RC2 and RC3 are closed.
+RC1 to RC8 in order. RC1 to RC4 are closed.
 
 ### What changed
 
@@ -33,12 +33,16 @@ RC1 to RC8 in order. RC1, RC2 and RC3 are closed.
 - RC3: `company/status/notes.xml` now holds my 11:50 floor counts for the week, floors one to
   three, with a schema (`notes.xsd`). Tuesday's floor three is 0, amended to 1 on reflection when
   Graham was found on the stairs. The three public updates agree with their sources. Unit 3/3.
+- RC4: Susan's gum graph is now 28 concepts: seven people, four observations, two borrowings, one
+  reimbursement, the twelve access requests one by one, and two of Clive's claims kept apart from
+  the observations, each with Susan's disposition. The OKF validator passes it in strict mode.
+  Unit 4/4. Graham's, Martin's and Susan's flavors are new and go to the table read.
 - The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
   against both lists.
 
 ### What's next
 
-1. RC4, the gum graph, then RC5 to RC8 in order.
+1. RC5, the papers as records, then RC6 to RC8 in order.
 2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
@@ -91,3 +95,4 @@ RC1 to RC8 in order. RC1, RC2 and RC3 are closed.
 - 2026-10-05 — Phase 5 active; RC1 closed: the mail headers, threading and the attachment header. (Martin, 2026-10-05)
 - 2026-10-05 — RC2 closed: the inventory's schema, Bev's spreadsheet, and the stapler's evidence. (Martin, 2026-10-05)
 - 2026-10-05 — RC3 closed: the week's floor counts and their schema. (Martin, 2026-10-05)
+- 2026-10-05 — RC4 closed: the gum graph in full, every edge its own concept. (Martin, 2026-10-05)
