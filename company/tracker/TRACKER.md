@@ -646,6 +646,10 @@ Malcolm
 
 > chair-01. Present. It was present at 11:50 as well.
 
+**bev** · 2026-09-29
+
+> stapler-01. Present. That one's the control. If the stapler ever comes up unknown, it's the count that's wrong.
+
 **malcolm** · 2026-09-30
 
 > Understood. For the Q4 pack, could we present Tuesday as a planned consolidation?

@@ -1,24 +1,38 @@
 # Office inventory: recorded status only, with the evidence for it. Kept by Bev.
 # present = seen here; absent = known not to be here; unknown = not established either way.
-# The spreadsheet (HERE_FINAL_2008_USE_THIS_ONE) remains the master copy.
+# The spreadsheet (HERE_FINAL_2008_USE_THIS_ONE) remains the master copy. This file holds the same
+# rows. Schema: schema.json beside this file.
 as_of: 2026-10-02
+kept_by: bev
 items:
   - id: stapler-01
+    name: Stapler
+    kind: object
     status: present
     evidence: Ordinary control object. On the desk.
+    records: [sh-014]
   - id: chair-01
+    name: Folding chair
+    kind: object
     status: present
     evidence: Moved six feet to the left 2026-10-02 09:00 (QA-001). Still in the office.
-    records: [QA-001, sh-051]
+    records: [QA-001, sh-051, sh-014]
   - id: lucas
+    name: Lucas the Intern
+    kind: person
     status: unknown
+    last_seen_here: 2026-09-08T11:20:00Z
     evidence: Last seen here 2026-09-08 11:20, leaving on the lunch run. Receipts since (sh-048, EXP-001). I'm not changing the row on receipts.
     records: [sh-054, sh-048, EXP-001]
   - id: adrian
+    name: Adrian Vale
+    kind: person
     status: unknown
     evidence: He quit at the 2022 party; there is a copy of the letter in the spreadsheet (NOTE-001). The org chart still lists him, so the row stays unknown.
     records: [NOTE-001, sh-007]
   - id: bench-01
+    name: Memorial bench
+    kind: object
     status: absent
     evidence: Removed in April, per the customer (SUPPORT-001).
     records: [SUPPORT-001, sh-025]

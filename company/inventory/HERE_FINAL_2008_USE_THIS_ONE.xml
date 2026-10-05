@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Title>HERE_FINAL_2008_USE_THIS_ONE</Title>
+  <Author>Bev</Author>
+  <LastAuthor>Bev</LastAuthor>
+  <Created>2008-03-03T09:00:00Z</Created>
+  <LastSaved>2026-10-02T09:40:00Z</LastSaved>
+ </DocumentProperties>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal"><Font ss:FontName="Arial" ss:Size="10"/></Style>
+  <Style ss:ID="hdr"><Font ss:FontName="Arial" ss:Size="10" ss:Bold="1"/></Style>
+ </Styles>
+  <Worksheet ss:Name="Adrian">
+   <Table>
+    <Row>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">date</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">what</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">where</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">2022-12-16</Data></Cell>
+     <Cell><Data ss:Type="String">Resignation letter, handed to Clive at the holiday party, beside the cheese</Data></Cell>
+     <Cell><Data ss:Type="String">Copy filed here (NOTE-001)</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">2023-01-04</Data></Cell>
+     <Cell><Data ss:Type="String">Asked for his accounts to be shut down</Data></Cell>
+     <Cell><Data ss:Type="String">sh-007</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">2026-10-01</Data></Cell>
+     <Cell><Data ss:Type="String">Org chart still says VP of Presence. It is wrong.</Data></Cell>
+     <Cell><Data ss:Type="String">NOTE-001</Data></Cell>
+    </Row>
+   </Table>
+  </Worksheet>
+  <Worksheet ss:Name="Martin">
+   <Table>
+    <Row>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">letter</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">date</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">where</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">1</Data></Cell>
+     <Cell><Data ss:Type="String">2014-05-16</Data></Cell>
+     <Cell><Data ss:Type="String">sh-001</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">9</Data></Cell>
+     <Cell><Data ss:Type="String">2026-09-25</Data></Cell>
+     <Cell><Data ss:Type="String">sh-050</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">all nine</Data></Cell>
+     <Cell><Data ss:Type="String"></Data></Cell>
+     <Cell><Data ss:Type="String">Copies on this tab, on paper, in the blue folder</Data></Cell>
+    </Row>
+   </Table>
+  </Worksheet>
+  <Worksheet ss:Name="Inventory">
+   <Table>
+    <Row>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">id</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">item</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">status</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">last checked</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">evidence</Data></Cell>
+     <Cell ss:StyleID="hdr"><Data ss:Type="String">records</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">stapler-01</Data></Cell>
+     <Cell><Data ss:Type="String">Stapler</Data></Cell>
+     <Cell><Data ss:Type="String">present</Data></Cell>
+     <Cell><Data ss:Type="String">2026-09-29</Data></Cell>
+     <Cell><Data ss:Type="String">Control. On the desk.</Data></Cell>
+     <Cell><Data ss:Type="String">sh-014</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">chair-01</Data></Cell>
+     <Cell><Data ss:Type="String">Folding chair</Data></Cell>
+     <Cell><Data ss:Type="String">present</Data></Cell>
+     <Cell><Data ss:Type="String">2026-10-02</Data></Cell>
+     <Cell><Data ss:Type="String">Six feet to the left since Friday 09:00. Still in the office.</Data></Cell>
+     <Cell><Data ss:Type="String">QA-001; sh-051; sh-014</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">lucas</Data></Cell>
+     <Cell><Data ss:Type="String">Lucas the Intern</Data></Cell>
+     <Cell><Data ss:Type="String">unknown</Data></Cell>
+     <Cell><Data ss:Type="String">2026-09-30</Data></Cell>
+     <Cell><Data ss:Type="String">Last seen here 2026-09-08 11:20, lunch run. Receipts are not presence.</Data></Cell>
+     <Cell><Data ss:Type="String">sh-054; sh-048; EXP-001</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">adrian</Data></Cell>
+     <Cell><Data ss:Type="String">Adrian Vale</Data></Cell>
+     <Cell><Data ss:Type="String">unknown</Data></Cell>
+     <Cell><Data ss:Type="String">2026-10-01</Data></Cell>
+     <Cell><Data ss:Type="String">Quit at the 2022 party. See tab Adrian. Org chart disagrees.</Data></Cell>
+     <Cell><Data ss:Type="String">NOTE-001; sh-007</Data></Cell>
+    </Row>
+    <Row>
+     <Cell><Data ss:Type="String">bench-01</Data></Cell>
+     <Cell><Data ss:Type="String">Memorial bench</Data></Cell>
+     <Cell><Data ss:Type="String">absent</Data></Cell>
+     <Cell><Data ss:Type="String">2026-10-02</Data></Cell>
+     <Cell><Data ss:Type="String">Removed in April, per Ms Webb.</Data></Cell>
+     <Cell><Data ss:Type="String">SUPPORT-001; sh-025</Data></Cell>
+    </Row>
+   </Table>
+  </Worksheet>
+</Workbook>

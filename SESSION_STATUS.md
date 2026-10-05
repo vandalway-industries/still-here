@@ -18,20 +18,24 @@ relations: {}
 
 Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
 open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1 is closed.
+RC1 to RC8 in order. RC1 and RC2 are closed.
 
 ### What changed
 
 - RC1: every mail in `company/correspondence/` now has a Message-ID, and the replies have their
   subjects and thread by In-Reply-To to the message they answer, which they quote. SUPPORT-001
   carries Ms Webb's attachment header with certificate SH-00PH-HEGC-M3YK. CAL-001 has its invite
-  history by date. The bodies are as filed.
-- Unit 5/5 for RC1; the seeds test 6/6 and the records check 7/7 still pass. The continuity check
-  reports 0 matches against both lists.
+  history by date. The bodies are as filed. Unit 5/5.
+- RC2: the inventory has a schema (`company/inventory/schema.json`), every row cites the records
+  behind it, and Bev's spreadsheet is filed as `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same five
+  rows. Bev's count of the stapler is now a comment on sh-014, so its row has something to cite.
+  Unit 4/4; the tracker still validates, 55 issues and 0 errors.
+- The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
+  against both lists.
 
 ### What's next
 
-1. RC2, the inventory (the schema and Bev's spreadsheet), then RC3 to RC8 in order.
+1. RC3, the status records (the 11:50 floor counts and their schema), then RC4 to RC8 in order.
 2. The X4 and X6 test items go into the next checkpoint packet.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
@@ -82,3 +86,4 @@ RC1 to RC8 in order. RC1 is closed.
 - 2026-10-05 — Re-run at specs-v3: E5 closed; E2 item 10, E3 BROWSER PASS, E4 item 1 flipped; E2 and E7 to a quiet re-run. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 4 built: X1, X2, X3, X5 closed; X4 and X6 held on test items for the next packet. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 5 active; RC1 closed: the mail headers, threading and the attachment header. (Martin, 2026-10-05)
+- 2026-10-05 — RC2 closed: the inventory's schema, Bev's spreadsheet, and the stapler's evidence. (Martin, 2026-10-05)
