@@ -60,7 +60,7 @@ node scripts/identifier-check.mjs
 | [`src/`](src/) | The website's source: page templates, each page's copy in [`src/content/`](src/content/), styles, scripts, fonts and images. |
 | `site/` | The built website, written by `npm run build`. Not kept in the repository. |
 | [`vandalwayind/`](vandalwayind/) | Vandalway Industries' page, vandalwayind.com, as built in 1997. |
-| [`company/`](company/README.md) | The company's records: the issue tracker, correspondence, notes, status records, inventory, the gum graph, research. |
+| [`company/`](company/README.md) | The company's records: the issue tracker, correspondence, chat, the calendar, notes, status records, certificates, staff, inventory, the gum graph, research. |
 | [`PRD.md`](PRD.md) | What STILL HERE does and why. |
 | [`PLAN.md`](PLAN.md) | How it is being built, phase by phase. |
 | [`DESIGN.md`](DESIGN.md) | How it looks: tokens, type, components. |
@@ -76,8 +76,9 @@ node scripts/identifier-check.mjs
 
 ## Licences
 
-- **The code.** The repository carries no licence file: Vandalway Industries reserves all rights
-  in the code.
+- **The code.** The repository root carries no licence of its own: Vandalway Industries reserves
+  all rights in its code. Vendored tools and fonts keep their own licences (`tools/okf/LICENSE` and
+  the OFL texts in `src/fonts/`), listed in [`docs/licences.md`](docs/licences.md).
 - **The fonts.** Inter, Inter Tight, JetBrains Mono and Cormorant Garamond are under the SIL Open
   Font License 1.1 (OFL-1.1); each face's licence text sits beside it in `src/fonts/`. The two
   signature faces used to draw the certificate signatures are OFL-1.1 too.
@@ -88,3 +89,4 @@ node scripts/identifier-check.mjs
 - 2026-10-03 — Written at promote. (Jules, 2026-10-03)
 - 2026-10-05 — Rewritten for readers: what STILL HERE does, how to run and test it, the map, the licences. (Jules, 2026-10-05)
 - 2026-10-05 — The test commands are `npm test` and `npm run e2e`; each page's copy lives in `src/content/`. (Jules, 2026-10-05)
+- 2026-10-05 — The code's licence says what the root carries and what vendored tools and fonts keep; the company map names every record set. (Jules, 2026-10-05)

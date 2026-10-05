@@ -40,7 +40,7 @@ From `PRD.md` § Acceptance criteria, HUMAN-JUDGED, the C3 list, item by item:
 | the relocation line | [vandalwayind/index.html](../../vandalwayind/index.html) line 84: "This page has moved to its own address. Please update your bookmarks." |
 | every record's voice | every file under [company/](../../company/tracker/TRACKER.md), listed in § 5 in the week's order. |
 | continuity | checked by machine in `tests/unit/still-here-62x-continuity.test.ts` and `.github/workflows/records.yml`; what the machine cannot read (who knows what) is yours, record by record, § 5. |
-| the examples' wording | [src/content/index.html](../../src/content/index.html) line 33–42, the example buttons on `/`. The call is in § 2. |
+| the examples' wording | [src/content/index.html](../../src/content/index.html) lines 33–44, the ten example buttons on `/`. The call is in § 2. |
 | portrait crops | [src/content/leadership.html](../../src/content/leadership.html), twelve portraits as cropped for `/leadership`, and Eileen Webb’s two; § 2. |
 | photograph placement | every photograph and the page it sits on, `garage/pack/ASSET_MANIFEST.md`; the table and the call on `s07` are in § 2. |
 
@@ -91,11 +91,50 @@ Twelve portraits on `/leadership`, [src/content/leadership.html](../../src/conte
 
 ### The examples' wording
 
-The four buttons under the box on `/` ([src/content/index.html](../../src/content/index.html) lines 33–42). Their exact words are locked strings (§ 3, `EXAMPLES`). The time capsule is the future case on `/verify` until 2027-10-03.
+The ten buttons under the box on `/` ([src/content/index.html](../../src/content/index.html) lines 33–44): Car keys, Phone, Wallet, Glasses, Folding chair, The Moon, A hot-air balloon, An emotional-support peacock, A time capsule (contents unknown), A lighthouse. All ten are locked strings, held as `EXAMPLES` in `e2e/helpers/strings.ts`; § 3 lists the four longest with the tests that use them. The time capsule is the future case on `/verify` until 2027-10-03.
 
 ### The relocation line
 
 [vandalwayind/index.html](../../vandalwayind/index.html) line 84: "This page has moved to its own address. Please update your bookmarks." It is the only sentence on that page about the move (V1 item 3).
+
+### The paper and case-study slugs
+
+`PRD.md` line 342 (R24): the paper and case-study slugs are drafts this read may rename; the count
+may not change. There are six, three papers and three case studies:
+
+| Slug | Page | Copy |
+|---|---|---|
+| `competitive-landscape` | `/research/competitive-landscape` | [src/content/research/competitive-landscape.html](../../src/content/research/competitive-landscape.html) |
+| `directionality-of-here` | `/research/directionality-of-here` | [src/content/research/directionality-of-here.html](../../src/content/research/directionality-of-here.html) |
+| `six-feet-to-the-left` | `/research/six-feet-to-the-left` | [src/content/research/six-feet-to-the-left.html](../../src/content/research/six-feet-to-the-left.html) |
+| `municipal-infrastructure` | `/case-studies/municipal-infrastructure` | [src/content/case-studies/municipal-infrastructure.html](../../src/content/case-studies/municipal-infrastructure.html) |
+| `public-seating` | `/case-studies/public-seating` | [src/content/case-studies/public-seating.html](../../src/content/case-studies/public-seating.html) |
+| `civic-rest-sector` | `/case-studies/civic-rest-sector` | [src/content/case-studies/civic-rest-sector.html](../../src/content/case-studies/civic-rest-sector.html) |
+
+The call: keep each, or rename it. A rename is a bead (the links, the indexes and the tests that
+name the path follow it).
+
+### Alt text
+
+`garage/pack/ASSET_MANIFEST.md` line 27: alt text is plain description, drafted there and finished
+at C3. Every photograph's alt is in its page's copy, the `alt` of each `img` under
+[src/content/](../../src/content/index.html) (`src/content/*.html` and the folders below it), except
+the two on `/status`, which [scripts/company-pages.mjs](../../scripts/company-pages.mjs) sets at
+lines 270–271 (STATUS-001 and STATUS-002). Read each alt beside its photograph (§ 2's table gives
+the line of each).
+
+### Three readings to confirm
+
+- **"Six Feet to the Left"** ([company/research/six-feet-to-the-left.md](../../company/research/six-feet-to-the-left.md)
+  lines 16, 24 and 42) says "six feet leftward" where the plain words are "six feet to the left",
+  because the locked distance pattern reads "left" as "le ft". Read it alongside § 7 item 2: if the
+  test changes, the paper can say "left".
+- **STATUS-002** ([company/status/status-updates.xml](../../company/status/status-updates.xml) line 8)
+  is posted at 09:00 on 2026-10-02, the minute the chair was moved, and says "This morning it was
+  moved". Whether Martin posting at the minute of the move reads right is yours.
+- **MAIL-005** ([company/correspondence/MAIL-005.md](../../company/correspondence/MAIL-005.md) line 13):
+  "expanded into theme-park-adjacent expenditure". Confirm it reads as Clive's spin on Lucas's
+  receipts, not as the company knowing where Lucas is.
 
 ## 3. Locked strings: where each is held
 
@@ -264,15 +303,17 @@ Everything here was written in this phase and has not been read by anyone:
 - **Bev's stapler.** One new comment on sh-014, 2026-09-29, after her chair count: "stapler-01.
   Present. That one's the control. If the stapler ever comes up unknown, it's the count that's
   wrong." It is the evidence the stapler's inventory row cites. The tracker is otherwise as filed.
-- **Bev's spreadsheet**, `HERE_FINAL_2008_USE_THIS_ONE.xml`: three tabs, Adrian (the letter),
-  Martin (letters one and nine on file; "all nine" in the blue folder) and Inventory.
+- **Bev's spreadsheet**, `HERE_FINAL_2008_USE_THIS_ONE.xml`: three tabs, Adrian (the letter, and
+  her request of 2023-01-04 to shut his accounts, sh-007), Martin (all nine letters, 2014-05-16 to
+  2026-09-25, each with its date and where it is filed: sh-001, two emails attached to sh-005,
+  sh-005, four attached to sh-050, sh-050; paper copies in the blue folder) and Inventory.
 - **Martin's floor counts** (`notes.xml`): floors one to three, 11:50 each day; his figures are
   2, 3 and 4 except Tuesday's floor three (0, amended to 1 on reflection) and Wednesday's (2, fish
   again, as Graham announced).
 - **The gum graph.** Flavors, new: Susan spearmint, Graham peppermint, Martin wintergreen. Diane
   and Jules stay unspecified; Lucas stays undisclosed; Clive buys none. Two loans (Graham owes one
   stick; Martin returned a wintergreen for a spearmint, "reconciled at face value"). Clive's
-  first six requests are dated 2019-04-02 to 2023-05-30 with purposes we wrote: founder oversight,
+  first six requests are dated 2019-04-02 to 2023-05-30, each with the purpose Clive gave: founder oversight,
   culture audit, morale (mint-related), succession planning, stakeholder proximity, none stated.
   OBS-001, the matching gum, is dated 2025-11-27, before request ten mentions it. Clive's two
   statements are filed as claims, each with Susan's disposition.
@@ -294,10 +335,11 @@ Locked tests we found wrong or unmeetable in Phase 5. None was worked around.
    `package.json` scripts named `test` and `e2e`. Settled as a product change: `package.json` now has
    `test` and `e2e` (`test:unit` and `test:e2e` stay, and run the same), and the README says
    `npm test` and `npm run e2e`. Walk W9 passes from step 1. Closed with RC8.
-5. **The code's licence.** The repository has no licence file, so the README says what that means
-   today: Vandalway Industries reserves all rights in the code. Whether the code gets a licence
-   before the repository goes public is yours (C4 at the latest).
-4. **E0, the links test** (`tests/unit/still-here-lsz-links.test.ts` line 108) checks og:image only
+4. **The code's licence.** The repository root carries no licence of its own (vendored tools and
+   fonts keep theirs, listed in `docs/licences.md`), so the README says what that means today:
+   Vandalway Industries reserves all rights in its code. Whether the code gets a licence before the
+   repository goes public is yours (C4 at the latest).
+5. **E0, the links test** (`tests/unit/still-here-lsz-links.test.ts` line 108) checks og:image only
    against `/hero/` and its size; the source was confirmed by reading `scripts/derivatives.py`. A
    note for the next re-tag.
 
@@ -337,4 +379,5 @@ Items the build noted for this packet as it went. The ones for another packet ar
 
 - 2026-10-05 — Written at RC7, at the end of Phase 5. (Diane, 2026-10-05)
 - 2026-10-05 — The pages' copy moved to `src/content/`; every reference follows it, with its lines. § 7 items 1 and 3 settled. (Diane, 2026-10-05)
+- 2026-10-05 — Ten example buttons, not four; the slug and alt-text calls and three readings added to § 2; Bev's spreadsheet holds all nine letters; § 7 renumbered. (Diane, 2026-10-05)
 
