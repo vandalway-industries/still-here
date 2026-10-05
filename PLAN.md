@@ -32,8 +32,8 @@ relations:
 | 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
 | 1 | Design system, golden candidates | held (awaiting C2) | DS1–DS7 closed; C2 packet out |
 | 2 | The shell, the ritual and the certificate | held (awaiting C2) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
-| 3 | The company website | active | S2–S9 closed; W4 W5 played |
-| 4 | Extras | pending | X1–X6 closed; W6 played |
+| 3 | The company website | held (awaiting C2) | S2–S9 closed; W4 W5 played |
+| 4 | Extras | active | X1–X6 closed; W6 played |
 | 5 | The records in full | pending | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | pending | V1–V4 closed; W7 played internally |
 | 7 | Staging and the launch packet | pending | L1–L5 closed; C4 packet out |
@@ -257,7 +257,7 @@ No cap (I-07). Expected about 220 orchestrator turns.
   - S7 (2026-10-04): `still-here-5ki` closed through the gate. Bulk certification copy, two testimonials verbatim from SUPPORT-001 and sh-025, the call to action verbatim, no form; s08, b3-wide-courthouse, p12-eileen-courthouse. Unit 4/4; spec and W5 walk 10 passed, 2 skipped, two runs in six projects.
   - S8 (2026-10-04): `still-here-hng` closed through the gate. Terms of Presence with the four sentences verbatim. Unit 2/2; spec and W4.legal (Terms) walk 10 passed, 2 skipped, two runs in six projects.
   - S9 (2026-10-04): `still-here-eg4` closed through the gate. Privacy with the eight sentences verbatim and the host's and WebKit's own documentation linked (both fetched and read 2026-10-04). Unit 2/2; spec and W4.legal (Privacy) walk 10 passed, 2 skipped, two runs in six projects.
-- [ ] Walks W4 (with each page's sub-walk) and W5 played by the critic.
+- [x] Walks W4 (with each page's sub-walk) and W5 played by the critic. Evidence: Phase 3 exit review, 2026-10-05: every sub-walk and W5 played by hand in Chromium and WebKit at 390×844 and 1440×900 (316 steps), no stuck step; S2–S9 specs two runs 116 passed, 0 failed.
 
 #### Bar
 Deterministic: the D8 path list by name; zero broken links; the exact strings (Enterprise sentence, status constant and titles, Jules's line, the footer link); zero form elements on Enterprise and Careers; each Terms and Privacy statement found with the test or citation that proves it. Then W4 and W5 in a browser. Then the blind pick for leadership against `exemplars/leadership-1440-golden.png`. Pages without a golden are judged on tokens and the walk; their taste goes to C3.
@@ -445,3 +445,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-04 — E7 built: Your Presence Portfolio; held open on its spec's press-second race (C2 test change 4). (Jules, 2026-10-04)
 - 2026-10-04 — Phase 2 held awaiting C2 after the critic's review; Phase 3 active. E3 item 4 unticked. Clive's early approval of test change 4 recorded. (Jules, 2026-10-04)
 - 2026-10-05 — Re-run at specs-v3: E5 closed; E2 item 10, E3 BROWSER PASS and E4 item 1 flipped; E2 and E7 to re-run on a quiet machine before C4. (Jules, 2026-10-05)
+- 2026-10-05 — Phase 3 held awaiting C2 (S2's leadership golden only) after the critic's review; Phase 4 active. (Jules, 2026-10-05)
