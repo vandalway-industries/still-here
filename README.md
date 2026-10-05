@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-05
 read_by: anyone meeting this repository cold (a fresh clone, the organization page); AGENTS.md points here for what the product is
 relations: {}
 ---
@@ -10,40 +10,80 @@ STILL HERE™ is Vandalway Industries' presence-certification platform. Enter an
 verification, and receive documented reassurance that it remains here. Going nowhere. With
 confidence.
 
-This repository holds the platform's website (isitstillhere.com), Vandalway Industries' own
-website (vandalwayind.com), and the company records behind both.
+On isitstillhere.com you name an object (a folding chair, a memorial bench, anything) and press
+**Check presence**. A short verification sequence runs, the result reads STILL HERE., and you can
+download a certificate with the object's name, the moment, your time zone and a certificate
+identifier, or keep it in Your Presence Portfolio on your device.
 
-**Where it stands:** the build has begun. The repository, its gates and its work items are in
-place; the website itself is not built yet. Progress is tracked in `PLAN.md` and
-`SESSION_STATUS.md`.
+What the software does, exactly: the check is a constant. Every object receives the same
+certificate. Nothing is inspected or located, and the object's name never leaves your browser; the
+certificate confirms successful completion of the form, and the identifier is a checksum calculated
+in your browser. The Terms of
+Presence say so, and so does every certificate.
 
-## Run
+This repository holds the STILL HERE website, Vandalway Industries' own website (vandalwayind.com),
+and the company's records.
 
-What runs today:
+## Run it
+
+You need Node 24 and npm.
 
 ```bash
-# the unit tests (Node 24 runs the .test.ts files directly)
-node --test 'tests/unit/**/*.test.ts'
-
-# the open work items (beads)
-bd ready
+npm ci              # install exactly what package-lock.json lists
+npm run build       # build the website into site/
+npm run serve       # build, then serve site/ at http://127.0.0.1:5320
 ```
 
-The local website server and the browser tests arrive with the next work item; this section will
-say how to run them once they exist.
+The site is static HTML, CSS and JavaScript. Everything the check and the certificate need runs in
+the visitor's browser; there is no application server and no database.
 
-## Layout
+## Test it
 
-- `PRD.md` — what STILL HERE does and why.
-- `PLAN.md` — the build, phase by phase.
-- `DESIGN.md` — how it looks.
-- `SESSION_STATUS.md` — where the build stands right now.
-- `garage/` — the project's shaping history and the build pack (`garage/pack/`).
-- `company/` — the company's records.
-- `assets/` — brand and photography originals.
-- `docs/bead-map.md` — each work item's label, id, owner and test files.
-- `tests/unit/`, `e2e/specs/` — the unit tests and the browser specs.
+```bash
+npm run test:unit   # the unit tests (Node runs the .test.ts files directly)
+npx playwright install chromium webkit firefox   # once, for the browser specs
+npm run test:e2e    # the browser specs, in Chromium, WebKit and Firefox
+```
+
+The browser specs build the site and serve it themselves. The records have their own checks, which
+also run on every push (`.github/workflows/records.yml`):
+
+```bash
+node scripts/continuity-check.mjs --list all company site
+node scripts/identifier-check.mjs
+```
+
+## Where everything is
+
+| Path | What it is |
+|---|---|
+| [`src/`](src/) | The website's source: pages, styles, scripts, fonts and images. |
+| `site/` | The built website, written by `npm run build`. Not kept in the repository. |
+| [`vandalwayind/`](vandalwayind/) | Vandalway Industries' page, vandalwayind.com, as built in 1997. |
+| [`company/`](company/README.md) | The company's records: the issue tracker, correspondence, notes, status records, inventory, the gum graph, research. |
+| [`PRD.md`](PRD.md) | What STILL HERE does and why. |
+| [`PLAN.md`](PLAN.md) | How it is being built, phase by phase. |
+| [`DESIGN.md`](DESIGN.md) | How it looks: tokens, type, components. |
+| [`garage/`](garage/) | The product team's working documents: the shaping history and the build pack. |
+| `deploy/` | The server scripts for vandalwayind.com, each with its undo script; added when vandalwayind.com is deployed. |
+| [`tests/`](tests/) | The unit tests and their fixtures. |
+| [`e2e/`](e2e/) | The browser specs and the walks a person plays. |
+| [`scripts/`](scripts/) | The build, the local server and the checks. |
+| [`assets/`](assets/) | Brand and photography originals. |
+| [`docs/`](docs/) | The work-item map, the checkpoint packets and the dependency licences. |
+| [`SESSION_STATUS.md`](SESSION_STATUS.md) | Where the build stands right now. |
+| [`AGENTS.md`](AGENTS.md) | The team's working rules for this repository. |
+
+## Licences
+
+- **The code.** The repository carries no licence file: Vandalway Industries reserves all rights
+  in the code.
+- **The fonts.** Inter, Inter Tight, JetBrains Mono and Cormorant Garamond are under the SIL Open
+  Font License 1.1 (OFL-1.1); each face's licence text sits beside it in `src/fonts/`. The two
+  signature faces used to draw the certificate signatures are OFL-1.1 too.
+- **Everything npm installs** is listed with its licence in [`docs/licences.md`](docs/licences.md).
 
 ## Changelog
 
 - 2026-10-03 — Written at promote. (Jules, 2026-10-03)
+- 2026-10-05 — Rewritten for readers: what STILL HERE does, how to run and test it, the map, the licences. (Jules, 2026-10-05)

@@ -247,6 +247,8 @@ Outside the week:
 
 The gum graph (Susan), as of 2026-10-01: [borrowings/B-001.md](../../company/gum-graph/borrowings/B-001.md), [borrowings/B-002.md](../../company/gum-graph/borrowings/B-002.md), [claims/clive-shared-node.md](../../company/gum-graph/claims/clive-shared-node.md), [claims/clive-shareholder.md](../../company/gum-graph/claims/clive-shareholder.md), [index.md](../../company/gum-graph/index.md), [log.md](../../company/gum-graph/log.md), [observations/OBS-001.md](../../company/gum-graph/observations/OBS-001.md), [observations/OBS-002.md](../../company/gum-graph/observations/OBS-002.md), [observations/OBS-003.md](../../company/gum-graph/observations/OBS-003.md), [observations/OBS-004.md](../../company/gum-graph/observations/OBS-004.md), [people/clive.md](../../company/gum-graph/people/clive.md), [people/diane.md](../../company/gum-graph/people/diane.md), [people/graham.md](../../company/gum-graph/people/graham.md), [people/jules.md](../../company/gum-graph/people/jules.md), [people/lucas.md](../../company/gum-graph/people/lucas.md), [people/martin.md](../../company/gum-graph/people/martin.md), [people/susan.md](../../company/gum-graph/people/susan.md), [reimbursements/R-001.md](../../company/gum-graph/reimbursements/R-001.md), [requests/request-01.md](../../company/gum-graph/requests/request-01.md), [requests/request-02.md](../../company/gum-graph/requests/request-02.md), [requests/request-03.md](../../company/gum-graph/requests/request-03.md), [requests/request-04.md](../../company/gum-graph/requests/request-04.md), [requests/request-05.md](../../company/gum-graph/requests/request-05.md), [requests/request-06.md](../../company/gum-graph/requests/request-06.md), [requests/request-07.md](../../company/gum-graph/requests/request-07.md), [requests/request-08.md](../../company/gum-graph/requests/request-08.md), [requests/request-09.md](../../company/gum-graph/requests/request-09.md), [requests/request-10.md](../../company/gum-graph/requests/request-10.md), [requests/request-11.md](../../company/gum-graph/requests/request-11.md), [requests/request-12.md](../../company/gum-graph/requests/request-12.md).
 
+Also under `company/`: [company/README.md](../../company/README.md).
+
 ## 6. New in Phase 5: read these first
 
 Everything here was written in this phase and has not been read by anyone:
@@ -289,6 +291,14 @@ Locked tests we found wrong or unmeetable in Phase 5. None was worked around.
    `package.json` scripts named `test` and `e2e`; the scripts are `test:unit` and `test:e2e`. Either
    the scripts get the two names (a one-line product change outside Phase 5's files) or the test
    reads the names we have.
+   The same two words stop walk W9 at step 1 (`e2e/helpers/walks.ts` W9_1 looks for `npm test` on
+   the README). The README names the commands that work today, `npm run test:unit` and
+   `npm run test:e2e`; once the scripts exist, its two lines change to `npm test` and
+   `npm run e2e`. W9 steps 1 to 3 and 5 were played by hand on the local checkout in Chromium and
+   WebKit with that one substitution, and passed. RC8 stays open on it.
+5. **The code's licence.** The repository has no licence file, so the README says what that means
+   today: Vandalway Industries reserves all rights in the code. Whether the code gets a licence
+   before the repository goes public is yours (C4 at the latest).
 4. **E0, the links test** (`tests/unit/still-here-lsz-links.test.ts` line 108) checks og:image only
    against `/hero/` and its size; the source was confirmed by reading `scripts/derivatives.py`. A
    note for the next re-tag.

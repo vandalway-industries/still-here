@@ -12,59 +12,61 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 5 — The records in full
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 6 — vandalwayind.com (internal)
 
 ### Current state
 
-Phases 1, 2 and 3 are held awaiting C2. Phase 4 is built: X1, X2, X3 and X5 closed, X4 and X6 held
-open on test items for the next packet, and the phase is under review. Phase 5 is active, one owner,
-RC1 to RC8 in order. RC1 to RC6 are closed. RC7's packet is out and the bead is held open on a test item. Phase 4 is now marked held.
+Phase 5 is built and held on test items for the next packet. RC1 to RC6 are closed through the
+gate. The C3 packet is out. RC7 and RC8 are built and held open, each on one test item. Phase 6 is
+now active. Phases 1, 2 and 3 are held awaiting C2, and Phase 4 is held on its test items and under
+review.
 
 ### What changed
 
-- RC1: every mail in `company/correspondence/` now has a Message-ID, and the replies have their
+- RC1: every mail in `company/correspondence/` has a Message-ID, and the replies have their
   subjects and thread by In-Reply-To to the message they answer, which they quote. SUPPORT-001
   carries Ms Webb's attachment header with certificate SH-00PH-HEGC-M3YK. CAL-001 has its invite
   history by date. The bodies are as filed. Unit 5/5.
-- RC2: the inventory has a schema (`company/inventory/schema.json`), every row cites the records
-  behind it, and Bev's spreadsheet is filed as `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same five
-  rows. Bev's count of the stapler is now a comment on sh-014, so its row has something to cite.
-  Unit 4/4; the tracker still validates, 55 issues and 0 errors.
-- RC3: `company/status/notes.xml` now holds my 11:50 floor counts for the week, floors one to
-  three, with a schema (`notes.xsd`). Tuesday's floor three is 0, amended to 1 on reflection when
-  Graham was found on the stairs. The three public updates agree with their sources. Unit 3/3.
-- RC4: Susan's gum graph is now 28 concepts: seven people, four observations, two borrowings, one
+- RC2: the inventory has a schema (`company/inventory/schema.json`), and every row cites the
+  records behind it. Bev's spreadsheet is filed as `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same
+  five rows. Bev's count of the stapler is now a comment on sh-014, so its row has something to
+  cite. Unit 4/4. The tracker still validates: 55 issues, 0 errors.
+- RC3: `company/status/notes.xml` holds my 11:50 floor counts for the week, floors one to three,
+  with a schema (`notes.xsd`). Tuesday's floor three is 0, amended to 1 on reflection when Graham
+  was found on the stairs. The three public updates agree with their sources. Unit 3/3.
+- RC4: Susan's gum graph is 28 concepts: seven people, four observations, two borrowings, one
   reimbursement, the twelve access requests one by one, and two of Clive's claims kept apart from
-  the observations, each with Susan's disposition. The OKF validator passes it in strict mode.
-  Unit 4/4. Graham's, Martin's and Susan's flavors are new and go to the table read.
-- RC5: Dr. Voss's three papers checked as records against everything above: every footnote
-  resolves, and *Six Feet to the Left* states only the times and the distance QA-001 and sh-051
-  record. Unit 3/3. No change to the papers. The test's distance pattern also catches any word
-  ending in m ("from" reads as "fro m"); it goes to the C3 packet as before.
-- RC6: a new workflow, Records (`.github/workflows/records.yml`), builds the site on every push
-  and runs the continuity check over `company/` and `site/` and the new identifier check
-  (`scripts/identifier-check.mjs`), which recomputes every certificate number in the records and on
-  the pages with the site's own module. First run on GitHub: green, continuity 0, 8 identifiers
-  found and 8 recomputed. Unit 7/7.
-- RC7: the C3 packet is out, `docs/checkpoints/c3-packet.md`. It places all 16 items the PRD
-  gives C3, links all 56 company records and 23 page sources, lists the 64 locked strings with the
-  files that hold them, and sets out the testimonials and `s07` calls. Its test passes 2 of 3. The
-  third looks for page copy under `src/content/`, and that folder does not exist. That goes in the
-  next packet, and RC7 stays open on it.
-- The seeds test 6/6 and the records check 7/7 still pass. The continuity check reports 0 matches
-  against both lists.
+  the observations. The OKF validator passes it in strict mode. Unit 4/4.
+- RC5: Dr. Voss's three papers were checked as records, with no changes. Unit 3/3.
+- RC6: the new Records workflow builds the site on every push. It runs the continuity check over
+  `company/` and `site/` and the identifier check (`scripts/identifier-check.mjs`), which
+  recomputes every certificate number with the site's own module. First run on GitHub: green,
+  continuity 0, 8 identifiers found and all 8 recomputed. Unit 7/7.
+- RC7: the C3 packet, `docs/checkpoints/c3-packet.md`, places all 16 items the PRD gives C3. It
+  links all 57 company records and every page source, lists the 64 locked strings with the files
+  that hold them, and sets out the testimonials and `s07` calls. Unit 2 of 3: test 2 looks for
+  page copy under `src/content/`, and that folder does not exist.
+- RC8: `README.md` and `company/README.md` are written. Unit 3 of 4: test 1 and walk W9's first
+  step look for `npm test` and `npm run e2e`, but `package.json` calls those scripts `test:unit`
+  and `test:e2e`. The README gives the commands that work. W9 steps 1 to 3 and 5, played by hand
+  on the local checkout with that one substitution: 2 passed (Chromium, WebKit).
+- Whole unit suite: 225 tests, 173 pass, 14 skipped, 38 fail. Every failure is one of three
+  kinds: the two items above; beads of Phases 6 to 8 not yet built; or failures already known
+  before this phase (G0 test 4, E4 unit 3, DS1 items 2 and 4, X6 item 4).
 
 ### What's next
 
-1. RC8, the two READMEs and walk W9.
-2. The X4 and X6 test items go into the next checkpoint packet.
+1. Phase 6: V1, the 1997 page finished.
+2. The next checkpoint packet takes the test items: RC5's distance pattern, RC7's `src/content/`,
+   RC8's two script names, and the X4 and X6 items. `PLAN.md` § Open questions lists them, and
+   the C3 packet's § 7 sets out the Phase 5 ones.
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
-4. When Clive answers C2, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
+4. When Clive answers C2 or C3, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
 
 ### Waiting on Clive
 
 - C3: the table read, `docs/checkpoints/c3-packet.md`. Nothing waits on it until Phase 7.
-
+- Whether the code gets a licence before the repository goes public (the C3 packet, § 7).
 - C2: the golden candidates, the test changes, and the three failure sentences.
 - The Pages verification TXT value for isitstillhere.com, any time before L3.
 
@@ -115,3 +117,4 @@ RC1 to RC8 in order. RC1 to RC6 are closed. RC7's packet is out and the bead is 
 - 2026-10-05 — RC5 closed: the papers checked as records. (Martin, 2026-10-05)
 - 2026-10-05 — RC6 closed: the records check runs in CI. (Martin, 2026-10-05)
 - 2026-10-05 — RC7: the C3 packet is out; the bead held on a test item. (Martin, 2026-10-05)
+- 2026-10-05 — Phase 5 built: RC1–RC6 closed, the C3 packet out, RC7 and RC8 held on test items; Phase 6 active. (Martin, 2026-10-05)
