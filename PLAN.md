@@ -35,13 +35,18 @@ relations:
 | 3 | The company website | held (awaiting C2) | S2–S9 closed; W4 W5 played |
 | 4 | Extras | held (test items for the next packet; under review) | X1–X6 closed; W6 played |
 | 5 | The records in full | exit gate met (C3 table read with Clive) | RC1–RC8 closed; W9 played locally; C3 packet out |
-| 6 | vandalwayind.com (internal) | active | V1–V4 closed; W7 played internally |
+| 6 | vandalwayind.com (internal) | active (V3 closed; V1 awaiting C2; V2 on a test item; V4 on L3's null MX) | V1–V4 closed; W7 played internally |
 | 7 | Staging and the launch packet | pending | L1–L5 closed; C4 packet out |
 | 8 | Launch | pending | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
-**Phase 6 — vandalwayind.com, built and served internally.** Next move: V1.
+**Phase 6 — vandalwayind.com, built and served internally.** Built, and served on the production
+server to the internal network (`deploy/deploy-log.md`). V3 is closed. V1 waits only on C2's blind
+pick. V2 waits only on a locked-test item for the next packet: its address filter reads the access
+log's nested `output file` line as a site address. V4 waits only on W7.3, which needs L3 to publish
+the null MX for vandalwayind.com. Next move: Phase 7, with V2 and V4 rejoining when their items
+clear.
 
 Phase 5's exit gate is met. RC1 to RC8 closed through the gate; the records check runs in CI; W9
 played on the local checkout. The C3 packet is out (`docs/checkpoints/c3-packet.md`), and Clive's
@@ -348,11 +353,11 @@ No cap (I-07). Expected about 150 orchestrator turns.
 - [ ] DS6 closed. Styling past the candidate waits on C2's verdict on the 1997 page.
 
 #### Steps
-- [ ] V1: the page finished per R42 and the C2 red-pen; the guestbook page; all period assets.
-- [ ] V2: `deploy/vandalwayind-install.sh` and its undo: files under `/srv/vandalwayind/`; a Caddy site bound to localhost; a new internal-network HTTPS port of its own (I-11); Caddyfile backed up, `caddy validate` before reload, no other site block changed; undo run once, install re-run.
-- [ ] V3: the counter: this site's own access log (JSON, seven-day retention), a running-total file, the page and image sent `no-cache`, a ten-minute systemd timer, the digit image, Node installed if absent — all by the V2 scripts.
-- [ ] V4: `Last-Modified` per file (1997 page, 1999 guestbook, counter's own time), POST refused, quirks mode on the served copy, HTTP→HTTPS ready for Phase 8.
-- [ ] Walk W7 played on the internal copy.
+- [ ] V1: the page finished per R42 and the C2 red-pen; the guestbook page; all period assets. Page, guestbook and period assets done (DS6 unit 4/4, V1 unit 3/3 + item 4 HUMAN-JUDGED, `still-here-bdd-vandalway.spec.ts` 2/2 Chromium and WebKit, two runs). The counter is now `/counter.gif`, drawn by `deploy/counter/count.mjs`. The menu's E-Mail is the page's one `mailto:`. The C2 red-pen is still to come.
+- [x] V2: `deploy/vandalwayind-install.sh` and its undo: files under `/srv/vandalwayind/`; a Caddy site bound to localhost; a new internal-network HTTPS port of its own (I-11); Caddyfile backed up, `caddy validate` before reload, no other site block changed; undo run once, install re-run. Done 2026-10-05: Install, undo and re-install, with the undo run six times, each back to the backup's sha256 (`deploy/deploy-log.md`, 13 runs). Ten other site blocks and the internal network's other routes byte-identical in every run. Site on loopback plus a socket; the internal network's new HTTPS port proxies to the socket, because a port target keeps the visitor's host name and a localhost site answers it with an empty 200.
+- [x] V3: the counter: this site's own access log (JSON, seven-day retention), a running-total file, the page and image sent `no-cache`, a ten-minute systemd timer, the digit image, Node installed if absent — all by the V2 scripts. Unit 5/5 and the counter spec green twice, 0 skipped; by hand, n=0 then 000026 within four minutes of the third load (2026-10-05).
+- [ ] V4: `Last-Modified` per file (1997 page, 1999 guestbook, counter's own time), POST refused, quirks mode on the served copy, HTTP→HTTPS ready for Phase 8. Served headers, 405 and quirks mode done (V4 unit 4/4 twice; W7.1 in both engines). HTTP→HTTPS belongs to Phase 8's public block.
+- [ ] Walk W7 played on the internal copy. Steps 1, 2, 4 and 5 played, by hand and by the spec, in Chromium and WebKit. Step 3 is stuck: vandalwayind.com has no MX record yet (`queryMx ENODATA`), which is L3's.
 
 #### Bar
 Deterministic: the markup checks; the served headers; the counter showing at least n+3 within eleven minutes of three loads; `caddy validate`; the undo-then-install round trip. Then W7. Then the blind pick against `exemplars/vandalway-1997-golden.png`; "reads as found, not as parody" is HUMAN-JUDGED at C2 and C3.
@@ -445,6 +450,16 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
   - [ ] Next packet (RC5): RC5's distance pattern matches any word ending in "m" or "ft". Listed in
     `docs/checkpoints/c3-packet.md` § 7. Found at the Phase 5 build, 2026-10-05. RC7's and RC8's
     entries here were product items, not test items, and closed with their beads (2026-10-05).
+  - [ ] Next packet (V2): `tests/unit/still-here-d7l-caddy-config.test.ts` test 1's address filter
+    lists directives but not `output`, so the access log's nested `output file <path> {` line reads
+    as a site address. V3 test 1 requires that block (`roll_keep_for 168h` has no other Caddyfile
+    form), so no valid snippet passes both. Proposed: add `output` to the filter. Found at the
+    Phase 6 build, 2026-10-05.
+  - [ ] Phase 7 (L3): the null MX for vandalwayind.com, which W7.3 (V4's walk) checks on the
+    internal copy. Found at the Phase 6 build, 2026-10-05.
+  - [ ] Phases 7 and 8 (L1, N2): Caddy 2.6.2 keeps a removed site's log file open across reloads.
+    A `deploy/` undo for a logged site empties its log rather than deleting it, as
+    `deploy/vandalwayind-uninstall.sh` does. Found at the Phase 6 build, 2026-10-05.
 
 ## Retro — process notes (append-only)
 
@@ -487,3 +502,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-05 — Phase 4: X1, X2, X3, X5 closed; X4 and X6 built and held on test items for the next packet; the glyph and tokens-header items done; the failure sentences built as drafts. (Jules, 2026-10-05)
 - 2026-10-05 — Phase 5 built: RC1–RC6 closed (the records in full, the records check in CI); the C3 packet out; RC7 and RC8 held on test items for the next packet; Phase 4 and Phase 5 held, Phase 6 active. (Jules, 2026-10-05)
 - 2026-10-05 — RC7 and RC8 closed: they were product items, not test items. The pages' copy moved to `src/content/` with the built site unchanged, and `package.json` gained `test` and `e2e`. Phase 5's exit gate met; C3's table read is next. (Jules, 2026-10-05)
+- 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 waits on C2; V2 on a test item for the next packet; V4 on L3's null MX (W7.3). (Jules, 2026-10-05)

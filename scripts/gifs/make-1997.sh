@@ -10,8 +10,8 @@
 #   images/netscape.gif   the "best viewed with Netscape" badge, 88 x 31, drawn here, not copied
 #   images/email.gif      the e-mail icon, animated (four frames, looping)
 #   images/s09mkt.jpg     the Sunday market photograph, 320 wide, no metadata, under 40 KB
-#   cgi-bin/digits/0.gif … 9.gif   odometer digits for the hit counter
-#   cgi-bin/counter.gif   the counter as served before counting starts: 000000
+#   counter.gif           the hit counter as served before counting starts: 000000
+#                         (drawn by deploy/counter/count.mjs, which redraws it on the server)
 #
 # Inputs: assets/brand/vandalway-industries-logo.png and assets/s09-sunday-market-1997.png.
 # Palette: the 216-colour web-safe cube (00 33 66 99 CC FF) for everything drawn here.
@@ -24,7 +24,7 @@ IMG="$OUT/images"
 CGI="$OUT/cgi-bin"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
-mkdir -p "$IMG" "$CGI/digits"
+mkdir -p "$IMG" "$CGI"
 
 PAGE_BG='#FFFFFF'   # the page's BGCOLOR, under the tiles
 NAVY='#000066'
@@ -80,16 +80,9 @@ convert -dispose Background -loop 0 \
   -delay 60 "$TMP/e0.png" -delay 20 "$TMP/e1.png" "$TMP/e2.png" -delay 80 "$TMP/e3.png" \
   -colors 8 "${GIF_OPTS[@]}" "$IMG/email.gif"
 
-# Odometer digits for the counter, and the counter as it stands before counting begins.
-for d in 0 1 2 3 4 5 6 7 8 9; do
-  convert -size 13x19 xc:black -fill '#33FF33' -font Courier-Bold -pointsize 17 \
-    -gravity center -annotate +0+1 "$d" \
-    -fill '#333333' -draw 'line 0,0 12,0' -draw 'line 0,18 12,18' \
-    -colors 8 "${GIF_OPTS[@]}" "$CGI/digits/$d.gif"
-done
-convert "$CGI/digits/0.gif" "$CGI/digits/0.gif" "$CGI/digits/0.gif" \
-  "$CGI/digits/0.gif" "$CGI/digits/0.gif" "$CGI/digits/0.gif" +append \
-  -bordercolor '#666666' -border 1 -colors 8 "${GIF_OPTS[@]}" "$CGI/counter.gif"
+# The counter as it stands before counting begins: 000000, drawn by the counter itself
+# (deploy/counter/count.mjs keeps the odometer digits, so the server needs only Node to redraw it).
+node "$ROOT/deploy/counter/count.mjs" --log /dev/null --total "$TMP/total" --gif "$OUT/counter.gif"
 
 # The Sunday market photograph: a small JPEG, as the page had it, with no metadata.
 convert "$ROOT/assets/s09-sunday-market-1997.png" -resize 320x -strip -interlace none \

@@ -1,0 +1,11 @@
+# Runs vandalwayind-counter.service every ten minutes. (Jules, 2026-10-05)
+[Unit]
+Description=vandalwayind.com hit counter, every ten minutes
+
+[Timer]
+OnCalendar=*:0/10
+AccuracySec=1s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

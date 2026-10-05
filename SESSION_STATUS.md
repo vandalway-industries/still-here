@@ -12,57 +12,49 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 6 — vandalwayind.com (internal)
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 6 — vandalwayind.com (internal), built
 
 ### Current state
 
-Phase 5's exit gate is met: RC1 to RC8 are closed through the gate, W9 is played on the local
-checkout, and the C3 packet is out. RC7 and RC8 turned out to be product items, not test items, and
-both are fixed. Phase 6 is active. Phases 1, 2 and 3 are held awaiting C2, and Phase 4 is held on its test items and under
-review.
+Phase 6 is built. vandalwayind.com is served from the production server to the internal network
+on a port of its own. The ten other sites on that server and the network's other routes were
+byte-identical before and after every one of the 13 runs in `deploy/deploy-log.md`. V3, the
+counter, is closed. V1 waits only on C2's blind pick. V2 waits on one locked-test item for the next
+packet. V4 waits on W7 step 3, which needs the null MX that L3 publishes in Phase 7.
 
 ### What changed
 
-- RC1: every mail in `company/correspondence/` has a Message-ID, and the replies have their
-  subjects and thread by In-Reply-To to the message they answer, which they quote. SUPPORT-001
-  carries Ms Webb's attachment header with certificate SH-00PH-HEGC-M3YK. CAL-001 has its invite
-  history by date. The bodies are as filed. Unit 5/5.
-- RC2: the inventory has a schema (`company/inventory/schema.json`), and every row cites the
-  records behind it. Bev's spreadsheet is filed as `HERE_FINAL_2008_USE_THIS_ONE.xml` with the same
-  five rows. Bev's count of the stapler is now a comment on sh-014, so its row has something to
-  cite. Unit 4/4. The tracker still validates: 55 issues, 0 errors.
-- RC3: `company/status/notes.xml` holds my 11:50 floor counts for the week, floors one to three,
-  with a schema (`notes.xsd`). Tuesday's floor three is 0, amended to 1 on reflection when Graham
-  was found on the stairs. The three public updates agree with their sources. Unit 3/3.
-- RC4: Susan's gum graph is 28 concepts: seven people, four observations, two borrowings, one
-  reimbursement, the twelve access requests one by one, and two of Clive's claims kept apart from
-  the observations. The OKF validator passes it in strict mode. Unit 4/4.
-- RC5: Dr. Voss's three papers were checked as records, with no changes. Unit 3/3.
-- RC6: the new Records workflow builds the site on every push. It runs the continuity check over
-  `company/` and `site/` and the identifier check (`scripts/identifier-check.mjs`), which
-  recomputes every certificate number with the site's own module. First run on GitHub: green,
-  continuity 0, 8 identifiers found and all 8 recomputed. Unit 7/7.
-- RC7 closed. Every page's words (its title, its description and everything inside `<main>`)
-  now live in `src/content/`, one file per page at the page's own path. The page under `src/`
-  keeps its structure and the shell, and the build puts the two together. I built the site before
-  and after the move and compared every file: identical, down to the build id (11de8e1e97e74102).
-  The only difference is security.txt's Expires, which follows the clock. The C3 packet now links
-  all 19 copy sources and its line numbers follow them. Unit 3/3; the S2–S9, E0 and DS5 browser
-  specs 92/92 in Chromium and WebKit.
-- RC8 closed. `package.json` has `test` and `e2e`, and the old names still work. The README says
-  `npm test` and `npm run e2e`. Unit 4/4; walk W9 2/2 in Chromium and WebKit, run twice.
-- Whole unit suite: 225 tests, 175 pass, 14 skipped, 36 fail. Each of the 36 also fails at the
-  previous commit. They are beads of Phases 6 to 8 not yet built, or failures already known
-  (G0 test 4, E4 unit 3, DS1 items 2 and 4, X6 item 4).
+- The install and its undo: `deploy/vandalwayind-install.sh` and
+  `deploy/vandalwayind-uninstall.sh`. Before every reload the Caddyfile is backed up with a
+  timestamp, `caddy validate` is run, and every other block is hashed. After the reload the other
+  sites are checked and must still answer. The undo ran six times, and each time the Caddyfile came
+  back identical to the backup. The install ran again after each undo.
+- Requests reach the site through a socket, not a port. On a port, the network's proxy passes on
+  the visitor's own host name, and Caddy answers a site named for localhost with an empty 200.
+  Through a socket the proxy sends "localhost".
+- At 12:10 the counter counted nothing. Caddy 2.6.2 keeps a removed site's log open, and the undo
+  had deleted that log, so the re-added site was writing to a deleted file. The undo now empties
+  the log instead of deleting it, and the install stops if this happens again.
+- The counter: `deploy/counter/count.mjs` keeps its own digits, so the server needs only Node, and
+  a timer runs it every ten minutes. By hand I saw 000000, loaded the page three times, and saw
+  000026 at the 12:20 run. The counter is now `/counter.gif`, and the old digit images are gone.
+- The 1997 page: the menu's E-Mail is now its one `mailto:` link. Before, the walk's first e-mail
+  link was the menu jump.
+- Tests, with VANDALWAY_INTERNAL_URL set, two runs each, 0 skipped. V1 unit 3/3 (item 4 is
+  HUMAN-JUDGED); V2 unit 2/3; V3 unit 5/5; V4 unit 4/4. Browser: V1 2/2 and V2 2/2 in Chromium
+  and WebKit; the V3 counter spec 1/1 in Chromium. The W7 spec passes steps 1 and 2 in both
+  engines and fails step 3 (`queryMx ENODATA`). I played steps 4 and 5 by hand in both engines.
+- Whole unit suite: 225 tests, 177 pass, 34 fail, 14 skipped (before: 175, 36, 14).
 
 ### What's next
 
-1. Phase 6: V1, the 1997 page finished.
-2. The next checkpoint packet takes the test items: RC5's distance pattern, and the X4 and X6
-   items. `PLAN.md` § Open questions lists them, and
-   the C3 packet's § 7 sets out the Phase 5 ones.
+1. Phase 7. V2 and V4 close when their items clear: V2's test change at the next packet, and V4's
+   W7.3 once L3 has published the null MX.
+2. The next packet takes V2's test item along with the RC5, X4 and X6 items (`PLAN.md`, Open
+   questions).
 3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
 4. When Clive answers C2 or C3, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
+   V1's blind pick follows C2.
 
 ### Waiting on Clive
 
@@ -86,6 +78,8 @@ review.
 - `bd` records a bead's owner from the git author address, so `bd` commands are run with the
   owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`, set on that one command only. Never
   export them.
+- Caddy on the production server keeps one deleted, empty log file open until it next
+  restarts (the 12:10 problem above). It is harmless and goes away on Caddy's next restart.
 - This computer's clock steps back about 1.16 s every 32 s; no red was put down to it.
 
 ## Changelog
@@ -120,3 +114,4 @@ review.
 - 2026-10-05 — RC7: the C3 packet is out; the bead held on a test item. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 5 built: RC1–RC6 closed, the C3 packet out, RC7 and RC8 held on test items; Phase 6 active. (Martin, 2026-10-05)
 - 2026-10-05 — RC7 and RC8 closed as product fixes: the copy in `src/content/`, the `test` and `e2e` scripts; Phase 5's exit gate met. (Martin, 2026-10-05)
+- 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 on C2, V2 on a test item, V4 on L3's null MX. (Martin, 2026-10-05)

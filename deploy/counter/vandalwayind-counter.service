@@ -1,0 +1,19 @@
+# The hit counter of vandalwayind.com: adds the page loads in the site's access log to the running
+# total and redraws counter.gif. Started every ten minutes by vandalwayind-counter.timer. Installed
+# and removed by deploy/vandalwayind-install.sh and deploy/vandalwayind-uninstall.sh.
+# (Jules, 2026-10-05)
+[Unit]
+Description=vandalwayind.com hit counter
+After=caddy.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/env node /srv/vandalwayind/.counter/count.mjs --log /var/log/caddy/vandalwayind.access.log --total /srv/vandalwayind/.counter/total --gif /srv/vandalwayind/counter.gif
+UMask=0022
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateNetwork=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadOnlyPaths=/var/log/caddy
+ReadWritePaths=/srv/vandalwayind

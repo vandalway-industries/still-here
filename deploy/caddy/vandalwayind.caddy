@@ -1,0 +1,40 @@
+# vandalwayind.com, the internal copy. Added to the server's Caddyfile by
+# deploy/vandalwayind-install.sh between its BEGIN and END marks, and taken out again by
+# deploy/vandalwayind-uninstall.sh. Bound to the loopback interface and to a socket under
+# /srv/vandalwayind/; nothing here listens on a public address. The internal network reaches it
+# through its own HTTPS port, which proxies to the socket: the network's proxy keeps the visitor's
+# own host name on requests sent to a port, which a site named for localhost would not answer, and
+# sends "localhost" on requests sent to a socket. That port is chosen at install time and is not
+# written in this repository. The public block for vandalwayind.com is Phase 8's.
+# (Jules, 2026-10-05)
+http://localhost:18997 {
+	root * /srv/vandalwayind
+	bind 127.0.0.1 unix//srv/vandalwayind/.run/caddy.sock
+	# Requests through the socket arrive addressed to "localhost"; name them as this site so they
+	# reach this site's access log (the counter counts from it) like requests on the port do.
+	request_header Host localhost:18997
+
+	# The page, the guestbook and the counter are fetched fresh on every load, so every load and
+	# reload reaches the server and its access log.
+	@fresh path / /index.html /cgi-bin/guestbook.html /counter.gif
+	header @fresh Cache-Control "no-cache"
+
+	# Nothing on this site accepts a POST, or anything but GET and HEAD.
+	@write not method GET HEAD
+	header @write Allow "GET, HEAD"
+	respond @write 405
+
+	# The counter's own files and the socket are not part of the site.
+	@private path /.*
+	respond @private 404
+
+	file_server
+
+	# This site's own access log: JSON, rolled, seven days kept. The counter reads it.
+	log {
+		output file /var/log/caddy/vandalwayind.access.log {
+			roll_keep_for 168h
+		}
+		format json
+	}
+}
