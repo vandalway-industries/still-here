@@ -1116,3 +1116,85 @@ address goes in this repository. Each write was the three records L3 names and n
 - Read-back, isitstillhere.com: every other record unchanged, equal to the snapshot (A `@`, CNAME `www`, TXT `_github-pages-challenge-vandalway-industries`); the three new record sets present; six record sets in all (zone sha256 a38f75d3cae1277f9b2156cc67c1b82fea4c596f9620e04d3ac0a4feb0cc8b0b).
 - Read-back, vandalwayind.com: every other record unchanged, equal to the snapshot (A `@`, CNAME `www`); the three new record sets present; five record sets in all (zone sha256 9ed23c42dbbd5024c8bda5f27c9874d8595e1a3e0ee39968ab20fec85c687d27).
 - No wildcard record in either zone (a random name under each answers NXDOMAIN at the zone's own name servers).
+
+## Phase 8: launch (N1, N2), 2026-10-06
+
+After Clive's C4 sign-off and the repository reading public.
+
+### isitstillhere.com on GitHub Pages (N1)
+
+- Private vulnerability reporting enabled; the repository variable `RENEWAL_ASSIGNEE` set.
+- Pages created with the GitHub Actions source; the `github-pages` environment deploys from `main` only.
+- Deploy: run 37468552403 (workflow_dispatch on `main`), build and deploy green. An earlier push run
+  (37468436366) failed at `configure-pages`: it ran in the minute between the switch and the Pages site existing.
+- Custom domain set: `isitstillhere.com`; the domain already verified for the organization.
+- DNS, 13:10:42 UTC. Zone saved first (sha256 a38f75d3cae1277f…, as at L3's read-back); the
+  registrar's latest snapshot before the write: 186074588. Validation dry run passed (200). Then the
+  apex and `www` replaced, which Pages needs (the registrar's placeholder apex A and the `www`
+  CNAME to the apex were all they held): A `@` GitHub Pages' four IPv4 addresses; AAAA `@` its
+  four IPv6 addresses; CNAME `www` `vandalway-industries.github.io.`; TTL 3600. 200 "Request accepted".
+- Read-back, isitstillhere.com: those three record sets changed as written; every other record set
+  unchanged (MX, SPF, DMARC, the Pages challenge TXT); zone sha256 62687f8ea041a3eb144b151b14ce68f7b581bed5fb43d737febb6b6814b3248e.
+
+### vandalwayind.com, public (N2)
+
+- DNS, 13:12:52 UTC. Zone saved first (sha256 9ed23c42dbbd5024…, as at L3's read-back); the
+  registrar's latest snapshot before the write: 186074603. Validation dry run passed (200). Then A
+  `@` replaced: the registrar's placeholder address became the production server's (not written
+  here; it is in the uncommitted environment). 200 "Request accepted".
+- Read-back, vandalwayind.com: A `@` changed as written; every other record set unchanged (MX, SPF,
+  DMARC, CNAME `www` to the apex); zone sha256 088b42fc84ccf206860d476fc7cfee4974485c5a712a339fc8e54d9dd8f929b8. Both public resolvers answered the new
+  address within a minute.
+- `deploy/vandalwayind-public-install.sh`, run once on the server (vandalwayind.com public block; every other block unchanged, byte-identical, and every other site answering as before). Its output, whole:
+
+```
+== vandalwayind-public-install.sh, 2026-10-06T13:13:17Z
+preconditions: the internal copy installed, no public block yet
+before: 13 blocks hashed, 12 other sites checked
+backup /etc/caddy/Caddyfile.bak-vandalwayind-public-20261006T131323Z sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696
+go-live 2026-10-06 total 793 -> 0
+files: refreshed; the page reads "times since October 6, 2026."; page and images dated 1997-08-22, guestbook 1999-03-02; counter at 0
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile with the public blocks)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+block site-12 sha256 before af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10 after af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10
+vandalwayind.com public block: every other block byte-identical before and after
+reload: done; caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+site-13 answers: before 000 after 000
+site-14 answers: before 000 after 000
+other sites: every site that answered before the reload answers after it
+Caddyfile now sha256 7bca0be197a3fb118b372348f86177e014aa186a58e240438978d19a0c23832a
+== vandalwayind-public-install.sh done
+```
+
+The go-live line, on its own:
+
+go-live 2026-10-06 total 793 -> 0
+
+- Checked by hand after the reload: `https://vandalwayind.com/` 200 with a valid certificate;
+  `http://vandalwayind.com/` and `http://www.vandalwayind.com/` 301 to `https://vandalwayind.com/`;
+  `https://www.vandalwayind.com/` 301 to the apex; `Last-Modified` 22 Aug 1997; the counter line
+  "times since October 6, 2026."
