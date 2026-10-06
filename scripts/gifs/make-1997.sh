@@ -88,4 +88,8 @@ node "$ROOT/deploy/counter/count.mjs" --log /dev/null --total "$TMP/total" --gif
 convert "$ROOT/assets/s09-sunday-market-1997.png" -resize 320x -strip -interlace none \
   -sampling-factor 2x2 -quality 72 "$IMG/s09mkt.jpg"
 
+# ImageMagick writes an "ImageMagick" application block into every GIF, and -strip leaves it in.
+# Take it out (and any comment), keeping the loop block; the pixels do not change.
+node "$ROOT/scripts/gifs/strip-gif-apps.mjs" "$IMG"/*.gif "$OUT/counter.gif"
+
 echo "1997 images written to vandalwayind/"
