@@ -111,7 +111,7 @@ Each with who can answer it.
 - `research/5-browser-storage.md` — Safari's 7-day deletion; fragments never reach the server.
 - `research/6-1990s-web.md` — what 1996–97 business pages actually contained.
 - `assets/` — brand: `still-here-logo-horizontal.png`, `still-here-hero-chair.png`, parent logo in
-  `../../brand/`. Portraits `p01`–`p13` (plus `p12-eileen-courthouse`). Case study `b1`–`b3` (plus
+  `assets/brand/`. Portraits `p01`–`p13` (plus `p12-eileen-courthouse`). Case study `b1`–`b3` (plus
   `b3-wide-courthouse`, for Enterprise). Asset and office shots `s01`–`s08`. The 1997 photo `s09`.
   Merch `m1`–`m3`.
 

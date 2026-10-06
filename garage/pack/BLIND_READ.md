@@ -209,9 +209,9 @@ item 8, for him to overrule at C1.
 
     **FIXED** — E2's walk covers W1 steps 1–5 and 8–10 and W8; E4's walk covers W1 steps 6–7; Check another is E2.12.
 
-48. Several counts and paths are out of date. ASSET_MANIFEST says 30 of 32 files carry a C2PA manifest but names s07 as the only one without, which makes 31. HANDOFF's HUMAN-JUDGED table says four portraits break the house look; DESIGN and ASSET_MANIFEST name two. The parent logo is at `../brand/` in ASSET_MANIFEST and `../../brand/` in HANDOFF. Home: garage/pack/ASSET_MANIFEST.md § Rules, § The brand; garage/HANDOFF.md § HUMAN-JUDGED, § Inputs; DESIGN.md § Components. POLISH.
+48. Several counts and paths are out of date. ASSET_MANIFEST says 30 of 32 files carry a C2PA manifest but names s07 as the only one without, which makes 31. HANDOFF's HUMAN-JUDGED table says four portraits break the house look; DESIGN and ASSET_MANIFEST name two. The parent logo's path differed between ASSET_MANIFEST and HANDOFF (both now name `assets/brand/`). Home: garage/pack/ASSET_MANIFEST.md § Rules, § The brand; garage/HANDOFF.md § HUMAN-JUDGED, § Inputs; DESIGN.md § Components. POLISH.
 
-    **FIXED** — 31 of 32 carry a manifest, 30 naming the software; the four portraits named in `ASSET_MANIFEST.md` and `DESIGN.md`; the parent logo described as `brand/` beside the repository (HANDOFF's `../../brand/` is the same place seen from `garage/`, and stays).
+    **FIXED** — 31 of 32 carry a manifest, 30 naming the software; the four portraits named in `ASSET_MANIFEST.md` and `DESIGN.md`; the parent logo described as `brand/` beside the repository (HANDOFF now names its copy, `assets/brand/`).
 
 49. The phone checklist runs only on staging, which is on the internal network. Nothing says Clive's iPhone must be on that network. The iOS and printed-QR promises of Goals 1–2 ("on the public internet") are never re-run on production, and W-DoD leaves out W2.7. Home: garage/pack/WALKS.md § Phone checklist, W-DoD; garage/pack/ENV_PREFLIGHT.md; PRD.md diff item 7, Goals 1–2. POLISH.
 
