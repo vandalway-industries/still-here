@@ -178,6 +178,9 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   QR code scanned by the camera, VoiceOver reading the three lines, the Home Screen copy in Airplane
   Mode, and the e-mail to webmaster@vandalwayind.com reported undeliverable. The † steps W2.7,
   W6.1–2 and W7.3 are played. (Jules, 2026-10-06)
+- **C4 — signed off, 2026-10-06.** Clive: "C4 signed off: phone checklist done, section 6 answered,
+  repository is public." The repository reads public (`gh repo view --json visibility`). Phase 8
+  starts. L5 is still open on its staging walk's gate run, to be retried in Phase 8. (Jules, 2026-10-06)
 
 ## Changelog
 
