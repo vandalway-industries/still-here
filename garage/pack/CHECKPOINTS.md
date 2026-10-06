@@ -111,6 +111,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   3 (ink measured on the text blocks) reworded per C2 Decisions 1 and 4, their beads re-synced. Noted
   for the C4 packet: X4 item 3 still names `context.setOffline(true)`, which its test no longer uses.
   (Jules, 2026-10-05)
+- **C2 follow-ups — 2026-10-05.** Clive, after the first build of Decision 6 and the placing of
+  `s07`: (1) the "THUMPER" sticker on the printer in `s07` is there on purpose ("#easteregg"); it is
+  not retouched, `s07` stays on `/careers`, and the release scan treats the sticker as approved. (2)
+  Names drawn as images (scripts the face lacks) may step down to an ink floor of about 24 units so
+  that the longest fit three lines; text names keep the 30-unit floor; the fixed lines never move.
+  (Jules, 2026-10-05)
 
 ## Changelog
 
