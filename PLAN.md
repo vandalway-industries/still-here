@@ -16,11 +16,10 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 7 is active. L1–L4 are closed; Phase 6 is done (V4 closed 2026-10-06). L5 is next: W1–W9
-  on staging, the screenshots, the critic, the phone checklist and the C4 packet.
+- Phase 7 is held at C4. L1–L4 are closed; the C4 packet is with Clive; L5 waits on its question 9.
 
 **Next:**
-- L5, then the C4 packet goes to Clive and the run waits on his sign-off and the public switch.
+- Clive: the phone checklist, the packet's § 6, sign-off, the public switch. Then Phase 8 (N1–N3).
 
 **Later:**
 - L1–L5 to the C4 launch packet (staging, phone checklist); Phase 8 after Clive's public switch.
@@ -36,16 +35,14 @@ relations:
 | 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | done | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | active | L1–L5 closed; C4 packet out |
+| 7 | Staging and the launch packet | active (at C4; L5 on question 9) | L1–L5 closed; C4 packet out |
 | 8 | Launch | pending | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
-**Phase 7 — Staging and the launch packet.** Entered 2026-10-06. Phases 0–6 are done. C2 and C3
-are recorded, and C3's one bead is closed. isitstillhere.com is verified as the organization's Pages
-domain. L1–L4 closed 2026-10-06 (L3 and L4 after Clive approved their test changes, `specs-v8`).
-Next move: L5 (W1–W9 on staging, the screenshots, the critic, the phone checklist, the C4 packet).
-Staging serves the build of 7f198d9; nothing under `src/` has changed since.
+**Phase 7 — Staging and the launch packet.** Entered 2026-10-06; held at C4 the same day. L1–L4
+closed; the C4 packet (`docs/checkpoints/c4-packet.md`) is with Clive; L5 waits on the packet's
+question 9 (the walk helpers on a networked server). Phase 8 starts on Clive's public switch.
 
 ## Build method
 
@@ -415,6 +412,7 @@ Done 2026-10-06. vandalwayind.com is served on the internal network from the pro
   Run (2026-10-06), twice: the tree and every blob in the history pass the gate at the public tier; the public denylist finds nothing; `site/` images are clean. Items 1, 2 and 5 flipped (unit 3/5, 0 skipped, twice). Open on two: item 3, commit 38c10f5's in-story author (approved by Clive, a test change for C4); item 4, four GIFs in `vandalwayind/images/` carry ImageMagick's application block. The pack's paths outside the repository are reworded here, in `CRITIC_RUBRIC.md` and in `ENV_PREFLIGHT.md`; `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and the gate hook's default wait for a decision.
   Closed (2026-10-06): `still-here-48f` through the gate. Item 4: `scripts/gifs/strip-gif-apps.mjs` takes ImageMagick's block out of the four GIFs, pixels, frames and delays unchanged (16829da), and `make-1997.sh` runs it. Item 3 and the paths: Clive approved, ahead of C4, the one exception for 38c10f5 by its full sha, and tools found through the uncommitted `.env.local` instead of paths (`ACCEPTANCE.md` G0 item 9, G1 item 5 and L4 item 1 reworded, beads re-synced; `specs-v8`). Unit 5/5, 0 skipped, twice.
 - [ ] L5: W1–W9 on staging; the phone checklist printed for Clive; the C4 packet.
+  Run (2026-10-06): the C4 packet is out (`docs/checkpoints/c4-packet.md`, unit 3/3 twice), with the phone checklist to print, the critic reports, 40 screenshots of staging and every call since C3. W1–W9 on staging (the build of 7f198d9; `src/` unchanged since): the spec 19 passed, 12 skipped (Firefox, by design) and 5 red in each of two runs; every red step played by hand on staging and works (packet § 2). The reds are the locked walk helpers' on a networked server; their change is C4 question 9. W7 credited from V4's walks (Clive, 2026-10-06). CODE PASS and items 2–3 flipped; open on item 1 and BROWSER PASS.
 
 #### Bar
 Deterministic: staging specs; the URL table; DNS read-back equals the intended records and the snapshot holds everything else unchanged; the release scan clean. Then W1–W9 on staging. The phone test is Clive's (HUMAN-JUDGED, C4).
@@ -423,9 +421,11 @@ Deterministic: staging specs; the URL table; DNS read-back equals the intended r
 No cap (I-07). Expected about 100 orchestrator turns.
 
 #### Exit gate
-- [ ] L1–L5 closed through the gate; the C4 packet is out.
+- [ ] L1–L5 closed through the gate; the C4 packet is out. (2026-10-06: L1–L4 closed; the C4 packet is out; L5 open on C4 question 9.)
 
 #### Result
+
+Held at C4 (2026-10-06). Staging is up on the internal network and walked; DNS, the workflows and the release scan are done; the C4 packet is with Clive. Clive lowered the bar for the rest of the launch (one green run, no repeat critic where the gate replayed a walk, a short packet; `CHECKPOINTS.md`). The run waits on his phone checklist, his answers to the packet's § 6 and the public switch.
 
 ### Phase 8 — Launch
 
@@ -546,3 +546,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Phase 2 done (critic review plus blind picks plus quiet-machine closes); Phase 7 entered. Phase 6's V4 waits on L3's null MX, so it follows L3 rather than preceding Phase 7. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 7: L1 (staging) and L2 closed; L3's DNS written, held on its ANY probe; L4 run, held on items 3 and 4; V4's W7.3 green, V4 held on a twice-green walk. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 6 done (V4 closed, W7 played by hand by the critic); L3 and L4 closed at `specs-v8`; X6's guard regression from the GIF script fixed; the found list brought up to date. (Jules, 2026-10-06)
+- 2026-10-06 — Phase 7 held at C4: the packet is out; W1–W9 walked on staging, red steps played by hand; Clive lowered the bar for the rest of the launch. (Jules, 2026-10-06)

@@ -158,6 +158,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   uncommitted `.env.local`, and fail saying which line to add when neither has it. Clive also chose
   to leave the internal copy's GIFs (pixels unchanged, metadata stripped in the repository) until
   N2 installs the public site. (Jules, 2026-10-06)
+- **The bar for the rest of the launch — 2026-10-06.** Clive, during L5: what protects the facts stays
+  (the locked tests, the close gate, no outside names, real deploys); the repeats go: one green run
+  instead of two, no separate critic where the gate already replayed a walk, a short packet. W7 is not
+  repeated on staging; it is credited from the day's three green walks of the internal copy and the
+  critic's hand play. (Jules, 2026-10-06)
 
 ## Changelog
 

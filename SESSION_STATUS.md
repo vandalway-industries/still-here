@@ -12,82 +12,58 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active; Phase 6 held on V4 (see below)
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v8`) · **Phase:** 7 held at C4; Phase 8 waits on the public switch
 
 ### Current state
 
-Staging is up on the internal network, over HTTPS, and L1 is closed. L2 is closed: the reminder's
-dry run opened and closed its test issue. L3's records are written on both domains and read back,
-but L3 stays open on one test that cannot pass against our name servers. L4's scan is run: three of
-its five checks pass, and two wait on decisions. V4 now passes W7.3, but it is not closed.
+The C4 packet is with Clive (`docs/checkpoints/c4-packet.md`). Phases 0–6 are done. L1–L4 are
+closed. L5 is open on one test change (packet § 6, question 9). The run is stopped and waits on
+Clive: the phone checklist, his answers to § 6, sign-off, then the public switch.
 
 ### What changed
 
-- L1: `deploy/staging-install.sh`, `deploy/staging-uninstall.sh`, `deploy/lib/staging.sh` and
-  `deploy/caddy/staging.caddy`. Installed, undone (back to the backup's sha256) and installed again,
-  with the same checks as vandalwayind (deploy log, Phase 7 staging, runs 1–3). Then the files were
-  brought up to the build of 7f198d9. The staging spec passed 18, skipped 0, in both runs. The unit
-  test passed 7/7, skipped 0, in both runs. Closed through the gate.
-- L2: the reminder ran by hand with a date ten days out (run 37426838369). It opened issue #1
-  "Renew security.txt" and closed it again. Unit 4/4 twice. Closed.
-- L3: both zones snapshotted (ids in the deploy log). The dry run passed, then the null MX, SPF
-  and DMARC records went in, appended. Every other record is unchanged. The Pages TXT is present and
-  matches. Both public resolvers return the new records. Unit 3/4 twice. Test 4 asks for an ANY
-  lookup. Our name servers answer ANY with RFC 8482's placeholder, so no resolver can say "not
-  found". There is no wildcard: A, TXT and CNAME lookups of a random name all come back not found.
-  Items 1–3 flipped. Not closed.
-- L4: unit 3/5 twice. The tree and every blob in the history pass the gate at the public tier. The
-  public denylist finds nothing, and the images in `site/` are clean. Item 3 fails on commit
-  38c10f5's author, which is the approved exception and needs C4's test change. Item 4 fails on four
-  GIFs in `vandalwayind/images/`, which carry ImageMagick's application block. Items 1, 2 and 5
-  flipped. Not closed.
-- V4: the W7 walk ran three times after the null MX went in. W7.3 passed every time it was
-  reached. Runs 2 and 3 each failed once in Chromium, at W7.2's reload, with `ERR_NETWORK_CHANGED`:
-  the workstation's network changed, as it did once for V2. WebKit passed all three runs. Not
-  closed, and BROWSER PASS is not flipped.
-- Paths outside the repository: reworded in `PLAN.md`, `garage/pack/CRITIC_RUBRIC.md` and
-  `garage/pack/ENV_PREFLIGHT.md`.
+- L4 item 4: `scripts/gifs/strip-gif-apps.mjs` takes ImageMagick's block out of the 1997 GIFs, the
+  pixels unchanged; `make-1997.sh` runs it. The internal copy keeps the old bytes until N2 (Clive).
+- `specs-v8`, approved by Clive: L3's probe asks A, TXT and CNAME; L4 allows 38c10f5 by its sha;
+  the tests and the landing hook find their tools through the uncommitted `.env.local`.
+- L3, L4 and V4 closed through the gate. Phase 6 done; its review found one regression from the GIF
+  script (X6's host guard), fixed the same hour.
+- W1–W9 on staging: the spec 19 passed, 12 skipped (Firefox), 5 red in each of two runs; every red
+  step played by hand on staging and works. The reds are the walk helpers' on a networked server.
+- The C4 packet, the phone checklist, the critic reports and 40 screenshots of staging.
+- Clive lowered the bar for the rest of the launch: one green run, no repeat critic where the gate
+  replayed a walk, a short packet (`CHECKPOINTS.md`).
 
 ### What's next
 
-1. Strip the four GIFs, redeploy the internal copy, and re-run L4 item 4.
-2. Put the test changes in the next packet: L3 test 4's probe, and L4 test 3's one approved author.
-3. The path wording left in `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and its beads, and
-   the gate hook's default folder.
-4. V4: run the walk again when the network is quiet, then close it through the gate.
-5. L5 after the specs-v7 re-tag.
+1. Clive's answers. Then: apply what he approves (question 9 is a test change, then a re-tag and
+   L5's close; question 1 may strip the originals' credentials; question 3 is a product change).
+2. After the public switch: Phase 8, N1–N3.
 
 ### Waiting on Clive
 
-- A second look at the certificate golden with the thicker guilloche.
-- Whether the code gets a licence before the repository goes public (the C3 packet, § 7).
+- The phone checklist (`docs/checkpoints/c4-phone-checklist.md`), on the internal network.
+- The packet's § 6: the originals' content credentials, the code's licence, the drawing code at the
+  press, X4 item 3's wording, RC5's pattern, the certificate golden, the counter cell, the walk
+  helpers.
+- Sign-off, then the public switch.
 
 ### Surprises / debt
 
-- E7's test 1–2 has about 11 s to spare on one worker in WebKit (18.6 s in a traced run, each
-  PDF download 1.0–1.7 s). At three workers on this computer it can run out once, as it did in
-  the gate's first attempt.
-- The V2 unit test skips test 3 unless `.env.staging` is loaded. Loaded, it is 3/3, 0 skipped.
-- With STAGING_URL set, the offline helper aborts requests instead of stopping a server. WebKit
-  refuses that and Firefox's service worker goes around it. L5 meets this when it plays W6 on
-  staging.
-- The X6 unit test needs a git work tree, because test 4 reads `git ls-files`.
-- Playwright's `context.setOffline` does not reach service workers the same way in each engine.
-  The product works offline; the emulation is what differs.
-- The vandalwayind undo checks the Caddyfile against its own last backup, which was taken before
-  the staging block went in. Before a V2 undo, take staging out, or expect the undo to report the
-  difference.
-- Staging, internal-copy and production specs skip while their environment is missing, and a run
-  of only skipped tests exits 0. The zero-skip close rule in `PLAN.md` covers it.
-- vandalwayind.com already answers with somebody's parked page; the production specs check the
-  page is ours before they run.
-- `bd` records a bead's owner from the git author address. So `bd` commands run with the owner's
-  address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`, set on that one command only. Never export
-  them.
-- Caddy on the production server keeps one deleted, empty log file open until it next restarts.
-  It is harmless and goes away on Caddy's next restart.
-- The printer photograph has dated sticky notes and a sticker on it. Clive says both stay.
-- This computer's clock steps back about 1.16 s every 32 s; no red was put down to it.
+- Staging serves the build of 7f198d9; nothing under `src/` has changed since. This session could
+  not write to the server. To put HEAD's build there: build with `BUILD_ID=$(git rev-parse HEAD)
+  npm run build`, then send `site` and `deploy` to the server and run `deploy/staging-install.sh
+  --update` there (the header of that script gives the command).
+- The workstation's network drops now and then (`ERR_NETWORK_CHANGED`); a red with that error is
+  re-run, not believed.
+- On staging the offline copy takes up to 21 s to install on a first visit in Chromium (4 MB, 62
+  files); after that the site works offline.
+- The null-MX checks use the public resolvers set in the uncommitted `.env.staging`.
+- A test server left on port 5320 by an earlier run made G1 test 3 red; stop stray servers before
+  a full run.
+- `bd` commands run with the owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR` on that one
+  command only. Never export them.
+- This computer's clock steps back about 1.16 s every 32 s.
 
 ## Changelog
 
@@ -127,3 +103,4 @@ its five checks pass, and two wait on decisions. V4 now passes W7.3, but it is n
 - 2026-10-06 — Re-run at specs-v6 after the 1997 page's redeploy: DS1, E3, S2 and X6 closed; seven beads open, each with what it waits on. (Martin, 2026-10-06)
 - 2026-10-06 — Quiet-machine re-run: E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done. (Martin, 2026-10-06)
 - 2026-10-06 — Phase 7: L1 and L2 closed; L3 written and held on one test; L4 run and held on two. (Martin, 2026-10-06)
+- 2026-10-06 — L3, L4 and V4 closed at specs-v8; Phase 6 done; W1–W9 walked on staging; the C4 packet is out and the run waits on Clive. (Martin, 2026-10-06)
