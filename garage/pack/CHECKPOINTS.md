@@ -137,6 +137,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   address link by its address. (2) E4 item 7's second tap is made while the button still shows its busy state. (3)
   E4 item 6 crops the export by the screenshot's actual pixel clip. No acceptance text changes.
   (Jules, 2026-10-05)
+- **Pages domain verified — 2026-10-06.** Clive added isitstillhere.com as a verified Pages domain
+  for the organization and handed over the challenge value; the TXT record was written to the zone
+  (append only; the two existing records unchanged, read back) and resolved publicly; Clive's
+  verification succeeded. The value is kept in the uncommitted `.env.staging`, not in this
+  repository. (Jules, 2026-10-06)
 
 ## Changelog
 
