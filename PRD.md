@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-06
 read_by: PLAN.md's author at the PLAN gate; the build-readiness auditor; `/goal` at BUILD entry (with HANDOFF.md + PLAN.md); any agent asked "is this in scope?"; the critic, when it checks a unit for scope reduction (critic rule 8)
 relations:
   derived_from: garage/HANDOFF.md
@@ -603,3 +603,4 @@ test file. HUMAN-JUDGED items are named with the checkpoint that judges them.
 - 2026-10-03 — Blind read applied (`garage/pack/BLIND_READ.md`, 51 findings): new calls in diff item 8, changed items 5, 11, 12; I-09–I-12 applied; R57 added; the reverse-DNS question closed by I-10. (Diane, 2026-10-03)
 - 2026-10-03 — Wording only: the 1997 page is described as "built in-house" throughout the pack. (Diane, 2026-10-03)
 - 2026-10-03 — C1 signed by Clive (I-13): pack approved; ceiling 1,400; phone checklist as written. (Diane, 2026-10-03)
+- 2026-10-06 — Checked at launch, no requirement changed: Pages sends `access-control-allow-origin: *` on `/api/v1/presence.json`, so R34 stands as written; `garage/HANDOFF.md` now names the parent logo by its copy, `assets/brand/`. (Diane, 2026-10-06)
