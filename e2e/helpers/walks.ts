@@ -911,7 +911,7 @@ async function follow(w: Walk, href: (h: string) => boolean): Promise<void> {
   // The README's own links first (github.com renders it in an article), then anywhere on the page;
   // and the new address, not a navigation request, since github.com may change pages in place
   // (C4 follow-up, approved by Clive 2026-10-06).
-  for (const scope of [w.page.locator('article'), w.page.locator('body')]) {
+  for (const scope of [w.page.getByRole('article'), w.page]) {
     for (const l of await scope.getByRole('link').all()) {
       const h = (await l.getAttribute('href')) ?? '';
       if (!href(h)) continue;

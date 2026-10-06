@@ -195,6 +195,9 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   uses (`follow()` in `e2e/helpers/walks.ts`): it takes the link from inside the rendered README
   first, as W9.2 says, and waits for the new address instead of a navigation request, since
   github.com changes pages in place. The steps' content checks are unchanged. (Jules, 2026-10-06)
+- **Re-tag specs-v12 — 2026-10-06.** The same change, the same hour: specs-v11 wrote the README's
+  scope as CSS locators, which T0's rule (role and visible-text locators only) refuses; it is now
+  `getByRole('article')`. Nothing else changes. (Jules, 2026-10-06)
 
 ## Changelog
 
