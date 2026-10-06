@@ -829,7 +829,8 @@ export async function W7_2(w: Walk, origin: string, readCounter: (page: Page) =>
 export async function W7_3(w: Walk, origin: string): Promise<void> {
   await test.step('W7.3 — the e-mail link, and the mail bounces at once — played (substitute): checkNullMx() († phone checklist item 9)', async () => {
     await w.page.goto(`${origin}/`);
-    const link = w.page.getByRole('link', { name: /webmaster@vandalwayind\.com|E-?mail/i }).first();
+    // the address line's link, found by its address (specs-v6; the menu's E-Mail may come first in the page)
+    const link = w.page.getByRole('link', { name: /webmaster@vandalwayind\.com/i }).first();
     await checkNullMx(link);
   });
 }

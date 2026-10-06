@@ -36,5 +36,7 @@ test('2. the served page renders in quirks mode in Chromium and WebKit (W7 step 
 
 test('3. the mailto: address is webmaster@vandalwayind.com', async () => {
   const [hrefs] = await inDom<string[]>([readMust('vandalwayind/index.html')], "return [...doc.querySelectorAll('a[href^=\"mailto:\" i]')].map(a => a.getAttribute('href'));");
-  assert.deepEqual(hrefs, ['mailto:webmaster@vandalwayind.com']);
+  // every e-mail link on the page goes to the one address (the golden shows two: the menu's and the address line's; specs-v6)
+  assert.ok(hrefs.length >= 1, 'at least one mailto: link');
+  for (const h of hrefs) assert.equal(h, 'mailto:webmaster@vandalwayind.com');
 });

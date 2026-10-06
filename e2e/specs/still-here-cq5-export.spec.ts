@@ -83,9 +83,11 @@ test.describe('in Chromium and WebKit', () => {
       const onScreen = await block.screenshot();
       const bb = (await block.boundingBox())!;
       const svgBox = (await p.locator('svg[viewBox="0 0 1100 850"]').boundingBox())!;
+      const dpr = await p.evaluate(() => window.devicePixelRatio);
+      const shotSize = { w: onScreen.readUInt32BE(16), h: onScreen.readUInt32BE(20) }; // PNG IHDR width and height
       const png = await downloadBytes(await fileOf(p, 'Download PNG'));
       const iou = await p.evaluate(
-        async ({ shot, png, crop }) => {
+        async ({ shot, png, crop }: { shot: string; png: string; crop: { x: number; y: number; w: number; h: number; sx: number; sy: number } }) => {
           const img = async (src: string) => {
             const i = new Image();
             i.src = src;
@@ -108,19 +110,38 @@ test.describe('in Chromium and WebKit', () => {
             return m;
           };
           const ma = mask((x) => x.drawImage(a, 0, 0));
-          const mb = mask((x) => x.drawImage(b, crop.x * b.naturalWidth, crop.y * b.naturalHeight, crop.w * b.naturalWidth, crop.h * b.naturalHeight, 0, 0, a.naturalWidth, a.naturalHeight));
-          let both = 0;
-          let either = 0;
-          for (let i = 0; i < ma.length; i++) {
-            if (ma[i] && mb[i]) both++;
-            if (ma[i] || mb[i]) either++;
+          // the best match within ±1 device pixel of the clip's origin (specs-v6)
+          let best = 0;
+          for (const dx of [-1, -0.5, 0, 0.5, 1]) {
+            for (const dy of [-1, -0.5, 0, 0.5, 1]) {
+              const cx = crop.x + dx * crop.sx;
+              const cy = crop.y + dy * crop.sy;
+              const mb = mask((x) => x.drawImage(b, cx * b.naturalWidth, cy * b.naturalHeight, crop.w * b.naturalWidth, crop.h * b.naturalHeight, 0, 0, a.naturalWidth, a.naturalHeight));
+              let both = 0;
+              let either = 0;
+              for (let i = 0; i < ma.length; i++) {
+                if (ma[i] && mb[i]) both++;
+                if (ma[i] || mb[i]) either++;
+              }
+              if (either) best = Math.max(best, both / either);
+            }
           }
-          return either ? both / either : 0;
+          return best;
         },
         {
           shot: `data:image/png;base64,${onScreen.toString('base64')}`,
           png: `data:image/png;base64,${png.toString('base64')}`,
-          crop: { x: (bb.x - svgBox.x) / svgBox.width, y: (bb.y - svgBox.y) / svgBox.height, w: bb.width / svgBox.width, h: bb.height / svgBox.height },
+          // crop to the screenshot's actual size: the element screenshot is rounded out to whole device
+          // pixels, so the export is cropped to that size rather than the fractional box (specs-v6);
+          // sx/sy are one device pixel in the crop's units, for the ±1 px search above
+          crop: {
+            x: (bb.x - svgBox.x) / svgBox.width,
+            y: (bb.y - svgBox.y) / svgBox.height,
+            w: shotSize.w / dpr / svgBox.width,
+            h: shotSize.h / dpr / svgBox.height,
+            sx: 1 / dpr / svgBox.width,
+            sy: 1 / dpr / svgBox.height,
+          },
         },
       );
       expect(iou, `${name}: the exported name matches the screen's (no missing glyphs)`).toBeGreaterThanOrEqual(0.6);
@@ -144,11 +165,26 @@ test.describe('in Chromium and WebKit', () => {
     for (const [label, preparing] of [['Download PDF', PREPARING_PDF], ['Download PNG', PREPARING_PNG]] as const) {
       const downloads: string[] = [];
       page.on('download', (d) => downloads.push(d.suggestedFilename()));
+      // the second tap lands while the button is still busy: made inside the page the moment it reads
+      // "preparing" with aria-disabled, so load on the test machine cannot delay it past the export (specs-v6)
+      await page.evaluate((preparing) => {
+        const w = window as unknown as { __secondTap?: boolean };
+        w.__secondTap = false;
+        const obs = new MutationObserver(() => {
+          const el = [...document.querySelectorAll('button, a')].find((e) => e.textContent?.trim() === preparing && e.getAttribute('aria-disabled') === 'true') as HTMLElement | undefined;
+          if (el && !w.__secondTap) {
+            w.__secondTap = true;
+            obs.disconnect();
+            el.click();
+          }
+        });
+        obs.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['aria-disabled'] });
+      }, preparing);
       await action(page, label).click();
       const busy = page.getByRole('button', { name: preparing, exact: true }).or(page.getByRole('link', { name: preparing, exact: true })).first();
       await expect(busy).toBeVisible();
       await expect(busy).toHaveAttribute('aria-disabled', 'true');
-      await busy.click({ force: true });
+      await expect.poll(() => page.evaluate(() => (window as unknown as { __secondTap?: boolean }).__secondTap), { message: `${label}: second tap made while busy` }).toBe(true);
       await expect(action(page, label)).toBeVisible({ timeout: 30_000 });
       await page.waitForTimeout(1000);
       expect(downloads.length, `${label}: one file for two taps`).toBe(1);
