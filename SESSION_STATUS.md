@@ -12,7 +12,7 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v12`) · **Phase:** 8, launched; the final audit's second round
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v12`) · **Phase:** 8, launched; the final audit passed
 
 ### Current state
 
@@ -36,8 +36,7 @@ approved at launch: their walks never came out green in one run on this workstat
 
 ### What's next
 
-1. The final audit's second round, then its result recorded in `PLAN.md` (N3 item 7).
-2. Nothing else in v1.
+1. Nothing else in v1. L5 and N3 can be closed by a gate run from a steadier network.
 
 ### Waiting on Clive
 
@@ -98,3 +97,4 @@ approved at launch: their walks never came out green in one run on this workstat
 - 2026-10-06 — L3, L4 and V4 closed at specs-v8; Phase 6 done; W1–W9 walked on staging; the C4 packet is out and the run waits on Clive. (Martin, 2026-10-06)
 - 2026-10-06 — C4's questions answered and applied (specs-v9); L5 waits on a quiet-network gate run; the phone checklist and the switch are Clive's. (Martin, 2026-10-06)
 - 2026-10-06 — Launched: both sites live; N1 and N2 closed; L5 and N3 excluded by Clive; the final audit in its second round. (Martin, 2026-10-06)
+- 2026-10-06 — The final audit passed; v1 is done, with L5 and N3 item 4 excluded by Clive. (Martin, 2026-10-06)
