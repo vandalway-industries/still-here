@@ -505,6 +505,11 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
   - [x] Phase 7 (X6): `scripts/gifs/strip-gif-apps.mjs`'s main-module check was a `file://` template
     string, which X6's host guard reads as a host. Found by Phase 6's exit review, 2026-10-06; the
     check now compares paths (`fileURLToPath`), and X6's unit test is 3/3.
+  - [ ] Next packet (E2): on a slow, high-latency link (a phone's hotspot) WebKit showed the result
+    6.7–7.9 s after the press, against the 4–5 s the ritual promises. The drawing code is fetched
+    once the home page is idle (C4 question 3); a visitor who presses within a second or two of
+    arriving still waits for it. Worth fetching it earlier, or holding the result's timing to the
+    press regardless. Found at L5's gate runs, 2026-10-06.
   - [ ] Next packet (N3): test 7 ("the final audit passes, recorded in Phase 8") matches the exit
     gate's own wording, so it is green before any audit; it should look for the audit's recorded
     result. Found by the final audit, 2026-10-06.
