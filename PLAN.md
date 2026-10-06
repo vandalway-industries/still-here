@@ -16,11 +16,13 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 8 is active. Both sites are live; N1 and N2 are closed; Clive's production phone re-check
-  passed. W-DoD on production is running.
+- Both sites are live: isitstillhere.com on GitHub Pages and vandalwayind.com from the production
+  server, over HTTPS. 52 of 54 beads are closed. L5 and N3 stay open as exclusions Clive approved at
+  launch (`CHECKPOINTS.md` § Record): their walks never came out green in one run on this
+  workstation's network. The final audit is in its second round.
 
 **Next:**
-- N3's close, then the final audit against `PRD.md`; L5's staging gate run.
+- The final audit's result, recorded here (N3 item 7).
 
 **Later:**
 - Nothing after Phase 8 in v1.
@@ -36,15 +38,15 @@ relations:
 | 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | done | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | held (C4 signed off; L5 on its staging gate run) | L1–L5 closed; C4 packet out |
-| 8 | Launch | active | N1–N3 closed; W-DoD on production |
+| 7 | Staging and the launch packet | held (C4 signed off; L5 an approved exclusion) | L1–L5 closed; C4 packet out |
+| 8 | Launch | active (both sites live; N3 item 4 an approved exclusion; final audit) | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
-**Phase 8 — Launch.** Entered 2026-10-06 on Clive's C4 sign-off and public switch. isitstillhere.com
-is live on GitHub Pages over HTTPS (N1 closed); vandalwayind.com is live from the production server
-(N2 closed). N3 next: W-DoD on production, then the final audit. L5 stays open on its staging
-walk's gate run (the walks are played by hand; the workstation's link to staging drops).
+**Phase 8 — Launch.** Entered 2026-10-06 on Clive's C4 sign-off and public switch. Both sites are
+live; N1 and N2 closed; N3's checks pass against production except W-DoD in one green run, which
+Clive excluded at launch, as he did L5's staging walk. The final audit runs a second round after its
+first found two documentation gaps (status files and staging's build id).
 
 ## Build method
 
@@ -429,6 +431,8 @@ No cap (I-07). Expected about 100 orchestrator turns.
 
 Held at C4 (2026-10-06). Staging is up on the internal network and walked; DNS, the workflows and the release scan are done; the C4 packet is with Clive. Clive lowered the bar for the rest of the launch (one green run, no repeat critic where the gate replayed a walk, a short packet; `CHECKPOINTS.md`). The run waits on his phone checklist, his answers to the packet's § 6 and the public switch.
 
+Signed off at C4 (2026-10-06): the phone checklist passed, § 6 answered and applied (`specs-v9`), the repository public. L5 stays open as an exclusion Clive approved at launch: its staging walk never came out green in one run on this workstation's network (`CHECKPOINTS.md` § Record, "Exclusions at launch").
+
 ### Phase 8 — Launch
 
 #### Entry criteria
@@ -441,6 +445,7 @@ Held at C4 (2026-10-06). Staging is up on the internal network and walked; DNS, 
 - [ ] N2: vandalwayind.com's A record (reverse record accepted as it is, I-10); the public Caddy site block by a `deploy/` script with its undo; certificate issued; the counter reset and dated at go-live; W7 on production.
   Closed (2026-10-06): `still-here-vi0` through the gate. `deploy/vandalwayind-public-install.sh` and its undo (every other block byte-identical, every other site answering as before; the undo returned the Caddyfile to the backup's sha256); `go-live 2026-10-06 total 793 -> 0`; a second run after the X6 change (`specs-v10`) reset 8 more loads, and the go-live now runs once. Unit 3/3; W7 on production 4 passed (Chromium and WebKit, 1440 and 390), and again in the gate.
 - [ ] N3: the live record check against production Verify; `security.txt` and `presence.json` on production; Clive's production phone re-check recorded; W-DoD on production; `/goal`'s final audit against `PRD.md`.
+  Run (2026-10-06): unit items 1, 2, 3, 5 and 6 pass against production (`security.txt` 200 `text/plain`; `presence.json` with `access-control-allow-origin: *`, so R34 stands; every identifier in `company/` verifies on the live Verify page; Clive's production phone re-check recorded; the renewal in `PROJECT.md`). W-DoD on production ran three times and once more for W9 alone and never came out green in one run: the workstation's network dropped (`ERR_NETWORK_CHANGED`, "Network is unreachable") and GitHub answered 429 to the walks' repeated visits. Clive excluded item 4 at launch on his rule; N3 stays open.
 
 #### Bar
 Deterministic: the production smoke (build id, URL table, 301s, `https_enforced`, headers); the live identifier check. Then W-DoD in a browser on production, played by the critic. This is v1's definition of done.
@@ -452,6 +457,8 @@ No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and cer
 - [ ] N1–N3 closed through the gate; W-DoD complete on production; the final audit passes against `PRD.md`.
 
 #### Result
+
+Launched 2026-10-06. isitstillhere.com serves from GitHub Pages over HTTPS (certificate for the apex and `www`, HTTPS enforced); vandalwayind.com serves from the production server over HTTPS, counting from zero since its go-live. Both domains carry a null MX, SPF `-all` and DMARC `reject`. Exclusions approved by Clive at launch: L5's staging walk and N3 item 4 (W-DoD in one green run), each red only on this workstation's network or GitHub's rate limit; every step was played in some run or by hand, and Clive's phone checks passed at C4 and on production.
 
 ## Deliberately not doing
 
@@ -498,6 +505,9 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
   - [x] Phase 7 (X6): `scripts/gifs/strip-gif-apps.mjs`'s main-module check was a `file://` template
     string, which X6's host guard reads as a host. Found by Phase 6's exit review, 2026-10-06; the
     check now compares paths (`fileURLToPath`), and X6's unit test is 3/3.
+  - [ ] Next packet (N3): test 7 ("the final audit passes, recorded in Phase 8") matches the exit
+    gate's own wording, so it is green before any audit; it should look for the audit's recorded
+    result. Found by the final audit, 2026-10-06.
   - [ ] Phases 7 and 8 (L1, N2): Caddy 2.6.2 keeps a removed site's log file open across reloads.
     A `deploy/` undo for a logged site empties its log rather than deleting it, as
     `deploy/vandalwayind-uninstall.sh` does. Found at the Phase 6 build, 2026-10-05.
@@ -552,3 +562,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Phase 6 done (V4 closed, W7 played by hand by the critic); L3 and L4 closed at `specs-v8`; X6's guard regression from the GIF script fixed; the found list brought up to date. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 7 held at C4: the packet is out; W1–W9 walked on staging, red steps played by hand; Clive lowered the bar for the rest of the launch. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 8 entered on C4's sign-off: N1 and N2 closed, both sites live; W-DoD and the final audit next. (Jules, 2026-10-06)
+- 2026-10-06 — Launched: both sites live; L5 and N3 item 4 excluded by Clive; the final audit's first round found the status files stale, fixed here. (Jules, 2026-10-06)

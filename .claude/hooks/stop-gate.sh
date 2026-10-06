@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # stop-gate.sh — the Factory LANDING GATE (B2/H3, 2026-08-28). Fast lane, every turn.
-# Reader: Claude Code, at the end of every turn, via .claude/hooks/stop-gate.sh (copy or symlink)
+# Reader: the agent working in this repository, at the end of every turn, via .claude/hooks/stop-gate.sh (copy or symlink)
 # registered in .claude/settings.json:
 #   { "hooks": { "Stop": [ { "matcher": "", "hooks": [
 #       { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-gate.sh" } ] } ] } }

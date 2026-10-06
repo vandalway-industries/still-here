@@ -12,52 +12,47 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v8`) · **Phase:** 7 held at C4; Phase 8 waits on the public switch
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v12`) · **Phase:** 8, launched; the final audit's second round
 
 ### Current state
 
-The C4 packet is with Clive (`docs/checkpoints/c4-packet.md`). Phases 0–6 are done. L1–L4 are
-closed. L5 is open on one test change (packet § 6, question 9). The run is stopped and waits on
-Clive: the phone checklist, his answers to § 6, sign-off, then the public switch.
+STILL HERE is live at https://isitstillhere.com (GitHub Pages, HTTPS enforced) and Vandalway's page
+at https://vandalwayind.com (the production server, HTTPS, counting since its go-live on 6 October
+2026). The repository is public. 52 of 54 beads are closed. L5 and N3 stay open as exclusions Clive
+approved at launch: their walks never came out green in one run on this workstation's network.
 
 ### What changed
 
-- L4 item 4: `scripts/gifs/strip-gif-apps.mjs` takes ImageMagick's block out of the 1997 GIFs, the
-  pixels unchanged; `make-1997.sh` runs it. The internal copy keeps the old bytes until N2 (Clive).
-- `specs-v8`, approved by Clive: L3's probe asks A, TXT and CNAME; L4 allows 38c10f5 by its sha;
-  the tests and the landing hook find their tools through the uncommitted `.env.local`.
-- L3, L4 and V4 closed through the gate. Phase 6 done; its review found one regression from the GIF
-  script (X6's host guard), fixed the same hour.
-- W1–W9 on staging: the spec 19 passed, 12 skipped (Firefox), 5 red in each of two runs; every red
-  step played by hand on staging and works. The reds are the walk helpers' on a networked server.
-- The C4 packet, the phone checklist, the critic reports and 40 screenshots of staging.
-- Clive lowered the bar for the rest of the launch: one green run, no repeat critic where the gate
-  replayed a walk, a short packet (`CHECKPOINTS.md`).
+- C4 signed off: the phone checklist passed on staging; § 6 answered and applied (`specs-v9`); the
+  repository made public by Clive.
+- N1 closed: Pages from Actions, the domain, DNS, the certificate (the domain re-added once with
+  Clive's word), HTTPS enforced; the production spec 18/18.
+- N2 closed: vandalwayind.com's DNS and its public block by `deploy/vandalwayind-public-install.sh`
+  with its undo; go-live reset the internal copy's 793 loads to 0; W7 on production 4/4.
+- N3: its checks pass against production; Clive's production phone re-check passed; W-DoD never
+  green in one run (network drops, GitHub's 429), excluded by Clive.
+- Re-tags `specs-v10` to `specs-v12`, each approved: X6 reads a host without Caddy's placeholder;
+  G0 expects public after C4; W9's helper follows the README's links and waits for the address.
 
 ### What's next
 
-1. Clive answered C4's § 6 (recorded in `CHECKPOINTS.md`; applied at `specs-v9`, f728237, staging
-   updated). Still his: the phone checklist and the public switch.
-2. L5: re-run its staging walk through the gate at a quiet network moment (the workstation's link to
-   staging drops during long browser runs; every step plays by hand).
-3. After the public switch: Phase 8, N1–N3, then the final audit.
+1. The final audit's second round, then its result recorded in `PLAN.md` (N3 item 7).
+2. Nothing else in v1.
 
 ### Waiting on Clive
 
-- The phone checklist (`docs/checkpoints/c4-phone-checklist.md`), on the internal network.
-- Sign-off, then the public switch.
+- Nothing.
 
 ### Surprises / debt
 
-- Staging serves the build of a918f13 (updated after the packet; `deploy/deploy-log.md`). Server
-  writes over `ssh` are allowed for this workstation by its uncommitted local settings.
-- The workstation's network drops now and then (`ERR_NETWORK_CHANGED`); a red with that error is
-  re-run, not believed.
-- On staging the offline copy takes up to 21 s to install on a first visit in Chromium (4 MB, 62
-  files); after that the site works offline.
-- The null-MX checks use the public resolvers set in the uncommitted `.env.staging`.
-- A test server left on port 5320 by an earlier run made G1 test 3 red; stop stray servers before
-  a full run.
+- The workstation's network drops during long browser runs (`ERR_NETWORK_CHANGED`, "Network is
+  unreachable"). It is why L5 and N3 are open. A run from a steadier network can close them.
+- GitHub answers 429 when the W9 walk visits the repository many times in an hour.
+- Each deploy to `main` moves `security.txt`'s `Expires` a year from that deploy; `PROJECT.md`
+  gives the renewal as of launch, and the reminder workflow reads the live file.
+- N3's test 7 (the final audit recorded) matches the exit gate's own wording, so it is green before
+  any audit; for the next packet.
+- Staging's `/build.txt` must equal HEAD for L1's test 2: put the last commit's build on staging.
 - `bd` commands run with the owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR` on that one
   command only. Never export them.
 - This computer's clock steps back about 1.16 s every 32 s.
@@ -102,3 +97,4 @@ Clive: the phone checklist, his answers to § 6, sign-off, then the public switc
 - 2026-10-06 — Phase 7: L1 and L2 closed; L3 written and held on one test; L4 run and held on two. (Martin, 2026-10-06)
 - 2026-10-06 — L3, L4 and V4 closed at specs-v8; Phase 6 done; W1–W9 walked on staging; the C4 packet is out and the run waits on Clive. (Martin, 2026-10-06)
 - 2026-10-06 — C4's questions answered and applied (specs-v9); L5 waits on a quiet-network gate run; the phone checklist and the switch are Clive's. (Martin, 2026-10-06)
+- 2026-10-06 — Launched: both sites live; N1 and N2 closed; L5 and N3 excluded by Clive; the final audit in its second round. (Martin, 2026-10-06)
