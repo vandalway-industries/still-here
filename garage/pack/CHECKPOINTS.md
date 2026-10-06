@@ -187,6 +187,10 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   checked. Every host that is not ours still fails. And G0 test 5 (`tests/unit/still-here-agb-promote.test.ts`):
   the repository is private until "C4 — signed off" is recorded here, and public after. No acceptance
   text changes. (Jules, 2026-10-06)
+- **N3 — the production phone re-check, 2026-10-06.** Clive, on his iPhone at isitstillhere.com
+  after launch: items 1, 2, 4 and 6 of the phone checklist and item 9, all passed: the ritual, the
+  PDF in the certificate's type, the copied link reopened, the QR code scanned by the camera, and the
+  e-mail to webmaster@vandalwayind.com reported undeliverable. (Jules, 2026-10-06)
 
 ## Changelog
 
