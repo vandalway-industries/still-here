@@ -16,12 +16,14 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 7 is active; its entry waits on Phase 2's exit review (E0–E7 are all closed) and on V4,
-  whose last step is the null MX that L3 writes. Phases 0, 1, 3, 4 and 5 are done.
+- Phase 7 is active. L1 and L2 are closed. L3's records are written, and L3 waits on one test
+  change. L4 is run and waits on two items. V4's W7.3 now passes; V4 waits on a walk that is green
+  twice in a row (Chromium met `ERR_NETWORK_CHANGED` once at each size).
 
 **Next:**
-- The Phase 2 exit review; a PM decision on the offline helper's staging branch before L5 plays
-  W6 on staging; then L1–L3, with V4 closing after L3's null MX.
+- Strip the four GIFs' ImageMagick blocks (L4 item 4) and redeploy the internal copy; the next
+  packet's test changes (L3 test 4's probe, L4 test 3's approved author); V4 re-run on a quiet
+  network; L5 after the specs-v7 re-tag.
 
 **Later:**
 - L1–L5 to the C4 launch packet (staging, phone checklist); Phase 8 after Clive's public switch.
@@ -45,8 +47,9 @@ relations:
 **Phase 7 — Staging and the launch packet.** Entered 2026-10-06. Phases 0–5 are done; Phase 6 is
 held only on V4's W7.3, which needs the null MX that L3 writes here. C2 and C3 are recorded, and
 C3's one bead is closed. isitstillhere.com is verified as the organization's Pages domain (its TXT
-record written). Next move: L1 (staging), L2 (the workflows), L3 (DNS: null MX, SPF, DMARC), L4 (the
-release scan), L5 (W1–W9 on staging, the phone checklist, the C4 packet). Open before L5: the
+record written). L1 and L2 closed 2026-10-06; L3 written (held on its test 4's ANY probe); L4 run (held on items 3
+and 4). Next move: the L4 GIF fix, the packet's test changes, V4's re-run, then L5 (W1–W9 on
+staging, the phone checklist, the C4 packet). Open before L5: the
 offline helper's staging branch (WebKit refuses it; Firefox's service worker goes around it).
 
 ## Build method
@@ -383,7 +386,8 @@ No cap (I-07). Expected about 150 orchestrator turns.
   Deferred fixes (2026-10-05, not ticked here): `count.mjs` skips leading NUL bytes before reading a line's JSON (the emptied log regains a NUL prefix at Caddy's next write; seen on the server); the install writes its counting start date into the served page, which now reads "times since October 5, 2026." with `Last-Modified` 1997-08-22. Counter spec green in Chromium and Chromium-390 with VANDALWAY_INTERNAL_URL set.
 - [ ] V4: `Last-Modified` per file (1997 page, 1999 guestbook, counter's own time), POST refused, quirks mode on the served copy, HTTP→HTTPS ready for Phase 8. Served headers, 405 and quirks mode done (V4 unit 4/4 twice; W7.1 in both engines). HTTP→HTTPS belongs to Phase 8's public block.
   Re-run after the redeploy (2026-10-05): V1 and V2 specs green in every engine they run in; W7 fails only step 3 (`queryMx ENODATA`, waits on L3) in Chromium, WebKit and both at 390. Skips are the specs' engine limits only.
-- [ ] Walk W7 played on the internal copy. Steps 1, 2, 4 and 5 played, by hand and by the spec, in Chromium and WebKit. Step 3 is stuck: vandalwayind.com has no MX record yet (`queryMx ENODATA`), which is L3's. At `specs-v6` (2026-10-06): the same, in Chromium, WebKit and both at 390, both runs; V4 unit 4/4 twice.
+  After L3's null MX (2026-10-06), three runs of the W7 walk: W7.3 passed in every project that reached it. Run 1, 4 passed and 2 Firefox skips (engine limit). Runs 2 and 3, in Chromium and WebKit at both sizes: 3 passed and 1 failed each, at W7.2's reload with `ERR_NETWORK_CHANGED` (a workstation network change, Chromium only, once at each size). WebKit was green in all three. Not closed: the walk is not yet green twice in a row in all four projects.
+- [ ] Walk W7 played on the internal copy. Steps 1, 2, 4 and 5 played, by hand and by the spec, in Chromium and WebKit. Step 3 was stuck until L3 wrote the null MX (2026-10-06); it now passes (played (substitute), `checkNullMx()`). At `specs-v6` (2026-10-06): the same, in Chromium, WebKit and both at 390, both runs; V4 unit 4/4 twice.
 
 #### Bar
 Deterministic: the markup checks; the served headers; the counter showing at least n+3 within eleven minutes of three loads; `caddy validate`; the undo-then-install round trip. Then W7. Then the blind pick against `exemplars/vandalway-1997-golden.png`; "reads as found, not as parody" is HUMAN-JUDGED at C2 and C3.
@@ -537,3 +541,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Re-run at specs-v6 after the internal copy's redeploy: DS1, E3, S2 and X6 closed; Phases 1 and 3 done; Phases 2, 4 and 6 held on E2's gate run, E4 test 7, E7 in WebKit, X4's W6, V1's re-pick, V2's network red and V4's null MX; Phase 7 active, entry not yet met. (Jules, 2026-10-06)
 - 2026-10-06 — Quiet-machine re-run (one worker, load below 3): E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done; Phase 2 to its exit review; Phase 6 held on V4 alone. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 2 done (critic review plus blind picks plus quiet-machine closes); Phase 7 entered. Phase 6's V4 waits on L3's null MX, so it follows L3 rather than preceding Phase 7. (Jules, 2026-10-06)
+- 2026-10-06 — Phase 7: L1 (staging) and L2 closed; L3's DNS written, held on its ANY probe; L4 run, held on items 3 and 4; V4's W7.3 green, V4 held on a twice-green walk. (Jules, 2026-10-06)

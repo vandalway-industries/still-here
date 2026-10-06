@@ -19,7 +19,7 @@ relations: {}
 Staging is up on the internal network, over HTTPS, and L1 is closed. L2 is closed: the reminder's
 dry run opened and closed its test issue. L3's records are written on both domains and read back,
 but L3 stays open on one test that cannot pass against our name servers. L4's scan is run: three of
-its five checks pass, and two wait on decisions. V4: see "What changed".
+its five checks pass, and two wait on decisions. V4 now passes W7.3, but it is not closed.
 
 ### What changed
 
@@ -41,6 +41,10 @@ its five checks pass, and two wait on decisions. V4: see "What changed".
   38c10f5's author, which is the approved exception and needs C4's test change. Item 4 fails on four
   GIFs in `vandalwayind/images/`, which carry ImageMagick's application block. Items 1, 2 and 5
   flipped. Not closed.
+- V4: the W7 walk ran three times after the null MX went in. W7.3 passed every time it was
+  reached. Runs 2 and 3 each failed once in Chromium, at W7.2's reload, with `ERR_NETWORK_CHANGED`:
+  the workstation's network changed, as it did once for V2. WebKit passed all three runs. Not
+  closed, and BROWSER PASS is not flipped.
 - Paths outside the repository: reworded in `PLAN.md`, `garage/pack/CRITIC_RUBRIC.md` and
   `garage/pack/ENV_PREFLIGHT.md`.
 
@@ -50,7 +54,8 @@ its five checks pass, and two wait on decisions. V4: see "What changed".
 2. Put the test changes in the next packet: L3 test 4's probe, and L4 test 3's one approved author.
 3. The path wording left in `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and its beads, and
    the gate hook's default folder.
-4. L5 after the specs-v7 re-tag.
+4. V4: run the walk again when the network is quiet, then close it through the gate.
+5. L5 after the specs-v7 re-tag.
 
 ### Waiting on Clive
 
