@@ -147,6 +147,17 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   visits it there, then stops that server, so the offline behaviour is real and the bytes are
   staging's. It replaces the staging branch of the offline helper (route abort), which WebKit refuses
   and Firefox's service worker goes around. No acceptance text changes. (Jules, 2026-10-06)
+- **Re-tag specs-v8 — 2026-10-06.** Clive approved three changes ahead of the C4 packet: (1) L3 test
+  4 probes a random name with A, TXT and CNAME lookups, each required to come back "not found",
+  instead of ANY, which our name servers answer with RFC 8482's placeholder. (2) L4 test 3 allows
+  exactly one exception: commit 38c10f5 (by its full sha) with the in-story address it was made
+  with, as accepted on 2026-10-05; any other author still fails. History is not rewritten. (3) No
+  file names a path outside the repository: `ACCEPTANCE.md` G0 item 9, G1 item 5 and L4 item 1 name
+  the tools instead of their paths (their beads re-synced); the tests and the landing hook read
+  `FACTORY_DIR`, `BD_GATE_SELFTEST` and `FACTORY_PII_DENYLIST_PUBLIC` from the environment or the
+  uncommitted `.env.local`, and fail saying which line to add when neither has it. Clive also chose
+  to leave the internal copy's GIFs (pixels unchanged, metadata stripped in the repository) until
+  N2 installs the public site. (Jules, 2026-10-06)
 
 ## Changelog
 

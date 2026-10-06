@@ -24,7 +24,7 @@ SRC_GLOBS='src/ scripts/ e2e/ tests/ vandalwayind/ deploy/ tools/' # counts as "
 PLAN_GLOBS='PRD.md .beads/'                                       # plus SRC_GLOBS → "plan-relevant"
 FAST_CHECK='true'                                                 # e.g. 'npm run -s typecheck && npm run -s lint'
 # bun has no -s: use 'bun run --silent typecheck' (foundry G0, 2026-09-29).
-FACTORY="${FACTORY_DIR:-$HOME/projects/factory}"
+FACTORY="${FACTORY_DIR:-$(sed -n 's/^FACTORY_DIR=//p' .env.local 2>/dev/null | tail -1)}" # .env.local is uncommitted
 # --------------------------------------------------------
 
 input="$(cat)"

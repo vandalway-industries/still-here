@@ -4,9 +4,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { abs, read, readMust, run } from '../helpers/repo.ts';
+import { localPath } from '../helpers/local-env.ts';
 
 test("1. README.md: what STILL HERE is, how to run and test it, the map, the licences", () => {
   const md = readMust('README.md');
@@ -55,11 +55,11 @@ test('3. every relative link in both READMEs resolves', () => {
 test('4. neither README explains how the company or its story was made; the names grep and the PII gate pass on both', () => {
   const files = ['README.md', 'company/README.md'];
   for (const f of files) assert.doesNotMatch(read(f), /\b(fictional|fiction|invented|made[- ]up|parody|satire|worldbuilding|language model|AI[- ]generated|sample data|role[- ]?play)\b/i, f);
-  const deny = process.env.FACTORY_PII_DENYLIST_PUBLIC ?? join(homedir(), '.factory', 'pii-denylist-public.txt');
+  const deny = localPath('FACTORY_PII_DENYLIST_PUBLIC');
   assert.ok(existsSync(deny), 'the public-tier denylist is readable');
   const names = readFileSync(deny, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
   for (const f of files) for (const n of names) assert.ok(!read(f).toLowerCase().includes(n.toLowerCase()), `${f} names someone from outside the company`);
-  const gate = join(process.env.FACTORY_DIR ?? join(homedir(), 'projects', 'factory'), 'scripts/pii-gate.sh');
+  const gate = join(localPath('FACTORY_DIR'), 'scripts/pii-gate.sh');
   const allow = read('.git/hooks/pre-commit').match(/PII_ALLOW_REGEX='([^']+)'/)?.[1] ?? '';
   for (const f of files) {
     const r = run(gate, ['--tree', abs(f)], { env: { PII_PUBLIC: '1', PII_ALLOW_REGEX: allow } });

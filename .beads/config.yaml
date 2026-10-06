@@ -33,8 +33,7 @@
 # repos:
 #   primary: "."  # Primary repo (where this database lives)
 #   additional:   # Additional repos to hydrate from (read-only)
-#     - ~/beads-planning  # Personal planning repo
-#     - ~/work-planning   # Work planning repo
+#     - <another repository's path>
 
 # JSONL backup (periodic export for off-machine recovery)
 # Auto-enabled when a git remote exists. Override explicitly:

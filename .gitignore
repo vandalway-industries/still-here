@@ -11,6 +11,7 @@ e2e/playwright-report/
 # Local settings that never leave the workstation
 .env
 .env.staging
+.env.local
 .factory-waive
 
 # The run's local control board (machine paths; never committed)

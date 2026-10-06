@@ -45,7 +45,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 6. `assets/` equals `garage/assets/` file for file (same hashes), plus `assets/brand/vandalway-industries-logo.png`.
 7. Every section of `garage/pack/ACCEPTANCE.md` is a bead whose acceptance field equals that section byte for byte (the equality test runs in this file); every bead's owner address is `<character>@vandalway.example`.
 8. `.beads/` contains no issue labelled `record`.
-9. `~/projects/factory/scripts/docs-sync-check.sh .` reports clean.
+9. The factory's `scripts/docs-sync-check.sh .` (under `FACTORY_DIR`, set in the uncommitted `.env.local`) reports clean.
 
 ### G1 — scaffold and the local Pages server (owner: jules)
 - [ ] CODE PASS — `tests/unit/<id>-serve-pages.test.ts` passes
@@ -53,7 +53,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 2. `npm run build` writes `site/` and nothing outside it; `site/` is in `.gitignore`.
 3. `scripts/serve-pages.mjs site 5320` answers research 3's table: `/index` 200 (index.html), `/index.html` 200, `/index/` 404, a folder without its slash 301 to the slash, a missing path 404 with `site/404.html` as the body (a stub until E0).
 4. `e2e/playwright.config.ts` defines Chromium, WebKit and Firefox projects and starts the server above as its `webServer`; `npx playwright --version` reports 1.59.1; all three browsers are installed.
-5. `.bd-gate` names `lock_tag = specs-v1`, `unit_test_dirs = tests/unit`, `unit_test_cmd = node --test`, `pw_cmd = npx playwright test`; `~/bin/bd-gate-selftest.sh` passes.
+5. `.bd-gate` names `lock_tag = specs-v1`, `unit_test_dirs = tests/unit`, `unit_test_cmd = node --test`, `pw_cmd = npx playwright test`; the close gate's self-test (`BD_GATE_SELFTEST`, set in the uncommitted `.env.local`) passes.
 6. `tools/okf/okf_validate.py` is vendored from the OKF toolkit 0.3.3 with its MIT `LICENSE` beside it, and `python3 tools/okf/okf_validate.py --help` runs.
 
 ### G2 — record seeds filed (owner: diane)
@@ -445,7 +445,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 
 ### L4 — the release scan (owner: diane)
 - [ ] CODE PASS — `tests/unit/<id>-release-scan.test.ts` passes
-1. `PII_PUBLIC=1 ~/projects/factory/scripts/pii-gate.sh --tree .` exits 0.
+1. `PII_PUBLIC=1 pii-gate.sh --tree .` (the factory's PII gate, under `FACTORY_DIR`, set in the uncommitted `.env.local`) exits 0.
 2. The same strings checked over every blob in `git log --all` find nothing.
 3. Every author and committer email in `git log --all --format='%ae%n%ce'` is the repository's no-reply address (or `noreply@github.com` for commits GitHub itself makes); every author and committer name is the account's own.
 4. No image under `site/` or `vandalwayind/` carries metadata (DS3's chunk check).

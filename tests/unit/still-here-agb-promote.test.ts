@@ -5,12 +5,11 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, readFileSync, readdirSync, readlinkSync, statSync } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { localPath } from '../helpers/local-env.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const FACTORY = process.env.FACTORY_DIR ?? join(homedir(), 'projects', 'factory');
 const G0_ID = 'still-here-agb';
 
 const sh = (cmd: string, args: string[], env: NodeJS.ProcessEnv = {}): string =>
@@ -232,6 +231,6 @@ test('8. no bead is labelled record', () => {
 });
 
 test('9. the drift check reports clean', () => {
-  const out = sh(join(FACTORY, 'scripts/docs-sync-check.sh'), ['.']);
+  const out = sh(join(localPath('FACTORY_DIR'), 'scripts/docs-sync-check.sh'), ['.']);
   assert.match(out, /docs-sync-check: clean/);
 });

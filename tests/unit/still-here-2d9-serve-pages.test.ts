@@ -4,9 +4,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
 import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { homedir, tmpdir } from 'node:os';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { localPath } from '../helpers/local-env.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const read = (rel: string): string => readFileSync(join(ROOT, rel), 'utf8');
@@ -148,7 +149,7 @@ test('5. .bd-gate is configured and the gate self-test passes', () => {
   assert.match(gate, /^unit_test_dirs\s*=\s*tests\/unit\s*$/m);
   assert.match(gate, /^unit_test_cmd\s*=\s*node --test\s*$/m);
   assert.match(gate, /^pw_cmd\s*=\s*npx playwright test\s*$/m);
-  const selftest = process.env.BD_GATE_SELFTEST ?? join(homedir(), 'bin', 'bd-gate-selftest.sh');
+  const selftest = localPath('BD_GATE_SELFTEST');
   assert.ok(existsSync(selftest), 'the gate self-test is not installed');
   sh('bash', [selftest]); // throws on a non-zero exit
 });

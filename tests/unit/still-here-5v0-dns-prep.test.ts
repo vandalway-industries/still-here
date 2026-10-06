@@ -52,7 +52,12 @@ test('4. no wildcard record; every other record equals the snapshot (recorded in
   const r = resolver();
   for (const d of DOMAINS) {
     const probe = `zz-${randomBytes(6).toString('hex')}.${d}`;
-    await assert.rejects(r.resolveAny(probe), (e: NodeJS.ErrnoException) => ['ENOTFOUND', 'ENODATA'].includes(e.code ?? ''), `${d}: no wildcard`);
+    // A, TXT and CNAME, not ANY: our name servers answer ANY with RFC 8482's placeholder, so an ANY
+    // probe can never come back "not found" (approved by Clive, 2026-10-06; CHECKPOINTS.md § Record).
+    const missing = (e: NodeJS.ErrnoException) => ['ENOTFOUND', 'ENODATA'].includes(e.code ?? '');
+    await assert.rejects(r.resolve4(probe), missing, `${d}: no wildcard A`);
+    await assert.rejects(r.resolveTxt(probe), missing, `${d}: no wildcard TXT`);
+    await assert.rejects(r.resolveCname(probe), missing, `${d}: no wildcard CNAME`);
     assert.match(readMust(DEPLOY_LOG), new RegExp(`${d.replace('.', '\\.')}[^\\n]*(every other record|other records)[^\\n]*(equal|unchanged|match)`, 'i'), `${d}: compared with its snapshot`);
   }
 });
