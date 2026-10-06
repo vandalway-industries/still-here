@@ -131,9 +131,10 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   certificate and leadership; the 1997 page failed on its e-mail address, which had lost its link
   before the golden was approved; the link is restored to match the golden. (Jules, 2026-10-05)
 - **Re-tag specs-v6 — 2026-10-05.** Clive, after the blind picks: (1) the 1997 page matches its
-  golden, with both e-mail links (the menu's and the address's) as mailto links; V4's check now
-  asks that every mailto goes to webmaster@vandalwayind.com, and W7.3 locates the address link by
-  its address. (2) E4 item 7's second tap is made while the button still shows its busy state. (3)
+  golden: the menu's E-Mail jumps to the address (`#email`) and the address line is the mailto link
+  (as the golden shows them; corrected 2026-10-06, the first wording said both were mailto links);
+  V4's check now asks that every mailto goes to webmaster@vandalwayind.com, and W7.3 locates the
+  address link by its address. (2) E4 item 7's second tap is made while the button still shows its busy state. (3)
   E4 item 6 crops the export by the screenshot's actual pixel clip. No acceptance text changes.
   (Jules, 2026-10-05)
 
