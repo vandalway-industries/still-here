@@ -123,6 +123,13 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   `still-here-txf`, `s07` on careers, from C3) can carry its own tests. Nothing else in T0 changes.
   Applied by a separate test-author session with the two `s07` tests, re-tagged `specs-v5`, and
   `.bd-gate` locks there. (Jules, 2026-10-05)
+- **Against the goldens, recorded 2026-10-05.** Two differences from the candidates were before
+  Clive when he approved them and stand: the empty-box **Check presence** button shows its disabled
+  state (40%, `DESIGN.md`), named in the C2 question on home; and the 1997 page's counter line reads
+  "times since <the date the copy began counting>", which `CONTENT_SEEDS.md` specifies (the internal
+  copy shows its own start date until go-live). The blind picks of 2026-10-05 passed home, the
+  certificate and leadership; the 1997 page failed on its e-mail address, which had lost its link
+  before the golden was approved; the link is restored to match the golden. (Jules, 2026-10-05)
 
 ## Changelog
 
