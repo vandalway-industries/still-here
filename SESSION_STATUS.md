@@ -12,55 +12,57 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`) · **Phase:** 6 — vandalwayind.com (internal), built
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`; `specs-v4` is being cut by the test author) · **Phase:** 6 held; C2 and C3 answered, their product changes in
 
 ### Current state
 
-Phase 6 is built. vandalwayind.com is served from the production server to the internal network
-on a port of its own. The ten other sites on that server and the network's other routes were
-byte-identical before and after every one of the 13 runs in `deploy/deploy-log.md`. V3, the
-counter, is closed. V1 waits only on C2's blind pick. V2 waits on one locked-test item for the next
-packet. V4 waits on W7 step 3, which needs the null MX that L3 publishes in Phase 7.
+Clive's C2 and C3 answers are in the product, except one piece of Decision 6 (below). Nothing was
+ticked and no bead was closed: the test author is re-tagging `specs-v4`, and the re-runs come after.
+The internal copy of vandalwayind.com was taken down and put back by its two scripts with the
+counter fixes in.
 
 ### What changed
 
-- The install and its undo: `deploy/vandalwayind-install.sh` and
-  `deploy/vandalwayind-uninstall.sh`. Before every reload the Caddyfile is backed up with a
-  timestamp, `caddy validate` is run, and every other block is hashed. After the reload the other
-  sites are checked and must still answer. The undo ran six times, and each time the Caddyfile came
-  back identical to the backup. The install ran again after each undo.
-- Requests reach the site through a socket, not a port. On a port, the network's proxy passes on
-  the visitor's own host name, and Caddy answers a site named for localhost with an empty 200.
-  Through a socket the proxy sends "localhost".
-- At 12:10 the counter counted nothing. Caddy 2.6.2 keeps a removed site's log open, and the undo
-  had deleted that log, so the re-added site was writing to a deleted file. The undo now empties
-  the log instead of deleting it, and the install stops if this happens again.
-- The counter: `deploy/counter/count.mjs` keeps its own digits, so the server needs only Node, and
-  a timer runs it every ten minutes. By hand I saw 000000, loaded the page three times, and saw
-  000026 at the 12:20 run. The counter is now `/counter.gif`, and the old digit images are gone.
-- The 1997 page: the menu's E-Mail is now its one `mailto:` link. Before, the walk's first e-mail
-  link was the menu jump.
-- Tests, with VANDALWAY_INTERNAL_URL set, two runs each, 0 skipped. V1 unit 3/3 (item 4 is
-  HUMAN-JUDGED); V2 unit 2/3; V3 unit 5/5; V4 unit 4/4. Browser: V1 2/2 and V2 2/2 in Chromium
-  and WebKit; the V3 counter spec 1/1 in Chromium. The W7 spec passes steps 1 and 2 in both
-  engines and fails step 3 (`queryMx ENODATA`). I played steps 4 and 5 by hand in both engines.
-- Whole unit suite: 225 tests, 177 pass, 34 fail, 14 skipped (before: 175, 36, 14).
+- Home: the band reads "Every Friday, it is still here." Leadership: Lucas's card reads "Lucas",
+  with "Intern" beneath. His staff file and the tracker still say "Lucas the Intern".
+- The certificate: the guilloche is 0.7 units. Folding chair's PDF, cropped and rendered back,
+  differs from its PNG by 0.61% in Chromium and 0.20% in WebKit (it was 0.65% and 1.00%). The
+  specimen was rendered again into `candidates/` and `certificate-golden.png` for Clive's second
+  look. Against the approved golden, only the guilloche band changed.
+- Long names step down in size, never below 30, to three lines at most, and stay between "This
+  certifies that" and the name rule. Latin and Greek names fit. 80 × 椅 and 80 × 🪑 do not. A line of
+  either is about 30 units of ink at size 30, and the zone is 79, so three lines will not fit. They
+  print as they did before, over the fixed lines. Someone has to decide the floor for names drawn
+  as images.
+- The hero's crop box in the manifest is now the build's, (1044,110)-(1656,875).
+- The second-floor printer (`s07`) is on careers, next to the stapler, at 400 and 800 wide, with
+  no metadata.
+- The three failure sentences were already in the approved words. I took out the "draft" comments.
+- The counter skips NUL bytes at the start of a log line. The undo empties the log, and at Caddy's
+  next write the log gets a run of NULs at the front; I saw it on the server. The install now
+  writes the day it started counting into the served page: "times since October 5, 2026." Undo
+  and install at 22:49 UTC, `deploy/deploy-log.md` runs 14 and 15. All 11 other blocks were
+  byte-identical, the ten other sites answered as before, and the other routes hashed the same.
+- Tests, against whatever was on disk at `specs-v3`, from a private copy at two workers: the DS4,
+  E3 and E4 specs 24/24 in Chromium and WebKit. S2, S6 and DS5 specs green; the only skips are the
+  specs' own engine limits. V1 to V4 with VANDALWAY_INTERNAL_URL set: 12 passed and 4 failed, all
+  four W7 step 3 (`queryMx ENODATA`, waiting on L3). The 8 skips are engine limits. `npm run build`
+  is fine, and `npm run check:links` finds 19 pages and 0 broken. The whole unit suite: 225 tests,
+  183 pass, 28 fail, 14 skipped. That is the same set of failures as HEAD, apart from two. The
+  portfolio's identifier landed a second late under the running clock, which is C2 test change 4.
+  The specs-v1 lock fails because the test author's files are changing.
 
 ### What's next
 
-1. Phase 7. V2 and V4 close when their items clear: V2's test change at the next packet, and V4's
-   W7.3 once L3 has published the null MX.
-2. The next packet takes V2's test item along with the RC5, X4 and X6 items (`PLAN.md`, Open
-   questions).
-3. Before C4, re-run E2's timing spec and E7's portfolio spec on a quiet machine.
-4. When Clive answers C2 or C3, his words go into `garage/pack/CHECKPOINTS.md` § Record that day.
-   V1's blind pick follows C2.
+1. The test author tags `specs-v4`. Then the PM re-runs the affected beads and decides on the
+   image-name floor (Decision 6).
+2. V1's blind pick and the certificate golden's second look go to Clive.
+3. Phase 7, once Phase 6's items clear.
 
 ### Waiting on Clive
 
-- C3: the table read, `docs/checkpoints/c3-packet.md`. Nothing waits on it until Phase 7.
+- A second look at the certificate golden with the thicker guilloche.
 - Whether the code gets a licence before the repository goes public (the C3 packet, § 7).
-- C2: the golden candidates, the test changes, and the three failure sentences.
 - The Pages verification TXT value for isitstillhere.com, any time before L3.
 
 ### Surprises / debt
@@ -80,6 +82,7 @@ packet. V4 waits on W7 step 3, which needs the null MX that L3 publishes in Phas
   export them.
 - Caddy on the production server keeps one deleted, empty log file open until it next
   restarts (the 12:10 problem above). It is harmless and goes away on Caddy's next restart.
+- The printer photograph carries sticky-note dates (2020-2023) and a sticker; Clive placed it as is.
 - This computer's clock steps back about 1.16 s every 32 s; no red was put down to it.
 
 ## Changelog
@@ -115,3 +118,4 @@ packet. V4 waits on W7 step 3, which needs the null MX that L3 publishes in Phas
 - 2026-10-05 — Phase 5 built: RC1–RC6 closed, the C3 packet out, RC7 and RC8 held on test items; Phase 6 active. (Martin, 2026-10-05)
 - 2026-10-05 — RC7 and RC8 closed as product fixes: the copy in `src/content/`, the `test` and `e2e` scripts; Phase 5's exit gate met. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 on C2, V2 on a test item, V4 on L3's null MX. (Martin, 2026-10-05)
+- 2026-10-05 — C2 and C3 product changes in; the internal copy redeployed with the counter fixes; Decision 6 open for image-drawn names. (Martin, 2026-10-05)

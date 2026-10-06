@@ -77,6 +77,13 @@ install -d -m 750 -o caddy -g caddy /srv/vandalwayind/.run
 cp -R "$SRC/vandalwayind/." /srv/vandalwayind/
 install -m 644 "$HERE/counter/count.mjs" /srv/vandalwayind/.counter/count.mjs
 find /srv/vandalwayind -path /srv/vandalwayind/.run -prune -o -type d -exec chmod 755 {} + -o -type f -exec chmod 644 {} +
+# The counter starts at zero here (the undo removed the old total), so the served page says the
+# date this copy began counting, in the page's own style ("October 5, 2026", UTC). The repository's
+# vandalwayind/index.html keeps its own date; only the served copy is rewritten, before the touch.
+SINCE=$(LC_ALL=C date -u '+%B %-d, %Y')
+sed -i -E "s/times since [A-Z][a-z]+ [0-9]{1,2}, [0-9]{4}\./times since $SINCE./" /srv/vandalwayind/index.html
+grep -qF "times since $SINCE." /srv/vandalwayind/index.html || die "the counting start date was not written into the served page"
+say "counting start: the served page reads \"times since $SINCE.\""
 # Last-Modified as the page says: the page and its images 1997-08-22, the guestbook 1999-03-02.
 touch -d '1997-08-22 12:00:00 UTC' /srv/vandalwayind/index.html /srv/vandalwayind/images/*
 touch -d '1999-03-02 12:00:00 UTC' /srv/vandalwayind/cgi-bin/guestbook.html

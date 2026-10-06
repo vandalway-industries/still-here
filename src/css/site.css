@@ -1479,6 +1479,19 @@ a.button-secondary {
   max-width: 400px;
 }
 
+/* the stapler and, beside it, the second-floor printer (C3) */
+.careers-equipment {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sh-space-md);
+  align-items: end;
+  max-width: 400px;
+}
+
+.careers-equipment figure {
+  margin: var(--sh-space-lg) 0 0;
+}
+
 @media (min-width: 640px) {
   .careers-photos {
     grid-template-columns: repeat(3, minmax(0, 1fr));

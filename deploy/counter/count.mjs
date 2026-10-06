@@ -53,7 +53,10 @@ function countLog(file, since) {
   if (!existsSync(file)) return { added: 0, newest: null };
   let added = 0;
   let newest = null;
-  for (const line of readFileSync(file, 'utf8').split('\n')) {
+  for (const raw of readFileSync(file, 'utf8').split('\n')) {
+    // An emptied log regains a NUL-filled prefix at Caddy's next write (it keeps its old offset),
+    // so a line may begin with NUL bytes before its JSON; they are skipped.
+    const line = raw.replace(/^\0+/, '');
     if (!line.trim()) continue;
     let e;
     try {

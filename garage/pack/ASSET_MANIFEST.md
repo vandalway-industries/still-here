@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-03
+updated: 2026-10-05
 read_by: DS3 (makes every derivative listed here); every Worker before it places an image; the critic (canon vs placeholder; what an image is for); Clive at C2 and C3 (placements); L4 (the metadata rule)
 relations: {}
 ---
@@ -30,7 +30,7 @@ garage keeps its copies. (Jules, 2026-10-03)
 
 | File | Size | Use | Status | Derivatives |
 |---|---|---|---|---|
-| `still-here-hero-chair.png` | 1672 × 941 | Home: the chair, cropped to the bracket area (source box 1008,162 → 1550,834, about 4:5), right column at 1440, above the heading at 390. Open Graph image for every page. The palette's source (`DESIGN.md`). | canon | crop: 440 and 542 wide; Open Graph: 1200 × 630 JPEG, uncropped scale, ≤ 250 KB |
+| `still-here-hero-chair.png` | 1672 × 941 | Home: the chair, cropped to the bracket area (source box 1044,110 → 1656,875, 4:5; the whole callout, none of the heading), right column at 1440, above the heading at 390. Open Graph image for every page. The palette's source (`DESIGN.md`). | canon | crop: 440 and 542 wide; Open Graph: 1200 × 630 JPEG, uncropped scale, ≤ 250 KB |
 | `still-here-logo-horizontal.png` | 2172 × 724, RGBA | Reference for the mark redrawn as SVG (DS2) and for the wordmark's weight. Not served. | canon (reference) | none |
 | `brand/vandalway-industries-logo.png`, beside the repository (outside it) → `assets/brand/` | 1880 × 837, RGBA | The 1997 page's logo, as a GIF flattened onto the page's background colour, `WIDTH=410 HEIGHT=183` (DS6). | canon | one GIF, 410 wide, ≤ 64 colours |
 
@@ -77,7 +77,7 @@ Enterprise, below).
 | `s05-floor-three.png` | 1536 × 1024 | Status, STATUS-001 (floor three) | canon | 480, 960 | An empty open-plan office floor with every window open. |
 | `s04-stapler.png` | 1254 × 1254 | Careers, "Your equipment" | canon | 400, 800 | A black office stapler on a white backdrop. |
 | `s06-microwave.png` | 1122 × 1402 | Careers, "Facilities" | canon | 400, 800 | An office microwave with a handwritten "Testing — do not unplug" sign. |
-| `s07-printer.png` | 1174 × 1467 | Not placed on the site in v1: no page has a reason to show it. Kept in `assets/` for the records. C3 may place it. | canon | none | — |
+| `s07-printer.png` | 1174 × 1467 | Careers, "Your equipment", beside the stapler (placed at C3) | canon | 400, 800 | An office printer with an "Out of order" sign, covered in dated sticky notes, its bottom tray hanging open. |
 
 ## Merch
 
@@ -108,3 +108,4 @@ Enterprise, below).
 
 - 2026-10-03 — Written at stage 11: 32 files and the parent logo placed, derivative widths set, D21 rule stated, the audit's missing assets assigned to beads. (Jules, 2026-10-03)
 - 2026-10-03 — Blind read applied: C2PA counts corrected; bead labels DS1–DS6; the parent logo's location stated; the four portraits named. (Jules, 2026-10-03)
+- 2026-10-05 — C2, Decision 3: the hero's crop box is the build's, (1044,110) → (1656,875). C3: `s07` placed on careers beside the stapler, at 400 and 800, with its alt text. (Jules, 2026-10-05)

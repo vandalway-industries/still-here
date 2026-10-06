@@ -39,7 +39,7 @@ const EPOCH = Date.UTC(2026, 0, 1);
 const PORTFOLIO_KEY = 'stillhere.portfolio.v1';
 const EMPTY = 'Name an object to check its presence.';
 const BEFORE_2026 = "Your device's clock reads earlier than 1 January 2026, a moment our records cannot express. The object, however, is still here.";
-// Two draft sentences awaiting Clive's red-pen at C2 (C2 packet, addendum decision 7a and 7c):
+// Two sentences approved at C2 (decision 7a and 7c):
 // the check could not finish (the certificate's drawing code or faces did not load), and this
 // device refused to keep a copy in the portfolio. (Jules, 2026-10-05)
 const NOT_COMPLETED = 'This check could not be completed. Nothing was issued and nothing was kept. Please try again.';

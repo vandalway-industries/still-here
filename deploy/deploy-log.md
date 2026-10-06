@@ -22,7 +22,7 @@ reload as it did before (five answer 200 or 301; five answered 502 before we sta
 **Backups kept** in `/etc/caddy/` as records: one `Caddyfile.bak-vandalwayind-<time>` per install,
 one `Caddyfile.pre-undo-vandalwayind-<time>` per undo.
 
-**The runs, in order (UTC).** The undo was run on the server six times, and each time the server
+**The runs, in order (UTC).** The undo was run on the server seven times, and each time the server
 returned to its backed-up state (the Caddyfile identical to the backup); after each, the install was
 re-run. Three of those round trips were forced by something the previous one taught us:
 
@@ -59,13 +59,28 @@ re-run. Three of those round trips were forced by something the previous one tau
 12. The 1997 page changed (the menu's E-Mail became the page's one `mailto:` link, so the first
     e-mail link a visitor meets is the address). To put it on the server, the undo ran:
     returned to the backed-up state.
-13. `deploy/vandalwayind-install.sh` re-run after the undo: the copy that is running now.
+13. `deploy/vandalwayind-install.sh` re-run after the undo.
+14. Two fixes deferred from the Phase 6 review, put on the server at 22:49 by the undo (returned to
+    the backed-up state) and the install. First: the undo empties the site's log, but Caddy keeps
+    writing at its old offset, so at Caddy's next write the emptied log regains a prefix of NUL
+    bytes as long as the old file, and the first line after it begins with NULs. The counter
+    (`deploy/counter/count.mjs`) now skips leading NUL bytes on a line before reading its JSON;
+    before, that first line was skipped as unreadable. Second: the install now writes the date this
+    copy began counting (the day it reset the total, UTC, "October 5, 2026") into the served page's
+    "times since" line, before the page's Last-Modified is set. The repository's page keeps its own
+    date.
+15. `deploy/vandalwayind-install.sh` re-run after the undo: the copy that is running now. Checked
+    afterwards over the internal network: the page 200, `Last-Modified` 1997-08-22, "times since
+    October 5, 2026."; on the server, the log began with NUL bytes and the counter, run by hand,
+    counted the visit after them.
 
 **What the undo leaves, said plainly.** After the undo the server is in its backed-up state: the
 Caddyfile identical to the backup, no `/srv/vandalwayind`, no timer, no last-run record, no unit
 files, the internal network serving only its original port, nothing on the site's local port. Two
 things remain by design and are not configuration: the backup copies named above, and the site's
-access log, empty, held open by Caddy until its next restart (item 7).
+access log, empty, held open by Caddy until its next restart (item 7). Emptied is not quite the
+end of it: at Caddy's next write to that log, the file regains a NUL-filled prefix as long as it was
+before, and the new lines follow it (item 14); the counter reads past it.
 
 ### 1. Install, first run
 
@@ -688,6 +703,93 @@ timer: vandalwayind-counter.timer enabled and started; the counter ran once
 systemctl list-timers vandalwayind-counter.timer:
 NEXT                        LEFT LAST PASSED UNIT                       ACTIVATES
 Mon 2026-10-05 12:30:00 UTC 8min -         - vandalwayind-counter.timer vandalwayind-counter.service
+internal network: a new port of its own added for vandalwayind; no existing route changed (other routes sha256 before 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275 after 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275)
+served on the local port: HEAD / 200, GET /cgi-bin/guestbook.html 200, POST / 405
+served through the socket: HEAD / 200, GET /.counter/total 404
+Caddyfile now sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6
+== vandalwayind-install.sh done
+```
+
+### 14. Undo, to put the counter fixes on the server
+
+```
+== vandalwayind-uninstall.sh, 2026-10-05T22:49:10Z
+internal network: 1 port of the site removed; no other route changed (other routes sha256 before 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275 after 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275)
+timer: vandalwayind-counter.timer disabled and removed; systemctl list-timers no longer shows it
+Caddyfile copied before the undo: /etc/caddy/Caddyfile.pre-undo-vandalwayind-20261005T224913Z (sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+caddy validate: Valid configuration
+reload: done (systemctl reload caddy); caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+other sites: every site that answered before the reload answers after it
+files: /srv/vandalwayind/ removed; the site's access log emptied (left in place, 0 bytes, for the reason above)
+uninstall Caddyfile sha256 0674a2446fb392505a816aa6a212be8375edde7aa08a279cb021a78df25163d4
+Caddyfile identical to the backup /etc/caddy/Caddyfile.bak-vandalwayind-20261005T122126Z: the server returned to its backed-up state
+the site is gone: local port 000, socket absent
+== vandalwayind-uninstall.sh done
+```
+
+### 15. Install, re-run after the undo (running now)
+
+```
+== vandalwayind-install.sh, 2026-10-05T22:49:52Z
+preconditions: no vandalwayind block, no /srv/vandalwayind, local port free, a new port of its own free
+node: v18.19.1 present
+before: 11 blocks hashed, 10 other sites checked
+Caddyfile backed up: /etc/caddy/Caddyfile.bak-vandalwayind-20261005T224956Z
+backup /etc/caddy/Caddyfile.bak-vandalwayind-20261005T224956Z sha256 0674a2446fb392505a816aa6a212be8375edde7aa08a279cb021a78df25163d4
+counting start: the served page reads "times since October 5, 2026."
+files: /srv/vandalwayind/ written; page and images dated 1997-08-22, guestbook 1999-03-02; counter at 0
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile with the vandalwayind block)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+every other site block byte-identical before and after (and the Caddyfile outside the vandalwayind block: sha256 0674a2446fb392505a816aa6a212be8375edde7aa08a279cb021a78df25163d4, as before)
+reload: done (systemctl reload caddy); caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+other sites: every site that answered before the reload answers after it
+access log: written, and the file Caddy writes is the one the counter reads
+timer: vandalwayind-counter.timer enabled and started; the counter ran once
+systemctl list-timers vandalwayind-counter.timer:
+NEXT                        LEFT LAST PASSED UNIT                       ACTIVATES
+Mon 2026-10-05 23:00:00 UTC 9min -         - vandalwayind-counter.timer vandalwayind-counter.service
 internal network: a new port of its own added for vandalwayind; no existing route changed (other routes sha256 before 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275 after 311cb1424af62cfabbba4279ceaaa719ae893233dbd86668b1176f4073d29275)
 served on the local port: HEAD / 200, GET /cgi-bin/guestbook.html 200, POST / 405
 served through the socket: HEAD / 200, GET /.counter/total 404

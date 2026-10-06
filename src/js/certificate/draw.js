@@ -142,14 +142,28 @@ export function utcLine(time) {
   return `Recorded ${iso.slice(0, 10)} ${iso.slice(11, 19)} UTC`;
 }
 
-// ── The name: shrink to a 30-unit floor, then wrap to up to four centred lines ──────────────────
+// ── The name: step down in size to a 30-unit floor, on up to three centred lines ──────────────
 // A name is set in NFC, so a name typed composed or decomposed prints identically (R11).
+// Decision 6 (C2): a long name steps down in size until it fits at most three lines inside the
+// name zone, between "This certifies that" (ink ends at its baseline, y 266) and the name rule
+// (y 352). Those lines, and "was, at the moment recorded below", never move. A one-line name keeps
+// its baseline at 326, as on the approved golden.
 const NAME_FACE = `${SERIF}/600`;
 const NAME_MAX = 54;
 const NAME_FLOOR = 30;
 const NAME_WIDTH = 760;
-// the widest a name image may run before it must take a fifth line: inside the inner rules
+// the widest a name may run before it must take another line: inside the inner rules
 const NAME_WIDTH_MAX = 900;
+const NAME_LINES = 3;
+// the name zone's ink limits, a few units clear of the fixed lines above and below
+const NAME_TOP = 270;
+const NAME_BOTTOM = 349;
+const NAME_BASELINE = 326;
+// the face's ink above and below the baseline, in ems (Cormorant Garamond SemiBold: l and g)
+const FACE_ASCENT = 0.73;
+const FACE_DESCENT = 0.28;
+// line spacing, as a share of one line's ink height
+const NAME_LEAD = 1.04;
 // pixels per user unit for a name drawn as an image: 600 dpi on the 11-inch page (diff item 8)
 const NAME_SCALE = 6;
 
@@ -165,11 +179,8 @@ export function inFace(name) {
   return true;
 }
 
-/** Lay a name out with a width function (user units at a size): one line, or four at the floor. */
-function layout(name, widthAt, maxWidth = NAME_WIDTH) {
-  const w = widthAt(name, 1);
-  if (w * NAME_FLOOR <= maxWidth) return { size: Math.min(NAME_MAX, maxWidth / w), lines: [name] };
-  const size = NAME_FLOOR;
+/** Break a name into lines no wider than maxWidth at a size: at spaces, else at graphemes. */
+function wrap(name, widthAt, size, maxWidth) {
   const lines = [];
   let line = '';
   const fits = (s) => widthAt(s, size) <= maxWidth;
@@ -195,12 +206,41 @@ function layout(name, widthAt, maxWidth = NAME_WIDTH) {
     }
   }
   if (line) lines.push(line);
-  return { size, lines };
+  return lines;
+}
+
+/**
+ * Lay a name out: { size, lines, bases } with each line's baseline. widthAt(s, size) is a width in
+ * user units; ink(size) is [ascent, descent] of the name's ink at a size. One line at up to 54
+ * units; otherwise the largest size, down to the floor, whose lines (at most three) fit the zone.
+ */
+function layout(name, widthAt, ink) {
+  const w = widthAt(name, 1);
+  if (w * NAME_FLOOR <= NAME_WIDTH) return { size: Math.min(NAME_MAX, NAME_WIDTH / w), lines: [name], bases: [NAME_BASELINE] };
+  const zone = NAME_BOTTOM - NAME_TOP;
+  for (let size = NAME_MAX; size >= NAME_FLOOR; size -= 0.5) {
+    const [up, down] = ink(size);
+    const lead = (up + down) * NAME_LEAD;
+    for (const maxWidth of [NAME_WIDTH, NAME_WIDTH_MAX]) {
+      const lines = wrap(name, widthAt, size, maxWidth);
+      if (lines.length > NAME_LINES) continue;
+      const block = up + (lines.length - 1) * lead + down;
+      if (block > zone) break;
+      const first = NAME_TOP + (zone - block) / 2 + up;
+      return { size, lines, bases: lines.map((_, i) => first + i * lead) };
+    }
+  }
+  // nothing fits the zone at the floor: the floor, at the fewest lines, centred on the baseline
+  let lines = wrap(name, widthAt, NAME_FLOOR, NAME_WIDTH);
+  if (lines.length > NAME_LINES) lines = wrap(name, widthAt, NAME_FLOOR, NAME_WIDTH_MAX);
+  const [up, down] = ink(NAME_FLOOR);
+  const lead = (up + down) * NAME_LEAD;
+  const first = NAME_BASELINE - ((lines.length - 1) * lead) / 2;
+  return { size: NAME_FLOOR, lines, bases: lines.map((_, i) => first + i * lead) };
 }
 
 export function fitName(name) {
-  const fit = layout(name.normalize('NFC'), (s, size) => measure(s, NAME_FACE, size));
-  return { size: fit.size, lines: fit.lines.slice(0, 4) };
+  return layout(name.normalize('NFC'), (s, size) => measure(s, NAME_FACE, size), (size) => [FACE_ASCENT * size, FACE_DESCENT * size]);
 }
 
 /** A 2D canvas the browser draws a name on, or null where there is none (Node). */
@@ -217,7 +257,7 @@ function canvas2d(w, h) {
  * visitor's browser, in the certificate face where it has the glyph and the browser's own fallback
  * where it does not, and placed as an image in the name's position. Null where no canvas exists.
  */
-function nameImages(name, cx, centre) {
+function nameImages(name, cx) {
   const probe = canvas2d(1, 1);
   if (!probe) return null;
   const ctx = probe.getContext('2d');
@@ -226,13 +266,16 @@ function nameImages(name, cx, centre) {
     ctx.font = font(100);
     return (ctx.measureText(s).width / 100) * size;
   };
-  let fit = layout(name, widthAt);
-  if (fit.lines.length > 4) fit = layout(name, widthAt, NAME_WIDTH_MAX);
+  // the ink of the whole name, which the browser knows for its own fallback faces
+  ctx.font = font(100);
+  const m = ctx.measureText(name);
+  const up = Math.max(m.actualBoundingBoxAscent || 0, 70) / 100;
+  const down = Math.max(m.actualBoundingBoxDescent || 0, 0) / 100;
+  const fit = layout(name, widthAt, (size) => [up * size, down * size]);
   probe.width = 0;
   probe.height = 0;
-  const lead = fit.size * 1.08;
-  const firstBase = centre - ((fit.lines.length - 1) * lead) / 2;
-  const tall = fit.size * 1.3;
+  const ascent = Math.max(fit.size * 0.98, up * fit.size + 2);
+  const tall = ascent + Math.max(fit.size * 0.32, down * fit.size + 2);
   const out = [];
   fit.lines.forEach((line, i) => {
     const w = widthAt(line, fit.size) + fit.size * 0.2;
@@ -242,11 +285,10 @@ function nameImages(name, cx, centre) {
     g.fillStyle = INK;
     g.textBaseline = 'alphabetic';
     g.textAlign = 'center';
-    const ascent = fit.size * 0.98;
     g.fillText(line, c.width / 2, ascent * NAME_SCALE);
     const href = c.toDataURL('image/png');
     const [cw, ch] = [c.width, c.height];
-    const y = firstBase + i * lead - ascent;
+    const y = fit.bases[i] - ascent;
     c.width = 0;
     c.height = 0;
     out.push(`<image x="${n(cx - w / 2)}" y="${n(y)}" width="${n(cw / NAME_SCALE)}" height="${n(ch / NAME_SCALE)}" preserveAspectRatio="none" href="${href}"/>`);
@@ -311,7 +353,7 @@ function border() {
       const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
       d += `C${n(c1[0])} ${n(c1[1])} ${n(c2[0])} ${n(c2[1])} ${n(p2[0])} ${n(p2[1])}`;
     }
-    return `<path d="${d}Z" fill="none" stroke="${INK}" stroke-width="0.45"/>`;
+    return `<path d="${d}Z" fill="none" stroke="${INK}" stroke-width="0.7"/>`;
   };
   for (let k = 0; k < 4; k++) parts.push(curve((k * Math.PI) / 2, 11));
   for (let k = 0; k < 2; k++) parts.push(curve((k * Math.PI) + Math.PI / 4, 5.5));
@@ -452,13 +494,11 @@ export function drawCertificate({ name, time, zone, identifier, link }) {
 
   // the name, as typed (in NFC): vector text in the face, or drawn by the browser (diff item 8)
   const setName = name.normalize('NFC');
-  const image = inFace(setName) ? null : nameImages(setName, cx, 326);
+  const image = inFace(setName) ? null : nameImages(setName, cx);
   if (image) out.push(image);
   else {
     const fit = fitName(setName);
-    const lead = fit.size * 1.08;
-    const firstBase = 326 - ((fit.lines.length - 1) * lead) / 2;
-    const tspans = fit.lines.map((l, i) => glyphs(l, positions(l, NAME_FACE, fit.size, cx), firstBase + i * lead)).join('');
+    const tspans = fit.lines.map((l, i) => glyphs(l, positions(l, NAME_FACE, fit.size, cx), fit.bases[i])).join('');
     out.push(`<text data-field="name" font-family="${SERIF}" font-size="${n(fit.size)}" font-weight="600" fill="${INK}">${tspans}</text>`);
   }
   out.push(`<line x1="${cx - 280}" y1="352" x2="${cx + 280}" y2="352" stroke="${MUTED}" stroke-width="0.5"/>`);
