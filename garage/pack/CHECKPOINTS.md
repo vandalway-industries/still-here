@@ -198,6 +198,22 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
 - **Re-tag specs-v12 — 2026-10-06.** The same change, the same hour: specs-v11 wrote the README's
   scope as CSS locators, which T0's rule (role and visible-text locators only) refuses; it is now
   `getByRole('article')`. Nothing else changes. (Jules, 2026-10-06)
+- **Exclusions at launch — 2026-10-06.** Clive: a bead whose walk is red only on this workstation's
+  network or on GitHub's rate limit gets one more gate run, then stays open as a named exclusion,
+  and the final audit reports it as one. **L5 (`still-here-bhe`)** is excluded on that rule: its gate
+  run at `specs-v12` failed on `ERR_NETWORK_CHANGED` page loads (the workstation's link to staging)
+  and two WebKit menu steps of the same runs; every step of W1–W9 was played on staging by the spec in
+  some run or by hand (`docs/checkpoints/c4-packet.md` § 2), and the † steps on Clive's phone. Its
+  boxes for item 1 and BROWSER PASS stay unticked. (Jules, 2026-10-06)
+- **N3 (`still-here-tfr`) excluded on the same rule, 2026-10-06.** W-DoD on production ran three
+  times and once more for W9 alone; it never came out green in one run. The reds were the
+  workstation's network (`ERR_NETWORK_CHANGED`, "Network is unreachable"), GitHub answering 429 to
+  the walks' repeated visits, and steps that failed alongside those drops; some tests in two of the
+  runs did not run at all, so not every walk is shown green in every engine and size. What is
+  proven: N3's unit checks 1, 2, 3, 5 and 6 pass against production (`security.txt`, `presence.json`
+  with its header, every identifier in `company/` verifying on the live Verify page, Clive's
+  production phone re-check, the renewal in `PROJECT.md`); N1's production spec 18/18; N2's W7 on
+  production 4/4, twice; Clive's phone at launch. Item 4 and BROWSER PASS stay unticked. (Jules, 2026-10-06)
 
 ## Changelog
 
