@@ -60,7 +60,7 @@ The builder–critic loop (factory README §3b), as it applies here.
 - **Builder:** a Worker sub-agent per bead, editing only the files the bead names, two fix attempts
   per verification failure, then it reports and stops.
 - **Critic:** a fresh-context sub-agent with no write tools, briefed with
-  `~/projects/factory/templates/prompts/critic.md` (rules 1–9, including rule 8's scope-reduction
+  the factory's critic prompt (`templates/prompts/critic.md` in the factory) (rules 1–9, including rule 8's scope-reduction
   scan and rule 9's four levels) and then `garage/pack/CRITIC_RUBRIC.md`. **The constant exception
   applies:** the presence result is a constant by specification (Q1, sh-013). A critic must not
   report the ritual's result, the status page's "All systems operational", or `presence.json` as
@@ -168,7 +168,7 @@ From the audit's list, mapped to the moment each is needed. Everything else is t
 - [x] T0: a separate test-author session writes every test file named in `ACCEPTANCE.md`, named with the real bead ids; the full run is red except Phase 0's; commit; tag `specs-v1`. Evidence: commit d8d6ab3, tag `specs-v1`; 50 unit files and 49 browser specs, the walk-to-bead table in `docs/bead-map.md` § Walks; `tests/unit/still-here-64t-specs.test.ts` 5/5; G0, G1, G2 and T0 together 26/26; every later bead's unit file red, every later bead's spec red or skipped for want of staging, the internal copy or production (Chromium run; `tests/fixtures/specs-v1-baseline.json`); T0 closed.
 
 #### Bar
-Deterministic only: `~/bin/bd-gate-selftest.sh` output; `~/projects/factory/scripts/docs-sync-check.sh .` clean; the PII gate at the public tier passes on the tree; G0/G1/G2's unit tests; the red run at `specs-v1`. No screen yet.
+Deterministic only: the bead gate's self-test (`bd-gate-selftest.sh`) output; the factory's docs-sync check (`scripts/docs-sync-check.sh .` in the factory) clean; the PII gate at the public tier passes on the tree; G0/G1/G2's unit tests; the red run at `specs-v1`. No screen yet.
 
 #### Budget
 No cap (I-07). Expected about 60 orchestrator turns, reported in the C2 packet.
@@ -402,10 +402,14 @@ No cap (I-07). Expected about 80 orchestrator turns.
 - [x] Phases 2, 3, 4, 5 and 6 at their exit gates (or `held` awaiting C2 with C2 since recorded); every bead filed from C3's red-pens closed. Evidence (2026-10-06): Phases 1–5 done; Phase 6 held only on V4's W7.3, which needs the null MX that L3 writes in this phase (recorded as a sequencing call: Phase 6's last item depends on Phase 7). C2 recorded; the one bead C3 filed (still-here-txf) closed.
 
 #### Steps
-- [ ] L1: staging for isitstillhere by `deploy/staging-install.sh` and its undo: Caddy on localhost with Pages-equivalent rules and the `presence.json` header, a new internal-network HTTPS port of its own (I-11); rsync of `site/`; `/build.txt` check; research 3's URL table on staging.
-- [ ] L2: `.github/workflows/pages.yml` (Actions from `site/` only, pinned versions, `include-hidden-files: true`, skipped while private, no `schedule:`) and `.github/workflows/security-txt-reminder.yml` (weekly; opens an issue, nothing else).
+- [x] L1: staging for isitstillhere by `deploy/staging-install.sh` and its undo: Caddy on localhost with Pages-equivalent rules and the `presence.json` header, a new internal-network HTTPS port of its own (I-11); rsync of `site/`; `/build.txt` check; research 3's URL table on staging.
+  Closed (2026-10-06): `still-here-xg9` through the gate. Install, undo (back to the backup's sha256), install re-run (`deploy/deploy-log.md` § Phase 7 staging, runs 1–3): `caddy validate` passed, 12 other blocks byte-identical, the other sites answered as before, the other routes hashed the same; then `--update` to the build of 7f198d9. The staging spec 18 passed, 0 skipped, twice (six projects); unit 7/7, 0 skipped, twice, with `STAGING_URL` and a copy of staging's one-day log after W2. The staging address is in `.env.staging` only.
+- [x] L2: `.github/workflows/pages.yml` (Actions from `site/` only, pinned versions, `include-hidden-files: true`, skipped while private, no `schedule:`) and `.github/workflows/security-txt-reminder.yml` (weekly; opens an issue, nothing else).
+  Closed (2026-10-06): `still-here-6m0` through the gate. The reminder's dry run with a fabricated near date (run 37426838369): opened and closed issue #1 "Renew security.txt". The Pages job reads "skipped" on `main` while private. Unit 4/4, 0 skipped, twice. Pages' real deploy is N1's, after the public switch.
 - [ ] L3: zone snapshots of both domains; validation dry run; then null MX, SPF and DMARC on both, and the Pages verification TXT once Clive has handed its value over. Nothing else changes.
+  Written (2026-10-06, `deploy/deploy-log.md` § L3): a snapshot of each zone (ids in the log), the dry run passed, `MX 0 .`, `v=spf1 -all` and `_dmarc` `v=DMARC1; p=reject` appended on both; read back, every other record unchanged; the Pages TXT present and equal to the value handed over; both public resolvers answer all of it. Items 1–3 flipped (unit 3/4, 0 skipped, twice). Not closed: test 4's wildcard probe uses an ANY query, which both domains' name servers answer with RFC 8482's HINFO, so no resolver can return "not found". The zone has no wildcard (A, TXT and CNAME probes: not found). The probe's change goes to the next packet.
 - [ ] L4: the release scan: PII gate at the public tier over the tree and the whole history; every author and committer email; PNG metadata on `site/`; the names grep.
+  Run (2026-10-06), twice: the tree and every blob in the history pass the gate at the public tier; the public denylist finds nothing; `site/` images are clean. Items 1, 2 and 5 flipped (unit 3/5, 0 skipped, twice). Open on two: item 3, commit 38c10f5's in-story author (approved by Clive, a test change for C4); item 4, four GIFs in `vandalwayind/images/` carry ImageMagick's application block. The pack's paths outside the repository are reworded here, in `CRITIC_RUBRIC.md` and in `ENV_PREFLIGHT.md`; `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and the gate hook's default wait for a decision.
 - [ ] L5: W1–W9 on staging; the phone checklist printed for Clive; the C4 packet.
 
 #### Bar

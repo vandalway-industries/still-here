@@ -1,6 +1,6 @@
 ---
 updated: 2026-10-03
-read_by: every critic sub-agent spawned in BUILD, after `~/projects/factory/templates/prompts/critic.md`; the Judge when it reviews a Worker's receipt; `/goal`'s final audit
+read_by: every critic sub-agent spawned in BUILD, after the factory's critic prompt (`templates/prompts/critic.md` in the factory); the Judge when it reviews a Worker's receipt; `/goal`'s final audit
 relations:
   derived_from: ../../PRD.md
 ---

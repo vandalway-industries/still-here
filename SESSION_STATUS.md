@@ -12,46 +12,45 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active, entry not met; Phase 2 at its exit review, Phase 6 held on V4
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active; Phase 6 held on V4 (see below)
 
 ### Current state
 
-The five beads that went red under load were re-run on a quiet machine, twice each, and all five
-closed through the gate: E2, E4, E7, X4 and V2. V1 closed on the critic's fresh blind pick of the
-1997 page. Phases 0, 1, 3, 4 and 5 are done. Every Phase 2 bead is closed, and the phase waits on
-its exit review. Phase 6 waits on V4 alone, and V4 waits on the null MX that L3 writes. Phase 7 is
-the active row.
+Staging is up on the internal network, over HTTPS, and L1 is closed. L2 is closed: the reminder's
+dry run opened and closed its test issue. L3's records are written on both domains and read back,
+but L3 stays open on one test that cannot pass against our name servers. L4's scan is run: three of
+its five checks pass, and two wait on decisions. V4: see "What changed".
 
 ### What changed
 
-- Why the re-run: a file search covering the whole computer had held the load average at 10 to 15
-  for seven hours. It was stopped at 00:36. Every red from the last re-run on these five beads was
-  measured under that load.
-- How: a private copy of HEAD 973717a, `npm ci` and a build, served on a free port. One worker.
-  Before each run I waited for the one-minute load to drop below 3. X4 ran locally, with
-  STAGING_URL unset, so each offline test stops its own server. V2 ran with
-  VANDALWAY_INTERNAL_URL set.
-- E2: ritual, timing and walk 86 passed, 10 skipped, 0 failed, in both runs (00:39–01:00). Then the
-  gate's own run at three workers: ritual 60 + 6 skipped, timing 18/18, walk 8 + 4 skipped. Closed.
-- E4: export and walk 5/5 in Chromium and WebKit at both sizes, both runs. Test 7 was green at
-  webkit-390 both times. Firefox ran its download test, 1 passed + 4 skipped. BROWSER PASS flipped,
-  and the gate passed. Closed.
-- E7: portfolio and walk 4/4 in Chromium and WebKit at both sizes, both runs. Test 1–2 took 19.8 s
-  in WebKit. Items 1–2 and BROWSER PASS flipped. The gate's first attempt ran out of time in
-  WebKit once, at a download. Its second passed 18/18. Closed.
-- X4: offline and the W6 walk 3/3 in Chromium and WebKit at both sizes, Firefox 2 + 1 skipped,
-  both runs. W6.1 was green at chromium-390 every time. BROWSER PASS flipped, and the gate passed.
-  Closed.
-- V2: the internal spec 6 passed, 0 skipped, in both runs; unit 3/3, 0 skipped, twice. The gate
-  passed 6/6. Closed.
-- `PLAN.md`: E2, E4, E7, X4, W6, V1 and V2 ticked with this evidence. Phase 4 done. The drift
-  check is clean.
+- L1: `deploy/staging-install.sh`, `deploy/staging-uninstall.sh`, `deploy/lib/staging.sh` and
+  `deploy/caddy/staging.caddy`. Installed, undone (back to the backup's sha256) and installed again,
+  with the same checks as vandalwayind (deploy log, Phase 7 staging, runs 1–3). Then the files were
+  brought up to the build of 7f198d9. The staging spec passed 18, skipped 0, in both runs. The unit
+  test passed 7/7, skipped 0, in both runs. Closed through the gate.
+- L2: the reminder ran by hand with a date ten days out (run 37426838369). It opened issue #1
+  "Renew security.txt" and closed it again. Unit 4/4 twice. Closed.
+- L3: both zones snapshotted (ids in the deploy log). The dry run passed, then the null MX, SPF
+  and DMARC records went in, appended. Every other record is unchanged. The Pages TXT is present and
+  matches. Both public resolvers return the new records. Unit 3/4 twice. Test 4 asks for an ANY
+  lookup. Our name servers answer ANY with RFC 8482's placeholder, so no resolver can say "not
+  found". There is no wildcard: A, TXT and CNAME lookups of a random name all come back not found.
+  Items 1–3 flipped. Not closed.
+- L4: unit 3/5 twice. The tree and every blob in the history pass the gate at the public tier. The
+  public denylist finds nothing, and the images in `site/` are clean. Item 3 fails on commit
+  38c10f5's author, which is the approved exception and needs C4's test change. Item 4 fails on four
+  GIFs in `vandalwayind/images/`, which carry ImageMagick's application block. Items 1, 2 and 5
+  flipped. Not closed.
+- Paths outside the repository: reworded in `PLAN.md`, `garage/pack/CRITIC_RUBRIC.md` and
+  `garage/pack/ENV_PREFLIGHT.md`.
 
 ### What's next
 
-1. The Phase 2 exit review.
-2. The PM decides on the offline helper's staging branch before L5 plays W6 on staging.
-3. Phase 7: L1 first. L3's null MX lets V4 close, and that closes Phase 6.
+1. Strip the four GIFs, redeploy the internal copy, and re-run L4 item 4.
+2. Put the test changes in the next packet: L3 test 4's probe, and L4 test 3's one approved author.
+3. The path wording left in `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and its beads, and
+   the gate hook's default folder.
+4. L5 after the specs-v7 re-tag.
 
 ### Waiting on Clive
 
@@ -70,7 +69,9 @@ the active row.
 - The X6 unit test needs a git work tree, because test 4 reads `git ls-files`.
 - Playwright's `context.setOffline` does not reach service workers the same way in each engine.
   The product works offline; the emulation is what differs.
-- The workflows are committed but not yet run. L2 owns their dry run.
+- The vandalwayind undo checks the Caddyfile against its own last backup, which was taken before
+  the staging block went in. Before a V2 undo, take staging out, or expect the undo to report the
+  difference.
 - Staging, internal-copy and production specs skip while their environment is missing, and a run
   of only skipped tests exits 0. The zero-skip close rule in `PLAN.md` covers it.
 - vandalwayind.com already answers with somebody's parked page; the production specs check the
@@ -120,3 +121,4 @@ the active row.
 - 2026-10-05 — Names drawn as images fit three lines in the name zone, and their PDF matches the PNG. (Martin, 2026-10-05)
 - 2026-10-06 — Re-run at specs-v6 after the 1997 page's redeploy: DS1, E3, S2 and X6 closed; seven beads open, each with what it waits on. (Martin, 2026-10-06)
 - 2026-10-06 — Quiet-machine re-run: E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done. (Martin, 2026-10-06)
+- 2026-10-06 — Phase 7: L1 and L2 closed; L3 written and held on one test; L4 run and held on two. (Martin, 2026-10-06)

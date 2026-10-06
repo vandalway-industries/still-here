@@ -1050,6 +1050,19 @@ staging Caddyfile now sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d1
 == staging-install.sh done
 ```
 
+### 4. Update to the build of 7f198d9 (files only)
+
+`deploy/staging-install.sh --update` replaces the files of the installed staging with a new build by
+rsync and touches nothing else (no Caddyfile, no port). Staging's own log was emptied by hand before
+each L1 spec run, so the copy read for L1 item 5 holds only that run.
+
+```
+== staging-install.sh --update, 2026-10-06T07:00:40Z
+files: site/ synced to /srv/still-here-staging/site by rsync (130 files); build 7f198d95ec58b19b4b1e5db9dde14c08c1b886ea
+staging /build.txt through the socket: 7f198d95ec58b19b4b1e5db9dde14c08c1b886ea
+== staging-install.sh --update done
+```
+
 ## Phase 7: the security.txt reminder's dry run (L2), 2026-10-06
 
 security-txt-reminder dry run, 06:58 UTC: dispatched by hand with `expires` set to a fabricated near
@@ -1079,7 +1092,7 @@ address goes in this repository. Each write was the three records L3 names and n
 
 **The steps, in order (UTC):**
 
-- isitstillhere.com zone snapshot before its first write (the Pages challenge, 05:51): the registrar's snapshot id 186064327, holding the two records then there (A `@`, CNAME `www`).
+- isitstillhere.com zone snapshot before its first change (the Pages challenge, 05:51): the registrar's snapshot id 186064327, holding the two records then there (A `@`, CNAME `www`).
 - 05:51 validation dry run passed (`POST /zones/isitstillhere.com/validate`: 200 "Request accepted").
 - isitstillhere.com: wrote one record, TXT `_github-pages-challenge-vandalway-industries` (append; the two records before it unchanged on read-back). Recorded at the time in CHECKPOINTS.md § Record.
 - isitstillhere.com zone snapshot before L3's write, 06:51: id local-sha256 4c9d761ece2f1bd2866e4927ad93c1061c7d6a0dfbc113150f326f495618ac52 (three record sets, the table above); the registrar's own snapshot at the write, id 186074588, holds the same three record sets.

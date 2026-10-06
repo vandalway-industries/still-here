@@ -21,7 +21,7 @@ internal network" is the private network that reaches it. (Jules, 2026-10-03)
 | Node | `node --version` | v24.13.0 (runs `.test.ts` with type stripping) |
 | npm | `npm --version` | 11.6.2 |
 | Playwright | `npx -y playwright --version` | 1.59.1 |
-| Playwright browsers | `ls ~/.cache/ms-playwright` | Chromium and WebKit installed; **Firefox missing** → G1 runs `npx playwright install firefox` |
+| Playwright browsers | `npx playwright install --list` (from `e2e/`) | Chromium and WebKit installed; **Firefox missing** → G1 runs `npx playwright install firefox` |
 | Port for the local Pages server | `ss -ltn \| grep :5320` | free |
 | Python | `python3 --version`; `python3 -c "import yaml, PIL"` | 3.12.3; PyYAML 6.0.1; Pillow 12.1.0 |
 | ImageMagick (period GIFs, DS6) | `convert -version \| head -1` | 6.9.12-98 |
@@ -29,9 +29,9 @@ internal network" is the private network that reaches it. (Jules, 2026-10-03)
 | git | `git --version` | 2.43.0; global default branch unset → G0 uses `git init -b main` |
 | GitHub CLI | `gh --version`; `gh auth status` (read the scopes line only) | 2.45.0; scopes `repo`, `read:org`, `gist`, `admin:public_key`; **no `workflow` scope** → every push goes over SSH, which carries workflow files |
 | SSH push to GitHub | `ssh -T git@github.com` (exit 1 with a greeting is success) | authenticates (audit) |
-| beads | `bd --version`; `ls ~/bin/bd ~/bin/bd-gate-selftest.sh` | 1.0.3; gate wrapper and self-test present |
-| PII gate, both tiers | `ls ~/.factory/pii-denylist.txt ~/.factory/pii-denylist-public.txt`; `PII_PUBLIC=1 ~/projects/factory/scripts/pii-gate.sh --tree .` (after G0) | both lists present; the public tier runs from the first commit |
-| Factory scripts | `ls ~/projects/factory/scripts/{docs-sync-check,stop-gate,pii-gate}.sh` | present |
+| beads | `bd --version`; `command -v bd bd-gate-selftest.sh` (the gate wrapper and its self-test, on the operator's PATH) | 1.0.3; gate wrapper and self-test present |
+| PII gate, both tiers | the factory's two denylists, private and public, present in the operator's factory settings; `PII_PUBLIC=1 "$FACTORY_DIR"/scripts/pii-gate.sh --tree .` (after G0; `FACTORY_DIR` is where the factory is checked out) | both lists present; the public tier runs from the first commit |
+| Factory scripts | `ls "$FACTORY_DIR"/scripts/{docs-sync-check,stop-gate,pii-gate}.sh` | present |
 | OKF validator (RC4) | the OKF toolkit 0.3.3 (MIT) installed as a local agent plugin; G1 copies `okf_validate.py` and `LICENSE` into `tools/okf/` | present; needs PyYAML (present) |
 | Design linter | `npx -y @google/design.md@0.3.0 lint DESIGN.md` | 0 errors, 0 warnings |
 | DNS and HTTP tools | `dig -v`; `curl --version` | 9.18.39; 8.5.0 |
