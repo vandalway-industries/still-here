@@ -11,6 +11,8 @@
 // their delays and their pixels do not change. The file is rewritten only when something was taken
 // out. (Jules, 2026-10-06)
 import { readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const KEEP = /^(NETSCAPE2\.0|ANIMEXTS1\.0)$/;
 
@@ -55,7 +57,7 @@ export function stripGif(buf) {
   return { buf: Buffer.concat(parts), removed };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (fileURLToPath(import.meta.url) === resolve(process.argv[1] ?? '')) {
   for (const f of process.argv.slice(2)) {
     const { buf, removed } = stripGif(readFileSync(f));
     if (removed.length) writeFileSync(f, buf);
