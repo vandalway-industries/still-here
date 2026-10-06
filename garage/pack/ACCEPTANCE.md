@@ -301,7 +301,7 @@ One section per bead, grouped by phase. Each section is the bead's acceptance fi
 - [ ] BROWSER PASS — `e2e/specs/<id>-offline.spec.ts` and `e2e/specs/<id>-walk.spec.ts` (W6) green; installability in Chromium only
 1. `site/manifest.webmanifest` names the icons of DS2, `display: standalone`, colours from the tokens; Chromium's `Page.getInstallabilityErrors` returns none.
 2. The service worker precaches every HTML page of PRD R24, the 404, all CSS, JS and fonts, the export libraries, the icons and the home chair image; other images are cached when first shown.
-3. After one visit, `context.setOffline(true)`: the ritual, Download PDF, Download PNG, Copy certificate link, reopening a `/c/` link, Verify by hand, and the portfolio's list, Open and re-download each work.
+3. After one visit, with the server stopped (offline): the ritual, Download PDF, Download PNG, Copy certificate link, reopening a `/c/` link, Verify by hand, and the portfolio's list, Open and re-download each work.
 4. Offline, a page never visited still opens (precached); an image never shown displays its alt text; an unknown path shows the cached 404 page.
 5. Deploy build N, load, deploy build N+1: the page reports N+1's build id (`/build.txt` and a `data-build` attribute) by its second navigation.
 6. The service worker's caches hold only same-origin URLs; the cache name carries the build id.

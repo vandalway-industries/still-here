@@ -163,6 +163,15 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   instead of two, no separate critic where the gate already replayed a walk, a short packet. W7 is not
   repeated on staging; it is credited from the day's three green walks of the internal copy and the
   critic's hand play. (Jules, 2026-10-06)
+- **C4 — answers, 2026-10-06** (`docs/checkpoints/c4-packet.md` § 6). Clive: (1) the photograph
+  originals keep their content credentials; no strip, no history rewrite. (2) The code stays all
+  rights reserved. (3) The certificate's drawing code is fetched once the home page has loaded and
+  the browser is idle (a product change). (4) X4 item 3 reads "with the server stopped (offline)",
+  as its test does; its bead re-synced. (5) RC5's distance pattern counts only a number, in figures
+  or words, before a unit. (6) The certificate golden stands. (7) Our 1997 counter cell stays. (9)
+  The walk helpers wait for the new page's address before its heading, and the first-visit install
+  wait is 60 s instead of 15 s. (5) and (9) re-tag `specs-v9`. The phone checklist and the public
+  switch are still his. (Jules, 2026-10-06)
 
 ## Changelog
 

@@ -33,7 +33,8 @@ test('2. On the Directionality of Here has a §3 of that title; Six Feet to the 
   const srcTimes = new Set([...src.matchAll(/\b(\d\d:\d\d)\b/g)].map((m) => m[1]));
   for (const t of ['09:00', '2026-10-02']) assert.ok(six.includes(t), `the paper states ${t}`);
   for (const m of six.matchAll(/\b(\d\d:\d\d)\b/g)) assert.ok(srcTimes.has(m[1]), `${m[1]} is not a time QA-001 or sh-051 records`);
-  for (const m of six.matchAll(/\b(\w+(?:\.\d+)?)\s*(feet|foot|ft|metres?|meters?|m)\b/gi)) {
+  // a number, in figures or words, then a unit: "from" and "left" are not distances (C4 question 5, 2026-10-06)
+  for (const m of six.matchAll(/\b(\d+(?:\.\d+)?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s*(feet|foot|ft|metres?|meters?|m)\b/gi)) {
     assert.match(`${m[1]} ${m[2]}`, /^(six|6) (feet|foot|ft)$/i, `a distance that is not six feet: ${m[0]}`);
   }
 });

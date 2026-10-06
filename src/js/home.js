@@ -17,8 +17,9 @@
 // the clock cannot be expressed in an identifier: the sequence runs the same and ends with the
 // pre-2026 sentence, and no identifier is made, nothing drawn and nothing saved.
 //
-// The certificate's drawing code is fetched when a check starts (it is needed 4.6 s later), which
-// keeps the home page's first load small. The certificate's faces are loaded with the page (and preloaded in its head), so the certificate
+// The certificate's drawing code is fetched quietly once the page has loaded and the browser is
+// idle, so a slow connection never holds up the result (C4, 2026-10-06); the page's first load, to
+// its load event, stays as small as it was. A check started before then fetches it itself. The certificate's faces are loaded with the page (and preloaded in its head), so the certificate
 // is never drawn in a fallback face and its PNG never waits on a font (PRD R14); the drawing also
 // waits for them, so the certificate drawn again from its link (/c/) comes out byte for byte the
 // same. The result's actions, Copy certificate link among them, are in result.js. (Jules, 2026-10-04)
@@ -262,6 +263,12 @@ function start() {
 }
 
 if (form && input && button) {
+  // after the load event and when the browser is idle; import() is shared, so a check started
+  // later finds the module already here
+  const warm = () => import('./certificate/draw.js').catch(() => undefined);
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(warm, { timeout: 2000 }) : setTimeout(warm, 200));
+  if (document.readyState === 'complete') idle();
+  else window.addEventListener('load', idle, { once: true });
   input.removeAttribute('maxlength');
   input.addEventListener('input', (e) => {
     if (!e.isComposing) enforceLength();

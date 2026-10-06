@@ -84,7 +84,12 @@ async function openMenu(w: Walk): Promise<void> {
 /** Choose a page from the menu. */
 export async function go(w: Walk, item: string): Promise<void> {
   await openMenu(w);
-  await menu(w).getByRole('link', { name: item, exact: true }).click();
+  const link = menu(w).getByRole('link', { name: item, exact: true });
+  // the new page's address first: the page being left has a level-1 heading of its own, which on a
+  // networked server can still be showing when the click returns (C4 question 9, 2026-10-06)
+  const path = new URL((await link.getAttribute('href'))!, w.page.url()).pathname;
+  await link.click();
+  await expect(w.page).toHaveURL((u) => new URL(u).pathname === path);
   await expect(w.page.getByRole('heading', { level: 1 })).toBeVisible();
 }
 
@@ -680,7 +685,9 @@ async function oneVisit(w: Walk, origin = ''): Promise<void> {
     () =>
       new Promise<boolean>((ok) => {
         if (!('serviceWorker' in navigator)) return ok(false);
-        setTimeout(() => ok(false), 15_000);
+        // the offline copy is about 4 MB; over a network its first install can take 20 s or more
+        // (C4 question 9, 2026-10-06)
+        setTimeout(() => ok(false), 60_000);
         navigator.serviceWorker.ready.then(() => ok(true));
       }),
   );
