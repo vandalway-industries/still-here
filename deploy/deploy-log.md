@@ -1,6 +1,7 @@
-# Deploy log — vandalwayind.com on the production server
+# Deploy log — the production server and the domains
 
-What was run on the production server for vandalwayind.com, and what the server said. Every block of
+What was run on the production server (vandalwayind.com in Phase 6, staging in Phase 7) and at the
+registrar (DNS, Phase 7), and what each said. Every block of
 output below is the scripts' own output, pasted whole, or a check made by hand on the server right
 after. The scripts print hashes, status codes and labels only: the other sites are `site-01` to
 `site-10` in the order they stand in the Caddyfile, and no host name, address or port appears here.
@@ -845,7 +846,7 @@ the site is gone: local port 000, socket absent
 == vandalwayind-uninstall.sh done
 ```
 
-### 17. Install, re-run after the undo (running now)
+### 17. Install, re-run after the undo (running)
 
 ```
 == vandalwayind-install.sh, 2026-10-06T03:43:31Z
@@ -893,3 +894,199 @@ served through the socket: HEAD / 200, GET /.counter/total 404
 Caddyfile now sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6
 == vandalwayind-install.sh done
 ```
+
+## Phase 7: staging (L1), 2026-10-06
+
+**What it is.** `deploy/staging-install.sh` adds one Caddy site for STILL HERE staging, bound to the
+loopback interface and to a socket under `/srv/still-here-staging/`, serving the build in
+`/srv/still-here-staging/site/` (copied there by rsync) with the rules of
+`deploy/caddy/staging.caddy`, which answer research 3's URL table as Pages does and give
+`/api/` (so `presence.json`) `access-control-allow-origin: *`. The internal network reaches staging
+on a new port of its own, an HTTPS port that proxies to the socket, so staging is a secure context.
+Staging's own JSON access log keeps one day. The build is made with `BUILD_ID` set to the commit,
+so `/build.txt` is that commit. Its undo is `deploy/staging-uninstall.sh`. The same guardrails as
+Phase 6: Caddyfile backed up with a timestamp, `caddy validate` passed before every reload, every
+other site block byte-identical before and after (the internal vandalwayind block is one of them,
+`site-11`), every other site answering after as before, the internal network's other routes hashed
+the same. The staging address is kept in the uncommitted `.env.staging`.
+
+**The runs, in order (UTC).** `deploy/staging-install.sh` first run (1); `deploy/staging-uninstall.sh`
+ran once and returned the server to its backed-up state (2); then `deploy/staging-install.sh` re-run
+after the undo (3). Built from commit 5a19b1c.
+
+### 1. Install, first run
+
+```
+== staging-install.sh, 2026-10-06T06:56:27Z
+preconditions: no staging block, no /srv/still-here-staging, local port free, a new port of its own free
+before: 12 blocks hashed, 11 other sites checked
+staging: Caddyfile backed up: /etc/caddy/Caddyfile.bak-staging-20261006T065633Z
+staging backup /etc/caddy/Caddyfile.bak-staging-20261006T065633Z sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6
+files: site/ synced to /srv/still-here-staging/site by rsync (130 files); build 5a19b1ca3371a3372cda93970d29d38921f65c8d
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile with the staging block)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+every other site block byte-identical before and after (and the Caddyfile outside the staging block: sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6, as before)
+reload: done (systemctl reload caddy); caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+other sites: every site that answered before the reload answers after it
+access log: written, one day kept
+internal network: a new port of its own added for staging; no existing route changed (other routes sha256 before e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20 after e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20)
+url table: /index 200, /index.html 200, /index/ 404, /research 301 (location /research/), /research/ 200, /no-such-page 404, /company/tracker/TRACKER.md 404
+presence.json: 200, access-control-allow-origin *
+staging /build.txt through the socket: 5a19b1ca3371a3372cda93970d29d38921f65c8d
+POST / 405
+staging Caddyfile now sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696
+== staging-install.sh done
+```
+
+### 2. Undo (deploy/staging-uninstall.sh ran once)
+
+```
+== staging-uninstall.sh, 2026-10-06T06:57:04Z
+internal network: 1 port of staging removed; no other route changed (other routes sha256 before e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20 after e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20)
+Caddyfile copied before the undo: /etc/caddy/Caddyfile.pre-undo-staging-20261006T065705Z (sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+caddy validate: Valid configuration
+reload: done (systemctl reload caddy); caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+other sites: every site that answered before the reload answers after it
+files: /srv/still-here-staging removed; staging's access log emptied (left in place, 0 bytes)
+staging uninstall Caddyfile sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6
+Caddyfile identical to the backup /etc/caddy/Caddyfile.bak-staging-20261006T065633Z: the server returned to its backed-up state
+staging is gone: local port 000, socket absent
+== staging-uninstall.sh done
+```
+
+### 3. Install, re-run after the undo
+
+```
+== staging-install.sh, 2026-10-06T06:57:26Z
+preconditions: no staging block, no /srv/still-here-staging, local port free, a new port of its own free
+before: 12 blocks hashed, 11 other sites checked
+staging: Caddyfile backed up: /etc/caddy/Caddyfile.bak-staging-20261006T065730Z
+staging backup /etc/caddy/Caddyfile.bak-staging-20261006T065730Z sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6
+files: site/ synced to /srv/still-here-staging/site by rsync (130 files); build 5a19b1ca3371a3372cda93970d29d38921f65c8d
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile with the staging block)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+every other site block byte-identical before and after (and the Caddyfile outside the staging block: sha256 e11e271d0eeb96ccd80aecc84e0003a7bdd977093b70646e8fafe6f1c708e5b6, as before)
+reload: done (systemctl reload caddy); caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+other sites: every site that answered before the reload answers after it
+access log: written, one day kept
+internal network: a new port of its own added for staging; no existing route changed (other routes sha256 before e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20 after e80fa4a7d0c63faa486b44d245df75a1f419cdc72adf72224e22efb65cc2ec20)
+url table: /index 200, /index.html 200, /index/ 404, /research 301 (location /research/), /research/ 200, /no-such-page 404, /company/tracker/TRACKER.md 404
+presence.json: 200, access-control-allow-origin *
+staging /build.txt through the socket: 5a19b1ca3371a3372cda93970d29d38921f65c8d
+POST / 405
+staging Caddyfile now sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696
+== staging-install.sh done
+```
+
+## Phase 7: the security.txt reminder's dry run (L2), 2026-10-06
+
+security-txt-reminder dry run, 06:58 UTC: dispatched by hand with `expires` set to a fabricated near
+date (2026-10-16T06:58:40Z), run 37426838369, success. Its log: "Expires 2026-10-16T06:58:40Z: 10.0
+days left (dry run)", "opened #1", "dry run: closed #1". Issue #1 "Renew security.txt" opened and
+closed in the same second, with no assignee (`RENEWAL_ASSIGNEE` is set in N1). The Pages workflow's
+runs on `main` read "skipped" while the repository is private (for example run 37425721753).
+
+## Phase 7: DNS before launch (L3), 2026-10-06
+
+**How.** Through the registrar's DNS API, by direct calls (the zone read, `POST …/validate`, then
+`PUT` with `"overwrite": false`, which appends and never replaces). Before each write the whole zone
+was read and saved off the repository as that domain's snapshot (its id below is the sha256 of the
+saved file), and the registrar's own snapshot taken at the write was read back and compared with
+it. The parking address in the zones is written here as "the registrar's parking address": no
+address goes in this repository. Each write was the three records L3 names and nothing else.
+
+**The snapshots (the zones before L3's writes), in full:**
+
+| Domain | Name | Type | TTL | Value |
+|---|---|---|---|---|
+| isitstillhere.com | `@` | A | 50 | the registrar's parking address |
+| isitstillhere.com | `www` | CNAME | 300 | `isitstillhere.com.` |
+| isitstillhere.com | `_github-pages-challenge-vandalway-industries` | TXT | 3600 | the value Clive handed over (in `.env.staging`) |
+| vandalwayind.com | `@` | A | 50 | the registrar's parking address |
+| vandalwayind.com | `www` | CNAME | 300 | `vandalwayind.com.` |
+
+**The steps, in order (UTC):**
+
+- isitstillhere.com zone snapshot before its first write (the Pages challenge, 05:51): the registrar's snapshot id 186064327, holding the two records then there (A `@`, CNAME `www`).
+- 05:51 validation dry run passed (`POST /zones/isitstillhere.com/validate`: 200 "Request accepted").
+- isitstillhere.com: wrote one record, TXT `_github-pages-challenge-vandalway-industries` (append; the two records before it unchanged on read-back). Recorded at the time in CHECKPOINTS.md § Record.
+- isitstillhere.com zone snapshot before L3's write, 06:51: id local-sha256 4c9d761ece2f1bd2866e4927ad93c1061c7d6a0dfbc113150f326f495618ac52 (three record sets, the table above); the registrar's own snapshot at the write, id 186074588, holds the same three record sets.
+- vandalwayind.com zone snapshot before its first write, 06:51: id local-sha256 ae6f6c4eef5740ea8336e1c2e36f133d60b6dd9bd38b6576e0c58ad115c0fb30 (two record sets, the table above); the registrar's own snapshot at the write, id 186074603, holds the same two record sets.
+- 06:51:49 validation dry run passed for both zones with the same payload (`POST …/validate`: 200 "Request accepted", 200 "Request accepted").
+- 06:52:15 isitstillhere.com: wrote three records (append): MX `@` `0 .`; TXT `@` `"v=spf1 -all"`; TXT `_dmarc` `"v=DMARC1; p=reject"`; TTL 3600 each. 200 "Request accepted".
+- 06:52:19 vandalwayind.com: wrote three records (append), the same three: MX `@` `0 .`; TXT `@` `"v=spf1 -all"`; TXT `_dmarc` `"v=DMARC1; p=reject"`; TTL 3600 each. 200 "Request accepted".
+- Read-back, isitstillhere.com: every other record unchanged, equal to the snapshot (A `@`, CNAME `www`, TXT `_github-pages-challenge-vandalway-industries`); the three new record sets present; six record sets in all (zone sha256 a38f75d3cae1277f9b2156cc67c1b82fea4c596f9620e04d3ac0a4feb0cc8b0b).
+- Read-back, vandalwayind.com: every other record unchanged, equal to the snapshot (A `@`, CNAME `www`); the three new record sets present; five record sets in all (zone sha256 9ed23c42dbbd5024c8bda5f27c9874d8595e1a3e0ee39968ab20fec85c687d27).
+- No wildcard record in either zone (a random name under each answers NXDOMAIN at the zone's own name servers).
