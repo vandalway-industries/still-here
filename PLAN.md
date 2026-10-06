@@ -32,34 +32,22 @@ relations:
 |---|---|---|---|
 | 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
 | 1 | Design system, golden candidates | done | DS1–DS7 closed; C2 packet out |
-| 2 | The shell, the ritual and the certificate | exit review (E0–E7 closed; the gate's critic PASS line not yet ticked) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
+| 2 | The shell, the ritual and the certificate | done | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | done | S2–S9 closed; W4 W5 played |
 | 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | held (V4 on L3's null MX, W7.3) | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | active (entry waits on Phase 2's exit review and Phase 6's V4) | L1–L5 closed; C4 packet out |
+| 7 | Staging and the launch packet | active | L1–L5 closed; C4 packet out |
 | 8 | Launch | pending | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
-**Phase 7 — Staging and the launch packet.** Active, and its entry is not yet satisfied. C2 and
-C3 are recorded, and C3's one bead (`still-here-txf`, `s07` on careers) is closed. Phases 0, 1, 3,
-4 and 5 are done. The quiet-machine re-run (2026-10-06, 00:39–01:41, after a stray
-whole-filesystem search that had held the load at 10–15 was stopped) tested a private snapshot of
-HEAD 973717a with one worker, each run started with the one-minute load below 3, two runs per bead
-in six projects. It closed E2, E4, E7, X4 and V2 through the STRICT gate. V1 was closed on the
-critic's fresh blind pick (89c41f1). Open, and what each waits on:
-
-- Phase 2: every bead closed; the exit gate's line (critic PASS on each GUI bead) waits on the
-  Phase 2 exit review.
-- V4: W7 step 3, the null MX that L3 writes.
-- For L5: with `STAGING_URL` set, `e2e/helpers/offline.ts` takes its staging branch, which WebKit
-  refuses and which Firefox's service worker goes around. X4 closed on its local runs; W6 on
-  staging needs a PM decision first.
-- On record: E7's portfolio test 1–2 takes 18.6–19.8 s in WebKit on one worker against a 30 s
-  limit. The gate's first attempt at three workers ran out of time once; its second passed.
-
-Next move: the Phase 2 exit review; then Phase 7's steps, L1 first.
+**Phase 7 — Staging and the launch packet.** Entered 2026-10-06. Phases 0–5 are done; Phase 6 is
+held only on V4's W7.3, which needs the null MX that L3 writes here. C2 and C3 are recorded, and
+C3's one bead is closed. isitstillhere.com is verified as the organization's Pages domain (its TXT
+record written). Next move: L1 (staging), L2 (the workflows), L3 (DNS: null MX, SPF, DMARC), L4 (the
+release scan), L5 (W1–W9 on staging, the phone checklist, the C4 packet). Open before L5: the
+offline helper's staging branch (WebKit refuses it; Firefox's service worker goes around it).
 
 ## Build method
 
@@ -266,7 +254,7 @@ Deterministic: the identifier vectors and the exhaustive test; timing and stilln
 No cap (I-07). Expected about 220 orchestrator turns.
 
 #### Exit gate
-- [ ] E0–E7 closed through the gate (beads waiting only on C2's pick are handled by "Waiting on C2"); W4.1–2, W1, W2, W3, W8 played with no stuck step; critic PASS on each GUI bead.
+- [x] E0–E7 closed through the gate (beads waiting only on C2's pick are handled by "Waiting on C2"); W4.1–2, W1, W2, W3, W8 played with no stuck step; critic PASS on each GUI bead. Evidence: E0–E7 closed through the gate (E2, E4, E7 on 2026-10-06 after two quiet-machine runs each); walks played by the critic with no stuck step (Phase 2 review, 2026-10-04); critic PASS on every GUI bead at that review except E3 item 4, since resolved by C2 Decision 6, and E2.14 and E3.7 passed their blind picks (2026-10-05).
 
 #### Result
 
@@ -411,7 +399,7 @@ No cap (I-07). Expected about 80 orchestrator turns.
 ### Phase 7 — Staging and the launch packet
 
 #### Entry criteria
-- [ ] Phases 2, 3, 4, 5 and 6 at their exit gates (or `held` awaiting C2 with C2 since recorded); every bead filed from C3's red-pens closed.
+- [x] Phases 2, 3, 4, 5 and 6 at their exit gates (or `held` awaiting C2 with C2 since recorded); every bead filed from C3's red-pens closed. Evidence (2026-10-06): Phases 1–5 done; Phase 6 held only on V4's W7.3, which needs the null MX that L3 writes in this phase (recorded as a sequencing call: Phase 6's last item depends on Phase 7). C2 recorded; the one bead C3 filed (still-here-txf) closed.
 
 #### Steps
 - [ ] L1: staging for isitstillhere by `deploy/staging-install.sh` and its undo: Caddy on localhost with Pages-equivalent rules and the `presence.json` header, a new internal-network HTTPS port of its own (I-11); rsync of `site/`; `/build.txt` check; research 3's URL table on staging.
@@ -544,3 +532,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-05 — Phase 6 held after the critic's review (server matches the deploy log hash for hash; V2's test conflict confirmed); V2's step unticked (the bead is open). The run waits on C2 and C3 for Phase 7's entry. (Jules, 2026-10-05)
 - 2026-10-06 — Re-run at specs-v6 after the internal copy's redeploy: DS1, E3, S2 and X6 closed; Phases 1 and 3 done; Phases 2, 4 and 6 held on E2's gate run, E4 test 7, E7 in WebKit, X4's W6, V1's re-pick, V2's network red and V4's null MX; Phase 7 active, entry not yet met. (Jules, 2026-10-06)
 - 2026-10-06 — Quiet-machine re-run (one worker, load below 3): E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done; Phase 2 to its exit review; Phase 6 held on V4 alone. (Jules, 2026-10-06)
+- 2026-10-06 — Phase 2 done (critic review plus blind picks plus quiet-machine closes); Phase 7 entered. Phase 6's V4 waits on L3's null MX, so it follows L3 rather than preceding Phase 7. (Jules, 2026-10-06)
