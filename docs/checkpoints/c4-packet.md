@@ -116,7 +116,7 @@ for the new address; wait for the service worker to be ready) is § 6, question 
 | W2.4 | played | the spec went red at WebKit 390 (the walk helper's race, below); played by hand three times at WebKit 390 on staging, confirmed each time |
 | W2.5 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W2.6 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
-| W2.7 | played (substitute: `decodeQr()`); the camera scan awaiting phone (item 6) | red once in six projects × two runs (Chromium 1440, run 6); green in every other |
+| W2.7 | played (substitute: `decodeQr()`); the camera scan played on Clive's phone, 2026-10-06 (item 6) | red once in six projects × two runs (Chromium 1440, run 6); green in every other |
 | W3.1 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W3.2 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W3.3 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
@@ -134,8 +134,8 @@ for the new address; wait for the service worker to be ready) is § 6, question 
 | W5.1 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W5.2 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W5.3 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
-| W6.1 | played (substitute: `checkInstallable()`); the install itself awaiting phone (item 8) | the spec went red at Chromium 390: it checks before the offline copy (4 MB, 62 files) has finished installing over the network, which took 21 s in Chromium and 4.8 s in WebKit; played by hand: installable with no errors, controlled after the reload, Leadership opens offline |
-| W6.2 | played (substitute: `checkInstallable()`); awaiting phone (item 8) | green in the spec, Chromium and WebKit, 390 and 1440 |
+| W6.1 | played (substitute: `checkInstallable()`); the install itself played on Clive's phone, 2026-10-06 (item 8) | the spec went red at Chromium 390: it checks before the offline copy (4 MB, 62 files) has finished installing over the network, which took 21 s in Chromium and 4.8 s in WebKit; played by hand: installable with no errors, controlled after the reload, Leadership opens offline |
+| W6.2 | played (substitute: `checkInstallable()`); the Home Screen copy offline played on Clive's phone, 2026-10-06 (item 8) | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W6.3 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W6.4 | played (substitute: `openDownload()`) | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W6.5 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
@@ -144,7 +144,7 @@ for the new address; wait for the service worker to be ready) is § 6, question 
 | W6.8 | played | green in the spec, Chromium and WebKit, 390 and 1440 |
 | W7.1 | played | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging |
 | W7.2 | played | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging; the counter rose 643 → 665 within 628 s of three loads |
-| W7.3 | played (substitute: `checkNullMx()`); the real send awaiting phone (item 9) | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging |
+| W7.3 | played (substitute: `checkNullMx()`); the real send played on Clive's phone, 2026-10-06: undeliverable (item 9) | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging |
 | W7.4 | played | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging |
 | W7.5 | played | on the internal copy, credited from V4's three green walks (2026-10-06) and the critic's hand play, by your decision; not repeated on staging |
 | W8.1 | played | W1.3 inside it went red at Chromium 390 in the spec; played by hand three times: the chip fills the box and the cursor is in it |
@@ -397,3 +397,4 @@ larger.)
 ## Changelog
 
 - 2026-10-06 — Written at the end of Phase 7 for C4. (Diane, 2026-10-06)
+- 2026-10-06 — Clive's phone checklist: all nine items passed; the † steps marked played. (Diane, 2026-10-06)

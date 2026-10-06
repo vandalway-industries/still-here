@@ -172,6 +172,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   The walk helpers wait for the new page's address before its heading, and the first-visit install
   wait is 60 s instead of 15 s. (5) and (9) re-tag `specs-v9`. The phone checklist and the public
   switch are still his. (Jules, 2026-10-06)
+- **C4 — the phone checklist, 2026-10-06.** Clive ran all nine items on his iPhone against staging,
+  on the internal network, and all nine passed as written: the ritual, the PDF in the certificate's
+  type, the PNG saved to Photos, the copied link reopened, the portfolio after Safari was closed, the
+  QR code scanned by the camera, VoiceOver reading the three lines, the Home Screen copy in Airplane
+  Mode, and the e-mail to webmaster@vandalwayind.com reported undeliverable. The † steps W2.7,
+  W6.1–2 and W7.3 are played. (Jules, 2026-10-06)
 
 ## Changelog
 
