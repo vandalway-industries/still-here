@@ -117,6 +117,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   Names drawn as images (scripts the face lacks) may step down to an ink floor of about 24 units so
   that the longest fit three lines; text names keep the 30-unit floor; the fixed lines never move.
   (Jules, 2026-10-05)
+- **Re-tag specs-v5 — 2026-10-05.** Clive approved a narrow change to T0
+  (`tests/unit/still-here-64t-specs.test.ts`): its baseline check skips rows in a new "Filed from
+  checkpoints" table of `docs/bead-map.md`, so a bead filed after Phase 0 (beginning with
+  `still-here-txf`, `s07` on careers, from C3) can carry its own tests. Nothing else in T0 changes.
+  Applied by a separate test-author session with the two `s07` tests, re-tagged `specs-v5`, and
+  `.bd-gate` locks there. (Jules, 2026-10-05)
 
 ## Changelog
 
