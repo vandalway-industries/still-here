@@ -36,16 +36,15 @@ Clive: the phone checklist, his answers to § 6, sign-off, then the public switc
 
 ### What's next
 
-1. Clive's answers. Then: apply what he approves (question 9 is a test change, then a re-tag and
-   L5's close; question 1 may strip the originals' credentials; question 3 is a product change).
-2. After the public switch: Phase 8, N1–N3.
+1. Clive answered C4's § 6 (recorded in `CHECKPOINTS.md`; applied at `specs-v9`, f728237, staging
+   updated). Still his: the phone checklist and the public switch.
+2. L5: re-run its staging walk through the gate at a quiet network moment (the workstation's link to
+   staging drops during long browser runs; every step plays by hand).
+3. After the public switch: Phase 8, N1–N3, then the final audit.
 
 ### Waiting on Clive
 
 - The phone checklist (`docs/checkpoints/c4-phone-checklist.md`), on the internal network.
-- The packet's § 6: the originals' content credentials, the code's licence, the drawing code at the
-  press, X4 item 3's wording, RC5's pattern, the certificate golden, the counter cell, the walk
-  helpers.
 - Sign-off, then the public switch.
 
 ### Surprises / debt
@@ -102,3 +101,4 @@ Clive: the phone checklist, his answers to § 6, sign-off, then the public switc
 - 2026-10-06 — Quiet-machine re-run: E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done. (Martin, 2026-10-06)
 - 2026-10-06 — Phase 7: L1 and L2 closed; L3 written and held on one test; L4 run and held on two. (Martin, 2026-10-06)
 - 2026-10-06 — L3, L4 and V4 closed at specs-v8; Phase 6 done; W1–W9 walked on staging; the C4 packet is out and the run waits on Clive. (Martin, 2026-10-06)
+- 2026-10-06 — C4's questions answered and applied (specs-v9); L5 waits on a quiet-network gate run; the phone checklist and the switch are Clive's. (Martin, 2026-10-06)
