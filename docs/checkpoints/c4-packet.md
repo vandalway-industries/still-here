@@ -233,10 +233,9 @@ and `garage/assets/` keep their content credentials.
 7. **The 1997 counter cell.** The golden's counter cell has a lighter grey frame on a faint green;
    the counter we draw is darker, with a black frame. It is within the approved "counter digits
    change" allowance; this is for your eye. See [the 1997 page on the internal copy](c4/screens/vandalwayind-1997-1440.png).
-8. **Staging's build id** (no decision needed unless you want it): staging serves the build of
-   7f198d9. Nothing under `src/` has changed since, so the pages are the same as HEAD's; only
-   `/build.txt` differs. Putting HEAD's build on staging is a file update on the server, which this
-   session could not make. It is one command, given in `SESSION_STATUS.md`.
+8. **Staging's build id** (no decision needed): staging was walked on the build of 7f198d9 and now
+   serves the build of a918f13, the packet's own commit (`deploy/deploy-log.md`, Phase 7 staging,
+   run 5). Nothing under `src/` changed between them; the pages are the same.
 
 ## 7. Calls made under a rule since C3
 

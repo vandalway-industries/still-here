@@ -50,10 +50,8 @@ Clive: the phone checklist, his answers to § 6, sign-off, then the public switc
 
 ### Surprises / debt
 
-- Staging serves the build of 7f198d9; nothing under `src/` has changed since. This session could
-  not write to the server. To put HEAD's build there: build with `BUILD_ID=$(git rev-parse HEAD)
-  npm run build`, then send `site` and `deploy` to the server and run `deploy/staging-install.sh
-  --update` there (the header of that script gives the command).
+- Staging serves the build of a918f13 (updated after the packet; `deploy/deploy-log.md`). Server
+  writes over `ssh` are allowed for this workstation by its uncommitted local settings.
 - The workstation's network drops now and then (`ERR_NETWORK_CHANGED`); a red with that error is
   re-run, not believed.
 - On staging the offline copy takes up to 21 s to install on a first visit in Chromium (4 MB, 62

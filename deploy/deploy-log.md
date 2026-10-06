@@ -1063,6 +1063,19 @@ staging /build.txt through the socket: 7f198d95ec58b19b4b1e5db9dde14c08c1b886ea
 == staging-install.sh --update done
 ```
 
+### 5. Update to the build of a918f13 (files only), after the C4 packet
+
+The same files-only update, so that staging serves the commit the packet goes out with. Nothing
+under `src/` changed between 7f198d9 and a918f13; the pages are the same, `/build.txt` is new.
+L1's unit test 2 (staging `/build.txt` equals HEAD) passed after it.
+
+```
+== staging-install.sh --update, 2026-10-06T12:11:14Z
+files: site/ synced to /srv/still-here-staging/site by rsync (130 files); build a918f13bd571433625e9d0986eba5970fc632bec
+staging /build.txt through the socket: a918f13bd571433625e9d0986eba5970fc632bec
+== staging-install.sh --update done
+```
+
 ## Phase 7: the security.txt reminder's dry run (L2), 2026-10-06
 
 security-txt-reminder dry run, 06:58 UTC: dispatched by hand with `expires` set to a fabricated near
