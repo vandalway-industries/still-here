@@ -1198,3 +1198,93 @@ go-live 2026-10-06 total 793 -> 0
   `http://vandalwayind.com/` and `http://www.vandalwayind.com/` 301 to `https://vandalwayind.com/`;
   `https://www.vandalwayind.com/` 301 to the apex; `Last-Modified` 22 Aug 1997; the counter line
   "times since October 6, 2026."
+
+- The public scripts were then changed (one address per block; the go-live step runs once and
+  leaves a marker; the undo takes "ours" from its marks) and run again, so the server holds what
+  the repository has: `deploy/vandalwayind-public-uninstall.sh`, then
+  `deploy/vandalwayind-public-install.sh`. The undo returned the Caddyfile to the first install's
+  backup exactly. The go-live step ran a second time, because the first run had left no marker; it
+  reset the 8 loads made in the eleven minutes between the two runs, most of them our own checks.
+  The output of both, whole:
+
+```
+== vandalwayind-public-uninstall.sh, 2026-10-06T13:24:17Z
+Caddyfile copied before the undo: /etc/caddy/Caddyfile.pre-undo-vandalwayind-public-20261006T132422Z (sha256 7bca0be197a3fb118b372348f86177e014aa186a58e240438978d19a0c23832a)
+the marked lines hold 3 public blocks; 13 others
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile without the public blocks)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+block site-12 sha256 before af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10 after af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10
+every other block byte-identical before and after
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+site-13 answers: before 000 after 000
+site-14 answers: before 000 after 000
+the Caddyfile equals the public install's backup (/etc/caddy/Caddyfile.bak-vandalwayind-public-20261006T131323Z): sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696
+== vandalwayind-public-uninstall.sh done
+== vandalwayind-public-install.sh, 2026-10-06T13:24:28Z
+preconditions: the internal copy installed, no public block yet
+before: 13 blocks hashed, 12 other sites checked
+backup /etc/caddy/Caddyfile.bak-vandalwayind-public-20261006T132432Z sha256 e674d25a4a8b9fbb6a5829fe3d7f32f8a7ad47f0f6a01b148d128a7e267a4696
+go-live 2026-10-06 total 8 -> 0
+files: refreshed; the page reads "times since October 6, 2026."; page and images dated 1997-08-22, guestbook 1999-03-02; counter at 0
+caddy validate: Valid configuration
+caddy validate passed (the Caddyfile with the public blocks)
+block global-options sha256 before 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6 after 1a4dfb2eba60fceb421bc604cf8051ccc07ba5535e361c0390247d0722a726d6
+block site-01 sha256 before d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c after d3e30ebb6d30fd797d0871b12da9e8de6ed4faa775c72422150b1c0bf003868c
+block site-02 sha256 before f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420 after f35b3dddb7ad4b5ab3a5070572b9d676c1bcea2fe24317567f2fa988f7fe5420
+block site-03 sha256 before 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce after 5405def69f196bf47c9a0b1a1c342bde7037d1b17ad2267a10724be2daa411ce
+block site-04 sha256 before 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd after 12675a72e769ad5848395a596b50ff81f1ebfefc55b3e4fb3cb7d0567d30ebfd
+block site-05 sha256 before 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d after 043369b240d7004697e541c74605d628486ce1f3e906a61ade1d38b76556ad9d
+block site-06 sha256 before 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df after 74b5c289b5108108b72b3608333150c1eecc4d5e42661cfedb6f0b5d2182e9df
+block site-07 sha256 before 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6 after 266abd9f5c7c9956c5a344e08a09691b65711b08e1853a5bf37c7914a8882be6
+block site-08 sha256 before b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab after b960e035aa07c5c13ff08ce67c89d38b712f99e5f4a787188be0399f7b65dbab
+block site-09 sha256 before ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba after ff63dd85973364e399921153447feb3cbb29ef225beac1001be0c833c76295ba
+block site-10 sha256 before 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624 after 6c03df80ea8cca7408b562a9d9a5e122356405ec966f0d3783a74f65f2a42624
+block site-11 sha256 before fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46 after fe1dd9b02b229f27e04a4a1b6a5cc97e2bc56da698139034c56f892a9dcd8d46
+block site-12 sha256 before af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10 after af5712ac920fc3a50e22c01e5ed16f4f2a7e928d8471c2c0d199a171c79e5b10
+vandalwayind.com public block: every other block byte-identical before and after
+reload: done; caddy active
+site-01 answers: before 301 after 301
+site-02 answers: before 200 after 200
+site-03 answers: before 502 after 502
+site-04 answers: before 502 after 502
+site-05 answers: before 200 after 200
+site-06 answers: before 200 after 200
+site-07 answers: before 502 after 502
+site-08 answers: before 502 after 502
+site-09 answers: before 200 after 200
+site-10 answers: before 502 after 502
+site-11 answers: before 000 after 000
+site-12 answers: before 000 after 000
+site-13 answers: before 000 after 000
+site-14 answers: before 000 after 000
+other sites: every site that answered before the reload answers after it
+Caddyfile now sha256 9b05d53578a7b8c717e8ca3b2535828a0bd53ecce12165620760aaa5cb2a0c47
+== vandalwayind-public-install.sh done
+```
+
+- Checked by hand after the second run: `https://vandalwayind.com/` 200, certificate valid;
+  `http://vandalwayind.com/cgi-bin/guestbook.html` and `https://www.vandalwayind.com/cgi-bin/guestbook.html`
+  301 to the same path on `https://vandalwayind.com`; `http://www.vandalwayind.com/` 301 to the apex.

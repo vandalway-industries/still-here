@@ -32,7 +32,7 @@ STILL HERE™ — Vandalway Industries' presence-certification website: enter an
 
 <!-- THE HUB. Everything else is reached from here. Keep paths relative to this file. -->
 
-- Brand: `../brand/vandalway-industries-logo.png` (parent) · `garage/assets/still-here-logo-horizontal.png` · `garage/assets/still-here-hero-chair.png`
+- Brand: `assets/brand/vandalway-industries-logo.png` (the parent company's) · `garage/assets/still-here-logo-horizontal.png` · `garage/assets/still-here-hero-chair.png`
 - Braindump: `garage/BRAINDUMP.md`
 - Brainstorm: `garage/BRAINSTORM.md` (born at stage 2)
 - Handoff: `garage/HANDOFF.md` (born at stage 8)
@@ -51,6 +51,11 @@ STILL HERE™ — Vandalway Industries' presence-certification website: enter an
 ## Stable interfaces
 
 <!-- What other repos MAY depend on. Anything not listed is not a dependency surface. Empty until promote. -->
+- **security.txt** (`https://isitstillhere.com/.well-known/security.txt`): renew by **2027-09-06**,
+  30 days before its `Expires` of 2027-10-06 at launch. Owner: Martin (sh-011). The reminder is
+  `.github/workflows/security-txt-reminder.yml`, which opens an issue when 30 days or fewer are left.
+  Each deploy writes a new `Expires` a year from that deploy, so the date moves forward with every
+  publish; the reminder reads the live file, not this line. (Malcolm, 2026-10-06)
 
 ## Changelog
 
