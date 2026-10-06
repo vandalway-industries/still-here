@@ -16,7 +16,7 @@ relations: {}
 
 ### Current state
 
-Clive's C2 and C3 answers are in the product, except one piece of Decision 6 (below). Nothing was
+Clive's C2 and C3 answers are in the product, and so are his follow-ups. Nothing was
 ticked and no bead was closed: the test author is re-tagging `specs-v4`, and the re-runs come after.
 The internal copy of vandalwayind.com was taken down and put back by its two scripts with the
 counter fixes in.
