@@ -16,13 +16,12 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 7 is active; its entry waits on the beads still open in Phases 2, 4 and 6 (E2, E4, E7,
-  X4, V1, V2, V4). Phases 0, 1, 3 and 5 are done.
+- Phase 7 is active; its entry waits on Phase 2's exit review (E0–E7 are all closed) and on V4,
+  whose last step is the null MX that L3 writes. Phases 0, 1, 3, 4 and 5 are done.
 
 **Next:**
-- The critic's fresh blind pick of the 1997 page (V1 item 4); quiet-machine re-runs for E2's gate
-  and E7; decisions on E4 test 7, X4's W6 and the offline helper's staging branch, and V2's one
-  network red.
+- The Phase 2 exit review; a PM decision on the offline helper's staging branch before L5 plays
+  W6 on staging; then L1–L3, with V4 closing after L3's null MX.
 
 **Later:**
 - L1–L5 to the C4 launch packet (staging, phone checklist); Phase 8 after Clive's public switch.
@@ -33,38 +32,34 @@ relations:
 |---|---|---|---|
 | 0 | Promote, gates, records filed | done | G0 G1 G2 T0 closed; `specs-v1` tagged red |
 | 1 | Design system, golden candidates | done | DS1–DS7 closed; C2 packet out |
-| 2 | The shell, the ritual and the certificate | held (E2 at the gate's timing run; E4 test 7; E7 in WebKit) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
+| 2 | The shell, the ritual and the certificate | exit review (E0–E7 closed; the gate's critic PASS line not yet ticked) | E0–E7 closed; W1 W2 W3 W8 and W4.1–2 played |
 | 3 | The company website | done | S2–S9 closed; W4 W5 played |
-| 4 | Extras | held (X4: the W6 walk once at 390; the offline helper's staging branch) | X1–X6 closed; W6 played |
+| 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
-| 6 | vandalwayind.com (internal) | held (V1 blind re-pick; V2 one network red; V4 on L3's null MX) | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | active (entry waits on Phases 2, 4 and 6) | L1–L5 closed; C4 packet out |
+| 6 | vandalwayind.com (internal) | held (V4 on L3's null MX, W7.3) | V1–V4 closed; W7 played internally |
+| 7 | Staging and the launch packet | active (entry waits on Phase 2's exit review and Phase 6's V4) | L1–L5 closed; C4 packet out |
 | 8 | Launch | pending | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
 **Phase 7 — Staging and the launch packet.** Active, and its entry is not yet satisfied. C2 and
-C3 are recorded, and C3's one bead (`still-here-txf`, `s07` on careers) is closed, but Phases 2, 4
-and 6 are not at their exit gates. Phases 0, 1, 3 and 5 are done. The re-run at `specs-v6`
-(2026-10-06, a private snapshot of HEAD 3f4803e, two runs at two workers in six projects, the
-internal copy redeployed first) closed DS1, E3, S2 and X6 through the gate. Open, and what each
-waits on:
+C3 are recorded, and C3's one bead (`still-here-txf`, `s07` on careers) is closed. Phases 0, 1, 3,
+4 and 5 are done. The quiet-machine re-run (2026-10-06, 00:39–01:41, after a stray
+whole-filesystem search that had held the load at 10–15 was stopped) tested a private snapshot of
+HEAD 973717a with one worker, each run started with the one-minute load below 3, two runs per bead
+in six projects. It closed E2, E4, E7, X4 and V2 through the STRICT gate. V1 was closed on the
+critic's fresh blind pick (89c41f1). Open, and what each waits on:
 
-- E2: every box flipped, but the gate's own run of the timing spec went red once in Chromium
-  (line 1 held 631.6 ms against 983; load average 12–15). Waits on a gate run on a quiet machine.
-- E4: BROWSER PASS. Test 7, the second tap made while busy (`specs-v6`), went red once at
-  webkit-390 ("Preparing PNG…" was gone before its `aria-disabled` check).
-- E7: items 1–2 and BROWSER PASS. Test 1–2 runs out of its 30 s in WebKit in both runs.
-- X4: BROWSER PASS. The W6 walk went red once at chromium-390 (the service worker was not ready
-  within 15 s). With `STAGING_URL` set, `e2e/helpers/offline.ts` takes its staging branch, which
-  WebKit refuses and which Firefox's service worker goes around. That matters for L5's W6 on
-  staging.
-- V1: item 4, the critic's fresh blind pick after the e-mail redeploy.
-- V2: every box flipped; not closed, because its spec went red once in Chromium on a
-  workstation network change (`ERR_NETWORK_CHANGED`).
+- Phase 2: every bead closed; the exit gate's line (critic PASS on each GUI bead) waits on the
+  Phase 2 exit review.
 - V4: W7 step 3, the null MX that L3 writes.
+- For L5: with `STAGING_URL` set, `e2e/helpers/offline.ts` takes its staging branch, which WebKit
+  refuses and which Firefox's service worker goes around. X4 closed on its local runs; W6 on
+  staging needs a PM decision first.
+- On record: E7's portfolio test 1–2 takes 18.6–19.8 s in WebKit on one worker against a 30 s
+  limit. The gate's first attempt at three workers ran out of time once; its second passed.
 
-Next move: the PM's call on each of these; then Phase 7's entry.
+Next move: the Phase 2 exit review; then Phase 7's steps, L1 first.
 
 ## Build method
 
@@ -234,31 +229,34 @@ No cap (I-07). Expected about 120 orchestrator turns.
 #### Steps
 - [x] E0: the site shell (header, the eight-item menu, the three-link footer, CSP and Open Graph meta, the link checker) and a page for every path of PRD R24, built or a marked placeholder; the real 404 page. Evidence: `still-here-lsz` closed through the gate; the shell is included at build time from `src/_shell/` (a page without its three markers fails the build); `tests/unit/still-here-lsz-links.test.ts` 6/6; shell and walk specs 124 passed, 2 skipped (the walk is Chromium and WebKit only) in six projects; W4.1–2 played in Chromium and WebKit at 390 and 1440; `npm run check:links` 19 pages, 0 broken; DS2–DS7 and X3 tests still green.
 - [x] E1: identifier module (Branch B, mod 37 per I-12, canonicalization, decoder) shared by the site and the records check. Evidence: `still-here-yw2` closed through the gate; `src/js/identifier.js` (canonicalize, makeIdentifier, parseIdentifier), imported by `src/js/home.js`; `tests/unit/still-here-yw2-identifier.test.ts` 6/6 (seven vectors, 3,000 random identifiers with every substitution and swap rejected, the decoder cases, one alphabet holder); the DS4 specimen recomputes to SH-00PP-9AGR-1GTB.
-- [ ] E2: the ritual on `/`: input rules (D5), examples (Q10), the sequence and its timing (Q5), reduced motion, the result, Check another, the pre-2026 clock. **[after C2]** styled to the home golden.
+- [x] E2: the ritual on `/`: input rules (D5), examples (Q10), the sequence and its timing (Q5), reduced motion, the result, Check another, the pre-2026 clock. **[after C2]** styled to the home golden.
   Evidence (2026-10-04): unit 4/4; items 1-9 and 11-13 green in six projects in two full runs (84 and 82 of 86 run passed); W1 and W8 played in Chromium and WebKit; open on item 10 (C2 test change) and item 14 (C2 golden).
   Re-run at `specs-v3` (2026-10-05), against HEAD 2e1da15 served from a private copy, two full runs in six projects at two workers: item 10 flipped (ritual spec 10 passed, 1 skipped, in every project, both runs); unit 4/4 both runs. BROWSER PASS held: timing items 5 (WebKit spread 210 ms against 200) and 6 (an indicator sample taken between the result and the certificate) each red once in run 1 under load average about 10, green in run 2, so re-run on a quiet machine before C4; the W1 walk in WebKit went over 5,600 ms once (5,654 ms; C2 test change 5); item 14 waits on C2.
   Re-run at `specs-v6` (2026-10-06), a private snapshot of HEAD 3f4803e, two runs at two workers in six projects: ritual 10 passed + 1 HUMAN-JUDGED skip, timing 3/3, in every project both runs; walk 2/2 in Chromium and WebKit at both sizes both runs (W1.1–5, W1.8–10, W8.1–2 played); unit 4/4 twice. BROWSER PASS flipped, and item 14 on the critic's blind pick of 2026-10-05 (PASS). The STRICT gate refused the close: in its own run (default workers, load average 12–15) timing test 5 went red once in Chromium (line 1 held 631.6 ms against 983). Open on a quiet-machine gate run.
+  Closed (2026-10-06): `still-here-3a3` through the gate. Quiet-machine re-run (2026-10-06), a private snapshot of HEAD 973717a, one worker, load below 3 at the start of each run, two runs in six projects: ritual, timing and walk 86 passed, 10 skipped (the HUMAN-JUDGED test; the walks are Chromium and WebKit only), 0 failed, both runs (loads 2.92→1.56 and 1.61→0.94); unit 4/4. The gate's own run at three workers: ritual 60 + 6 skipped, timing 18/18, walk 8 + 4 skipped.
 - [x] E3: the certificate per issue: name layout, time zone (D4), the UTC line, QR code with the link. **[after C2]** matched to the certificate golden.
   Evidence (2026-10-04): `still-here-3xf` items 1-3 and 5-6 flipped; item 4 unticked at the Phase 2 review (four-line names print over "This certifies that"; C2 Decision 6); held open on items 4 and 7; unit 6/6; certificate spec 29/30 with one worker and Firefox 20/20 repeated (misses are the press-second race of E2 item 10); names outside the certificate face are drawn by the browser, one image per line (diff item 8).
   Re-run at `specs-v3` (2026-10-05), against HEAD 2e1da15 served from a private copy, two full runs in six projects at two workers: BROWSER PASS flipped, the certificate spec 5/5 in each of six projects in both runs (30/30); unit 6 passed, 1 skipped, both runs. Open on item 4 (C2 Decision 6) and item 7 (after C2).
   C2 Decision 6 (2026-10-05, not ticked here): `src/js/certificate/draw.js` steps a long name down in size, floor 30, to at most three lines inside the zone between "This certifies that" and the name rule; one-line names keep baseline 326. Text and Greek names fit (an 80-code-point Latin name: two lines at 38, ink y 270-349 in both engines). 80 × 椅 and 80 × 🪑 do not fit three lines at the 30-unit floor (their line ink is about 30 units, the zone 79); they keep the old placement and still print over the fixed lines. Open: a floor for image-drawn names. Certificate spec green in Chromium and WebKit at `specs-v3`.
   C2 follow-up (2026-10-05, not ticked here): names drawn as images step down to an ink floor (25.2 units by the browser's measure, which the test reads as at least 24) with their lines set solid. 80 × 椅 and 80 × 🪑 now print as three lines inside y 270-349 in Chromium and WebKit, and none reaches the fixed lines. The fallback to the old placement is gone. Text names keep the 30-unit floor. At `specs-v4`: E3 unit 6/6 twice (item 4: ink bands of at least 24 and no more than four lines), and the 3xf and cq5 specs 22 passed in Chromium and WebKit.
   Closed (2026-10-06): `still-here-3xf` through the gate at `specs-v6`. The certificate spec 36/36 in six projects in two runs from a private snapshot of HEAD 3f4803e and again in the gate; unit 6 passed + 1 HUMAN-JUDGED skip twice. Item 4 flipped on those runs, item 7 on the critic's blind pick of 2026-10-05 (PASS).
-- [ ] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
+- [x] E4: PDF and PNG exports, fonts embedded, name blocks outside the face, filenames, progress and failure, render-back.
   Evidence (2026-10-04): `still-here-cq5` items 2, 5 and 7 flipped. Held on item 3 (the PNG differs 9.8% from the no-font render; the DS4 candidate measures the same; bar 20%), item 4 (3.3% as the test scales a 1651-px pdf.js canvas; pixel for pixel it measured 1.04% Chromium / 1.01% WebKit, not the 0.17% first reported, and after every line was set glyph by glyph from the face's advances 0.65% / 1.00%; waits on the C2 re-tag and the WebKit guilloche decision), item 6 at 390 (IoU 0.585 vs 0.6), and item 1's Firefox press-second race. All four are test changes for C2. Unit 3/4; Download PDF and PNG work in Chromium, WebKit and Firefox.
   Re-run at `specs-v3` (2026-10-05), against HEAD 2e1da15 served from a private copy, two full runs in six projects at two workers: item 1 flipped (spec test 1 green in all six projects both runs; unit test 1 green both runs). Still held on the C2 items alone: unit test 3 and item 3 at 9.8% (Decision 4), item 4 at 3.01% Chromium and 3.29% WebKit (test change 6), item 6 at chromium-390, IoU 0.585 (test change 7), and the W1.6–7 walk in WebKit at 5,767 and 5,637 ms against 5,600 (test change 5). Export spec per run: chromium 3/1, chromium-390 2/2, webkit 3/1, webkit-390 3/1, firefox and firefox-390 1 passed, 3 skipped.
   C2 Decision 5 (2026-10-05, not ticked here): render-back of Folding chair, cropped, before 0.45 → after 0.7: Chromium 0.65% → 0.61%, WebKit 1.00% → 0.20%. Long names, after: Latin 0.82% / 0.28%, Greek 0.68% / 0.25%, 🪑 0.99% / 0.19%, 椅 1.45% / 0.64% (Chromium over the bar while its layout is open, E3). Four TrueType faces embedded in every PDF. Export spec and walk green in Chromium and WebKit at `specs-v3`.
   C2 follow-up (2026-10-05, not ticked here): name images sit on a 2/3-unit grid (one PDF pixel at 150 dpi), so the PDF and the PNG sample them alike. Cropped render-back (Chromium / WebKit): 80 × 椅 0.56% / 0.19% (it was 1.45% / 0.64%), 🪑 0.55% / 0.19%, Greek 0.56% / 0.18%, Latin 0.81% / 0.28%, Folding chair 0.61% / 0.20%. Every PDF embeds four TrueType faces. The Folding chair golden is unchanged, pixel for pixel.
   Re-run at `specs-v6` (2026-10-06), two runs as for E2: unit 4/4 twice (CODE PASS and item 3 flipped); export tests 4 and 6 green in Chromium and WebKit at both sizes both runs (items 4 and 6 flipped); the W1.6–7 walk green in Chromium and WebKit at both sizes both runs. BROWSER PASS held: test 7 went red once at webkit-390 in run 2 ("Preparing PNG…" visible, then gone before its `aria-disabled` check). This is a new red, reported to the PM.
+  Closed (2026-10-06): `still-here-cq5` through the gate; BROWSER PASS flipped. Quiet-machine re-run (2026-10-06), a private snapshot of HEAD 973717a, one worker, load below 3 at the start of each run, two runs in six projects: export and W1.6–7 walk 5/5 in Chromium and WebKit at both sizes, Firefox 1 passed + 4 skipped (download events only), 0 failed, both runs (loads 2.13→2.78 and 2.78→2.22); test 7 green at webkit-390 both times; unit 4/4. The gate's run: export 18 + 6 skipped, walk 4 + 2 skipped.
 - [x] E5: the certificate link (D2) and Copy certificate link.
   Evidence (2026-10-04): `still-here-wlr` CODE PASS and items 1-4 flipped, held open on BROWSER PASS. Unit 3/3 (five runs). After E6, two full runs of the link spec in six projects: item 4 green everywhere both times; chromium and chromium-390 6/6 both runs; tests 1-2 missed in Firefox (3 per project per run) and once in WebKit, each because the issuing page pressed at :01 or :02 under the spec's running clock (measured from the failing SVGs). This is C2 test change 4, which this spec now needs too. `/c/#…` is redrawn byte for byte from the link.
   Re-run at `specs-v3` (2026-10-05), against HEAD 2e1da15 served from a private copy, two full runs in six projects at two workers: BROWSER PASS flipped and `still-here-wlr` closed through the gate. The link spec in both runs: chromium and chromium-390 6/6; firefox, firefox-390, webkit and webkit-390 4 passed, 2 skipped (Copy is Chromium only); unit 3/3 both runs; the gate's own run 28 passed, 8 skipped. W2 is played by E6's walk.
 - [x] E6: `/c/` and `/verify`: reopening is verifying; the Verify cases in their order (Q7, D3); failure and empty states.
   Evidence: `still-here-xws` closed through the gate; `src/js/judge.js` (one order of judgment), `src/js/verify.js`, `src/js/certificate-page.js`; unit 7/7 twice (item 5's every substitution and swap); verify spec 6/6 in each of six projects and the W2 walk (steps 1-7, step 7 by decodeQr) in Chromium and WebKit at 1440 and 390, both green in two runs (40 passed, 2 skipped each) and again in the gate; `/verify` and bare `/c/` are no longer placeholders; `npm run check:links` 19 pages, 0 broken.
-- [ ] E7: Your Presence Portfolio.
+- [x] E7: Your Presence Portfolio.
   Evidence (2026-10-04): `still-here-c29` CODE PASS and items 3-6 flipped, held open on BROWSER PASS and items 1-2. `/portfolio` (`src/js/portfolio.js`) reads the store the ritual writes, unchanged. Unit 4/4 twice. Portfolio spec plus the W3 walk, two runs in six projects: 19 and 20 passed, 2 skipped, 3 and 2 failed. W3 (steps 1-5, step 4 by clearSiteData) passed in Chromium and WebKit at 1440 and 390 both times. Every miss is spec test 1-2's first issue, 'Car keys', landing at 10:52:01 under the spec's running clock (stored SH-00PP-9AHB-518D, expected SH-00PP-9AGV-4P4X): C2 test change 4, which this spec needs too.
   Re-run at `specs-v3` (2026-10-05), against HEAD 2e1da15 served from a private copy, two full runs in six projects at two workers: every identifier now matches with the paused clock. Run 1: spec test 1–2 in WebKit ran out of its 30 s under load (every assertion through the last download had passed), the other five 3/3; run 2: 3/3 in all six. W3 walk green in Chromium and WebKit at both sizes in both runs. Items 1–2 and BROWSER PASS stay unflipped; re-run on a quiet machine before C4. Unit 4/4 both runs.
   Re-run at `specs-v6` (2026-10-06), two runs as for E2: unit 4/4 twice; the W3 walk green in Chromium and WebKit at both sizes both runs; tests 4–5 green everywhere. Test 1–2 green in five projects but ran out of its 30 s in WebKit (1440) in both runs, at the pdf.js render-back screenshot. Items 1–2 and BROWSER PASS stay unflipped.
+  Closed (2026-10-06): `still-here-c29` through the gate; items 1–2 and BROWSER PASS flipped. Quiet-machine re-run (2026-10-06), a private snapshot of HEAD 973717a, one worker, load below 3 at the start of each run, two runs in six projects: portfolio and W3 walk 4/4 in Chromium and WebKit at both sizes, Firefox 3 + 1 skipped, 0 failed, both runs (loads 2.92→2.75 and 2.75→2.26); test 1–2 took 19.8 s in WebKit, 17.8–18.6 s at webkit-390; unit 4/4. The gate's first attempt (three workers) ran out of the 30 s once in WebKit at a download; its second: portfolio 18/18, walk 4 + 2 skipped.
 - [x] Walks W4.1–2, W1, W2, W3, W8 played by the critic in Chromium and WebKit at 390×844 and 1440×900. Evidence: Phase 2 exit review, 2026-10-04: every step played by hand (W2.7 and W3.4 by their substitutes) in both engines at both sizes, no stuck step; the locked walk specs' remaining reds are C2 test changes 4–5 or measured host clock steps.
 
 #### Bar
@@ -310,7 +308,7 @@ No cap (I-07). Expected about 160 orchestrator turns.
 - [x] X1 `presence.json` · X2 `security.txt` and its CI expiry check · X3 the 404 on every server.
   X1, X2 and X3 closed through the gate 2026-10-05 (commit dbaaac8): unit 2/2, 3/3, 1/1 on two runs
   (staging skips); presence spec 6/6 and the 404 spec and walk 16 passed, 2 skipped, on two runs.
-- [ ] X4 manifest and service worker; everything in Goals 1–3 offline; build N+1 served by the second navigation.
+- [x] X4 manifest and service worker; everything in Goals 1–3 offline; build N+1 served by the second navigation.
   Built (commit dbaaac8). The unit test passes 4/4. Chromium is green at both sizes on two runs.
   Firefox passes test 3 but not test 4: its service worker still reaches the network under
   `setOffline`. In WebKit every request fails under `setOffline`, so tests 3, 4 and W6.8 fail. With
@@ -326,6 +324,7 @@ No cap (I-07). Expected about 160 orchestrator turns.
   service worker not ready within 15 s). Unit 4/4 twice. With `STAGING_URL` set, the helper takes
   its staging branch (`context.route` abort): WebKit refuses it and Firefox's service worker goes
   around it, red in both runs. BROWSER PASS is held.
+  Closed (2026-10-06): `still-here-dzc` through the gate; BROWSER PASS flipped. Quiet-machine re-run (2026-10-06), a private snapshot of HEAD 973717a, local webServer with `STAGING_URL` unset, one worker, load below 3 at the start of each run, two runs in six projects: offline tests 3–4 and the W6 walk 3/3 in Chromium and WebKit at both sizes, Firefox 2 + 1 skipped, 0 failed, both runs (loads 2.98→1.81 and 1.81→1.95); unit 4/4. The gate's run (local): offline 12/12, walk 4 + 2 skipped. The staging branch above stays a PM decision for L5.
 - [x] X5 accessibility across every page (axe, keyboard, focus, live region). Closed 2026-10-05:
   unit 2/2; spec 18/18 in six projects on two runs (axe 0 serious/critical on 19 pages).
 - [x] X6 the guards: no external request, no analytics, fragment never sent, CSP holds, page weight, no placeholder left.
@@ -335,11 +334,12 @@ No cap (I-07). Expected about 160 orchestrator turns.
   for the next packet.
   Closed (2026-10-06): `still-here-xoi` through the gate at `specs-v6`. Unit 3/3 twice in the clean work tree (test 4 reads `git ls-files`); guards spec 10 passed, 2 skipped (the walks are Chromium and WebKit) in two local runs, and again in the gate. With `STAGING_URL` set, test 1 is red in WebKit for the staging-branch reason under X4.
   C2 Decision 7 (2026-10-05, not ticked here): the three failure sentences in `src/js/home.js` and `src/js/result.js` are the packet's words exactly; their "draft, awaiting C2" comments are gone.
-- [ ] Walk W6 played; the 404 sub-walk of W4 played. W4.404 played in Chromium and WebKit at both
+- [x] Walk W6 played; the 404 sub-walk of W4 played. W4.404 played in Chromium and WebKit at both
   sizes. W6.1–7 played in Chromium at both sizes (1–2 with the `checkInstallable()` substitute).
   W6.8 in WebKit is held on the emulation item above.
   At `specs-v6` (2026-10-06): W6 played whole in Chromium and WebKit at both sizes by the walk spec
   in local run 1; in run 2 W6.1 went red at chromium-390 (see X4).
+  Quiet-machine re-run (2026-10-06): W6 played whole by the walk spec in Chromium and WebKit at 390 and 1440 in both local runs and in the gate, no stuck step (see X4).
 
 #### Bar
 Deterministic: each X bead's specs, axe at zero serious or critical, the weight budget, the network log. Then W6 in Chromium (installability with its substitute) and the offline steps in WebKit.
@@ -348,7 +348,8 @@ Deterministic: each X bead's specs, axe at zero serious or critical, the weight 
 No cap (I-07). Expected about 100 orchestrator turns.
 
 #### Exit gate
-- [ ] X1–X6 closed through the gate; W6 played with no stuck step.
+- [x] X1–X6 closed through the gate; W6 played with no stuck step.
+  Evidence: X1, X2, X3, X5 closed 2026-10-05; X6 and X4 closed 2026-10-06; W6 as above.
 
 #### Result
 
@@ -383,11 +384,13 @@ No cap (I-07). Expected about 150 orchestrator turns.
 - [x] DS6 closed. Styling past the candidate waits on C2's verdict on the 1997 page. Evidence: `still-here-azk` closed (2026-10-04); C2 approved the 1997 golden 2026-10-05.
 
 #### Steps
-- [ ] V1: the page finished per R42 and the C2 red-pen; the guestbook page; all period assets. Page, guestbook and period assets done (DS6 unit 4/4, V1 unit 3/3 + item 4 HUMAN-JUDGED, `still-here-bdd-vandalway.spec.ts` 2/2 Chromium and WebKit, two runs). The counter is now `/counter.gif`, drawn by `deploy/counter/count.mjs`. The menu's E-Mail is the page's one `mailto:`. The C2 red-pen is still to come.
+- [x] V1: the page finished per R42 and the C2 red-pen; the guestbook page; all period assets. Page, guestbook and period assets done (DS6 unit 4/4, V1 unit 3/3 + item 4 HUMAN-JUDGED, `still-here-bdd-vandalway.spec.ts` 2/2 Chromium and WebKit, two runs). The counter is now `/counter.gif`, drawn by `deploy/counter/count.mjs`. The menu's E-Mail is the page's one `mailto:`. The C2 red-pen is still to come.
   After the blind picks (`specs-v6`, 2026-10-06): the menu's E-Mail goes to `#email`, and the address is the page's one `mailto:` link, to webmaster@vandalwayind.com, as in the golden. Put on the internal copy by the undo and the install (`deploy/deploy-log.md` runs 16 and 17); the served page is the repository's apart from its counting date. V1 unit 3 passed + 1 HUMAN-JUDGED skip twice; the bdd spec green in Chromium and WebKit at both sizes in two runs. Item 4 waits on the critic's fresh blind pick.
-- [ ] V2: `deploy/vandalwayind-install.sh` and its undo: files under `/srv/vandalwayind/`; a Caddy site bound to localhost; a new internal-network HTTPS port of its own (I-11); Caddyfile backed up, `caddy validate` before reload, no other site block changed; undo run once, install re-run. Done 2026-10-05: Install, undo and re-install, with the undo run six times, each back to the backup's sha256 (`deploy/deploy-log.md`, 13 runs). Ten other site blocks and the internal network's other routes byte-identical in every run. Site on loopback plus a socket; the internal network's new HTTPS port proxies to the socket, because a port target keeps the visitor's host name and a localhost site answers it with an empty 200.
+  Closed (2026-10-06): `still-here-bdd` through the gate on the critic's fresh blind pick against `exemplars/vandalway-1997-golden.png`, PASS for the repository copy and the internal copy (only the counter line differs, approved); commit 89c41f1.
+- [x] V2: `deploy/vandalwayind-install.sh` and its undo: files under `/srv/vandalwayind/`; a Caddy site bound to localhost; a new internal-network HTTPS port of its own (I-11); Caddyfile backed up, `caddy validate` before reload, no other site block changed; undo run once, install re-run. Done 2026-10-05: Install, undo and re-install, with the undo run six times, each back to the backup's sha256 (`deploy/deploy-log.md`, 13 runs). Ten other site blocks and the internal network's other routes byte-identical in every run. Site on loopback plus a socket; the internal network's new HTTPS port proxies to the socket, because a port target keeps the visitor's host name and a localhost site answers it with an empty 200.
   Phase 6's deferred counter fixes (2026-10-05, not ticked here), put on the server by the scripts at 22:49 UTC: the undo (back to the backup's sha256) then the install (`deploy/deploy-log.md` runs 14 and 15). `caddy validate` passed before each reload; all 11 other blocks byte-identical; the ten other sites answered after as before; the network's other routes hashed the same.
   The page's e-mail links (2026-10-06, 03:43 UTC): the undo (back to the backup's sha256) then the install, runs 16 and 17, with the same checks, all passing. At `specs-v6`: V2 unit 3/3 twice (CODE PASS flipped; every box now flipped); the internal spec 6/6 in run 2 and 5/6 in run 1 (Chromium `ERR_NETWORK_CHANGED`, a workstation network change). Not closed.
+  Closed (2026-10-06): `still-here-d7l` through the gate. Quiet-machine re-run (2026-10-06), a private snapshot of HEAD 973717a, `VANDALWAY_INTERNAL_URL` set, one worker, load below 3 at the start of each run, two runs in six projects: the internal spec 1/1 in each project, 6 passed, 0 skipped, 0 failed, both runs (loads 2.84→2.60 and 2.60→2.57); unit 3/3, 0 skipped, twice. The gate's run: 6/6, 0 skipped.
 - [x] V3: the counter: this site's own access log (JSON, seven-day retention), a running-total file, the page and image sent `no-cache`, a ten-minute systemd timer, the digit image, Node installed if absent — all by the V2 scripts. Unit 5/5 and the counter spec green twice, 0 skipped; by hand, n=0 then 000026 within four minutes of the third load (2026-10-05).
   Deferred fixes (2026-10-05, not ticked here): `count.mjs` skips leading NUL bytes before reading a line's JSON (the emptied log regains a NUL prefix at Caddy's next write; seen on the server); the install writes its counting start date into the served page, which now reads "times since October 5, 2026." with `Last-Modified` 1997-08-22. Counter spec green in Chromium and Chromium-390 with VANDALWAY_INTERNAL_URL set.
 - [ ] V4: `Last-Modified` per file (1997 page, 1999 guestbook, counter's own time), POST refused, quirks mode on the served copy, HTTP→HTTPS ready for Phase 8. Served headers, 405 and quirks mode done (V4 unit 4/4 twice; W7.1 in both engines). HTTP→HTTPS belongs to Phase 8's public block.
@@ -540,3 +543,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 waits on C2; V2 on a test item for the next packet; V4 on L3's null MX (W7.3). (Jules, 2026-10-05)
 - 2026-10-05 — Phase 6 held after the critic's review (server matches the deploy log hash for hash; V2's test conflict confirmed); V2's step unticked (the bead is open). The run waits on C2 and C3 for Phase 7's entry. (Jules, 2026-10-05)
 - 2026-10-06 — Re-run at specs-v6 after the internal copy's redeploy: DS1, E3, S2 and X6 closed; Phases 1 and 3 done; Phases 2, 4 and 6 held on E2's gate run, E4 test 7, E7 in WebKit, X4's W6, V1's re-pick, V2's network red and V4's null MX; Phase 7 active, entry not yet met. (Jules, 2026-10-06)
+- 2026-10-06 — Quiet-machine re-run (one worker, load below 3): E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done; Phase 2 to its exit review; Phase 6 held on V4 alone. (Jules, 2026-10-06)

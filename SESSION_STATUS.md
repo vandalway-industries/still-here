@@ -12,69 +12,62 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active, entry not met; Phases 2, 4 and 6 held
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active, entry not met; Phase 2 at its exit review, Phase 6 held on V4
 
 ### Current state
 
-The held beads were re-run at `specs-v6`, twice each, from a private copy of HEAD 3f4803e. Four
-closed through the gate: DS1, E3, S2 and X6. Phases 1 and 3 are done. Seven beads are still open.
-E2, E4 and E7 hold Phase 2, X4 holds Phase 4, and V1, V2 and V4 hold Phase 6. Phase 7 is the
-active row, but it cannot start until those three phases reach their gates.
+The five beads that went red under load were re-run on a quiet machine, twice each, and all five
+closed through the gate: E2, E4, E7, X4 and V2. V1 closed on the critic's fresh blind pick of the
+1997 page. Phases 0, 1, 3, 4 and 5 are done. Every Phase 2 bead is closed, and the phase waits on
+its exit review. Phase 6 waits on V4 alone, and V4 waits on the null MX that L3 writes. Phase 7 is
+the active row.
 
 ### What changed
 
-- The internal copy of vandalwayind.com was taken down and put back with the page's e-mail links
-  as in the golden. The undo ran at 03:43 UTC and the install straight after
-  (`deploy/deploy-log.md` runs 16 and 17). `caddy validate` passed before each reload. All 11
-  other blocks were byte-identical and the network's other routes hashed the same. The ten other
-  sites answered as before. Served: one `mailto:`, to webmaster@vandalwayind.com, and
-  `Last-Modified` 1997-08-22. The page is the repository's except for its counter line, which now
-  reads "times since October 6, 2026.", because the counting started again.
-- The re-run: `npm ci` and a build in the copy, served on a free port, two workers. Each bead's
-  unit tests ran twice. Its browser specs ran twice in all six projects, the internal-copy ones
-  with VANDALWAY_INTERNAL_URL set. The two full browser runs each came to 200 passed, 16 failed
-  and 30 skipped. Every skip is an engine limit or E2 item 14's labelled human pick.
-- Closed: DS1 (unit 4/4 twice), E3 (certificate spec 36/36 twice, then in the gate), S2 (10
-  passed twice, then in the gate) and X6 (see the next point). E2 item 14, E3 item 7 and S2 item
-  4 were flipped on the critic's blind picks of 2026-10-05, which passed.
-- X4 and X6 ran wrong with STAGING_URL set. With it set, the offline helper aborts every request
-  instead of stopping a server. WebKit refuses that ("Blocked by Web Inspector") and Firefox's
-  service worker goes around it, so we were red there in both runs. I ran their specs twice more
-  without it, so that each test stops its own server from the copy. X6 was green in both of those
-  runs and then in the gate. X4's tests 3 and 4 were green in all six projects both times, so
-  those items are flipped. L5 will meet the same staging branch when it plays W6 on staging.
-- The STRICT gate refused E2. Its own run of the timing spec went red once in Chromium: line 1
-  held 631.6 ms against 983, with the load average at 12 to 15. My two runs were green in all six
-  projects. E2's boxes are all flipped.
+- Why the re-run: a file search covering the whole computer had held the load average at 10 to 15
+  for seven hours. It was stopped at 00:36. Every red from the last re-run on these five beads was
+  measured under that load.
+- How: a private copy of HEAD 973717a, `npm ci` and a build, served on a free port. One worker.
+  Before each run I waited for the one-minute load to drop below 3. X4 ran locally, with
+  STAGING_URL unset, so each offline test stops its own server. V2 ran with
+  VANDALWAY_INTERNAL_URL set.
+- E2: ritual, timing and walk 86 passed, 10 skipped, 0 failed, in both runs (00:39–01:00). Then the
+  gate's own run at three workers: ritual 60 + 6 skipped, timing 18/18, walk 8 + 4 skipped. Closed.
+- E4: export and walk 5/5 in Chromium and WebKit at both sizes, both runs. Test 7 was green at
+  webkit-390 both times. Firefox ran its download test, 1 passed + 4 skipped. BROWSER PASS flipped,
+  and the gate passed. Closed.
+- E7: portfolio and walk 4/4 in Chromium and WebKit at both sizes, both runs. Test 1–2 took 19.8 s
+  in WebKit. Items 1–2 and BROWSER PASS flipped. The gate's first attempt ran out of time in
+  WebKit once, at a download. Its second passed 18/18. Closed.
+- X4: offline and the W6 walk 3/3 in Chromium and WebKit at both sizes, Firefox 2 + 1 skipped,
+  both runs. W6.1 was green at chromium-390 every time. BROWSER PASS flipped, and the gate passed.
+  Closed.
+- V2: the internal spec 6 passed, 0 skipped, in both runs; unit 3/3, 0 skipped, twice. The gate
+  passed 6/6. Closed.
+- `PLAN.md`: E2, E4, E7, X4, W6, V1 and V2 ticked with this evidence. Phase 4 done. The drift
+  check is clean.
 
 ### What's next
 
-1. The critic's fresh blind pick of the 1997 page against its golden (V1 item 4).
-2. The PM decides on the new reds: E4 test 7, X4's W6 at chromium-390, V2's network red, and the
-   offline helper's staging branch.
-3. E2's gate run and E7's WebKit test on a quiet machine. L3's null MX for V4. Then Phase 7.
+1. The Phase 2 exit review.
+2. The PM decides on the offline helper's staging branch before L5 plays W6 on staging.
+3. Phase 7: L1 first. L3's null MX lets V4 close, and that closes Phase 6.
 
 ### Waiting on Clive
 
 - A second look at the certificate golden with the thicker guilloche.
 - Whether the code gets a licence before the repository goes public (the C3 packet, § 7).
-- The Pages verification TXT value for isitstillhere.com, any time before L3.
 
 ### Surprises / debt
 
-- New reds, reported and not fixed. E4 test 7 at webkit-390, once: "Preparing PNG…" showed, then
-  the button was gone before its `aria-disabled` check. X4's W6.1 at chromium-390, once: the
-  service worker was not ready within 15 s. V2's spec in Chromium, once: `ERR_NETWORK_CHANGED`
-  on this workstation.
-- E7 test 1–2 in WebKit ran out of its 30 s in both runs while taking the pdf.js render-back
-  screenshot. W7 step 3 still waits on L3 (`queryMx ENODATA`).
-- A correction to the record: commit 1df6811's message says the `s07` bead was "filed from C3
-  and closed". The gate had in fact refused it then. It closed later, at 2ce6cd5, through the
-  gate at `specs-v5`.
-- The load average sat between 10 and 15 the whole session. A file search left running on this
-  computer since 17:27 kept part of it busy. I left it alone.
-- The X6 unit test needs a git work tree, because test 4 reads `git ls-files`. In the copy it
-  fails for that reason only, so it was run in the clean work tree at the same HEAD.
+- E7's test 1–2 has about 11 s to spare on one worker in WebKit (18.6 s in a traced run, each
+  PDF download 1.0–1.7 s). At three workers on this computer it can run out once, as it did in
+  the gate's first attempt.
+- The V2 unit test skips test 3 unless `.env.staging` is loaded. Loaded, it is 3/3, 0 skipped.
+- With STAGING_URL set, the offline helper aborts requests instead of stopping a server. WebKit
+  refuses that and Firefox's service worker goes around it. L5 meets this when it plays W6 on
+  staging.
+- The X6 unit test needs a git work tree, because test 4 reads `git ls-files`.
 - Playwright's `context.setOffline` does not reach service workers the same way in each engine.
   The product works offline; the emulation is what differs.
 - The workflows are committed but not yet run. L2 owns their dry run.
@@ -126,3 +119,4 @@ active row, but it cannot start until those three phases reach their gates.
 - 2026-10-05 — C2 and C3 product changes in; the internal copy redeployed with the counter fixes; Decision 6 open for image-drawn names. (Martin, 2026-10-05)
 - 2026-10-05 — Names drawn as images fit three lines in the name zone, and their PDF matches the PNG. (Martin, 2026-10-05)
 - 2026-10-06 — Re-run at specs-v6 after the 1997 page's redeploy: DS1, E3, S2 and X6 closed; seven beads open, each with what it waits on. (Martin, 2026-10-06)
+- 2026-10-06 — Quiet-machine re-run: E2, E4, E7, X4 and V2 closed through the gate; V1 closed on its blind pick; Phase 4 done. (Martin, 2026-10-06)
