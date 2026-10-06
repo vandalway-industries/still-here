@@ -22,3 +22,4 @@ docs/goals/
 *.db
 .beads-credential-key
 .claude/worktrees/
+.claude/settings.local.json
