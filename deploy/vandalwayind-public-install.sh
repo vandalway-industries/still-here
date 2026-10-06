@@ -29,8 +29,10 @@ SRC=$(cd "$HERE/.." && pwd)
 . "$HERE/lib/caddyfile.sh"
 PUB_BEGIN='# BEGIN vandalwayind public (deploy/vandalwayind-public-install.sh)'
 PUB_END='# END vandalwayind public'
-PUB_KEYS='^(vandalwayind\.com|www\.vandalwayind\.com|http://vandalwayind\.com, http://www\.vandalwayind\.com)'
+# the public blocks' addresses, matched exactly (one per block)
+PUB_KEYS=$'vandalwayind.com\nwww.vandalwayind.com\nhttp://vandalwayind.com\nhttp://www.vandalwayind.com'
 TOTAL=/srv/vandalwayind/.counter/total
+WENT_LIVE=/srv/vandalwayind/.counter/went-live
 
 [ "$(id -u)" = 0 ] || die "run as root"
 [ -f "$SRC/vandalwayind/index.html" ] || die "run from a copy of vandalwayind/ and deploy/"
@@ -47,7 +49,11 @@ chmod 755 "$WORK" # caddy validate runs as the caddy user and reads the candidat
 trap 'rm -rf "$WORK"' EXIT
 
 # Every block's hash except the public ones (the internal block is one of the "others" here).
-public_free_hashes() { block_hashes "$1" "$2.all"; grep -Pv "$PUB_KEYS\t" "$2.all" > "$2" || true; rm -f "$2.all"; }
+public_free_hashes() {
+  block_hashes "$1" "$2.all"
+  awk -F'\t' -v keys="$PUB_KEYS" 'BEGIN { n = split(keys, k, "\n"); for (i = 1; i <= n; i++) ours[k[i]] = 1 } !($1 in ours)' "$2.all" > "$2"
+  rm -f "$2.all"
+}
 
 # ── Before ────────────────────────────────────────────────────────────────────────────────────
 public_free_hashes "$CADDYFILE" "$WORK/blocks.before"
@@ -62,11 +68,19 @@ say "backup $BACKUP sha256 $(sha256sum "$BACKUP" | cut -d' ' -f1)"
 # ── The files, refreshed; then go-live ────────────────────────────────────────────────────────
 for f in "$SRC"/vandalwayind/*; do cp -R "$f" /srv/vandalwayind/; done
 find /srv/vandalwayind -path /srv/vandalwayind/.run -prune -o -type d -exec chmod 755 {} + -o -type f -exec chmod 644 {} +
-TODAY=$(date -u +%F)
-WAS=$(cut -d' ' -f1 "$TOTAL")
-# go-live: the total starts again at 0, counting only requests from this moment
-printf '0 %s\n' "$(date -u +%s)" > "$TOTAL.next" && mv "$TOTAL.next" "$TOTAL"
-SINCE=$(LC_ALL=C date -u '+%B %-d, %Y')
+if [ -f "$WENT_LIVE" ]; then
+  # a reinstall after go-live: the count and its date stand
+  SINCE=$(cat "$WENT_LIVE")
+  say "go-live: already done ($SINCE); the count is kept"
+else
+  TODAY=$(date -u +%F)
+  WAS=$(cut -d' ' -f1 "$TOTAL")
+  # go-live: the total starts again at 0, counting only requests from this moment
+  printf '0 %s\n' "$(date -u +%s)" > "$TOTAL.next" && mv "$TOTAL.next" "$TOTAL"
+  SINCE=$(LC_ALL=C date -u '+%B %-d, %Y')
+  printf '%s\n' "$SINCE" > "$WENT_LIVE"
+  say "go-live $TODAY total $WAS -> 0"
+fi
 sed -i -E "s/times since [A-Z][a-z]+ [0-9]{1,2}, [0-9]{4}\./times since $SINCE./" /srv/vandalwayind/index.html
 grep -qF "times since $SINCE." /srv/vandalwayind/index.html || die "the go-live date was not written into the page"
 # Last-Modified as the page says, after the go-live edit: the page and its images 1997-08-22, the
@@ -74,7 +88,6 @@ grep -qF "times since $SINCE." /srv/vandalwayind/index.html || die "the go-live 
 touch -d '1997-08-22 12:00:00 UTC' /srv/vandalwayind/index.html /srv/vandalwayind/images/*
 touch -d '1999-03-02 12:00:00 UTC' /srv/vandalwayind/cgi-bin/guestbook.html
 node /srv/vandalwayind/.counter/count.mjs --log "$ACCESS_LOG" --total "$TOTAL" --gif /srv/vandalwayind/counter.gif
-say "go-live $TODAY total $WAS -> 0"
 say "files: refreshed; the page reads \"times since $SINCE.\"; page and images dated 1997-08-22, guestbook 1999-03-02; counter at $(cut -d' ' -f1 "$TOTAL")"
 
 # ── The Caddyfile: append the public blocks, validate, prove the others unchanged, reload ─────
@@ -104,7 +117,10 @@ vandalwayind.com {
 www.vandalwayind.com {
 	redir https://vandalwayind.com{uri} permanent
 }
-http://vandalwayind.com, http://www.vandalwayind.com {
+http://vandalwayind.com {
+	redir https://vandalwayind.com{uri} permanent
+}
+http://www.vandalwayind.com {
 	redir https://vandalwayind.com{uri} permanent
 }
 CADDY

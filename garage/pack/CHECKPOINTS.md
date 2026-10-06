@@ -181,6 +181,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
 - **C4 — signed off, 2026-10-06.** Clive: "C4 signed off: phone checklist done, section 6 answered,
   repository is public." The repository reads public (`gh repo view --json visibility`). Phase 8
   starts. L5 is still open on its staging walk's gate run, to be retried in Phase 8. (Jules, 2026-10-06)
+- **Re-tag specs-v10 — 2026-10-06.** Clive approved, during N2, one change to X6's host guard
+  (`tests/unit/still-here-xoi-guards.test.ts` test 4): a web server's placeholder written after a
+  host in a URL (Caddy's `{uri}`, in vandalwayind.com's redirects) is dropped before the host is
+  checked. Every host that is not ours still fails. And G0 test 5 (`tests/unit/still-here-agb-promote.test.ts`):
+  the repository is private until "C4 — signed off" is recorded here, and public after. No acceptance
+  text changes. (Jules, 2026-10-06)
 
 ## Changelog
 

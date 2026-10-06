@@ -13,7 +13,8 @@ HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 . "$HERE/lib/caddyfile.sh"
 PUB_BEGIN='# BEGIN vandalwayind public (deploy/vandalwayind-public-install.sh)'
 PUB_END='# END vandalwayind public'
-PUB_KEYS='^(vandalwayind\.com|www\.vandalwayind\.com|http://vandalwayind\.com, http://www\.vandalwayind\.com)'
+# the public blocks' addresses, matched exactly (one per block)
+PUB_KEYS=$'vandalwayind.com\nwww.vandalwayind.com\nhttp://vandalwayind.com\nhttp://www.vandalwayind.com'
 
 [ "$(id -u)" = 0 ] || die "run as root"
 say "== vandalwayind-public-uninstall.sh, $(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -22,10 +23,8 @@ grep -qxF "$PUB_BEGIN" "$CADDYFILE" || die "the public blocks are not there; not
 WORK=$(mktemp -d)
 chmod 755 "$WORK"
 trap 'rm -rf "$WORK"' EXIT
-public_free_hashes() { block_hashes "$1" "$2.all"; grep -Pv "$PUB_KEYS\t" "$2.all" > "$2" || true; rm -f "$2.all"; }
 
-public_free_hashes "$CADDYFILE" "$WORK/blocks.before"
-site_hosts "$CADDYFILE" | grep -Ev '^(www\.)?vandalwayind\.com$|^vandalwayind\.com,' > "$WORK/hosts" || true
+site_hosts "$CADDYFILE" | awk -v keys="$PUB_KEYS" 'BEGIN { n = split(keys, k, "\n"); for (i = 1; i <= n; i++) { h = k[i]; sub(/^http:\/\//, "", h); ours[h] = 1 } } !($0 in ours)' > "$WORK/hosts"
 site_codes "$WORK/hosts" "$WORK/codes.before"
 
 COPY="/etc/caddy/Caddyfile.pre-undo-vandalwayind-public-$(date -u +%Y%m%dT%H%M%SZ)"
@@ -45,9 +44,15 @@ awk -v b="$PUB_BEGIN" -v e="$PUB_END" '
     }
     for (i = 1; i <= n; i++) print out[i]
   }' "$CADDYFILE" > "$CANDIDATE"
+# The others: every block of the current file whose address is still there after the marked lines
+# are taken out (the marks decide what is ours, whatever its blocks are called). Each must come
+# through byte-identical.
+block_hashes "$CANDIDATE" "$WORK/blocks.after"
+block_hashes "$CADDYFILE" "$WORK/blocks.current"
+awk -F'\t' 'NR == FNR { keep[$1] = 1; next } ($1 in keep)' "$WORK/blocks.after" "$WORK/blocks.current" > "$WORK/blocks.before"
+say "the marked lines hold $(( $(wc -l < "$WORK/blocks.current") - $(wc -l < "$WORK/blocks.before") )) public blocks; $(wc -l < "$WORK/blocks.before") others"
 validate "$CANDIDATE" || die "caddy validate failed; the Caddyfile was not changed"
 say "caddy validate passed (the Caddyfile without the public blocks)"
-public_free_hashes "$CANDIDATE" "$WORK/blocks.after"
 compare_blocks "$WORK/blocks.before" "$WORK/blocks.after" || die "another block would change; the Caddyfile was not changed"
 say "every other block byte-identical before and after"
 

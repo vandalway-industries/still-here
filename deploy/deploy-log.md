@@ -1132,7 +1132,7 @@ After Clive's C4 sign-off and the repository reading public.
   registrar's latest snapshot before the write: 186074588. Validation dry run passed (200). Then the
   apex and `www` replaced, which Pages needs (the registrar's placeholder apex A and the `www`
   CNAME to the apex were all they held): A `@` GitHub Pages' four IPv4 addresses; AAAA `@` its
-  four IPv6 addresses; CNAME `www` `vandalway-industries.github.io.`; TTL 3600. 200 "Request accepted".
+  four IPv6 addresses; CNAME `www` to the organization's Pages host; TTL 3600. 200 "Request accepted".
 - Read-back, isitstillhere.com: those three record sets changed as written; every other record set
   unchanged (MX, SPF, DMARC, the Pages challenge TXT); zone sha256 62687f8ea041a3eb144b151b14ce68f7b581bed5fb43d737febb6b6814b3248e.
 

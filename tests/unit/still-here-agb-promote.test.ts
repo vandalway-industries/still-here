@@ -156,11 +156,13 @@ test('4. commits carry only the GitHub no-reply address (one accepted author exc
   assert.deepEqual(bad, [], 'commits with an address other than the no-reply one');
 });
 
-test('5. main, and a private remote at vandalway-industries/still-here over SSH', () => {
+test('5. main, and a remote at vandalway-industries/still-here over SSH, private until C4 is signed off and public after', () => {
   assert.equal(sh('git', ['symbolic-ref', 'HEAD']).trim(), 'refs/heads/main');
   assert.equal(sh('git', ['remote', 'get-url', 'origin']).trim(), ['git', 'github.com:vandalway-industries/still-here.git'].join('@'));
   const view = JSON.parse(sh('gh', ['repo', 'view', 'vandalway-industries/still-here', '--json', 'visibility,defaultBranchRef']));
-  assert.equal(view.visibility, 'PRIVATE');
+  // private while building; public from Clive's switch at C4 (approved 2026-10-06, CHECKPOINTS.md § Record)
+  const signedOff = /\*\*C4 — signed off\b/.test(read('garage/pack/CHECKPOINTS.md').split('## Record')[1] ?? '');
+  assert.equal(view.visibility, signedOff ? 'PUBLIC' : 'PRIVATE');
   assert.equal(view.defaultBranchRef?.name, 'main');
 });
 
