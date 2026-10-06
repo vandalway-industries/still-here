@@ -191,6 +191,10 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   after launch: items 1, 2, 4 and 6 of the phone checklist and item 9, all passed: the ritual, the
   PDF in the certificate's type, the copied link reopened, the QR code scanned by the camera, and the
   e-mail to webmaster@vandalwayind.com reported undeliverable. (Jules, 2026-10-06)
+- **Re-tag specs-v11 — 2026-10-06.** Clive approved, during N3, one change to the walk helper W9
+  uses (`follow()` in `e2e/helpers/walks.ts`): it takes the link from inside the rendered README
+  first, as W9.2 says, and waits for the new address instead of a navigation request, since
+  github.com changes pages in place. The steps' content checks are unchanged. (Jules, 2026-10-06)
 
 ## Changelog
 

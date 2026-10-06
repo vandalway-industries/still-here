@@ -908,14 +908,24 @@ export async function W9_1(w: Walk, repo: string): Promise<void> {
 const followed: { url: string; status: number }[] = [];
 
 async function follow(w: Walk, href: (h: string) => boolean): Promise<void> {
-  for (const l of await w.page.getByRole('link').all()) {
-    const h = (await l.getAttribute('href')) ?? '';
-    if (href(h)) {
-      const [resp] = await Promise.all([
-        w.page.waitForResponse((r) => r.request().isNavigationRequest() && r.frame() === w.page.mainFrame()),
-        l.click(),
-      ]);
-      followed.push({ url: resp.url(), status: resp.status() });
+  // The README's own links first (github.com renders it in an article), then anywhere on the page;
+  // and the new address, not a navigation request, since github.com may change pages in place
+  // (C4 follow-up, approved by Clive 2026-10-06).
+  for (const scope of [w.page.locator('article'), w.page.locator('body')]) {
+    for (const l of await scope.getByRole('link').all()) {
+      const h = (await l.getAttribute('href')) ?? '';
+      if (!href(h)) continue;
+      const target = new URL(h, w.page.url()).pathname;
+      let nav: import('@playwright/test').Response | null = null;
+      const seen = (r: import('@playwright/test').Response) => {
+        if (r.request().isNavigationRequest() && r.frame() === w.page.mainFrame()) nav = r;
+      };
+      w.page.on('response', seen);
+      await l.click();
+      await expect(w.page).toHaveURL((u) => new URL(u).pathname === target);
+      w.page.off('response', seen);
+      const status = nav ? (nav as import('@playwright/test').Response).status() : (await w.page.request.get(w.page.url())).status();
+      followed.push({ url: w.page.url(), status });
       return;
     }
   }
