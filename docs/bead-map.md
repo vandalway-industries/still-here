@@ -69,6 +69,16 @@ not already name one; T0 decides those from `WALKS.md`. (Jules, 2026-10-03)
 | N2 | `still-here-vi0` | jules@vandalway.example | `tests/unit/still-here-vi0-vandalway-dns.test.ts` · `e2e/specs/still-here-vi0-walk.spec.ts` |
 | N3 | `still-here-tfr` | diane@vandalway.example | `tests/unit/still-here-tfr-post-launch.test.ts` · `e2e/specs/still-here-tfr-walk.spec.ts` |
 
+## Filed from checkpoints
+
+Beads a checkpoint filed after G0. They are not sections of `garage/pack/ACCEPTANCE.md`; each
+names the checkpoint that filed it and the bead it was found from. The label is the checkpoint's.
+(Jules, 2026-10-05)
+
+| Checkpoint | Bead id | Owner and source | Test files |
+|---|---|---|---|
+| C3 | `still-here-txf` | jules@vandalway.example, s07 on careers, found from S6 (still-here-skd) | `tests/unit/still-here-txf-s07.test.ts` · `e2e/specs/still-here-txf-s07.spec.ts` |
+
 ## Walks
 
 Which bead plays which walk of `garage/pack/WALKS.md`, decided at T0 from the walks' headings and
@@ -108,3 +118,4 @@ walk. T0 has no screen and no walk.
 
 - 2026-10-03 — Written at G0: 53 beads filed. (Jules, 2026-10-03)
 - 2026-10-04 — T0: the walk-to-bead table; walk specs added for S8 and S9 (W4.legal); T0's walk entry removed (it has no screen). (Diane, 2026-10-04)
+- 2026-10-05 — Filed from checkpoints: C3's s07 bead (`still-here-txf`) and its two tests, locked at specs-v5. (Jules, 2026-10-05)

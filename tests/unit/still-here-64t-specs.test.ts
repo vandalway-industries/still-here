@@ -238,7 +238,10 @@ test('3. the run recorded at specs-v1: red for every bead after Phase 0, green f
   const b = JSON.parse(readMust('tests/fixtures/specs-v1-baseline.json')) as Baseline;
   assert.equal(b.tag, 'specs-v1');
   const map = beadMap();
+  // beads a checkpoint filed after the tag carry their own tests and are not in the specs-v1 run (approved by Clive, CHECKPOINTS.md § Record, specs-v5)
+  const filed = new Set((readMust('docs/bead-map.md').split('## Filed from checkpoints')[1] ?? '').split(/\n## /)[0].split('\n').map((l) => /^\| ([A-Z]+\d+) \| `/.exec(l)?.[1]).filter(Boolean));
   for (const [label, entry] of map) {
+    if (filed.has(label)) continue;
     const unit = entry.files.filter((f) => f.startsWith('tests/unit/'));
     const specs = entry.files.filter((f) => f.startsWith('e2e/specs/'));
     if (PHASE0.includes(label)) {
