@@ -1,0 +1,70 @@
+# STILL HERE staging. Added to the server's Caddyfile by deploy/staging-install.sh between its BEGIN
+# and END marks, and taken out again by deploy/staging-uninstall.sh. Bound to the loopback
+# interface and to a socket under /srv/still-here-staging/; nothing here listens on a public
+# address. The internal network reaches it through an HTTPS port of its own that proxies to the
+# socket (the same arrangement as the internal copy of vandalwayind.com), so staging is a secure
+# context and the browser's crypto.subtle works there. That port is chosen at install time and is
+# not written in this repository.
+#
+# The rules answer the way GitHub Pages answers (garage/research/3-pages-hosting.md § 3, and
+# scripts/serve-pages.mjs, the local server that copies it):
+#   /index            200, index.html served without the extension
+#   /index.html       200
+#   /index/           404
+#   /folder           301 to /folder/
+#   /folder/          200, folder/index.html
+#   a missing path    404, with /404.html as the body
+# Anything under /api/ also carries access-control-allow-origin: *, so /api/v1/presence.json can
+# be read from any origin (PRD R34). (Jules, 2026-10-06)
+http://localhost:18998 {
+	root * /srv/still-here-staging/site
+	bind 127.0.0.1 unix//srv/still-here-staging/.run/caddy.sock
+	# Requests through the socket arrive addressed to "localhost"; name them as this site so they
+	# reach this site's access log like requests on the port do.
+	request_header Host localhost:18998
+
+	# As Pages sends them.
+	header Cache-Control "max-age=600"
+	header /api/* Access-Control-Allow-Origin "*"
+
+	# Nothing here accepts anything but GET and HEAD.
+	@write not method GET HEAD
+	header @write Allow "GET, HEAD"
+	respond @write 405
+
+	# A folder asked for without its slash: 301 to the slash.
+	@folder {
+		not path */
+		not file {path}
+		file {path}/
+	}
+	redir @folder {path}/ 301
+
+	# A page asked for without .html: served as the .html file.
+	@page {
+		not path */
+		not file {path}
+		file {path}.html
+	}
+	rewrite @page {path}.html
+
+	# No redirects of Caddy's own: /index.html stays /index.html, and a path with a trailing slash
+	# that is not a folder is a 404, as on Pages.
+	file_server {
+		disable_canonical_uris
+	}
+
+	# A missing path: 404, with the site's own 404 page as the body.
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+
+	# Staging's own access log: JSON, kept one day. W2 on staging reads it for names (L1 item 5).
+	log {
+		output file /var/log/caddy/still-here-staging.access.log {
+			roll_keep_for 24h
+		}
+		format json
+	}
+}
