@@ -16,13 +16,14 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Phase 7 is held at C4. L1–L4 are closed; the C4 packet is with Clive; L5 waits on its question 9.
+- Phase 8 is active. Both sites are live; N1 and N2 are closed; Clive's production phone re-check
+  passed. W-DoD on production is running.
 
 **Next:**
-- Clive: the phone checklist, the packet's § 6, sign-off, the public switch. Then Phase 8 (N1–N3).
+- N3's close, then the final audit against `PRD.md`; L5's staging gate run.
 
 **Later:**
-- L1–L5 to the C4 launch packet (staging, phone checklist); Phase 8 after Clive's public switch.
+- Nothing after Phase 8 in v1.
 
 ## Phase map
 
@@ -35,14 +36,15 @@ relations:
 | 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | done | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | active (at C4; L5 on question 9) | L1–L5 closed; C4 packet out |
-| 8 | Launch | pending | N1–N3 closed; W-DoD on production |
+| 7 | Staging and the launch packet | held (C4 signed off; L5 on its staging gate run) | L1–L5 closed; C4 packet out |
+| 8 | Launch | active | N1–N3 closed; W-DoD on production |
 
 ## Active phase
 
-**Phase 7 — Staging and the launch packet.** Entered 2026-10-06; held at C4 the same day. L1–L4
-closed; the C4 packet (`docs/checkpoints/c4-packet.md`) is with Clive; L5 waits on the packet's
-question 9 (the walk helpers on a networked server). Phase 8 starts on Clive's public switch.
+**Phase 8 — Launch.** Entered 2026-10-06 on Clive's C4 sign-off and public switch. isitstillhere.com
+is live on GitHub Pages over HTTPS (N1 closed); vandalwayind.com is live from the production server
+(N2 closed). N3 next: W-DoD on production, then the final audit. L5 stays open on its staging
+walk's gate run (the walks are played by hand; the workstation's link to staging drops).
 
 ## Build method
 
@@ -430,12 +432,14 @@ Held at C4 (2026-10-06). Staging is up on the internal network and walked; DNS, 
 ### Phase 8 — Launch
 
 #### Entry criteria
-- [ ] C4 signed off and the repository reads public (`gh repo view --json visibility`).
-- [ ] The Pages verification TXT resolves and the organization shows the domain verified.
+- [x] C4 signed off and the repository reads public (`gh repo view --json visibility`). Evidence (2026-10-06): CHECKPOINTS § Record "C4 — signed off"; visibility PUBLIC.
+- [x] The Pages verification TXT resolves and the organization shows the domain verified. Evidence: the TXT at both public resolvers; Pages API `protected_domain_state: verified`.
 
 #### Steps
 - [ ] N1: private vulnerability reporting enabled and `RENEWAL_ASSIGNEE` set first; then Pages source set to GitHub Actions; `github-pages` environment limited to `main`; deploy; custom domain set; apex A and AAAA and `www` CNAME written; wait for the certificate (up to 24 hours, polled); HTTPS enforced; the production smoke.
+  Closed (2026-10-06): `still-here-kdn` through the gate. Deploy run 37468552403; DNS written after a zone save and dry run (`deploy/deploy-log.md` § Phase 8); the custom domain re-added once with Clive's word, after its first check ran before DNS pointed at Pages; the certificate approved for the apex and `www`; HTTPS enforced. Unit 6/6; the production spec 18 passed, 0 skipped.
 - [ ] N2: vandalwayind.com's A record (reverse record accepted as it is, I-10); the public Caddy site block by a `deploy/` script with its undo; certificate issued; the counter reset and dated at go-live; W7 on production.
+  Closed (2026-10-06): `still-here-vi0` through the gate. `deploy/vandalwayind-public-install.sh` and its undo (every other block byte-identical, every other site answering as before; the undo returned the Caddyfile to the backup's sha256); `go-live 2026-10-06 total 793 -> 0`; a second run after the X6 change (`specs-v10`) reset 8 more loads, and the go-live now runs once. Unit 3/3; W7 on production 4 passed (Chromium and WebKit, 1440 and 390), and again in the gate.
 - [ ] N3: the live record check against production Verify; `security.txt` and `presence.json` on production; Clive's production phone re-check recorded; W-DoD on production; `/goal`'s final audit against `PRD.md`.
 
 #### Bar
@@ -547,3 +551,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Phase 7: L1 (staging) and L2 closed; L3's DNS written, held on its ANY probe; L4 run, held on items 3 and 4; V4's W7.3 green, V4 held on a twice-green walk. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 6 done (V4 closed, W7 played by hand by the critic); L3 and L4 closed at `specs-v8`; X6's guard regression from the GIF script fixed; the found list brought up to date. (Jules, 2026-10-06)
 - 2026-10-06 — Phase 7 held at C4: the packet is out; W1–W9 walked on staging, red steps played by hand; Clive lowered the bar for the rest of the launch. (Jules, 2026-10-06)
+- 2026-10-06 — Phase 8 entered on C4's sign-off: N1 and N2 closed, both sites live; W-DoD and the final audit next. (Jules, 2026-10-06)
