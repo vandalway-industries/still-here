@@ -1,5 +1,5 @@
 ---
-updated: 2026-10-05
+updated: 2026-10-06
 read_by: every session start in this repository; the landing gate checks it was touched; the morning look after any overnight run
 relations: {}
 ---
@@ -12,51 +12,47 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v3`; `specs-v4` is being cut by the test author) · **Phase:** 6 held; C2 and C3 answered, their product changes in
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v6`) · **Phase:** 7 active, entry not met; Phases 2, 4 and 6 held
 
 ### Current state
 
-Clive's C2 and C3 answers are in the product, and so are his follow-ups. Nothing was
-ticked and no bead was closed: the test author is re-tagging `specs-v4`, and the re-runs come after.
-The internal copy of vandalwayind.com was taken down and put back by its two scripts with the
-counter fixes in.
+The held beads were re-run at `specs-v6`, twice each, from a private copy of HEAD 3f4803e. Four
+closed through the gate: DS1, E3, S2 and X6. Phases 1 and 3 are done. Seven beads are still open.
+E2, E4 and E7 hold Phase 2, X4 holds Phase 4, and V1, V2 and V4 hold Phase 6. Phase 7 is the
+active row, but it cannot start until those three phases reach their gates.
 
 ### What changed
 
-- Home: the band reads "Every Friday, it is still here." Leadership: Lucas's card reads "Lucas",
-  with "Intern" beneath. His staff file and the tracker still say "Lucas the Intern".
-- The certificate: the guilloche is 0.7 units. Folding chair's PDF, cropped and rendered back,
-  differs from its PNG by 0.61% in Chromium and 0.20% in WebKit (it was 0.65% and 1.00%). The
-  specimen was rendered again into `candidates/` and `certificate-golden.png` for Clive's second
-  look. Against the approved golden, only the guilloche band changed.
-- Long names step down in size and stay between "This certifies that" and the name rule, on
-  three lines at most. Text names stop at 30. Names drawn as images may go down to about 24 units
-  of ink, which Clive allowed, and their lines are set solid. 80 × 椅 and 80 × 🪑 now fit in three
-  lines in both engines. Each name image is placed on the PDF's own pixel grid. The PDF of 80 × 椅
-  now differs from its PNG by 0.56% in Chromium (it was 1.45%) and 0.19% in WebKit.
-- The hero's crop box in the manifest is now the build's, (1044,110)-(1656,875).
-- The second-floor printer (`s07`) is on careers, next to the stapler, at 400 and 800 wide, with
-  no metadata.
-- The three failure sentences were already in the approved words. I took out the "draft" comments.
-- The counter skips NUL bytes at the start of a log line. The undo empties the log, and at Caddy's
-  next write the log gets a run of NULs at the front; I saw it on the server. The install now
-  writes the day it started counting into the served page: "times since October 5, 2026." Undo
-  and install at 22:49 UTC, `deploy/deploy-log.md` runs 14 and 15. All 11 other blocks were
-  byte-identical, the ten other sites answered as before, and the other routes hashed the same.
-- Tests, against whatever was on disk at `specs-v3`, from a private copy at two workers: the DS4,
-  E3 and E4 specs 24/24 in Chromium and WebKit. S2, S6 and DS5 specs green; the only skips are the
-  specs' own engine limits. V1 to V4 with VANDALWAY_INTERNAL_URL set: 12 passed and 4 failed, all
-  four W7 step 3 (`queryMx ENODATA`, waiting on L3). The 8 skips are engine limits. `npm run build`
-  is fine, and `npm run check:links` finds 19 pages and 0 broken. The whole unit suite: 225 tests,
-  183 pass, 28 fail, 14 skipped. That is the same set of failures as HEAD, apart from two. The
-  portfolio's identifier landed a second late under the running clock, which is C2 test change 4.
-  The specs-v1 lock fails because the test author's files are changing.
+- The internal copy of vandalwayind.com was taken down and put back with the page's e-mail links
+  as in the golden. The undo ran at 03:43 UTC and the install straight after
+  (`deploy/deploy-log.md` runs 16 and 17). `caddy validate` passed before each reload. All 11
+  other blocks were byte-identical and the network's other routes hashed the same. The ten other
+  sites answered as before. Served: one `mailto:`, to webmaster@vandalwayind.com, and
+  `Last-Modified` 1997-08-22. The page is the repository's except for its counter line, which now
+  reads "times since October 6, 2026.", because the counting started again.
+- The re-run: `npm ci` and a build in the copy, served on a free port, two workers. Each bead's
+  unit tests ran twice. Its browser specs ran twice in all six projects, the internal-copy ones
+  with VANDALWAY_INTERNAL_URL set. The two full browser runs each came to 200 passed, 16 failed
+  and 30 skipped. Every skip is an engine limit or E2 item 14's labelled human pick.
+- Closed: DS1 (unit 4/4 twice), E3 (certificate spec 36/36 twice, then in the gate), S2 (10
+  passed twice, then in the gate) and X6 (see the next point). E2 item 14, E3 item 7 and S2 item
+  4 were flipped on the critic's blind picks of 2026-10-05, which passed.
+- X4 and X6 ran wrong with STAGING_URL set. With it set, the offline helper aborts every request
+  instead of stopping a server. WebKit refuses that ("Blocked by Web Inspector") and Firefox's
+  service worker goes around it, so we were red there in both runs. I ran their specs twice more
+  without it, so that each test stops its own server from the copy. X6 was green in both of those
+  runs and then in the gate. X4's tests 3 and 4 were green in all six projects both times, so
+  those items are flipped. L5 will meet the same staging branch when it plays W6 on staging.
+- The STRICT gate refused E2. Its own run of the timing spec went red once in Chromium: line 1
+  held 631.6 ms against 983, with the load average at 12 to 15. My two runs were green in all six
+  projects. E2's boxes are all flipped.
 
 ### What's next
 
-1. `specs-v4` is tagged. The PM re-runs the affected beads.
-2. V1's blind pick and the certificate golden's second look go to Clive.
-3. Phase 7, once Phase 6's items clear.
+1. The critic's fresh blind pick of the 1997 page against its golden (V1 item 4).
+2. The PM decides on the new reds: E4 test 7, X4's W6 at chromium-390, V2's network red, and the
+   offline helper's staging branch.
+3. E2's gate run and E7's WebKit test on a quiet machine. L3's null MX for V4. Then Phase 7.
 
 ### Waiting on Clive
 
@@ -66,21 +62,31 @@ counter fixes in.
 
 ### Surprises / debt
 
-- Playwright's `context.setOffline` does not reach service workers the same way in each engine
-  (above). The product works offline; the emulation is what differs.
-- The workflows are committed but not yet run. L2 owns their dry run and the check that they are
-  on `origin/main`.
-- Staging, internal-copy and production specs skip while their environment is missing, and a run of
-  only skipped tests exits 0. The zero-skip close rule in `PLAN.md` covers it.
+- New reds, reported and not fixed. E4 test 7 at webkit-390, once: "Preparing PNG…" showed, then
+  the button was gone before its `aria-disabled` check. X4's W6.1 at chromium-390, once: the
+  service worker was not ready within 15 s. V2's spec in Chromium, once: `ERR_NETWORK_CHANGED`
+  on this workstation.
+- E7 test 1–2 in WebKit ran out of its 30 s in both runs while taking the pdf.js render-back
+  screenshot. W7 step 3 still waits on L3 (`queryMx ENODATA`).
+- A correction to the record: commit 1df6811's message says the `s07` bead was "filed from C3
+  and closed". The gate had in fact refused it then. It closed later, at 2ce6cd5, through the
+  gate at `specs-v5`.
+- The load average sat between 10 and 15 the whole session. A file search left running on this
+  computer since 17:27 kept part of it busy. I left it alone.
+- The X6 unit test needs a git work tree, because test 4 reads `git ls-files`. In the copy it
+  fails for that reason only, so it was run in the clean work tree at the same HEAD.
+- Playwright's `context.setOffline` does not reach service workers the same way in each engine.
+  The product works offline; the emulation is what differs.
+- The workflows are committed but not yet run. L2 owns their dry run.
+- Staging, internal-copy and production specs skip while their environment is missing, and a run
+  of only skipped tests exits 0. The zero-skip close rule in `PLAN.md` covers it.
 - vandalwayind.com already answers with somebody's parked page; the production specs check the
   page is ours before they run.
-- Unit failures that were already there at HEAD before Phase 4: DS1 items 2 and 4 (the linter
-  output's wording; Greek in Cormorant Garamond) and E4 unit test 3 (ink, C2 Decision 4).
-- `bd` records a bead's owner from the git author address, so `bd` commands are run with the
-  owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`, set on that one command only. Never
-  export them.
-- Caddy on the production server keeps one deleted, empty log file open until it next
-  restarts (the 12:10 problem above). It is harmless and goes away on Caddy's next restart.
+- `bd` records a bead's owner from the git author address. So `bd` commands run with the owner's
+  address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR`, set on that one command only. Never export
+  them.
+- Caddy on the production server keeps one deleted, empty log file open until it next restarts.
+  It is harmless and goes away on Caddy's next restart.
 - The printer photograph has dated sticky notes and a sticker on it. Clive says both stay.
 - This computer's clock steps back about 1.16 s every 32 s; no red was put down to it.
 
@@ -119,3 +125,4 @@ counter fixes in.
 - 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 on C2, V2 on a test item, V4 on L3's null MX. (Martin, 2026-10-05)
 - 2026-10-05 — C2 and C3 product changes in; the internal copy redeployed with the counter fixes; Decision 6 open for image-drawn names. (Martin, 2026-10-05)
 - 2026-10-05 — Names drawn as images fit three lines in the name zone, and their PDF matches the PNG. (Martin, 2026-10-05)
+- 2026-10-06 — Re-run at specs-v6 after the 1997 page's redeploy: DS1, E3, S2 and X6 closed; seven beads open, each with what it waits on. (Martin, 2026-10-06)
