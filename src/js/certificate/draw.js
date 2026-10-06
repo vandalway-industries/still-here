@@ -155,6 +155,9 @@ const NAME_WIDTH = 760;
 // the widest a name may run before it must take another line: inside the inner rules
 const NAME_WIDTH_MAX = 900;
 const NAME_LINES = 3;
+// the smallest ink height of a line of a name drawn as an image, in units (C2 follow-up: "about
+// 24"; 25.2 by the browser's measure keeps a pale emoji edge at 24 or more, and three lines fit 79)
+const NAME_INK_FLOOR = 25.2;
 // the name zone's ink limits, a few units clear of the fixed lines above and below
 const NAME_TOP = 270;
 const NAME_BOTTOM = 349;
@@ -214,29 +217,33 @@ function wrap(name, widthAt, size, maxWidth) {
  * user units; ink(size) is [ascent, descent] of the name's ink at a size. One line at up to 54
  * units; otherwise the largest size, down to the floor, whose lines (at most three) fit the zone.
  */
-function layout(name, widthAt, ink) {
+function layout(name, widthAt, ink, floor = NAME_FLOOR, leading = NAME_LEAD) {
   const w = widthAt(name, 1);
   if (w * NAME_FLOOR <= NAME_WIDTH) return { size: Math.min(NAME_MAX, NAME_WIDTH / w), lines: [name], bases: [NAME_BASELINE] };
   const zone = NAME_BOTTOM - NAME_TOP;
-  for (let size = NAME_MAX; size >= NAME_FLOOR; size -= 0.5) {
+  const place = (size, lines) => {
     const [up, down] = ink(size);
-    const lead = (up + down) * NAME_LEAD;
+    const lead = (up + down) * leading;
+    const block = up + (lines.length - 1) * lead + down;
+    const first = NAME_TOP + (zone - block) / 2 + up;
+    return { size, lines, bases: lines.map((_, i) => first + i * lead), fits: block <= zone };
+  };
+  const sizes = [];
+  for (let size = NAME_MAX; size > floor; size -= 0.5) sizes.push(size);
+  sizes.push(floor);
+  for (const size of sizes) {
     for (const maxWidth of [NAME_WIDTH, NAME_WIDTH_MAX]) {
       const lines = wrap(name, widthAt, size, maxWidth);
       if (lines.length > NAME_LINES) continue;
-      const block = up + (lines.length - 1) * lead + down;
-      if (block > zone) break;
-      const first = NAME_TOP + (zone - block) / 2 + up;
-      return { size, lines, bases: lines.map((_, i) => first + i * lead) };
+      const fit = place(size, lines);
+      if (!fit.fits) break;
+      return fit;
     }
   }
-  // nothing fits the zone at the floor: the floor, at the fewest lines, centred on the baseline
-  let lines = wrap(name, widthAt, NAME_FLOOR, NAME_WIDTH);
-  if (lines.length > NAME_LINES) lines = wrap(name, widthAt, NAME_FLOOR, NAME_WIDTH_MAX);
-  const [up, down] = ink(NAME_FLOOR);
-  const lead = (up + down) * NAME_LEAD;
-  const first = NAME_BASELINE - ((lines.length - 1) * lead) / 2;
-  return { size: NAME_FLOOR, lines, bases: lines.map((_, i) => first + i * lead) };
+  // nothing fits the zone at the floor: the floor, at the fewest lines, centred in the zone
+  let lines = wrap(name, widthAt, floor, NAME_WIDTH);
+  if (lines.length > NAME_LINES) lines = wrap(name, widthAt, floor, NAME_WIDTH_MAX);
+  return place(floor, lines);
 }
 
 export function fitName(name) {
@@ -271,7 +278,11 @@ function nameImages(name, cx) {
   const m = ctx.measureText(name);
   const up = Math.max(m.actualBoundingBoxAscent || 0, 70) / 100;
   const down = Math.max(m.actualBoundingBoxDescent || 0, 0) / 100;
-  const fit = layout(name, widthAt, (size) => [up * size, down * size]);
+  // Clive, C2 follow-up: a name drawn as an image may step down until its ink is about 24 units
+  // tall (the text floor is a 30-unit size), so the longest fit three lines in the zone
+  const floor = Math.min(NAME_FLOOR, NAME_INK_FLOOR / (up + down));
+  // its lines set solid (the browser's ink box includes the glyphs' pale edges, so they do not touch)
+  const fit = layout(name, widthAt, (size) => [up * size, down * size], floor, 1);
   probe.width = 0;
   probe.height = 0;
   const ascent = Math.max(fit.size * 0.98, up * fit.size + 2);
@@ -279,19 +290,24 @@ function nameImages(name, cx) {
   const out = [];
   fit.lines.forEach((line, i) => {
     const w = widthAt(line, fit.size) + fit.size * 0.2;
-    const c = canvas2d(Math.ceil(w * NAME_SCALE), Math.ceil(tall * NAME_SCALE));
+    // the image sits on a grid of 2/3 unit, one pixel of the PDF at 150 dpi and two of the PNG, so
+    // both renderers sample it at the same phase; the glyphs are drawn at the true baseline and centre
+    const grid = 2 / 3;
+    const step = grid * NAME_SCALE;
+    const c = canvas2d(Math.ceil((w * NAME_SCALE) / step + 1) * step, Math.ceil((tall * NAME_SCALE) / step + 1) * step);
+    const x = Math.round((cx - c.width / NAME_SCALE / 2) / grid) * grid;
+    const y = Math.round((fit.bases[i] - ascent) / grid) * grid;
     const g = c.getContext('2d');
     g.font = font(fit.size * NAME_SCALE);
     g.fillStyle = INK;
     g.textBaseline = 'alphabetic';
     g.textAlign = 'center';
-    g.fillText(line, c.width / 2, ascent * NAME_SCALE);
+    g.fillText(line, (cx - x) * NAME_SCALE, (fit.bases[i] - y) * NAME_SCALE);
     const href = c.toDataURL('image/png');
     const [cw, ch] = [c.width, c.height];
-    const y = fit.bases[i] - ascent;
     c.width = 0;
     c.height = 0;
-    out.push(`<image x="${n(cx - w / 2)}" y="${n(y)}" width="${n(cw / NAME_SCALE)}" height="${n(ch / NAME_SCALE)}" preserveAspectRatio="none" href="${href}"/>`);
+    out.push(`<image x="${n(x)}" y="${n(y)}" width="${n(cw / NAME_SCALE)}" height="${n(ch / NAME_SCALE)}" preserveAspectRatio="none" href="${href}"/>`);
   });
   return `<g data-field="name">${out.join('')}</g>`;
 }

@@ -29,11 +29,11 @@ counter fixes in.
   differs from its PNG by 0.61% in Chromium and 0.20% in WebKit (it was 0.65% and 1.00%). The
   specimen was rendered again into `candidates/` and `certificate-golden.png` for Clive's second
   look. Against the approved golden, only the guilloche band changed.
-- Long names step down in size, never below 30, to three lines at most, and stay between "This
-  certifies that" and the name rule. Latin and Greek names fit. 80 × 椅 and 80 × 🪑 do not. A line of
-  either is about 30 units of ink at size 30, and the zone is 79, so three lines will not fit. They
-  print as they did before, over the fixed lines. Someone has to decide the floor for names drawn
-  as images.
+- Long names step down in size and stay between "This certifies that" and the name rule, on
+  three lines at most. Text names stop at 30. Names drawn as images may go down to about 24 units
+  of ink, which Clive allowed, and their lines are set solid. 80 × 椅 and 80 × 🪑 now fit in three
+  lines in both engines. Each name image is placed on the PDF's own pixel grid. The PDF of 80 × 椅
+  now differs from its PNG by 0.56% in Chromium (it was 1.45%) and 0.19% in WebKit.
 - The hero's crop box in the manifest is now the build's, (1044,110)-(1656,875).
 - The second-floor printer (`s07`) is on careers, next to the stapler, at 400 and 800 wide, with
   no metadata.
@@ -54,8 +54,7 @@ counter fixes in.
 
 ### What's next
 
-1. The test author tags `specs-v4`. Then the PM re-runs the affected beads and decides on the
-   image-name floor (Decision 6).
+1. `specs-v4` is tagged. The PM re-runs the affected beads.
 2. V1's blind pick and the certificate golden's second look go to Clive.
 3. Phase 7, once Phase 6's items clear.
 
@@ -82,7 +81,7 @@ counter fixes in.
   export them.
 - Caddy on the production server keeps one deleted, empty log file open until it next
   restarts (the 12:10 problem above). It is harmless and goes away on Caddy's next restart.
-- The printer photograph carries sticky-note dates (2020-2023) and a sticker; Clive placed it as is.
+- The printer photograph has dated sticky notes and a sticker on it. Clive says both stay.
 - This computer's clock steps back about 1.16 s every 32 s; no red was put down to it.
 
 ## Changelog
@@ -119,3 +118,4 @@ counter fixes in.
 - 2026-10-05 — RC7 and RC8 closed as product fixes: the copy in `src/content/`, the `test` and `e2e` scripts; Phase 5's exit gate met. (Martin, 2026-10-05)
 - 2026-10-05 — Phase 6 built and served internally: V3 closed; V1 on C2, V2 on a test item, V4 on L3's null MX. (Martin, 2026-10-05)
 - 2026-10-05 — C2 and C3 product changes in; the internal copy redeployed with the counter fixes; Decision 6 open for image-drawn names. (Martin, 2026-10-05)
+- 2026-10-05 — Names drawn as images fit three lines in the name zone, and their PDF matches the PNG. (Martin, 2026-10-05)
