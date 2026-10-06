@@ -142,6 +142,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   (append only; the two existing records unchanged, read back) and resolved publicly; Clive's
   verification succeeded. The value is kept in the uncommitted `.env.staging`, not in this
   repository. (Jules, 2026-10-06)
+- **Re-tag specs-v7 — 2026-10-06.** Clive approved the offline steps on staging: the test fetches
+  staging's exact build (checked against its `/build.txt`), serves it from a private local server,
+  visits it there, then stops that server, so the offline behaviour is real and the bytes are
+  staging's. It replaces the staging branch of the offline helper (route abort), which WebKit refuses
+  and Firefox's service worker goes around. No acceptance text changes. (Jules, 2026-10-06)
 
 ## Changelog
 
