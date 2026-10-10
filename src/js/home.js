@@ -93,6 +93,8 @@ function setInert(on) {
   button.setAttribute('aria-disabled', String(on || blank()));
   for (const c of chips) c.setAttribute('aria-disabled', String(on));
   ask.classList.toggle('is-running', on);
+  // the offline copy waits while a check runs (offline.js), so the check has the network to itself
+  document.documentElement.toggleAttribute('data-checking', on);
 }
 
 function cancel() {

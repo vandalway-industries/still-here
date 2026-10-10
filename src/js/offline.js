@@ -1,10 +1,26 @@
-// Registers the service worker (/sw.js) once the page has loaded, so it never competes with the
-// page's own first load. From then on the site works offline (PRD R37). Every page includes this
-// from the shell's footer. (Jules, 2026-10-05)
+// Registers the service worker (/sw.js) once the page has settled, so its first download (the
+// offline copy, about 4 MB) never competes with the page or with a check in progress: three
+// seconds after the load event, when the browser is idle, and not while the home page's check runs
+// (it marks the page with data-checking). On a first visit Safari otherwise gave the copy's
+// requests the network before the check's own code, and the result came seconds late. From then
+// on the site works offline (PRD R37). Every page includes this from the shell's footer.
+// (Jules, 2026-10-05; the wait, 2026-10-10)
 if ('serviceWorker' in navigator) {
+  const root = document.documentElement;
   const register = () => navigator.serviceWorker.register('/sw.js').catch(() => undefined);
-  if (document.readyState === 'complete') register();
-  else window.addEventListener('load', register, { once: true });
+  const whenNoCheck = () => {
+    if (!root.hasAttribute('data-checking')) return void register();
+    const watch = new MutationObserver(() => {
+      if (root.hasAttribute('data-checking')) return;
+      watch.disconnect();
+      register();
+    });
+    watch.observe(root, { attributes: true, attributeFilter: ['data-checking'] });
+  };
+  const settle = () =>
+    setTimeout(() => ('requestIdleCallback' in window ? requestIdleCallback(whenNoCheck, { timeout: 5000 }) : whenNoCheck()), 3000);
+  if (document.readyState === 'complete') settle();
+  else window.addEventListener('load', settle, { once: true });
 }
 
 // A photograph that does not arrive (offline and never seen, or a failed request) shows its

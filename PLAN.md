@@ -510,6 +510,10 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
     once the home page is idle (C4 question 3); a visitor who presses within a second or two of
     arriving still waits for it. Worth fetching it earlier, or holding the result's timing to the
     press regardless. Found at L5's gate runs, 2026-10-06.
+  - [x] Phase 8 (L5): on a first visit Safari let the service worker's offline download (about 4 MB)
+    go before the ritual's own code, so the result came 6–10 s after the press. Found 2026-10-10 with
+    a service-worker-blocked probe (4.63 s). The worker now registers three seconds after the load,
+    when the browser is idle, and not while a check runs (`src/js/offline.js`, `src/js/home.js`).
   - [ ] Next packet (N3): test 7 ("the final audit passes, recorded in Phase 8") matches the exit
     gate's own wording, so it is green before any audit; it should look for the audit's recorded
     result. Found by the final audit, 2026-10-06.
@@ -569,3 +573,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Phase 8 entered on C4's sign-off: N1 and N2 closed, both sites live; W-DoD and the final audit next. (Jules, 2026-10-06)
 - 2026-10-06 — Launched: both sites live; L5 and N3 item 4 excluded by Clive; the final audit's first round found the status files stale, fixed here. (Jules, 2026-10-06)
 - 2026-10-06 — The final audit passes against `PRD.md` (second round), with L5 and N3 item 4 as Clive's exclusions. (Jules, 2026-10-06)
+- 2026-10-10 — The offline copy waits until the page has settled and no check runs; Safari's first-visit ritual keeps its timing. (Jules, 2026-10-10)
