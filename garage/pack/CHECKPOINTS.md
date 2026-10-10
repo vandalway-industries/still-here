@@ -214,6 +214,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   with its header, every identifier in `company/` verifying on the live Verify page, Clive's
   production phone re-check, the renewal in `PROJECT.md`); N1's production spec 18/18; N2's W7 on
   production 4/4, twice; Clive's phone at launch. Item 4 and BROWSER PASS stay unticked. (Jules, 2026-10-06)
+- **Re-tag specs-v13 — 2026-10-10.** Clive approved one change to the walk helper `readToEnd()`
+  (`e2e/helpers/walks.ts`): it waits for the page's fonts before pressing End. In WebKit the first
+  paper's fonts can arrive after the press and re-flow the page past the footer. The check (the
+  footer comes into view) is unchanged. Found with the workstation on a wired link, where L5's walk
+  was otherwise green. (Jules, 2026-10-10)
 
 ## Changelog
 

@@ -101,6 +101,9 @@ async function goHome(w: Walk): Promise<void> {
 
 /** Read to the end of a page: the footer comes into view. */
 async function readToEnd(w: Walk): Promise<void> {
+  // a person reads once the text has settled: the page's fonts first, since a late font re-flows a
+  // long page after the scroll (approved by Clive, 2026-10-10)
+  await w.page.evaluate(() => document.fonts.ready.then(() => undefined));
   await w.page.keyboard.press('End');
   await expect(footer(w)).toBeInViewport();
 }
