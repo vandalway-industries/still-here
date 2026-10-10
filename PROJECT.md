@@ -51,8 +51,8 @@ STILL HERE™ — Vandalway Industries' presence-certification website: enter an
 ## Stable interfaces
 
 <!-- What other repos MAY depend on. Anything not listed is not a dependency surface. Empty until promote. -->
-- **security.txt** (`https://isitstillhere.com/.well-known/security.txt`): renew by **2027-09-06**,
-  30 days before its `Expires` of 2027-10-06 at launch. Owner: Martin (sh-011). The reminder is
+- **security.txt** (`https://isitstillhere.com/.well-known/security.txt`): renew by **2027-09-10**,
+  30 days before its `Expires` of 2027-10-10 (the deploy of 10 October 2026). Owner: Martin (sh-011). The reminder is
   `.github/workflows/security-txt-reminder.yml`, which opens an issue when 30 days or fewer are left.
   Each deploy writes a new `Expires` a year from that deploy, so the date moves forward with every
   publish; the reminder reads the live file, not this line. (Malcolm, 2026-10-06)
