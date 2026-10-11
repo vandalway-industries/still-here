@@ -16,16 +16,14 @@ relations:
 ## Now / Next / Later
 
 **Now:**
-- Both sites are live: isitstillhere.com on GitHub Pages and vandalwayind.com from the production
-  server, over HTTPS. 52 of 54 beads are closed. L5 and N3 stay open as exclusions Clive approved at
-  launch (`CHECKPOINTS.md` § Record): their walks never came out green in one run on this
-  workstation's network. The final audit passed (second round).
+- v1 is done: both sites live, the final audit passed, all 54 beads closed (L5 and N3 by Clive's
+  decision). Nothing is open.
 
 **Next:**
-- Nothing open in v1 beyond the two exclusions; a run from a steadier network can close them.
+- Nothing in v1.
 
 **Later:**
-- Nothing after Phase 8 in v1.
+- The found-work list below, for whoever picks up a v1.1.
 
 ## Phase map
 
@@ -38,15 +36,16 @@ relations:
 | 4 | Extras | done | X1–X6 closed; W6 played |
 | 5 | The records in full | done (C3 packet out) | RC1–RC8 closed; W9 played locally; C3 packet out |
 | 6 | vandalwayind.com (internal) | done | V1–V4 closed; W7 played internally |
-| 7 | Staging and the launch packet | held (C4 signed off; L5 an approved exclusion) | L1–L5 closed; C4 packet out |
-| 8 | Launch | active (both sites live; N3 item 4 an approved exclusion; final audit) | N1–N3 closed; W-DoD on production |
+| 7 | Staging and the launch packet | done | L1–L5 closed; C4 packet out |
+| 8 | Launch | done | N1–N3 closed; W-DoD on production |
+| 9 | After launch | active | the security.txt renewal (2027-09-10); the found-work list |
 
 ## Active phase
 
-**Phase 8 — Launch.** Entered 2026-10-06 on Clive's C4 sign-off and public switch. Both sites are
-live; N1 and N2 closed; N3's checks pass against production except W-DoD in one green run, which
-Clive excluded at launch, as he did L5's staging walk. The final audit passed in its second round,
-after its first found two documentation gaps (status files and staging's build id).
+**Phase 9 — After launch.** v1 is done: all nine build phases complete, all 54 beads closed (L5 and
+N3 by Clive's decision, 2026-10-10). What remains is care, not build: Martin renews `security.txt`
+by 2027-09-10 (`PROJECT.md`, the reminder workflow opens an issue 30 days before), and the
+found-work list below waits for a v1.1.
 
 ## Build method
 
@@ -415,7 +414,7 @@ Done 2026-10-06. vandalwayind.com is served on the internal network from the pro
 - [x] L4: the release scan: PII gate at the public tier over the tree and the whole history; every author and committer email; PNG metadata on `site/`; the names grep.
   Run (2026-10-06), twice: the tree and every blob in the history pass the gate at the public tier; the public denylist finds nothing; `site/` images are clean. Items 1, 2 and 5 flipped (unit 3/5, 0 skipped, twice). Open on two: item 3, commit 38c10f5's in-story author (approved by Clive, a test change for C4); item 4, four GIFs in `vandalwayind/images/` carry ImageMagick's application block. The pack's paths outside the repository are reworded here, in `CRITIC_RUBRIC.md` and in `ENV_PREFLIGHT.md`; `ACCEPTANCE.md` (G0 item 9, G1 item 5, L4 item 1) and the gate hook's default wait for a decision.
   Closed (2026-10-06): `still-here-48f` through the gate. Item 4: `scripts/gifs/strip-gif-apps.mjs` takes ImageMagick's block out of the four GIFs, pixels, frames and delays unchanged (16829da), and `make-1997.sh` runs it. Item 3 and the paths: Clive approved, ahead of C4, the one exception for 38c10f5 by its full sha, and tools found through the uncommitted `.env.local` instead of paths (`ACCEPTANCE.md` G0 item 9, G1 item 5 and L4 item 1 reworded, beads re-synced; `specs-v8`). Unit 5/5, 0 skipped, twice.
-- [ ] L5: W1–W9 on staging; the phone checklist printed for Clive; the C4 packet.
+- [x] L5: W1–W9 on staging; the phone checklist printed for Clive; the C4 packet. Closed 2026-10-10 by Clive's decision, not by the gate (`CHECKPOINTS.md` § Record): every step played in some run or by hand; item 1 and BROWSER PASS unticked.
   Run (2026-10-06): the C4 packet is out (`docs/checkpoints/c4-packet.md`, unit 3/3 twice), with the phone checklist to print, the critic reports, 40 screenshots of staging and every call since C3. W1–W9 on staging (the build of 7f198d9; `src/` unchanged since): the spec 19 passed, 12 skipped (Firefox, by design) and 5 red in each of two runs; every red step played by hand on staging and works (packet § 2). The reds are the locked walk helpers' on a networked server; their change is C4 question 9. W7 credited from V4's walks (Clive, 2026-10-06). CODE PASS and items 2–3 flipped; open on item 1 and BROWSER PASS.
 
 #### Bar
@@ -425,7 +424,7 @@ Deterministic: staging specs; the URL table; DNS read-back equals the intended r
 No cap (I-07). Expected about 100 orchestrator turns.
 
 #### Exit gate
-- [ ] L1–L5 closed through the gate; the C4 packet is out. (2026-10-06: L1–L4 closed; the C4 packet is out; L5 open on C4 question 9.)
+- [x] L1–L5 closed; the C4 packet is out. Evidence: L1–L4 through the gate (2026-10-06); L5 by Clive's decision (2026-10-10).
 
 #### Result
 
@@ -440,12 +439,12 @@ Signed off at C4 (2026-10-06): the phone checklist passed, § 6 answered and app
 - [x] The Pages verification TXT resolves and the organization shows the domain verified. Evidence: the TXT at both public resolvers; Pages API `protected_domain_state: verified`.
 
 #### Steps
-- [ ] N1: private vulnerability reporting enabled and `RENEWAL_ASSIGNEE` set first; then Pages source set to GitHub Actions; `github-pages` environment limited to `main`; deploy; custom domain set; apex A and AAAA and `www` CNAME written; wait for the certificate (up to 24 hours, polled); HTTPS enforced; the production smoke.
+- [x] N1: private vulnerability reporting enabled and `RENEWAL_ASSIGNEE` set first; then Pages source set to GitHub Actions; `github-pages` environment limited to `main`; deploy; custom domain set; apex A and AAAA and `www` CNAME written; wait for the certificate (up to 24 hours, polled); HTTPS enforced; the production smoke.
   Closed (2026-10-06): `still-here-kdn` through the gate. Deploy run 37468552403; DNS written after a zone save and dry run (`deploy/deploy-log.md` § Phase 8); the custom domain re-added once with Clive's word, after its first check ran before DNS pointed at Pages; the certificate approved for the apex and `www`; HTTPS enforced. Unit 6/6; the production spec 18 passed, 0 skipped.
-- [ ] N2: vandalwayind.com's A record (reverse record accepted as it is, I-10); the public Caddy site block by a `deploy/` script with its undo; certificate issued; the counter reset and dated at go-live; W7 on production.
+- [x] N2: vandalwayind.com's A record (reverse record accepted as it is, I-10); the public Caddy site block by a `deploy/` script with its undo; certificate issued; the counter reset and dated at go-live; W7 on production.
   Closed (2026-10-06): `still-here-vi0` through the gate. `deploy/vandalwayind-public-install.sh` and its undo (every other block byte-identical, every other site answering as before; the undo returned the Caddyfile to the backup's sha256); `go-live 2026-10-06 total 793 -> 0`; a second run after the X6 change (`specs-v10`) reset 8 more loads, and the go-live now runs once. Unit 3/3; W7 on production 4 passed (Chromium and WebKit, 1440 and 390), and again in the gate.
-- [ ] N3: the live record check against production Verify; `security.txt` and `presence.json` on production; Clive's production phone re-check recorded; W-DoD on production; `/goal`'s final audit against `PRD.md`.
-  Run (2026-10-06): unit items 1, 2, 3, 5 and 6 pass against production (`security.txt` 200 `text/plain`; `presence.json` with `access-control-allow-origin: *`, so R34 stands; every identifier in `company/` verifies on the live Verify page; Clive's production phone re-check recorded; the renewal in `PROJECT.md`). W-DoD on production ran three times and once more for W9 alone and never came out green in one run: the workstation's network dropped (`ERR_NETWORK_CHANGED`, "Network is unreachable") and GitHub answered 429 to the walks' repeated visits. Clive excluded item 4 at launch on his rule; N3 stays open. The final audit passes against `PRD.md` (2026-10-06, second round: complete, with L5 and N3 item 4 as Clive's named exclusions; the first round's two gaps, the status files and staging's build id, were fixed between rounds).
+- [x] N3: the live record check against production Verify; `security.txt` and `presence.json` on production; Clive's production phone re-check recorded; W-DoD on production; `/goal`'s final audit against `PRD.md`.
+  Run (2026-10-06): unit items 1, 2, 3, 5 and 6 pass against production (`security.txt` 200 `text/plain`; `presence.json` with `access-control-allow-origin: *`, so R34 stands; every identifier in `company/` verifies on the live Verify page; Clive's production phone re-check recorded; the renewal in `PROJECT.md`). W-DoD on production ran three times and once more for W9 alone and never came out green in one run: the workstation's network dropped (`ERR_NETWORK_CHANGED`, "Network is unreachable") and GitHub answered 429 to the walks' repeated visits. Clive excluded item 4 at launch on his rule, and closed N3 by his decision on 2026-10-10 (item 4, CODE PASS and BROWSER PASS unticked). The final audit passes against `PRD.md` (2026-10-06, second round: complete, with L5 and N3 item 4 as Clive's named exclusions; the first round's two gaps, the status files and staging's build id, were fixed between rounds).
 
 #### Bar
 Deterministic: the production smoke (build id, URL table, 301s, `https_enforced`, headers); the live identifier check. Then W-DoD in a browser on production, played by the critic. This is v1's definition of done.
@@ -454,11 +453,24 @@ Deterministic: the production smoke (build id, URL table, 301s, `https_enforced`
 No cap (I-07). Expected about 60 orchestrator turns, plus waiting on DNS and certificates, which is time, not turns.
 
 #### Exit gate
-- [ ] N1–N3 closed through the gate; W-DoD complete on production; the final audit passes against `PRD.md`.
+- [x] N1–N3 closed; the final audit passes against `PRD.md`. Evidence: N1 and N2 through the gate; N3 by Clive's decision (2026-10-10); the audit passed 2026-10-06. W-DoD was never green in one run.
 
 #### Result
 
 Launched 2026-10-06. isitstillhere.com serves from GitHub Pages over HTTPS (certificate for the apex and `www`, HTTPS enforced); vandalwayind.com serves from the production server over HTTPS, counting from zero since its go-live. Both domains carry a null MX, SPF `-all` and DMARC `reject`. Exclusions approved by Clive at launch: L5's staging walk and N3 item 4 (W-DoD in one green run), each red only on this workstation's network or GitHub's rate limit; every step was played in some run or by hand, and Clive's phone checks passed at C4 and on production.
+
+### Phase 9 — After launch
+
+#### Entry criteria
+- [x] Phase 8 done. Evidence: N1 and N2 closed through the gate (2026-10-06), N3 by Clive's decision (2026-10-10); the final audit passed (2026-10-06).
+
+#### Steps
+- [ ] `security.txt` renewed by 2027-09-10: `SECURITY_TXT_EXPIRES` in `scripts/build.mjs` set a year on, published (Martin, sh-011; the reminder workflow opens an issue 30 days before).
+
+#### Exit gate
+- [ ] Renewed and published; or a v1.1 plan takes over this file.
+
+#### Result
 
 ## Deliberately not doing
 
@@ -576,3 +588,4 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
 - 2026-10-06 — Launched: both sites live; L5 and N3 item 4 excluded by Clive; the final audit's first round found the status files stale, fixed here. (Jules, 2026-10-06)
 - 2026-10-06 — The final audit passes against `PRD.md` (second round), with L5 and N3 item 4 as Clive's exclusions. (Jules, 2026-10-06)
 - 2026-10-10 — The offline copy waits until the page has settled and no check runs; Safari's first-visit ritual keeps its timing. (Jules, 2026-10-10)
+- 2026-10-10 — v1 done: L5 and N3 closed by Clive's decision; all 54 beads closed. (Jules, 2026-10-10)

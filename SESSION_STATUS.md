@@ -17,8 +17,8 @@ relations: {}
 ### Current state
 
 STILL HERE v1 is live and finished: https://isitstillhere.com and https://vandalwayind.com, the
-repository public, the final audit passed (2026-10-06). 52 of 54 beads are closed; L5 and N3 stay
-open as exclusions Clive approved at launch. Nothing is waiting on anyone.
+repository public, the final audit passed (2026-10-06). All 54 beads are closed (L5 and N3 by Clive's
+decision, 2026-10-10). Nothing is waiting on anyone.
 
 ### What changed (2026-10-10)
 
@@ -34,8 +34,7 @@ open as exclusions Clive approved at launch. Nothing is waiting on anyone.
 
 ### What's next
 
-1. Nothing in v1. L5 and N3 can be closed later by their gate runs; Clive runs `bd close` himself
-   (a global rule now blocks closes from the agent).
+1. Nothing in v1. (A global rule now blocks `bd close` from the agent; Clive closes beads himself.)
 
 ### Waiting on Clive
 
@@ -94,3 +93,4 @@ open as exclusions Clive approved at launch. Nothing is waiting on anyone.
 - 2026-10-06 — Launched: both sites live; N1 and N2 closed; L5 and N3 excluded by Clive; the final audit in its second round. (Martin, 2026-10-06)
 - 2026-10-06 — The final audit passed; v1 is done, with L5 and N3 item 4 excluded by Clive. (Martin, 2026-10-06)
 - 2026-10-10 — The book closed: the Safari first-visit fix, security.txt on a set date, the wired network; L5 and N3 stay Clive's exclusions. (Martin, 2026-10-10)
+- 2026-10-10 — L5 and N3 closed by Clive; all 54 beads closed. (Martin, 2026-10-10)
