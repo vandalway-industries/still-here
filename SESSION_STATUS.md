@@ -16,7 +16,7 @@ relations: {}
 
 ### Current state
 
-STILL HERE v1 is live and finished: https://isitstillhere.com and https://vandalwayind.com, the
+STILL HERE v1 is live and finished at isitstillhere.com and vandalwayind.com; the
 repository public, the final audit passed (2026-10-06). All 54 beads are closed (L5 and N3 by Clive's
 decision, 2026-10-10). Nothing is waiting on anyone.
 
