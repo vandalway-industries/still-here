@@ -2,7 +2,7 @@
 // Check the built security.txt before it is published (PRD R35, RFC 9116): it names our private
 // vulnerability reporting address, and its Expires is a valid RFC 3339 time at least 30 days and at
 // most 365 days away. Fewer than 30 days fails, so the Pages workflow stops before the upload and a
-// file about to lapse is never published. The build writes a fresh Expires each time it runs.
+// file about to lapse is never published. The build takes Expires from one line in scripts/build.mjs, renewed yearly.
 // Usage: node scripts/check-security-txt.mjs [site]     (npm run check:security-txt)
 // (Jules, 2026-10-05)
 import { existsSync, readFileSync } from 'node:fs';

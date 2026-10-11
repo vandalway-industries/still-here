@@ -154,10 +154,12 @@ for (const i of manifest.icons) if (!existsSync(join(OUT, i.src))) throw new Err
 writeFileSync(join(OUT, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2) + '\n');
 
 // security.txt (PRD R35, RFC 9116): our private vulnerability reporting address, and an Expires
-// 365 days from this build, so every build renews it. `npm run check:security-txt` refuses to
-// publish one with fewer than 30 days left.
-const DAY = 86_400_000;
-const expires = new Date(Math.floor(Date.now() / 1000) * 1000 + 365 * DAY).toISOString().replace(/\.\d+Z$/, 'Z');
+// that is renewed once a year by changing this one line (Martin, sh-011; PROJECT.md gives the
+// renewal date). The reminder workflow opens an issue 30 days before it, and
+// `npm run check:security-txt` refuses to publish one with fewer than 30 days left. A fixed date
+// replaced "365 days from each build" on 10 October 2026, so the published date and PROJECT.md agree.
+const SECURITY_TXT_EXPIRES = '2027-10-10T00:00:00Z';
+const expires = SECURITY_TXT_EXPIRES;
 mkdirSync(join(OUT, '.well-known'), { recursive: true });
 writeFileSync(
   join(OUT, '.well-known/security.txt'),
