@@ -224,6 +224,12 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   page's load event as well as its fonts before pressing End (a long paper was still arriving when
   its heading showed); and the menu and home navigations (`go()`, `goHome()`) allow 15 s instead of
   the default 5 s for the next page to arrive. The checks are unchanged. (Jules, 2026-10-10)
+- **L5 and N3 closed by Clive's decision — 2026-10-10.** "Close L5 and N3. My call." Neither bead
+  passed its STRICT gate: their walks never came out green in one run (the workstation's network,
+  then WebKit timing on a networked server, since fixed in the product). Every step was played in
+  some run or by hand, and the phone checks passed at C4 and on production. The unticked boxes stay
+  unticked: L5 item 1 and BROWSER PASS; N3 item 4, CODE PASS (its test 4) and BROWSER PASS. Closed
+  by Clive outside the gate wrapper. (Jules, 2026-10-10)
 
 ## Changelog
 
