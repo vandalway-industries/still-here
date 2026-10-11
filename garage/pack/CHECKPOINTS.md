@@ -219,6 +219,11 @@ After launch, the production phone re-check (`WALKS.md` § Phone checklist) is r
   paper's fonts can arrive after the press and re-flow the page past the footer. The check (the
   footer comes into view) is unchanged. Found with the workstation on a wired link, where L5's walk
   was otherwise green. (Jules, 2026-10-10)
+- **Re-tag specs-v14 — 2026-10-10.** Clive approved two more changes to the walk helpers
+  (`e2e/helpers/walks.ts`), both for walks against a networked server: `readToEnd()` waits for the
+  page's load event as well as its fonts before pressing End (a long paper was still arriving when
+  its heading showed); and the menu and home navigations (`go()`, `goHome()`) allow 15 s instead of
+  the default 5 s for the next page to arrive. The checks are unchanged. (Jules, 2026-10-10)
 
 ## Changelog
 

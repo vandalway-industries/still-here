@@ -89,20 +89,22 @@ export async function go(w: Walk, item: string): Promise<void> {
   // networked server can still be showing when the click returns (C4 question 9, 2026-10-06)
   const path = new URL((await link.getAttribute('href'))!, w.page.url()).pathname;
   await link.click();
-  await expect(w.page).toHaveURL((u) => new URL(u).pathname === path);
-  await expect(w.page.getByRole('heading', { level: 1 })).toBeVisible();
+  // a networked server: a photo-heavy page may take more than the default 5 s (approved by Clive, 2026-10-10)
+  await expect(w.page).toHaveURL((u) => new URL(u).pathname === path, { timeout: 15_000 });
+  await expect(w.page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 15_000 });
 }
 
 async function goHome(w: Walk): Promise<void> {
   await mark(w).click();
-  await expect(w.page).toHaveURL((u) => new URL(u).pathname === '/');
-  await expect(w.page.getByRole('heading', { name: S.HOME_HEADING })).toBeVisible();
+  await expect(w.page).toHaveURL((u) => new URL(u).pathname === '/', { timeout: 15_000 });
+  await expect(w.page.getByRole('heading', { name: S.HOME_HEADING })).toBeVisible({ timeout: 15_000 });
 }
 
 /** Read to the end of a page: the footer comes into view. */
 async function readToEnd(w: Walk): Promise<void> {
   // a person reads once the text has settled: the page's fonts first, since a late font re-flows a
   // long page after the scroll (approved by Clive, 2026-10-10)
+  await w.page.waitForLoadState('load'); // a long page may still be arriving when its heading shows
   await w.page.evaluate(() => document.fonts.ready.then(() => undefined));
   await w.page.keyboard.press('End');
   await expect(footer(w)).toBeInViewport();
