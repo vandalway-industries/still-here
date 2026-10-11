@@ -514,6 +514,8 @@ C2 packet, test change 3). Each item names the phase that picks it up. (Jules, 2
     go before the ritual's own code, so the result came 6–10 s after the press. Found 2026-10-10 with
     a service-worker-blocked probe (4.63 s). The worker now registers three seconds after the load,
     when the browser is idle, and not while a check runs (`src/js/offline.js`, `src/js/home.js`).
+    Refined the same evening: a PDF tapped right after a result then waited behind the copy (13–17 s),
+    so the copy now waits for ten quiet seconds after any check or export (`src/js/result.js`).
   - [ ] Next packet (N3): test 7 ("the final audit passes, recorded in Phase 8") matches the exit
     gate's own wording, so it is green before any audit; it should look for the audit's recorded
     result. Found by the final audit, 2026-10-06.

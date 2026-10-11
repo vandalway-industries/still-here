@@ -73,6 +73,8 @@ export function exporter(kind, label, busyLabel, file, actions) {
   b.addEventListener('click', async () => {
     if (busy) return;
     busy = true;
+    // the offline copy waits while a file is being made (offline.js)
+    document.documentElement.setAttribute('data-exporting', '');
     b.textContent = busyLabel;
     b.setAttribute('aria-disabled', 'true');
     actions.parentElement?.querySelector('.export-note')?.remove();
@@ -83,6 +85,7 @@ export function exporter(kind, label, busyLabel, file, actions) {
       if (actions.isConnected) actions.after(el('p', 'export-note body-sm', EXPORT_FAILED));
     } finally {
       busy = false;
+      document.documentElement.removeAttribute('data-exporting');
       b.textContent = label;
       b.removeAttribute('aria-disabled');
     }
