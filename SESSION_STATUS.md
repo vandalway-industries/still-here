@@ -12,31 +12,30 @@ relations: {}
 
 ## Resume here
 
-**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v12`) · **Phase:** 8, launched; the final audit passed
+**Branch:** `main` · **HEAD:** see `git log -1` (tests locked at `specs-v14`) · **Phase:** v1 done; the book is closed
 
 ### Current state
 
-STILL HERE is live at https://isitstillhere.com (GitHub Pages, HTTPS enforced) and Vandalway's page
-at https://vandalwayind.com (the production server, HTTPS, counting since its go-live on 6 October
-2026). The repository is public. 52 of 54 beads are closed. L5 and N3 stay open as exclusions Clive
-approved at launch: their walks never came out green in one run on this workstation's network.
+STILL HERE v1 is live and finished: https://isitstillhere.com and https://vandalwayind.com, the
+repository public, the final audit passed (2026-10-06). 52 of 54 beads are closed; L5 and N3 stay
+open as exclusions Clive approved at launch. Nothing is waiting on anyone.
 
-### What changed
+### What changed (2026-10-10)
 
-- C4 signed off: the phone checklist passed on staging; § 6 answered and applied (`specs-v9`); the
-  repository made public by Clive.
-- N1 closed: Pages from Actions, the domain, DNS, the certificate (the domain re-added once with
-  Clive's word), HTTPS enforced; the production spec 18/18.
-- N2 closed: vandalwayind.com's DNS and its public block by `deploy/vandalwayind-public-install.sh`
-  with its undo; go-live reset the internal copy's 793 loads to 0; W7 on production 4/4.
-- N3: its checks pass against production; Clive's production phone re-check passed; W-DoD never
-  green in one run (network drops, GitHub's 429), excluded by Clive.
-- Re-tags `specs-v10` to `specs-v12`, each approved: X6 reads a host without Caddy's placeholder;
-  G0 expects public after C4; W9's helper follows the README's links and waits for the address.
+- The workstation's network: Wi-Fi rate changes made WSL's mirrored network re-sync and Chromium
+  abort requests. The NUC is now wired through a 5 GHz extender; the route table stays still.
+- A Safari fix: on a first visit the offline copy (4 MB) went before the ritual's own code, so the
+  result came 6–10 s late. The copy now waits for ten quiet seconds after any check or download.
+  The ritual is 4.63 s in WebKit and Chromium; a PDF right after a result is 4–5 s.
+- `security.txt` expires on a set date (2027-10-10), renewed yearly in `scripts/build.mjs`;
+  `PROJECT.md` gives the renewal date, 2027-09-10.
+- Walk helpers re-tagged `specs-v13` and `specs-v14` (each approved): wait for the page's fonts and
+  load before reading to the end; 15 s for a page to arrive.
 
 ### What's next
 
-1. Nothing else in v1. L5 and N3 can be closed by a gate run from a steadier network.
+1. Nothing in v1. L5 and N3 can be closed later by their gate runs; Clive runs `bd close` himself
+   (a global rule now blocks closes from the agent).
 
 ### Waiting on Clive
 
@@ -44,17 +43,13 @@ approved at launch: their walks never came out green in one run on this workstat
 
 ### Surprises / debt
 
-- The workstation's network drops during long browser runs (`ERR_NETWORK_CHANGED`, "Network is
-  unreachable"). It is why L5 and N3 are open. A run from a steadier network can close them.
-- GitHub answers 429 when the W9 walk visits the repository many times in an hour.
-- Each deploy to `main` moves `security.txt`'s `Expires` a year from that deploy; `PROJECT.md`
-  gives the renewal as of launch, and the reminder workflow reads the live file.
-- N3's test 7 (the final audit recorded) matches the exit gate's own wording, so it is green before
-  any audit; for the next packet.
+- Chromium crashes at launch now and then on this machine (`SEGV` in `browser.newContext`); a re-run
+  passes.
+- The SSH key in WSL was regenerated on 2026-10-10 and re-registered on GitHub and the server.
+- E7's portfolio test has little headroom in WebKit and fails now and then; a re-run passes.
 - Staging's `/build.txt` must equal HEAD for L1's test 2: put the last commit's build on staging.
 - `bd` commands run with the owner's address as `GIT_AUTHOR_EMAIL` and `BEADS_ACTOR` on that one
   command only. Never export them.
-- This computer's clock steps back about 1.16 s every 32 s.
 
 ## Changelog
 
@@ -98,3 +93,4 @@ approved at launch: their walks never came out green in one run on this workstat
 - 2026-10-06 — C4's questions answered and applied (specs-v9); L5 waits on a quiet-network gate run; the phone checklist and the switch are Clive's. (Martin, 2026-10-06)
 - 2026-10-06 — Launched: both sites live; N1 and N2 closed; L5 and N3 excluded by Clive; the final audit in its second round. (Martin, 2026-10-06)
 - 2026-10-06 — The final audit passed; v1 is done, with L5 and N3 item 4 excluded by Clive. (Martin, 2026-10-06)
+- 2026-10-10 — The book closed: the Safari first-visit fix, security.txt on a set date, the wired network; L5 and N3 stay Clive's exclusions. (Martin, 2026-10-10)
